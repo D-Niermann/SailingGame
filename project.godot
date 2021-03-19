@@ -25,7 +25,7 @@ settings/stdout/print_fps=true
 
 [display]
 
-window/size/always_on_top=true
+window/size/test_width=648
 
 [rendering]
 

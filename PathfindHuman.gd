@@ -5,6 +5,7 @@ extends Spatial
 # var a = 2
 # var b = "text"
 onready var nav = get_parent()
+onready var rigid = get_node("RigidBody")
 var path = []
 export var path_node = 0
 var target_pos
@@ -33,6 +34,8 @@ func _physics_process(delta):
 		if dir.length()<0.01:
 			path_node+=1
 		else:
+			## move human
+#			rigid.add_force(dir, Vector3(0,0,0))
 			self.transform.origin += dir.normalized()*speed
 	elif path_node == path.size():
 		pass

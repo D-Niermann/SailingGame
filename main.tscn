@@ -50,11 +50,10 @@ agent/max_climb = 0.1
 
 [sub_resource type="CubeMesh" id=6]
 
-[sub_resource type="CapsuleMesh" id=7]
+[sub_resource type="ConcavePolygonShape" id=7]
+data = PoolVector3Array( -1, 1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, -1, 1, -1, -1, 1, -1, 1, -1, 1, -1, -1, 1, 1, -1, -1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, -1 )
 
-[sub_resource type="CapsuleShape" id=8]
-radius = 0.262949
-height = 0.249813
+[sub_resource type="CapsuleMesh" id=8]
 
 [node name="main" type="Spatial"]
 
@@ -63,14 +62,14 @@ height = 0.249813
 [node name="ui" parent="." instance=ExtResource( 4 )]
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.571143, 0.82085, 0, -0.82085, 0.571143, 1.93, 22.32, 10.96 )
+transform = Transform( 1, 0, 0, 0, 0.571143, 0.82085, 0, -0.82085, 0.571143, -25.872, 12.7817, 23.3644 )
 fov = 81.3
 script = ExtResource( 8 )
 
 [node name="Ship" type="Spatial" parent="." groups=[
 "Ship",
 ]]
-transform = Transform( 0.28674, 0, 0, 0, -1.25338e-08, -0.28674, 0, 0.28674, -1.25338e-08, -1.79327, 1.84901, 1.14628 )
+transform = Transform( 0.28674, 0, 0, 0, -1.25338e-08, -0.28674, 0, 0.28674, -1.25338e-08, 40, 1.85, 40 )
 script = ExtResource( 6 )
 
 [node name="ShipSprite" type="Sprite3D" parent="Ship"]
@@ -120,7 +119,7 @@ __meta__ = {
 }
 
 [node name="NavMeshCont" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -29.1182, 2.43, 14.0942 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -29.1371, 1.88227, 14.7443 )
 
 [node name="Navigation" type="Navigation" parent="NavMeshCont"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.7498, 1.90735e-06, -8.10709 )
@@ -132,6 +131,11 @@ navmesh = SubResource( 5 )
 transform = Transform( 12.8978, 0, 0, 0, 1, 0, 0, 0, 4.65037, -18.6292, -0.388844, 8.92874 )
 mesh = SubResource( 6 )
 material/0 = ExtResource( 9 )
+
+[node name="StaticBody" type="StaticBody" parent="NavMeshCont/Navigation/NavMesh/MeshInstance"]
+
+[node name="CollisionShape" type="CollisionShape" parent="NavMeshCont/Navigation/NavMesh/MeshInstance/StaticBody"]
+shape = SubResource( 7 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="NavMeshCont/Navigation/NavMesh"]
 transform = Transform( -0.156954, 0, -0.142492, 0, 1, 0, -0.0112231, 0, 1.99275, -26.6674, 0.318257, 8.47666 )
@@ -174,7 +178,7 @@ mesh = SubResource( 6 )
 material/0 = ExtResource( 9 )
 
 [node name="Target" type="MeshInstance" parent="NavMeshCont/Navigation/NavMesh"]
-transform = Transform( 0.0201032, 1.11689e-08, -0.170908, -1.37564e-08, 1, 0, -0.156066, -8.67064e-08, -0.0220151, -18.3636, 0.653086, 8.72805 )
+transform = Transform( 0.0201032, 1.11689e-08, -0.170908, -1.37564e-08, 1, 0, -0.156066, -8.67064e-08, -0.0220151, -19.5981, 1.47226, 9.58041 )
 mesh = SubResource( 6 )
 material/0 = ExtResource( 9 )
 
@@ -204,32 +208,19 @@ mesh = SubResource( 6 )
 material/0 = ExtResource( 9 )
 
 [node name="Human" type="Spatial" parent="NavMeshCont/Navigation"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -16.327, 1.31912, 9.50556 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -16.3089, 1.31912, 9.50368 )
 script = ExtResource( 10 )
 
-[node name="RigidBody" type="RigidBody" parent="NavMeshCont/Navigation/Human"]
-gravity_scale = 0.0
-
-[node name="MeshInstance" type="MeshInstance" parent="NavMeshCont/Navigation/Human/RigidBody"]
+[node name="MeshInstance" type="MeshInstance" parent="NavMeshCont/Navigation/Human"]
 transform = Transform( 0.259747, 0, 0, 0, -1.13539e-08, 0.259747, 0, -0.259747, -1.13539e-08, 0, 0, 0 )
-mesh = SubResource( 7 )
+mesh = SubResource( 8 )
 material/0 = ExtResource( 5 )
-
-[node name="CollisionShape" type="CollisionShape" parent="NavMeshCont/Navigation/Human/RigidBody"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
-shape = SubResource( 8 )
 
 [node name="Human2" type="Spatial" parent="NavMeshCont/Navigation"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -17.7417, 1.3611, 10.0367 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.176, 1.3611, 8.60839 )
 script = ExtResource( 10 )
 
-[node name="RigidBody" type="RigidBody" parent="NavMeshCont/Navigation/Human2"]
-
-[node name="MeshInstance" type="MeshInstance" parent="NavMeshCont/Navigation/Human2/RigidBody"]
+[node name="MeshInstance" type="MeshInstance" parent="NavMeshCont/Navigation/Human2"]
 transform = Transform( 0.259747, 0, 0, 0, -1.13539e-08, 0.259747, 0, -0.259747, -1.13539e-08, 0, 0, 0 )
-mesh = SubResource( 7 )
+mesh = SubResource( 8 )
 material/0 = ExtResource( 5 )
-
-[node name="CollisionShape" type="CollisionShape" parent="NavMeshCont/Navigation/Human2/RigidBody"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0 )
-shape = SubResource( 8 )

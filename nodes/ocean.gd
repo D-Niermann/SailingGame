@@ -89,10 +89,24 @@ func set_subsurface_scattering(value):
 	visual_material.set_shader_param("sss_strength", value);
 
 func _physics_process(delta):
-	time += 0.005
-	wind_modified = wind_modified + ((wind_strength + sin(time) * 0.2) - wind_modified) * delta * 0.5
+	pass
+	# time += 0.005
+	# wind_modified = wind_modified + ((wind_strength + sin(time) * 0.2) - wind_modified) * delta * 0.5
 	
 	# DEBUG WIND VAR
 	#print(wind_modified)
 	
-	update_water(wind_modified)
+	# update_water(wind_modified)
+
+
+func _process(delta):
+	pass
+	time+=delta
+	visual_material.set_shader_param("time", time)
+
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		if event.scancode == KEY_F:
+			visual_material.set_shader_param("time_offset", time)
+			visual_material.set_shader_param("gerstner_speed", Vector2(0.05, 0.05)) ## 5 times faster sinze image is 5 times smaller
+			visual_material.set_shader_param("gerstner_2_speed", Vector2(0.025,0.025))

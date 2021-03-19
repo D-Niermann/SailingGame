@@ -23,10 +23,12 @@ uniform float gerstner_tiling = 0.1;
 uniform float gerstner_2_height = 3.8;
 uniform float gerstner_2_normal = 0.4;
 uniform float gerstner_2_stretch = 0.03;
-uniform float gerstner_2_tiling = 0.15;
+uniform float gerstner_2_tiling = 0.02;
 uniform float gerstner_distance_fadeout = 0.03;
-uniform vec2 gerstner_speed = vec2(0.011, 0.014);
-uniform vec2 gerstner_2_speed = vec2(0.002, 0.001);
+uniform vec2 gerstner_speed = vec2(0.00, 0.0);
+uniform vec2 gerstner_2_speed = vec2(0.0, 0.0);
+uniform float time_offset = 0;
+uniform float time = 0;
 
 uniform float normal_base_intensity = 0.7;
 uniform float normal_peak_intensity = 1.5;
@@ -95,8 +97,8 @@ vec3 get_normal(sampler2D tex, vec2 uv, float offset, float intensity) {
 }
 
 void vertex() {
-	vec2 uv_gerstner = ( vec4(UV.x, 0.0, UV.y, 1.0) + WORLD_MATRIX[3] * 0.25 ).xz * gerstner_tiling + vec2(TIME * gerstner_speed.x, TIME * gerstner_speed.y);
-	vec2 uv_gerstner_2 = uv_gerstner * gerstner_2_tiling + vec2(gerstner_2_speed.x * TIME, gerstner_2_speed.y * TIME);
+	vec2 uv_gerstner = (vec4(UV.x, 0.0, UV.y-1.0, 1.0) + WORLD_MATRIX[3] * 0.25 ).xz * gerstner_tiling + vec2((time-time_offset) * gerstner_speed.x, (time-time_offset) * gerstner_speed.y);
+	vec2 uv_gerstner_2 = (vec4(UV.x, 0.0, UV.y-1.0, 1.0) + WORLD_MATRIX[3] * 0.25 ).xz * gerstner_2_tiling + vec2(gerstner_2_speed.x * (time-time_offset), gerstner_2_speed.y * (time-time_offset));
 	
 	//vec2 uv = fract( vec4(UV.x, UV.y, UV.y, 1.0) + WORLD_MATRIX[3] * 0.25 ).xz;
 	
@@ -105,18 +107,18 @@ void vertex() {
 //	vec2 gerstner_normal_read = ( texture(gerstner_normal_map, uv_gerstner).xy - vec2(0.5, 0.5) ) * gerstner_height;
 //	vec2 gerstner_2_normal_read = ( texture(gerstner_normal_map, uv_gerstner_2).xy - vec2(0.5, 0.5) ) * gerstner_2_height;
 	
-	vec3 gerstner = vec3(-0.0 * gerstner_stretch, (pow( texture(gerstner_height_map, uv_gerstner).x, 0.4545) - 0.5) * gerstner_height, 0.0 * gerstner_stretch);
-	vec3 gerstner_2 = vec3(-0.0 * gerstner_2_stretch, (pow( texture(gerstner_height_map, uv_gerstner_2).x, 0.4545) - 0.5) * gerstner_2_height, 0.0 * gerstner_2_stretch);
+	vec3 gerstner = vec3(-0.0 * gerstner_stretch, texture(gerstner_height_map, uv_gerstner).x* gerstner_height, 0.0 * gerstner_stretch);
+	vec3 gerstner_2 = vec3(-0.0 * gerstner_2_stretch, pow(texture(gerstner_height_map, uv_gerstner_2).x, 0.5) * gerstner_2_height, 0.0 * gerstner_2_stretch);
 	
 //	float height = get_height(vector_map, uv, 0.007);
-	
-	VERTEX +=  gerstner + gerstner_2;
+//	VERTEX += vec3(0,uv_gerstner.y,0);
+	VERTEX +=  gerstner + gerstner_2 ;
 	COLOR[0] = camera_distance;
 }
 
 void fragment() {
-	vec2 uv_gerstner = ( vec4(UV.x, UV.y, UV.y, 1.0) + WORLD_MATRIX[3] * 0.25 ).xz * gerstner_tiling + vec2(TIME * gerstner_speed.x, TIME * gerstner_speed.y);
-	vec2 uv_gerstner_2 = uv_gerstner * gerstner_2_tiling + vec2(gerstner_2_speed.x * TIME, gerstner_2_speed.y * TIME);
+	vec2 uv_gerstner = (vec4(UV.x, 0.0, UV.y-1.0, 1.0) + WORLD_MATRIX[3] * 0.25 ).xz * gerstner_tiling + vec2((time-time_offset) * gerstner_speed.x, (time-time_offset) * gerstner_speed.y);
+	vec2 uv_gerstner_2 = (vec4(UV.x, 0.0, UV.y-1.0, 1.0) + WORLD_MATRIX[3] * 0.25 ).xz * gerstner_2_tiling + vec2(gerstner_2_speed.x * (time-time_offset), gerstner_2_speed.y * (time-time_offset));
 	
 	vec2 uv = fract( vec4(UV.x, UV.y, UV.y, 1.0) + WORLD_MATRIX[3] * 0.25 ).xz;
 	
@@ -141,14 +143,14 @@ void fragment() {
 	
 	// DETAIL NORMAL
 	normal_output = mix(normal_output, vec3(0.5, 0.5, 1.0), smoothstep(COLOR[0], 0.0, normal_dist_fadeout) );
-	normal_output += ( texture(detail_normal_map, uv_gerstner * detail_normal_tiling - vec2(gerstner_speed.x * TIME, gerstner_speed.y * TIME) * detail_normal_speed ).xyz - vec3(0.5, 0.5, 1.0) ) * detail_normal_intensity;
+	normal_output += ( texture(detail_normal_map, uv_gerstner * detail_normal_tiling - vec2(gerstner_speed.x * (time-time_offset), gerstner_speed.y * (time-time_offset)) * detail_normal_speed ).xyz - vec3(0.5, 0.5, 1.0) ) * detail_normal_intensity;
 	
 	// ADDING SECOND GERSTNER WAVE
 	normal_output += normal_gerstner * gerstner_normal + normal_gerstner_2 * gerstner_2_normal;
 	normal_output = mix(normal_output, vec3(0.5, 0.5, 1.0), smoothstep(COLOR[0], 0.0, gerstner_distance_fadeout) );
 	
 	// FLOW TIMING FOR FLOW MAPS (USED IN FOAM AND BUBBLES) 2 UVs BLENDED TOGETHER
-	float flow_timing = TIME * flow_blend_timing;
+	float flow_timing = (time-time_offset) * flow_blend_timing;
 	float flow_timing_a = fract(flow_timing);
 	float flow_timing_b = fract(flow_timing + 0.5);
 	
@@ -181,7 +183,7 @@ void fragment() {
 	uv_underwater.y = uv_underwater.y + dot(CAMERA_MATRIX[2], vec4(0.0, 0.0, -1.0, 0.0)) * clamp(depth, 0.0, 1.0) * 0.5;
 	
 	// UV PARALLAX FOR FLOATING PIECES IN WATER
-	vec2 uv_swimthings = uv * float(swimthings_tiling) + vec2(TIME * 0.015, TIME * 0.008) - (normal_output.xy - vec2(0.5, 0.5)) * 0.4;
+	vec2 uv_swimthings = uv * float(swimthings_tiling) + vec2((time-time_offset) * 0.015, (time-time_offset) * 0.008) - (normal_output.xy - vec2(0.5, 0.5)) * 0.4;
 	uv_swimthings.x = uv_swimthings.x + dot(CAMERA_MATRIX[1], vec4(1.0, 0.0, 0.0, 0.0)) * 0.1;
 	uv_swimthings.y = uv_swimthings.y + dot(CAMERA_MATRIX[2], vec4(0.0, 0.0, -1.0, 0.0)) * 0.1;
 	
@@ -254,8 +256,8 @@ void fragment() {
 void light() {
 	// LAMBER DIFFUSE LIGHTING
 	float pi = 3.14159265358979323846;
-	float water_highlight_mask_1 = texture(water_highlight_map, fract( UV - (WORLD_MATRIX[3].xz * 0.25) + TIME * 0.051031 ) ).x;
-	float water_highlight_mask_2 = texture(water_highlight_map, fract( UV - (WORLD_MATRIX[3].xz * 0.25) + TIME * -0.047854) * 2.0 ).x;
+	float water_highlight_mask_1 = texture(water_highlight_map, fract( UV - (WORLD_MATRIX[3].xz * 0.25) + (time-time_offset) * 0.051031 ) ).x;
+	float water_highlight_mask_2 = texture(water_highlight_map, fract( UV - (WORLD_MATRIX[3].xz * 0.25) + (time-time_offset) * -0.047854) * 2.0 ).x;
 	
 	// SUBSURFACE SCATTERING
 	float sss = clamp( smoothstep(0.65, 0.7, dot(NORMAL , VIEW) * 0.5 + 0.5 ) * smoothstep(0.5, 1.0, (dot(-LIGHT, VIEW) * 0.5 + 0.5) ) * ( dot (-CAMERA_MATRIX[2].xyz, vec3(0.0, 1.0, 0.0)) * 0.5 + 0.5), 0.0, 1.0) * sss_strength;
