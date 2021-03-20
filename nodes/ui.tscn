@@ -75,28 +75,27 @@ __meta__ = {
 }
 
 [node name="Label4" type="Label" parent="."]
-visible = false
 margin_top = 130.824
 margin_right = 121.0
 margin_bottom = 152.824
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "SUN GLARE"
+text = "Time of Day"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="sun_glare" type="HSlider" parent="."]
-visible = false
+[node name="Time" type="HSlider" parent="."]
 anchor_right = 1.0
 margin_top = 149.594
 margin_bottom = 165.594
-max_value = 0.5
-step = 0.01
-value = 0.5
+min_value = -3.0
+max_value = 3.0
+step = 0.1
+value = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="value_changed" from="wind_speed" to="." method="_on_wind_speed_value_changed"]
 [connection signal="value_changed" from="water_style" to="." method="_on_water_style_value_changed"]
 [connection signal="value_changed" from="subsurface_scattering" to="." method="_on_subsurface_scattering_value_changed"]
-[connection signal="value_changed" from="sun_glare" to="." method="_on_sun_glare_value_changed"]
+[connection signal="value_changed" from="Time" to="." method="_on_sun_glare_value_changed"]

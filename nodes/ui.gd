@@ -12,5 +12,5 @@ func _on_water_style_value_changed(value):
 func _on_subsurface_scattering_value_changed(value):
 	get_node("../ocean").set_subsurface_scattering(value)
 
-#func _on_sun_glare_value_changed(value):
-#	get_node("../game_camera").set_sun_glare(value)
+func _on_sun_glare_value_changed(value):
+	get_tree().get_nodes_in_group("Light")[0].time = value

@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://nodes/ocean.tscn" type="PackedScene" id=1]
 [ext_resource path="res://textures/sky/evening_01.hdr" type="Texture" id=2]
@@ -11,6 +11,8 @@
 [ext_resource path="res://materials/Black.tres" type="Material" id=9]
 [ext_resource path="res://PathfindHuman.gd" type="Script" id=10]
 [ext_resource path="res://nodes/Boye.gd" type="Script" id=11]
+[ext_resource path="res://SunLight.gd" type="Script" id=12]
+[ext_resource path="res://materials/Invisible.tres" type="Material" id=13]
 
 [sub_resource type="CapsuleMesh" id=1]
 
@@ -68,7 +70,10 @@ data = PoolVector3Array( -1, 1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -1
 "Camera",
 ]]
 transform = Transform( 1, 0, 0, 0, 0.571143, 0.82085, 0, -0.82085, 0.571143, -25.872, 12.7817, 23.3644 )
-fov = 81.3
+fov = 63.3
+size = 208.4
+near = 0.03
+far = 7099.0
 script = ExtResource( 8 )
 
 [node name="ShipContainer" type="Spatial" parent="." groups=[
@@ -78,12 +83,13 @@ transform = Transform( 0.198898, 0, 0.206541, 0, 0.28674, 0, -0.206541, 0, 0.198
 script = ExtResource( 6 )
 pitch_factor = 0.02
 yaw_factor = 0.02
-height_offset = 3.0
+height_offset = 1.0
 
 [node name="Ship" type="Spatial" parent="ShipContainer"]
 
 [node name="ShipSprite" type="Sprite3D" parent="ShipContainer/Ship"]
-transform = Transform( 3.48748, 0, 0, 0, -1.52443e-07, 3.48748, 0, -3.48748, -1.52443e-07, 0, 0, 0 )
+transform = Transform( 3.48748, -1.19209e-07, -7.10543e-15, 0, -1.52443e-07, 3.48748, -1.19209e-07, -3.48748, -1.52443e-07, 0, 0, 0 )
+layers = 3
 shaded = true
 texture = ExtResource( 3 )
 
@@ -101,11 +107,10 @@ transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 6.81837
 mesh = SubResource( 1 )
 material/0 = ExtResource( 5 )
 
-[node name="MeshInstance" type="MeshInstance" parent="ShipContainer/Ship"]
-transform = Transform( 34.9626, 0, 0, 0, 0.00609493, 0, 0, 0, 7.9269, -3.93881, 0.0305595, 0.345277 )
-cast_shadow = 3
+[node name="Mesh" type="MeshInstance" parent="ShipContainer/Ship"]
+transform = Transform( 25.3668, 0, 4.76837e-07, 0, 0.00609493, 0, -9.53674e-07, 0, 4.27132, -2.64106, -1.07129, 0.345276 )
 mesh = SubResource( 2 )
-material/0 = null
+material/0 = ExtResource( 13 )
 
 [node name="HFront" type="Spatial" parent="ShipContainer"]
 transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 21.2908, 0, 0 )
@@ -143,6 +148,78 @@ script = ExtResource( 11 )
 mesh = SubResource( 3 )
 material/0 = null
 
+[node name="ShipContainer2" type="Spatial" parent="." groups=[
+"Ship",
+]]
+transform = Transform( 0.206541, 0, -0.198898, 0, 0.28674, 0, 0.198898, 0, 0.206541, 65.1157, 8.5374, -75.6017 )
+script = ExtResource( 6 )
+pitch_factor = 0.02
+yaw_factor = 0.02
+height_offset = 3.0
+
+[node name="Ship" type="Spatial" parent="ShipContainer2"]
+
+[node name="ShipSprite" type="Sprite3D" parent="ShipContainer2/Ship"]
+transform = Transform( 3.48748, 0, 0, 0, -1.52443e-07, 3.48748, 0, -3.48748, -1.52443e-07, 0, 0, 0 )
+shaded = true
+texture = ExtResource( 3 )
+
+[node name="Human" type="MeshInstance" parent="ShipContainer2/Ship" groups=[
+"Human",
+]]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.81097, 0 )
+mesh = SubResource( 1 )
+material/0 = ExtResource( 5 )
+
+[node name="Human2" type="MeshInstance" parent="ShipContainer2/Ship" groups=[
+"Human",
+]]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 6.81837, 1.82464, 0 )
+mesh = SubResource( 1 )
+material/0 = ExtResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ShipContainer2/Ship"]
+transform = Transform( 34.9626, 0, 0, 0, 0.00609493, 0, 0, 0, 7.9269, -3.93881, 0.0305595, 0.345277 )
+cast_shadow = 3
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="HFront" type="Spatial" parent="ShipContainer2"]
+transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 21.2908, 0, 0 )
+visible = false
+script = ExtResource( 11 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ShipContainer2/HFront"]
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="HBack" type="Spatial" parent="ShipContainer2"]
+transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -25.8406, 0, 0 )
+visible = false
+script = ExtResource( 11 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ShipContainer2/HBack"]
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="HLeft" type="Spatial" parent="ShipContainer2"]
+transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -3.07705, 0, -9.94185 )
+visible = false
+script = ExtResource( 11 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ShipContainer2/HLeft"]
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="HRight" type="Spatial" parent="ShipContainer2"]
+transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -3.97623, 0, 7.36206 )
+visible = false
+script = ExtResource( 11 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ShipContainer2/HRight"]
+mesh = SubResource( 3 )
+material/0 = null
+
 [node name="ImmediateGeometry" type="ImmediateGeometry" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.49139, 0.16108, -1.08455 )
 cast_shadow = 0
@@ -154,18 +231,21 @@ __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="DirectionalLight" type="DirectionalLight" parent="WorldEnvironment"]
-transform = Transform( 0.975917, 0.198957, -0.0894567, 0, 0.410082, 0.912049, 0.218143, -0.890083, 0.400206, 0, 0, 0 )
+[node name="DirectionalLight" type="DirectionalLight" parent="WorldEnvironment" groups=[
+"Light",
+]]
+transform = Transform( 0.975917, 0.198957, -0.0894566, 0, 0.410082, 0.912049, 0.218143, -0.890084, 0.400206, 0, 0, 0 )
 light_color = Color( 1, 0.929412, 0.823529, 1 )
 light_specular = 1.0
 shadow_enabled = true
 directional_shadow_max_distance = 200.0
+script = ExtResource( 12 )
 __meta__ = {
 "_editor_description_": ""
 }
 
 [node name="NavMeshCont" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -29.1371, 1.88227, 14.7443 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -29.1371, 3.08429, 14.7443 )
 
 [node name="Navigation" type="Navigation" parent="NavMeshCont"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.7498, 1.90735e-06, -8.10709 )
