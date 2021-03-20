@@ -43,6 +43,7 @@ script = ExtResource( 5 )
 
 [node name="Boye3" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.00994, 2.44552, 6.78764 )
+visible = false
 script = ExtResource( 6 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Boye3"]
@@ -54,6 +55,7 @@ material/0 = ExtResource( 7 )
 
 [node name="Boye" type="Spatial" parent="ShipYaw"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.12867, 0 )
+visible = false
 script = ExtResource( 6 )
 
 [node name="MeshInstance" type="MeshInstance" parent="ShipYaw/Boye"]
@@ -63,6 +65,7 @@ material/0 = ExtResource( 7 )
 
 [node name="Boye2" type="Spatial" parent="ShipYaw"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.9555, 12.698, 3.22978 )
+visible = false
 script = ExtResource( 6 )
 
 [node name="MeshInstance" type="MeshInstance" parent="ShipYaw/Boye2"]

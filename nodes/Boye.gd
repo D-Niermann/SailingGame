@@ -1,6 +1,15 @@
 extends Spatial
 
+###
+"""
+Rewrtie this so that only the ship manager needs to load
+the resource (or something else global) and then this here
+only transforms the coordinate
+"""
 
+
+
+###
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -14,7 +23,7 @@ var targetPos2
 var h_target
 var h1
 var h2
-var mass
+var delay_factor
 var px_x1
 var px_y1
 var px_x2
@@ -26,16 +35,16 @@ var imSize = 1024.0 # size in px of the height map
 var gerstner_tiling1 = imSize/40.0
 var gerstner_tiling2 = imSize/200.0
 var gerstner_height1 = 1
-var gerstner_height2 = 3
+var gerstner_height2 = 4
 var gerstner_speed1 = Vector2(0, 0)#Vector2(8, 4)
 var gerstner_speed2 = Vector2(0, 0)#Vector2(8, 4)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	image = load("res://gerstner_height.jpg")
-	camera = get_node("../../Camera")
+	camera = get_tree().get_nodes_in_group("Camera")[0]
 	data = image.get_data()
 	time = 0
-	mass = 0.1
+	delay_factor = 0.1
 
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -54,8 +63,8 @@ func _process(delta):
 		# transform.origin.x = camera.transform.origin.x + 3
 		# transform.origin.z = camera.transform.origin.z + 3
 		## i think for negative values the pos needs to be flipped somehow
-		targetPos1 = self.transform.origin*gerstner_tiling1
-		targetPos2 = self.transform.origin*gerstner_tiling2
+		targetPos1 = self.global_transform.origin*gerstner_tiling1
+		targetPos2 = self.global_transform.origin*gerstner_tiling2
 		# h1 = gerstner_height1 * data.get_pixel(fmod(targetPos1.x,imSize), fmod(targetPos1.z,imSize))[0]
 
 		## pixel 1
@@ -79,14 +88,13 @@ func _process(delta):
 		h_target = h1 + h2
 		## power 
 		# h2 = pow(h2, 0.4545)
-		transform.origin.y += (h_target - transform.origin.y)*mass
+		global_transform.origin.y += (h_target - global_transform.origin.y)*delay_factor
 	data.unlock()
-	# print(gerstner_speed2.x*time)
-	# if fmod(round(time),10)==0:
-	if round(time)!= time_b:
-		print(transform.origin)
-		print(px_x2, " | ", px_y2)
-		print(h2)
-		print("---------")
-		time_b = round(time)
+
+	# if round(time)!= time_b:
+	# 	print(transform.origin)
+	# 	print(px_x2, " | ", px_y2)
+	# 	print(h2)
+	# 	print("---------")
+	# 	time_b = round(time)
 	
