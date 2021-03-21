@@ -44,6 +44,7 @@ func _process(delta):
 	+ hLeft.transform.origin.y + hRight.transform.origin.y)/4.0
 	ship.transform = def_transform.rotated(Vector3(0,0,1),pitch).rotated(Vector3(1,0,0),yaw)
 	ship.transform.origin.y = height+height_offset
+	ship.transform.origin.x+=0.1
 
 # func _physics_process(delta):
 	# var space_state = get_world().direct_space_state

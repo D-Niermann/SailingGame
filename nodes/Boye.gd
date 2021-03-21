@@ -13,7 +13,10 @@ only transforms the coordinate
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+export var doPrint = 0
+export var vel_threshold = 0.1
 export var run = 1
+var last_pos
 var camera
 var pixel
 var image
@@ -44,6 +47,8 @@ func _ready():
 	# camera = get_tree().get_nodes_in_group("Camera")[0]
 	data = image.get_data()
 	time = 0
+	last_pos = global_transform.origin.y
+
 	
 
 func _input(event):
@@ -98,3 +103,12 @@ func _process(delta):
 	# 	print("---------")
 	# 	time_b = round(time)
 	
+func _physics_process(delta):
+	var vel = (global_transform.origin.y - last_pos)/delta
+	last_pos = global_transform.origin.y
+	if doPrint==1:
+		if vel>vel_threshold:
+			$Particles.emitting = true
+		else:
+			pass
+			$Particles.emitting = false
