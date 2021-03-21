@@ -14,7 +14,7 @@ only transforms the coordinate
 # var a = 2
 # var b = "text"
 export var doPrint = 0
-export var vel_threshold = 0.1
+export var vel_threshold = 0.22
 export var run = 1
 var last_pos
 var camera
@@ -26,7 +26,7 @@ var targetPos2
 var h_target
 var h1
 var h2
-var delay_factor  = 0.01
+var reactionSpeed  = 0.03
 var px_x1
 var px_y1
 var px_x2
@@ -93,7 +93,7 @@ func _process(delta):
 		h_target = h1 + h2
 		## power 
 		# h2 = pow(h2, 0.4545)
-		global_transform.origin.y += (h_target - global_transform.origin.y)*delay_factor
+		global_transform.origin.y += (h_target - global_transform.origin.y)*reactionSpeed
 	data.unlock()
 
 	# if round(time)!= time_b:
@@ -109,6 +109,7 @@ func _physics_process(delta):
 	if doPrint==1:
 		if vel>vel_threshold:
 			$Particles.emitting = true
+			print(vel)
 		else:
 			pass
 			$Particles.emitting = false

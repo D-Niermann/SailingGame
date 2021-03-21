@@ -31,8 +31,7 @@ func _ready():
 	print(ship)
 
 
-func setPitch()->void:
-	pass 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	# for i in humans:
@@ -44,7 +43,9 @@ func _process(delta):
 	+ hLeft.transform.origin.y + hRight.transform.origin.y)/4.0
 	ship.transform = def_transform.rotated(Vector3(0,0,1),pitch).rotated(Vector3(1,0,0),yaw)
 	ship.transform.origin.y = height+height_offset
-	ship.transform.origin.x+=0.1
+	self.transform.origin += self.transform.basis.x*0.02
+	# self.transform = self.transform.rotated(Vector3(0,1,0),0.01)
+	self.rotate_object_local(Vector3(0,1,0),0.001)
 
 # func _physics_process(delta):
 	# var space_state = get_world().direct_space_state
