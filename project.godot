@@ -29,6 +29,10 @@ window/size/always_on_top=true
 window/size/test_width=747
 window/size/test_height=406
 
+[global]
+
+reload=false
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

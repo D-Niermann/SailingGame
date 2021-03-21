@@ -1,31 +1,23 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://nodes/ocean.tscn" type="PackedScene" id=1]
 [ext_resource path="res://textures/sky/evening_01.hdr" type="Texture" id=2]
-[ext_resource path="res://Sprites/shipDeck.png" type="Texture" id=3]
+[ext_resource path="res://TestTool.gd" type="Script" id=3]
 [ext_resource path="res://nodes/ui.tscn" type="PackedScene" id=4]
 [ext_resource path="res://materials/human.tres" type="Material" id=5]
-[ext_resource path="res://ShipManager.gd" type="Script" id=6]
 [ext_resource path="res://DrawLine.gd" type="Script" id=7]
 [ext_resource path="res://Camera.gd" type="Script" id=8]
 [ext_resource path="res://materials/Black.tres" type="Material" id=9]
 [ext_resource path="res://PathfindHuman.gd" type="Script" id=10]
-[ext_resource path="res://nodes/Boye.gd" type="Script" id=11]
 [ext_resource path="res://SunLight.gd" type="Script" id=12]
-[ext_resource path="res://materials/Invisible.tres" type="Material" id=13]
+[ext_resource path="res://nodes/PlayerShipContainer.tscn" type="PackedScene" id=13]
 
-[sub_resource type="CapsuleMesh" id=1]
-
-[sub_resource type="CapsuleMesh" id=2]
-
-[sub_resource type="CapsuleMesh" id=3]
-
-[sub_resource type="PanoramaSky" id=4]
+[sub_resource type="PanoramaSky" id=1]
 panorama = ExtResource( 2 )
 
-[sub_resource type="Environment" id=5]
+[sub_resource type="Environment" id=2]
 background_mode = 2
-background_sky = SubResource( 4 )
+background_sky = SubResource( 1 )
 ambient_light_color = Color( 1, 1, 1, 1 )
 fog_color = Color( 0.368627, 0.435294, 0.505882, 1 )
 fog_depth_curve = 0.659754
@@ -45,7 +37,7 @@ dof_blur_far_quality = 2
 dof_blur_near_quality = 2
 glow_bicubic_upscale = true
 
-[sub_resource type="NavigationMesh" id=6]
+[sub_resource type="NavigationMesh" id=3]
 vertices = PoolVector3Array( -26.827, 1.01116, 6.37838, -26.627, 1.01116, 6.27838, -26.627, 1.01116, 4.37838, -26.927, 1.01116, 7.07838, -26.827, 1.01116, 6.37838, -26.627, 1.01116, 4.37838, -31.427, 1.01116, 4.37838, -31.427, 1.01116, 10.6784, -27.027, 1.01116, 10.5784, -26.927, 1.01116, 7.07838, -31.427, 1.01116, 4.37838, -26.627, 1.01116, 4.37838, -26.627, 1.01116, 6.27838, -26.227, 1.01116, 6.47838, -22.927, 1.01116, 6.27838, -23.027, 1.01116, 4.37838, -26.227, 1.01116, 6.47838, -26.227, 1.01116, 6.77838, -22.927, 1.01116, 6.27838, -22.927, 1.01116, 6.27838, -17.527, 1.01116, 6.17838, -17.527, 1.01116, 4.37838, -23.027, 1.01116, 4.37838, -17.527, 1.01116, 6.17838, -15.227, 1.01116, 6.47838, -15.127, 1.01116, 4.37838, -17.527, 1.01116, 4.37838, -15.127, 1.01116, 4.37838, -15.227, 1.01116, 6.47838, -14.627, 1.01116, 6.47838, -15.127, 1.01116, 4.37838, -14.627, 1.01116, 6.47838, -14.027, 1.01116, 6.77838, -9.82697, 1.01116, 8.77838, -5.82697, 1.01116, 9.47838, -5.82697, 1.01116, 4.37838, -9.82697, 1.01116, 8.77838, -9.52697, 1.01116, 9.47838, -5.82697, 1.01116, 9.47838, -14.027, 1.01116, 6.77838, -10.327, 1.01116, 8.97838, -9.82697, 1.01116, 8.77838, -16.627, 1.01116, 7.47838, -16.227, 1.01116, 7.47838, -16.027, 1.01116, 7.07838, -18.727, 1.01116, 6.77838, -16.627, 1.01116, 7.47838, -18.727, 1.01116, 6.77838, -18.627, 1.01116, 8.57838, -18.027, 1.01116, 8.57838, -16.627, 1.01116, 7.97838, -18.027, 1.01116, 8.97838, -18.327, 1.01116, 9.07838, -18.427, 1.01116, 11.0784, -16.627, 1.01116, 7.97838, -18.027, 1.01116, 8.57838, -18.027, 1.01116, 8.97838, -15.727, 1.01116, 10.9784, -15.827, 1.01116, 7.87838, -15.927, 1.01116, 8.07838, -15.927, 1.01116, 8.07838, -16.627, 1.01116, 7.97838, -18.027, 1.01116, 8.97838, -18.427, 1.01116, 11.0784, -15.727, 1.01116, 10.9784, -18.427, 1.01116, 11.0784, -18.327, 1.01116, 9.07838, -18.627, 1.01116, 8.97838, -18.627, 1.01116, 8.97838, -18.627, 1.01116, 8.57838, -18.727, 1.01116, 6.77838, -22.427, 1.01116, 6.77838, -22.427, 1.01116, 6.77838, -26.327, 1.01116, 7.47838, -26.427, 1.01116, 9.77838, -23.327, 1.01116, 10.5784, -18.427, 1.01116, 11.0784, -18.627, 1.01116, 8.97838, -16.027, 1.01116, 7.07838, -16.227, 1.01116, 7.47838, -15.927, 1.01116, 7.47838, -14.627, 1.01116, 7.17838, -15.827, 1.01116, 7.87838, -15.727, 1.01116, 10.9784, -14.827, 1.01116, 10.8784, -11.127, 1.01116, 9.37838, -11.027, 1.01116, 9.17838, -14.627, 1.01116, 7.17838, -14.627, 1.01116, 7.17838, -15.927, 1.01116, 7.47838, -15.827, 1.01116, 7.87838, -9.52697, 1.01116, 9.47838, -9.82697, 1.01116, 9.87838, -9.82697, 1.01116, 13.4784, -5.82697, 1.01116, 13.4784, -5.82697, 1.01116, 9.47838, -14.627, 1.01116, 11.4784, -15.527, 1.01116, 11.5784, -15.427, 1.01116, 13.4784, -9.82697, 1.01116, 13.4784, -9.82697, 1.01116, 9.87838, -10.527, 1.01116, 9.67838, -14.627, 1.01116, 11.4784, -15.427, 1.01116, 13.4784, -22.527, 1.01116, 13.4784, -22.427, 1.01116, 11.2784, -23.127, 1.01116, 11.2784, -26.427, 1.01116, 10.3784, -26.727, 1.01116, 10.6784, -26.527, 1.01116, 13.4784, -22.527, 1.01116, 13.4784, -23.127, 1.01116, 11.2784, -26.527, 1.01116, 13.4784, -26.727, 1.01116, 10.6784, -27.027, 1.01116, 10.5784, -31.427, 1.01116, 10.6784, -31.427, 1.01116, 13.4784, -22.527, 1.01116, 13.4784, -19.027, 1.01116, 13.4784, -19.027, 1.01116, 11.6784, -22.427, 1.01116, 11.2784, -19.027, 1.01116, 13.4784, -15.427, 1.01116, 13.4784, -15.527, 1.01116, 11.5784, -19.027, 1.01116, 11.6784 )
 polygons = [ PoolIntArray( 2, 1, 0 ), PoolIntArray( 4, 3, 5 ), PoolIntArray( 5, 3, 6 ), PoolIntArray( 8, 7, 9 ), PoolIntArray( 9, 7, 10 ), PoolIntArray( 12, 11, 13 ), PoolIntArray( 13, 11, 15 ), PoolIntArray( 13, 15, 14 ), PoolIntArray( 16, 18, 17 ), PoolIntArray( 20, 19, 21 ), PoolIntArray( 21, 19, 22 ), PoolIntArray( 26, 25, 23 ), PoolIntArray( 23, 25, 24 ), PoolIntArray( 29, 28, 27 ), PoolIntArray( 31, 30, 32 ), PoolIntArray( 32, 30, 33 ), PoolIntArray( 33, 30, 34 ), PoolIntArray( 34, 30, 35 ), PoolIntArray( 36, 38, 37 ), PoolIntArray( 41, 40, 39 ), PoolIntArray( 43, 42, 44 ), PoolIntArray( 44, 42, 45 ), PoolIntArray( 50, 49, 46 ), PoolIntArray( 46, 49, 48 ), PoolIntArray( 46, 48, 47 ), PoolIntArray( 53, 52, 51 ), PoolIntArray( 56, 55, 54 ), PoolIntArray( 59, 58, 57 ), PoolIntArray( 61, 60, 62 ), PoolIntArray( 62, 60, 64 ), PoolIntArray( 62, 64, 63 ), PoolIntArray( 67, 66, 65 ), PoolIntArray( 69, 68, 70 ), PoolIntArray( 70, 68, 71 ), PoolIntArray( 74, 73, 75 ), PoolIntArray( 75, 73, 72 ), PoolIntArray( 75, 72, 77 ), PoolIntArray( 75, 77, 76 ), PoolIntArray( 79, 78, 80 ), PoolIntArray( 80, 78, 81 ), PoolIntArray( 83, 82, 84 ), PoolIntArray( 84, 82, 87 ), PoolIntArray( 84, 87, 85 ), PoolIntArray( 85, 87, 86 ), PoolIntArray( 90, 89, 88 ), PoolIntArray( 92, 91, 93 ), PoolIntArray( 93, 91, 95 ), PoolIntArray( 93, 95, 94 ), PoolIntArray( 98, 97, 96 ), PoolIntArray( 100, 99, 101 ), PoolIntArray( 101, 99, 102 ), PoolIntArray( 102, 99, 103 ), PoolIntArray( 106, 105, 104 ), PoolIntArray( 108, 107, 109 ), PoolIntArray( 109, 107, 111 ), PoolIntArray( 109, 111, 110 ), PoolIntArray( 113, 112, 114 ), PoolIntArray( 114, 112, 115 ), PoolIntArray( 115, 112, 116 ), PoolIntArray( 118, 117, 119 ), PoolIntArray( 119, 117, 120 ), PoolIntArray( 124, 123, 121 ), PoolIntArray( 121, 123, 122 ) ]
 cell/size = 0.1
@@ -53,12 +45,16 @@ agent/height = 1.05
 agent/radius = 0.1
 agent/max_climb = 0.1
 
-[sub_resource type="CubeMesh" id=7]
+[sub_resource type="CubeMesh" id=4]
 
-[sub_resource type="ConcavePolygonShape" id=8]
+[sub_resource type="ConcavePolygonShape" id=5]
 data = PoolVector3Array( -1, 1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -1, 1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, -1, 1, -1, -1, 1, -1, 1, -1, 1, -1, -1, 1, 1, -1, -1, -1, -1, 1, 1, -1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1, 1, 1, -1, -1, -1, -1, -1 )
 
-[sub_resource type="CapsuleMesh" id=9]
+[sub_resource type="CapsuleMesh" id=6]
+
+[sub_resource type="CubeMesh" id=7]
+
+[sub_resource type="CapsuleMesh" id=8]
 
 [node name="main" type="Spatial"]
 
@@ -69,156 +65,17 @@ data = PoolVector3Array( -1, 1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -1
 [node name="Camera" type="Camera" parent="." groups=[
 "Camera",
 ]]
-transform = Transform( 1, 0, 0, 0, 0.571143, 0.82085, 0, -0.82085, 0.571143, -25.872, 12.7817, 23.3644 )
-fov = 63.3
-size = 208.4
-near = 0.03
-far = 7099.0
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -21.18, 17.64, 4.56 )
+projection = 1
+fov = 72.8
+size = 20.0
+near = 0.02
+far = 287.6
 script = ExtResource( 8 )
 
-[node name="ShipContainer" type="Spatial" parent="." groups=[
-"Ship",
-]]
-transform = Transform( 0.198898, 0, 0.206541, 0, 0.28674, 0, -0.206541, 0, 0.198898, 11.0766, 8.5374, 5.79943 )
-script = ExtResource( 6 )
-pitch_factor = 0.02
-yaw_factor = 0.02
-height_offset = 1.0
-
-[node name="Ship" type="Spatial" parent="ShipContainer"]
-
-[node name="ShipSprite" type="Sprite3D" parent="ShipContainer/Ship"]
-transform = Transform( 3.48748, -1.19209e-07, -7.10543e-15, 0, -1.52443e-07, 3.48748, -1.19209e-07, -3.48748, -1.52443e-07, 0, 0, 0 )
-layers = 3
-shaded = true
-texture = ExtResource( 3 )
-
-[node name="Human" type="MeshInstance" parent="ShipContainer/Ship" groups=[
-"Human",
-]]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.81097, 0 )
-mesh = SubResource( 1 )
-material/0 = ExtResource( 5 )
-
-[node name="Human2" type="MeshInstance" parent="ShipContainer/Ship" groups=[
-"Human",
-]]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 6.81837, 1.82464, 0 )
-mesh = SubResource( 1 )
-material/0 = ExtResource( 5 )
-
-[node name="Mesh" type="MeshInstance" parent="ShipContainer/Ship"]
-transform = Transform( 25.3668, 0, 4.76837e-07, 0, 0.00609493, 0, -9.53674e-07, 0, 4.27132, -2.64106, -1.07129, 0.345276 )
-mesh = SubResource( 2 )
-material/0 = ExtResource( 13 )
-
-[node name="HFront" type="Spatial" parent="ShipContainer"]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 21.2908, 0, 0 )
-visible = false
-script = ExtResource( 11 )
-
-[node name="MeshInstance" type="MeshInstance" parent="ShipContainer/HFront"]
-mesh = SubResource( 3 )
-material/0 = null
-
-[node name="HBack" type="Spatial" parent="ShipContainer"]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -25.8406, 0, 0 )
-visible = false
-script = ExtResource( 11 )
-
-[node name="MeshInstance" type="MeshInstance" parent="ShipContainer/HBack"]
-mesh = SubResource( 3 )
-material/0 = null
-
-[node name="HLeft" type="Spatial" parent="ShipContainer"]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -3.07705, 0, -9.94185 )
-visible = false
-script = ExtResource( 11 )
-
-[node name="MeshInstance" type="MeshInstance" parent="ShipContainer/HLeft"]
-mesh = SubResource( 3 )
-material/0 = null
-
-[node name="HRight" type="Spatial" parent="ShipContainer"]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -3.97623, 0, 7.36206 )
-visible = false
-script = ExtResource( 11 )
-
-[node name="MeshInstance" type="MeshInstance" parent="ShipContainer/HRight"]
-mesh = SubResource( 3 )
-material/0 = null
-
-[node name="ShipContainer2" type="Spatial" parent="." groups=[
-"Ship",
-]]
-transform = Transform( 0.206541, 0, -0.198898, 0, 0.28674, 0, 0.198898, 0, 0.206541, 65.1157, 8.5374, -75.6017 )
-script = ExtResource( 6 )
-pitch_factor = 0.02
-yaw_factor = 0.02
-height_offset = 3.0
-
-[node name="Ship" type="Spatial" parent="ShipContainer2"]
-
-[node name="ShipSprite" type="Sprite3D" parent="ShipContainer2/Ship"]
-transform = Transform( 3.48748, 0, 0, 0, -1.52443e-07, 3.48748, 0, -3.48748, -1.52443e-07, 0, 0, 0 )
-shaded = true
-texture = ExtResource( 3 )
-
-[node name="Human" type="MeshInstance" parent="ShipContainer2/Ship" groups=[
-"Human",
-]]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.81097, 0 )
-mesh = SubResource( 1 )
-material/0 = ExtResource( 5 )
-
-[node name="Human2" type="MeshInstance" parent="ShipContainer2/Ship" groups=[
-"Human",
-]]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 6.81837, 1.82464, 0 )
-mesh = SubResource( 1 )
-material/0 = ExtResource( 5 )
-
-[node name="MeshInstance" type="MeshInstance" parent="ShipContainer2/Ship"]
-transform = Transform( 34.9626, 0, 0, 0, 0.00609493, 0, 0, 0, 7.9269, -3.93881, 0.0305595, 0.345277 )
-cast_shadow = 3
-mesh = SubResource( 2 )
-material/0 = null
-
-[node name="HFront" type="Spatial" parent="ShipContainer2"]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 21.2908, 0, 0 )
-visible = false
-script = ExtResource( 11 )
-
-[node name="MeshInstance" type="MeshInstance" parent="ShipContainer2/HFront"]
-mesh = SubResource( 3 )
-material/0 = null
-
-[node name="HBack" type="Spatial" parent="ShipContainer2"]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -25.8406, 0, 0 )
-visible = false
-script = ExtResource( 11 )
-
-[node name="MeshInstance" type="MeshInstance" parent="ShipContainer2/HBack"]
-mesh = SubResource( 3 )
-material/0 = null
-
-[node name="HLeft" type="Spatial" parent="ShipContainer2"]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -3.07705, 0, -9.94185 )
-visible = false
-script = ExtResource( 11 )
-
-[node name="MeshInstance" type="MeshInstance" parent="ShipContainer2/HLeft"]
-mesh = SubResource( 3 )
-material/0 = null
-
-[node name="HRight" type="Spatial" parent="ShipContainer2"]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -3.97623, 0, 7.36206 )
-visible = false
-script = ExtResource( 11 )
-
-[node name="MeshInstance" type="MeshInstance" parent="ShipContainer2/HRight"]
-mesh = SubResource( 3 )
-material/0 = null
+[node name="PlayerShipContainer" parent="." instance=ExtResource( 13 )]
+transform = Transform( 0.158987, 0, 0.060711, 0, 0.170185, 0, -0.060711, 0, 0.158987, -22.3811, 4.42829, 5.33143 )
+height_offset = 0.0
 
 [node name="ImmediateGeometry" type="ImmediateGeometry" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.49139, 0.16108, -1.08455 )
@@ -226,7 +83,7 @@ cast_shadow = 0
 script = ExtResource( 7 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 5 )
+environment = SubResource( 2 )
 __meta__ = {
 "_editor_description_": ""
 }
@@ -245,108 +102,136 @@ __meta__ = {
 }
 
 [node name="NavMeshCont" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -29.1371, 3.08429, 14.7443 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -30.1976, 3.08429, 34.4929 )
 
 [node name="Navigation" type="Navigation" parent="NavMeshCont"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.7498, 1.90735e-06, -8.10709 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 18.97, 1.90735e-06, -8.94468 )
 
 [node name="NavMesh" type="NavigationMeshInstance" parent="NavMeshCont/Navigation"]
-navmesh = SubResource( 6 )
+navmesh = SubResource( 3 )
 
 [node name="MeshInstance" type="MeshInstance" parent="NavMeshCont/Navigation/NavMesh"]
 transform = Transform( 12.8978, 0, 0, 0, 1, 0, 0, 0, 4.65037, -18.6292, -0.388844, 8.92874 )
-mesh = SubResource( 7 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 9 )
 
 [node name="StaticBody" type="StaticBody" parent="NavMeshCont/Navigation/NavMesh/MeshInstance"]
 
 [node name="CollisionShape" type="CollisionShape" parent="NavMeshCont/Navigation/NavMesh/MeshInstance/StaticBody"]
-shape = SubResource( 8 )
+shape = SubResource( 5 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="NavMeshCont/Navigation/NavMesh"]
 transform = Transform( -0.156954, 0, -0.142492, 0, 1, 0, -0.0112231, 0, 1.99275, -26.6674, 0.318257, 8.47666 )
-mesh = SubResource( 7 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 9 )
 
 [node name="MeshInstance3" type="MeshInstance" parent="NavMeshCont/Navigation/NavMesh"]
 transform = Transform( 0.0370808, 0, -1.94157, 0, 1, 0, -0.152923, 0, -0.470792, -24.8764, 0.318095, 10.4714 )
-mesh = SubResource( 7 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 9 )
 
 [node name="MeshInstance4" type="MeshInstance" parent="NavMeshCont/Navigation/NavMesh"]
 transform = Transform( 0.0155738, 0, -1.98803, 0, 1, 0, -0.156582, 0, -0.197731, -20.9555, 0.318095, 11.1065 )
-mesh = SubResource( 7 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 9 )
 
 [node name="MeshInstance5" type="MeshInstance" parent="NavMeshCont/Navigation/NavMesh"]
 transform = Transform( -0.00667166, 0, -1.99604, 0, 1, 0, -0.157213, 0, 0.0847058, -17.0348, 0.318095, 11.3109 )
-mesh = SubResource( 7 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 9 )
 
 [node name="MeshInstance6" type="MeshInstance" parent="NavMeshCont/Navigation/NavMesh"]
 transform = Transform( 0.0201032, 0, -1.98146, 0, 1, 0, -0.156066, 0, -0.255238, -16.6753, 0.318095, 6.64621 )
-mesh = SubResource( 7 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 9 )
 
 [node name="MeshInstance8" type="MeshInstance" parent="NavMeshCont/Navigation/NavMesh"]
 transform = Transform( 0.0201032, 0, -1.98146, 0, 1, 0, -0.156066, 0, -0.255238, -16.6753, 0.318095, 6.64621 )
-mesh = SubResource( 7 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 9 )
 
 [node name="MeshInstance9" type="MeshInstance" parent="NavMeshCont/Navigation/NavMesh"]
 transform = Transform( 0.0201032, 0, -1.98146, 0, 1, 0, -0.156066, 0, -0.255238, -16.6753, 0.318095, 6.64621 )
-mesh = SubResource( 7 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 9 )
 
 [node name="MeshInstance10" type="MeshInstance" parent="NavMeshCont/Navigation/NavMesh"]
 transform = Transform( 0.0201032, 1.11689e-08, 0.232227, -1.37564e-08, 1, 0, -0.156066, -8.67064e-08, 0.0299138, -16.2321, 0.318095, 7.75107 )
-mesh = SubResource( 7 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 9 )
 
 [node name="Target" type="MeshInstance" parent="NavMeshCont/Navigation/NavMesh"]
 transform = Transform( 0.0201032, 1.11689e-08, -0.170908, -1.37564e-08, 1, 0, -0.156066, -8.67064e-08, -0.0220151, -19.5981, 1.47226, 9.58041 )
-mesh = SubResource( 7 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 9 )
 
 [node name="MeshInstance13" type="MeshInstance" parent="NavMeshCont/Navigation/NavMesh"]
 transform = Transform( 0.0201032, 0, -1.98146, 0, 1, 0, -0.156066, 0, -0.255238, -16.6753, 0.318095, 6.64621 )
-mesh = SubResource( 7 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 9 )
 
 [node name="MeshInstance14" type="MeshInstance" parent="NavMeshCont/Navigation/NavMesh"]
 transform = Transform( 0.0766952, 4.26101e-08, -2.50564, -1.37564e-08, 1, 0, -0.137399, -7.63356e-08, -1.39863, -12.2423, 0.318095, 8.20606 )
-mesh = SubResource( 7 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 9 )
 
 [node name="MeshInstance15" type="MeshInstance" parent="NavMeshCont/Navigation/NavMesh"]
 transform = Transform( 0.0595822, 6.0787e-09, 2.6559, 2.37599e-08, 1, -1.96111e-07, 0.145638, -1.6563e-07, -1.08656, -12.4494, 0.318095, 10.1917 )
-mesh = SubResource( 7 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 9 )
 
 [node name="MeshInstance11" type="MeshInstance" parent="NavMeshCont/Navigation/NavMesh"]
 transform = Transform( -0.0256731, 0, -1.97107, 0, 1, 0, -0.155247, 0, 0.325954, -24.5551, 0.318095, 6.86708 )
-mesh = SubResource( 7 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 9 )
 
 [node name="MeshInstance7" type="MeshInstance" parent="NavMeshCont/Navigation/NavMesh"]
 transform = Transform( -0.00337777, 0, -1.99738, 0, 1, 0, -0.157319, 0, 0.0428854, -20.6375, 0.318095, 6.48175 )
-mesh = SubResource( 7 )
+mesh = SubResource( 4 )
 material/0 = ExtResource( 9 )
 
 [node name="Human" type="Spatial" parent="NavMeshCont/Navigation"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -16.3089, 1.31912, 9.50368 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.2758, 0.891598, 9.44009 )
 script = ExtResource( 10 )
 
 [node name="MeshInstance" type="MeshInstance" parent="NavMeshCont/Navigation/Human"]
 transform = Transform( 0.259747, 0, 0, 0, -1.13539e-08, 0.259747, 0, -0.259747, -1.13539e-08, 0, 0, 0 )
-mesh = SubResource( 9 )
+mesh = SubResource( 6 )
 material/0 = ExtResource( 5 )
 
 [node name="Human2" type="Spatial" parent="NavMeshCont/Navigation"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.176, 1.3611, 8.60839 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.3677, 1.3611, 8.98558 )
 script = ExtResource( 10 )
 
 [node name="MeshInstance" type="MeshInstance" parent="NavMeshCont/Navigation/Human2"]
 transform = Transform( 0.259747, 0, 0, 0, -1.13539e-08, 0.259747, 0, -0.259747, -1.13539e-08, 0, 0, 0 )
-mesh = SubResource( 9 )
+mesh = SubResource( 6 )
+material/0 = ExtResource( 5 )
+
+[node name="ToolNode" type="Node" parent="."]
+script = ExtResource( 3 )
+stringToHuman1 = "../PlayerShipContainer/Ship/Human"
+stringToHuman2 = "../NavMeshCont/Navigation/Human"
+pathToC1 = "../PlayerShipContainer"
+pathToC2 = "../NavMeshCont"
+a = 215981.0
+
+[node name="Terrain" type="MeshInstance" parent="."]
+transform = Transform( 598.053, 1.20345, 0, -1.93904, 2.1846, 0, 0, 0, 395.96, -28.2458, -5.69314, 10.6939 )
+mesh = SubResource( 7 )
+material/0 = ExtResource( 5 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Terrain"]
+transform = Transform( 0.0795096, -0.00232562, 0, 0.0664025, 1.28404, 0, 0, 0, 0.120293, 0.0393816, 0.857132, -0.0095583 )
+mesh = SubResource( 8 )
+material/0 = ExtResource( 5 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Terrain"]
+transform = Transform( 0.0503737, -0.00242009, -0.0615128, 0.0405416, 1.28396, -0.0545985, 0.0930737, 0.000301769, 0.0762074, -0.0718963, 0.758362, 0.0829096 )
+mesh = SubResource( 8 )
+material/0 = ExtResource( 5 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="Terrain"]
+transform = Transform( -0.0210801, -0.00265176, -0.0438189, -0.0228805, 1.28375, -0.0388935, 0.0663015, 0.000214966, -0.0319089, 0.135992, 0.942883, -0.210825 )
+mesh = SubResource( 8 )
 material/0 = ExtResource( 5 )

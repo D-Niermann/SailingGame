@@ -23,7 +23,7 @@ var targetPos2
 var h_target
 var h1
 var h2
-var delay_factor
+var delay_factor  = 0.01
 var px_x1
 var px_y1
 var px_x2
@@ -41,10 +41,10 @@ var gerstner_speed2 = Vector2(0, 0)#Vector2(8, 4)
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	image = load("res://gerstner_height.jpg")
-	camera = get_tree().get_nodes_in_group("Camera")[0]
+	# camera = get_tree().get_nodes_in_group("Camera")[0]
 	data = image.get_data()
 	time = 0
-	delay_factor = 0.1
+	
 
 func _input(event):
 	if event is InputEventKey and event.pressed:

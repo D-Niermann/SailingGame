@@ -45,10 +45,10 @@ func _process(delta):
 	ship.transform = def_transform.rotated(Vector3(0,0,1),pitch).rotated(Vector3(1,0,0),yaw)
 	ship.transform.origin.y = height+height_offset
 
-func _physics_process(delta):
-	var space_state = get_world().direct_space_state
-	# use global coordinates, not local to node
-	var camera = get_node("../Camera")
+# func _physics_process(delta):
+	# var space_state = get_world().direct_space_state
+	# # use global coordinates, not local to node
+	# var camera = get_node("../Camera")
 	
-	var result = space_state.intersect_ray(camera.transform.origin, Vector3(0, -1000,0))
+	# var result = space_state.intersect_ray(camera.transform.origin, Vector3(0, -1000,0))
 #	print(result)

@@ -1,0 +1,225 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://nodes/Boye.gd" type="Script" id=1]
+[ext_resource path="res://ShipManager.gd" type="Script" id=2]
+[ext_resource path="res://materials/human.tres" type="Material" id=3]
+[ext_resource path="res://materials/Invisible.tres" type="Material" id=4]
+[ext_resource path="res://Sprites/topDeck.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/segel-schatten.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/segel.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/segelVorn.png" type="Texture" id=9]
+[ext_resource path="res://nodes/OmniLight.gd" type="Script" id=10]
+
+[sub_resource type="CapsuleMesh" id=1]
+
+[sub_resource type="CapsuleMesh" id=2]
+
+[sub_resource type="CapsuleMesh" id=7]
+
+[sub_resource type="CylinderMesh" id=8]
+top_radius = 0.2
+height = 25.0
+
+[sub_resource type="CapsuleMesh" id=9]
+
+[node name="ShipContainer" type="Spatial" groups=[
+"Ship",
+]]
+script = ExtResource( 2 )
+pitch_factor = 0.02
+yaw_factor = 0.02
+height_offset = 1.0
+
+[node name="Ship" type="Spatial" parent="."]
+
+[node name="ShipSprite" type="Sprite3D" parent="Ship"]
+transform = Transform( 2.52772, -8.64024e-08, -5.21079e-15, 0, -1.1049e-07, 3.48748, -8.64024e-08, -2.52772, -1.52443e-07, 11.9723, 0, -4.09235e-07 )
+layers = 3
+shaded = true
+texture = ExtResource( 5 )
+
+[node name="Human" type="MeshInstance" parent="Ship" groups=[
+"Human",
+]]
+transform = Transform( 0.686675, 2.98023e-08, 1.77636e-15, 0, -3.00155e-08, -0.686675, -2.98023e-08, 0.686675, -3.00155e-08, 0.0166593, 0.534605, -2.06205 )
+mesh = SubResource( 1 )
+material/0 = ExtResource( 3 )
+
+[node name="Human2" type="MeshInstance" parent="Ship" groups=[
+"Human",
+]]
+transform = Transform( 0.521004, 0, -8.88178e-16, 0, -2.27738e-08, 0.521004, 0, -0.521004, -2.27738e-08, 6.81837, 0.639531, 5.18027e-08 )
+mesh = SubResource( 1 )
+material/0 = ExtResource( 3 )
+
+[node name="Mesh" type="MeshInstance" parent="Ship"]
+transform = Transform( 31.0462, 0, 1.20407e-06, 0, 9.67506, 0, -5.72205e-06, 0, 6.53295, -2.64106, -10.3709, 0.0937042 )
+cast_shadow = 3
+mesh = SubResource( 2 )
+material/0 = ExtResource( 4 )
+
+[node name="FrontSegel" type="Sprite3D" parent="Ship"]
+transform = Transform( 3.24222e-08, 2.89113, 0.136234, -3.47574e-08, -0.397579, 0.990677, 2.91834, -3.68551e-08, 1.02854e-08, 37.08, 3.43281, -4.84044 )
+texture = ExtResource( 9 )
+
+[node name="MainMast" type="Spatial" parent="Ship"]
+transform = Transform( 1, 0, 0, 0, 1.18474, 0, 0, 0, 1, 4.20305, 0, 0 )
+
+[node name="Segel1" type="Sprite3D" parent="Ship/MainMast"]
+transform = Transform( -2.10818e-07, 4.82294, 7.8976e-08, 0, -2.10818e-07, 1.80676, 4.82294, 2.10818e-07, 3.45215e-15, 0.48702, 9.78134, 0.625 )
+texture = ExtResource( 7 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Ship/MainMast/Segel1"]
+transform = Transform( 1.8192, -0.198297, -3.55349e-14, 0.641356, 0.562467, 1.36779e-13, -1.91431e-14, -7.20657e-14, 1.1531, -0.194089, 0.569415, -1.22523 )
+cast_shadow = 3
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="Segel2" type="Sprite3D" parent="Ship/MainMast"]
+transform = Transform( -1.82392e-07, 4.17264, 7.8976e-08, 0, -1.82392e-07, 1.80676, 4.17264, 1.82392e-07, 3.45215e-15, 0.48702, 17.6104, 0.625 )
+texture = ExtResource( 7 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Ship/MainMast/Segel2"]
+transform = Transform( 2.16046, -0.235493, 1.32003e-15, 0.761664, 0.667977, 1.24345e-14, -1.17829e-14, -1.03915e-15, 1.28458, -0.224338, 0.65816, -1.55616 )
+cast_shadow = 3
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="Segel3" type="Sprite3D" parent="Ship/MainMast"]
+transform = Transform( -1.26399e-07, 2.89167, 7.8976e-08, 0, -1.26399e-07, 1.80676, 2.89167, 1.26399e-07, 3.45215e-15, 0.487021, 22.8972, 0.625 )
+texture = ExtResource( 8 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="Ship/MainMast/Segel3"]
+transform = Transform( 1.87861, -0.099685, -2.13922e-14, 0.662302, 0.282755, 7.28306e-14, -8.46606e-15, -3.05029e-14, 0.826614, -0.323716, 0.949714, -0.63648 )
+cast_shadow = 3
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="Mast" type="MeshInstance" parent="Ship/MainMast"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09226, 11.0542, 0 )
+cast_shadow = 3
+mesh = SubResource( 8 )
+material/0 = null
+
+[node name="BackMast" type="Spatial" parent="Ship"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9447, 0, 0 )
+
+[node name="Segel1" type="Sprite3D" parent="Ship/BackMast"]
+transform = Transform( -2.10818e-07, 4.82294, 7.8976e-08, 0, -2.10818e-07, 1.80676, 4.82294, 2.10818e-07, 3.45215e-15, 0.48702, 9.78134, 0.625 )
+texture = ExtResource( 7 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Ship/BackMast/Segel1"]
+transform = Transform( 1.8192, -0.198297, -3.55349e-14, 0.641356, 0.562467, 1.36779e-13, -1.91431e-14, -7.20657e-14, 1.1531, -0.194089, 0.569415, -1.22523 )
+cast_shadow = 3
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="Segel2" type="Sprite3D" parent="Ship/BackMast"]
+transform = Transform( -1.82392e-07, 4.17264, 7.8976e-08, 0, -1.82392e-07, 1.80676, 4.17264, 1.82392e-07, 3.45215e-15, 0.48702, 17.6104, 0.625 )
+texture = ExtResource( 7 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Ship/BackMast/Segel2"]
+transform = Transform( 2.16046, -0.235493, 1.32003e-15, 0.761664, 0.667977, 1.24345e-14, -1.17829e-14, -1.03915e-15, 1.28458, -0.224338, 0.65816, -1.55616 )
+cast_shadow = 3
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="Segel3" type="Sprite3D" parent="Ship/BackMast"]
+transform = Transform( -1.26399e-07, 2.89167, 7.8976e-08, 0, -1.26399e-07, 1.80676, 2.89167, 1.26399e-07, 3.45215e-15, 0.487021, 22.8972, 0.625 )
+texture = ExtResource( 8 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="Ship/BackMast/Segel3"]
+transform = Transform( 1.87861, -0.099685, -2.13922e-14, 0.662302, 0.282755, 7.28306e-14, -8.46606e-15, -3.05029e-14, 0.826614, -0.323716, 0.949714, -0.63648 )
+cast_shadow = 3
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="Mast" type="MeshInstance" parent="Ship/BackMast"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.09226, 11.0542, 0 )
+cast_shadow = 3
+mesh = SubResource( 8 )
+material/0 = null
+
+[node name="OmniLight" type="OmniLight" parent="Ship"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.95568, 2.57299, 0.195565 )
+light_color = Color( 1, 0.952941, 0.631373, 1 )
+light_energy = 1.75
+light_indirect_energy = 0.69
+light_cull_mask = 2147483647
+shadow_enabled = true
+shadow_color = Color( 0.470588, 0.470588, 0.470588, 1 )
+omni_range = 1.5
+omni_attenuation = 0.406126
+script = ExtResource( 10 )
+
+[node name="OmniLight2" type="OmniLight" parent="Ship"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.2896, 2.94966, -1.53503 )
+light_color = Color( 1, 0.952941, 0.631373, 1 )
+light_energy = 1.75
+light_indirect_energy = 0.69
+light_cull_mask = 2147483647
+shadow_enabled = true
+shadow_color = Color( 0.470588, 0.470588, 0.470588, 1 )
+omni_range = 1.5
+omni_attenuation = 0.406126
+script = ExtResource( 10 )
+
+[node name="OmniLight4" type="OmniLight" parent="Ship"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.1107, 2.94966, 4.32937 )
+light_color = Color( 1, 0.952941, 0.631373, 1 )
+light_energy = 1.75
+light_indirect_energy = 0.69
+light_cull_mask = 2147483647
+shadow_enabled = true
+shadow_color = Color( 0.470588, 0.470588, 0.470588, 1 )
+omni_range = 1.5
+omni_attenuation = 0.406126
+script = ExtResource( 10 )
+
+[node name="OmniLight3" type="OmniLight" parent="Ship"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 27.3398, 2.57299, -0.145133 )
+light_color = Color( 1, 0.952941, 0.631373, 1 )
+light_energy = 1.75
+light_indirect_energy = 0.69
+light_cull_mask = 2147483647
+shadow_enabled = true
+shadow_color = Color( 0.470588, 0.470588, 0.470588, 1 )
+omni_range = 1.5
+omni_attenuation = 0.406126
+script = ExtResource( 10 )
+
+[node name="HFront" type="Spatial" parent="."]
+transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 21.2908, 0, 0 )
+visible = false
+script = ExtResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="HFront"]
+mesh = SubResource( 9 )
+material/0 = null
+
+[node name="HBack" type="Spatial" parent="."]
+transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -25.8093, 0.0125771, -0.0161023 )
+visible = false
+script = ExtResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="HBack"]
+mesh = SubResource( 9 )
+material/0 = null
+
+[node name="HLeft" type="Spatial" parent="."]
+transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -3.07705, 0, -9.94185 )
+visible = false
+script = ExtResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="HLeft"]
+mesh = SubResource( 9 )
+material/0 = null
+
+[node name="HRight" type="Spatial" parent="."]
+transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -3.97623, 0, 7.36206 )
+visible = false
+script = ExtResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="HRight"]
+mesh = SubResource( 9 )
+material/0 = null
