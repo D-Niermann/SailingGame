@@ -31,6 +31,7 @@ texture = SubResource( 1 )
 expand = true
 
 [node name="waterplane" type="MeshInstance" parent="."]
+layers = 2147483650
 material_override = ExtResource( 2 )
 cast_shadow = 0
 mesh = ExtResource( 3 )

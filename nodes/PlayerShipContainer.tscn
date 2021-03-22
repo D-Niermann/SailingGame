@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://nodes/Boye.gd" type="Script" id=1]
 [ext_resource path="res://ShipManager.gd" type="Script" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://Sprites/segel.png" type="Texture" id=8]
 [ext_resource path="res://Sprites/segelVorn.png" type="Texture" id=9]
 [ext_resource path="res://nodes/OmniLight.gd" type="Script" id=10]
+[ext_resource path="res://addons/kenney_particle_pack/trace_01.png" type="Texture" id=11]
 
 [sub_resource type="CapsuleMesh" id=1]
 
@@ -51,7 +52,27 @@ curve = SubResource( 9 )
 [sub_resource type="ParticlesMaterial" id=11]
 lifetime_randomness = 0.32
 emission_shape = 2
-emission_box_extents = Vector3( 1, 1, 0.54 )
+emission_box_extents = Vector3( 2.91, 1, 0.54 )
+direction = Vector3( 1, 1, 0 )
+spread = 18.64
+gravity = Vector3( -10, -10, -4 )
+initial_velocity = 5.0
+initial_velocity_random = 0.1
+damping = 12.68
+damping_random = 0.12
+angle = 263.7
+angle_random = 0.44
+scale_random = 1.0
+scale_curve = SubResource( 10 )
+color_ramp = SubResource( 8 )
+
+[sub_resource type="QuadMesh" id=12]
+size = Vector2( 5, 5 )
+
+[sub_resource type="ParticlesMaterial" id=13]
+lifetime_randomness = 0.32
+emission_shape = 2
+emission_box_extents = Vector3( 2.62, 1, 0.54 )
 direction = Vector3( 1, 1, 0 )
 spread = 18.64
 gravity = Vector3( -10, 0, -4 )
@@ -65,19 +86,23 @@ scale_random = 1.0
 scale_curve = SubResource( 10 )
 color_ramp = SubResource( 8 )
 
-[sub_resource type="QuadMesh" id=12]
-size = Vector2( 5, 5 )
+[sub_resource type="SpatialMaterial" id=14]
+flags_transparent = true
+flags_vertex_lighting = true
+vertex_color_use_as_albedo = true
+params_billboard_mode = 2
+albedo_color = Color( 1, 1, 1, 0.121569 )
+albedo_texture = ExtResource( 11 )
+metallic_specular = 0.45
 
-[sub_resource type="ParticlesMaterial" id=13]
+[sub_resource type="ParticlesMaterial" id=15]
 lifetime_randomness = 0.32
 emission_shape = 2
-emission_box_extents = Vector3( 5.59, 1, 0.54 )
+emission_box_extents = Vector3( 100, 100, 10 )
 direction = Vector3( 1, 1, 0 )
 spread = 18.64
-gravity = Vector3( -10, 0, -4 )
-initial_velocity = 5.0
+gravity = Vector3( 50, -100, 100 )
 initial_velocity_random = 0.1
-angular_velocity = 20.0
 angular_velocity_random = 1.0
 damping = 12.68
 damping_random = 0.12
@@ -270,7 +295,7 @@ material_override = SubResource( 6 )
 cast_shadow = 0
 emitting = false
 amount = 30
-lifetime = 2.0
+lifetime = 3.0
 randomness = 0.26
 visibility_aabb = AABB( -9.27938, -5.19, -10.2165, 24.82, 20.92, 22.0981 )
 local_coords = false
@@ -290,7 +315,7 @@ mesh = SubResource( 5 )
 material/0 = null
 
 [node name="Particles" type="Particles" parent="HBack"]
-transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.000314459, -0.235371, -0.163769, 0.00045183, 0.16377, -0.23537, 0, 0, 0 )
+transform = Transform( 0.000550474, 1.88001e-07, -0.286739, -0.163769, -0.235371, -0.000314349, -0.23537, 0.16377, -0.00045189, 0, 2.09548e-09, 3.72529e-09 )
 material_override = SubResource( 6 )
 cast_shadow = 0
 emitting = false
@@ -303,7 +328,7 @@ process_material = SubResource( 11 )
 draw_pass_1 = SubResource( 12 )
 
 [node name="HLeft" type="Spatial" parent="."]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -2.416, 0, -1.91274 )
+transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 0.403394, 0, -1.91274 )
 script = ExtResource( 1 )
 doPrint = 1
 vel_threshold = 0.54
@@ -328,7 +353,7 @@ process_material = SubResource( 11 )
 draw_pass_1 = SubResource( 12 )
 
 [node name="HRight" type="Spatial" parent="."]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -2.09211, 0, 2.3751 )
+transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 1.10096, 0, 2.3751 )
 script = ExtResource( 1 )
 doPrint = 1
 vel_threshold = 0.5
@@ -340,7 +365,7 @@ mesh = SubResource( 5 )
 material/0 = null
 
 [node name="Particles" type="Particles" parent="HRight"]
-transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.000314459, -0.235371, -0.163769, 0.000451831, 0.16377, -0.23537, 0, 0, 0 )
+transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.000314459, -0.235371, -0.163769, 0.000451831, 0.16377, -0.23537, 0.0115791, 1.26958e-05, 1.8239e-05 )
 material_override = SubResource( 6 )
 cast_shadow = 0
 emitting = false
@@ -350,4 +375,16 @@ randomness = 0.26
 visibility_aabb = AABB( -12.8607, -9.59574, -10.2165, 24.82, 20.92, 22.0981 )
 local_coords = false
 process_material = SubResource( 13 )
+draw_pass_1 = SubResource( 12 )
+
+[node name="Rain" type="Particles" parent="."]
+transform = Transform( 0.941114, 0.338082, 0.00180669, 0.00191982, 6.14514e-07, -0.999997, -0.33808, 0.941119, -0.00064929, 0.726925, 15.5942, 0.461242 )
+visible = false
+material_override = SubResource( 14 )
+amount = 3000
+lifetime = 3.0
+randomness = 0.26
+visibility_aabb = AABB( -12.8607, -9.59574, -10.2165, 24.82, 20.92, 22.0981 )
+local_coords = false
+process_material = SubResource( 15 )
 draw_pass_1 = SubResource( 12 )
