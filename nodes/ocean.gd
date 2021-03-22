@@ -108,5 +108,5 @@ func _input(event):
 	if event is InputEventKey and event.pressed:
 		if event.scancode == KEY_F:
 			visual_material.set_shader_param("time_offset", time)
-			visual_material.set_shader_param("gerstner_speed", Vector2(0.05, 0.05)) ## 5 times faster sinze image is 5 times smaller
+			visual_material.set_shader_param("gerstner_speed", Vector2(0.125, 0.125)) ## 5 times faster sinze image is 5 times smaller
 			visual_material.set_shader_param("gerstner_2_speed", Vector2(0.025,0.025))

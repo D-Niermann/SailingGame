@@ -107,8 +107,8 @@ void vertex() {
 //	vec2 gerstner_normal_read = ( texture(gerstner_normal_map, uv_gerstner).xy - vec2(0.5, 0.5) ) * gerstner_height;
 //	vec2 gerstner_2_normal_read = ( texture(gerstner_normal_map, uv_gerstner_2).xy - vec2(0.5, 0.5) ) * gerstner_2_height;
 	
-	vec3 gerstner = vec3(-0.0 * gerstner_stretch, texture(gerstner_height_map, uv_gerstner).x* gerstner_height, 0.0 * gerstner_stretch);
-	vec3 gerstner_2 = vec3(-0.0 * gerstner_2_stretch, pow(texture(gerstner_height_map, uv_gerstner_2).x, 0.5) * gerstner_2_height, 0.0 * gerstner_2_stretch);
+	vec3 gerstner = vec3(0.0 * gerstner_stretch, texture(gerstner_height_map, uv_gerstner).x* gerstner_height, 0.0 * gerstner_stretch);
+	vec3 gerstner_2 = vec3(0.0 * gerstner_2_stretch, pow(texture(gerstner_height_map, uv_gerstner_2).x, 0.5) * gerstner_2_height, 0.0 * gerstner_2_stretch);
 	
 //	float height = get_height(vector_map, uv, 0.007);
 //	VERTEX += vec3(0,uv_gerstner.y,0);
@@ -133,13 +133,13 @@ void fragment() {
 	vec3 height_gerstner_2 = texture(gerstner_height_map, uv_gerstner_2).xyz;
 	
 	normal_output = get_normal(vector_map, uv, 0.000976, 4.0 * normal_peak_intensity); // 1.0 / 1024.0
-	normal_output += get_normal(vector_map, uv, 0.001953, 3.0 * normal_peak_intensity); // 1.0 / 512.0
+//	normal_output += get_normal(vector_map, uv, 0.001953, 3.0 * normal_peak_intensity); // 1.0 / 512.0
 	// normal_output += get_normal(vector_map, uv, 0.003906, 2.0 * normal_base_intensity); // 1.0 / 256.0
 	// normal_output += get_normal(vector_map, uv, 0.007812, 2.0 * normal_base_intensity); // 1.0 / 128.0
 	// normal_output += get_normal(vector_map, uv, 0.015625, 1.0 * normal_base_intensity); // 1.0 / 64.0
 	// normal_output += get_normal(vector_map, uv, 0.03125, 1.0 * normal_base_intensity); // 1.0 / 32.0
 	
-	normal_output /= 2.0;
+	normal_output /= 1.0;
 	
 	// DETAIL NORMAL
 	normal_output = mix(normal_output, vec3(0.5, 0.5, 1.0), smoothstep(COLOR[0], 0.0, normal_dist_fadeout) );
@@ -260,13 +260,13 @@ void light() {
 	float water_highlight_mask_2 = texture(water_highlight_map, fract( UV - (WORLD_MATRIX[3].xz * 0.25) + (time-time_offset) * -0.047854) * 2.0 ).x;
 	
 	// SUBSURFACE SCATTERING
-	float sss = clamp( smoothstep(0.65, 0.7, dot(NORMAL , VIEW) * 0.5 + 0.5 ) * smoothstep(0.5, 1.0, (dot(-LIGHT, VIEW) * 0.5 + 0.5) ) * ( dot (-CAMERA_MATRIX[2].xyz, vec3(0.0, 1.0, 0.0)) * 0.5 + 0.5), 0.0, 1.0) * sss_strength;
-		
+//	float sss = clamp( smoothstep(0.65, 0.7, dot(NORMAL , VIEW) * 0.5 + 0.5 ) * smoothstep(0.5, 1.0, (dot(-LIGHT, VIEW) * 0.5 + 0.5) ) * ( dot (-CAMERA_MATRIX[2].xyz, vec3(0.0, 1.0, 0.0)) * 0.5 + 0.5), 0.0, 1.0) * sss_strength;
+//
 	float lambert = clamp(dot(NORMAL, LIGHT), 0.0, 1.0);
 	float spec = clamp( pow( dot( reflect(LIGHT, NORMAL), -VIEW), 1000.0), 0.0, 1.0) * 2.0;
 	float spec_glare = clamp( pow( dot( reflect(LIGHT, NORMAL), -VIEW), 100.0), 0.0, 1.0) * smoothstep(0.0, 0.1, water_highlight_mask_1 * water_highlight_mask_2) * 30.0;
-	
+//
 	DIFFUSE_LIGHT += (LIGHT_COLOR * ALBEDO * ATTENUATION / pi) * lambert;
-	DIFFUSE_LIGHT += (LIGHT_COLOR * ALBEDO * ATTENUATION / pi) * sss;
+//	DIFFUSE_LIGHT += (LIGHT_COLOR * ALBEDO * ATTENUATION / pi) * sss;
 	DIFFUSE_LIGHT += LIGHT_COLOR * ATTENUATION * (spec + spec_glare);
 }

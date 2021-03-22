@@ -55,7 +55,7 @@ func _input(event):
 	if event is InputEventKey and event.pressed:
 		if event.scancode == KEY_F:
 			time_offset = time
-			gerstner_speed1 = Vector2(0.05*imSize,0.05*imSize) ## 5 times faster since img / tiling is 5 times smaller
+			gerstner_speed1 = Vector2(0.125*imSize,0.125*imSize) ## 5 times faster since img / tiling is 5 times smaller
 			gerstner_speed2 = Vector2(0.025*imSize,0.025*imSize)
 
 
@@ -109,7 +109,7 @@ func _physics_process(delta):
 	if doPrint==1:
 		if vel>vel_threshold:
 			$Particles.emitting = true
-			print(vel)
+			# print(vel)
 		else:
 			pass
 			$Particles.emitting = false

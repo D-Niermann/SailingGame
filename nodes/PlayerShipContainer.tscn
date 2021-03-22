@@ -284,8 +284,7 @@ doPrint = 1
 vel_threshold = 0.2
 
 [node name="MeshInstance" type="MeshInstance" parent="HFront"]
-transform = Transform( 0.25, 0, 0, 0, 0.25, -8.90513e-09, 0, 8.90513e-09, 0.25, 0, 0, 0 )
-visible = false
+transform = Transform( 0.12, 0, 0, 0, 0.11, -3.91826e-09, 0, 3.91826e-09, 0.11, 0, 0, 0 )
 mesh = SubResource( 5 )
 material/0 = null
 
@@ -309,8 +308,7 @@ doPrint = 1
 vel_threshold = 0.5
 
 [node name="MeshInstance" type="MeshInstance" parent="HBack"]
-transform = Transform( 0.25, 0, 0, 0, 0.25, -7.45058e-09, 0, 7.45058e-09, 0.25, 0, 0.143356, -0.0997462 )
-visible = false
+transform = Transform( 0.12, 0, 0, 0, 0.11, -3.27826e-09, 0, 3.27826e-09, 0.11, 0, 0.143356, -0.0997462 )
 mesh = SubResource( 5 )
 material/0 = null
 
@@ -334,8 +332,7 @@ doPrint = 1
 vel_threshold = 0.54
 
 [node name="MeshInstance" type="MeshInstance" parent="HLeft"]
-transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0 )
-visible = false
+transform = Transform( 0.12, 0, 0, 0, 0.11, 0, 0, 0, 0.11, 0, 0, 0 )
 mesh = SubResource( 5 )
 material/0 = null
 
@@ -359,8 +356,7 @@ doPrint = 1
 vel_threshold = 0.5
 
 [node name="MeshInstance" type="MeshInstance" parent="HRight"]
-transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0 )
-visible = false
+transform = Transform( 0.12, 0, 0, 0, 0.11, 0, 0, 0, 0.11, 0, 0, 0 )
 mesh = SubResource( 5 )
 material/0 = null
 
