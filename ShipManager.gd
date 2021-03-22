@@ -41,11 +41,13 @@ func _process(delta):
 	yaw = (hLeft.transform.origin.y - hRight.transform.origin.y)*yaw_factor
 	height = (hFront.transform.origin.y + hBack.transform.origin.y 
 	+ hLeft.transform.origin.y + hRight.transform.origin.y)/4.0
+	# rotate(Vector3(0,0,1)
 	ship.transform = def_transform.rotated(Vector3(0,0,1),pitch).rotated(Vector3(1,0,0),yaw)
+	# ship.rotate(Vector3(0,0,1),pitch)
 	ship.transform.origin.y = height+height_offset
 	self.transform.origin += self.transform.basis.x*0.02
 	# self.transform = self.transform.rotated(Vector3(0,1,0),0.01)
-	self.rotate_object_local(Vector3(0,1,0),0.001)
+	rotate(Vector3(0,1,0),0.001)
 
 # func _physics_process(delta):
 	# var space_state = get_world().direct_space_state

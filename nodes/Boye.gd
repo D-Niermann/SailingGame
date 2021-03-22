@@ -26,7 +26,7 @@ var targetPos2
 var h_target
 var h1
 var h2
-var reactionSpeed  = 0.03
+export var reactionSpeed  = 0.01
 var px_x1
 var px_y1
 var px_x2

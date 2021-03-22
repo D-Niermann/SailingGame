@@ -1,0 +1,93 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://materials/Black.tres" type="Material" id=1]
+[ext_resource path="res://nodes/Ball.gd" type="Script" id=2]
+[ext_resource path="res://nodes/Boye.gd" type="Script" id=3]
+[ext_resource path="res://addons/kenney_particle_pack/fire_01.png" type="Texture" id=4]
+
+[sub_resource type="SphereShape" id=1]
+
+[sub_resource type="SphereMesh" id=2]
+
+[sub_resource type="SpatialMaterial" id=6]
+flags_transparent = true
+flags_vertex_lighting = true
+vertex_color_use_as_albedo = true
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_color = Color( 1, 1, 1, 0.392157 )
+albedo_texture = ExtResource( 4 )
+metallic_specular = 0.45
+
+[sub_resource type="Gradient" id=7]
+offsets = PoolRealArray( 0, 0.162602, 0.548781 )
+colors = PoolColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=8]
+gradient = SubResource( 7 )
+
+[sub_resource type="Curve" id=9]
+_data = [ Vector2( 0, 0.535838 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=10]
+curve = SubResource( 9 )
+
+[sub_resource type="ParticlesMaterial" id=11]
+lifetime_randomness = 0.32
+emission_shape = 2
+emission_box_extents = Vector3( 1, 1, 1 )
+direction = Vector3( 0, 0, 1 )
+spread = 2.16
+gravity = Vector3( 0, -6, 4 )
+initial_velocity = 10.0
+initial_velocity_random = 0.24
+damping = 5.3
+damping_random = 0.12
+angle = 263.7
+angle_random = 1.0
+scale = 0.46
+scale_random = 1.0
+scale_curve = SubResource( 10 )
+color_ramp = SubResource( 8 )
+
+[sub_resource type="QuadMesh" id=12]
+size = Vector2( 5, 5 )
+
+[node name="Ball" type="RigidBody"]
+transform = Transform( 0.951371, 0, 0, 0, -4.15857e-08, 0.951371, 0, -0.951371, -4.15857e-08, 1.34181, 0, 0 )
+mass = 0.21
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+script = ExtResource( 2 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 0.343817, 0, 0, 0, 0.343817, 0, 0, 0, 0.343817, 0, 0, 0 )
+shape = SubResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 0.343817, 0, 0, 0, 0.343817, 0, 0, 0, 0.343817, 0, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = ExtResource( 1 )
+
+[node name="WaterHeight" type="Spatial" parent="."]
+script = ExtResource( 3 )
+reactionSpeed = 1.0
+
+[node name="Particles" type="Particles" parent="."]
+material_override = SubResource( 6 )
+cast_shadow = 0
+emitting = false
+amount = 57
+lifetime = 5.66
+explosiveness = 0.98
+randomness = 0.16
+visibility_aabb = AABB( -181.604, -196.936, -272.78, 362.306, 395.6, 547.224 )
+local_coords = false
+process_material = SubResource( 11 )
+draw_pass_1 = SubResource( 12 )
+__meta__ = {
+"_editor_description_": ""
+}

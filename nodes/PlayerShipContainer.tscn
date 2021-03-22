@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://nodes/Boye.gd" type="Script" id=1]
 [ext_resource path="res://ShipManager.gd" type="Script" id=2]
@@ -11,6 +11,7 @@
 [ext_resource path="res://Sprites/segelVorn.png" type="Texture" id=9]
 [ext_resource path="res://nodes/OmniLight.gd" type="Script" id=10]
 [ext_resource path="res://addons/kenney_particle_pack/trace_01.png" type="Texture" id=11]
+[ext_resource path="res://Cannon.tscn" type="PackedScene" id=12]
 
 [sub_resource type="CapsuleMesh" id=1]
 
@@ -52,16 +53,17 @@ curve = SubResource( 9 )
 [sub_resource type="ParticlesMaterial" id=11]
 lifetime_randomness = 0.32
 emission_shape = 2
-emission_box_extents = Vector3( 2.91, 1, 0.54 )
-direction = Vector3( 1, 1, 0 )
-spread = 18.64
-gravity = Vector3( -10, -10, -4 )
-initial_velocity = 5.0
-initial_velocity_random = 0.1
-damping = 12.68
+emission_box_extents = Vector3( 1, 1, 1 )
+direction = Vector3( 0, 0, 1 )
+spread = 2.16
+gravity = Vector3( 0, -6, 4 )
+initial_velocity = 10.0
+initial_velocity_random = 0.24
+damping = 5.3
 damping_random = 0.12
 angle = 263.7
-angle_random = 0.44
+angle_random = 1.0
+scale = 0.46
 scale_random = 1.0
 scale_curve = SubResource( 10 )
 color_ramp = SubResource( 8 )
@@ -277,6 +279,18 @@ omni_range = 1.5
 omni_attenuation = 0.406126
 script = ExtResource( 10 )
 
+[node name="Cannon" parent="Ship" instance=ExtResource( 12 )]
+transform = Transform( -1.71703e-07, 3.30026e-08, 4, 0.73306, 3.93225, -9.76517e-10, -3.93225, 0.73306, -1.74843e-07, -13.5236, 0.80717, -7.61927 )
+
+[node name="Cannon2" parent="Ship" instance=ExtResource( 12 )]
+transform = Transform( -1.71703e-07, 3.30026e-08, 4, 0.73306, 3.93225, -9.76517e-10, -3.93225, 0.73306, -1.74843e-07, 12.6421, 0.812078, -6.74041 )
+
+[node name="Cannon3" parent="Ship" instance=ExtResource( 12 )]
+transform = Transform( -1.71703e-07, 3.30026e-08, 4, 0.73306, 3.93225, -9.76517e-10, -3.93225, 0.73306, -1.74843e-07, 2.98616, -0.351177, -6.46362 )
+
+[node name="Cannon4" parent="Ship" instance=ExtResource( 12 )]
+transform = Transform( -1.71703e-07, 3.30026e-08, 4, 0.73306, 3.93225, -9.76517e-10, -3.93225, 0.73306, -1.74843e-07, -6.23833, 0.352856, -7.03106 )
+
 [node name="HFront" type="Spatial" parent="."]
 transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 8.17266, 0, 0 )
 script = ExtResource( 1 )
@@ -285,6 +299,7 @@ vel_threshold = 0.2
 
 [node name="MeshInstance" type="MeshInstance" parent="HFront"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, -3.91826e-09, 0, 3.91826e-09, 0.11, 0, 0, 0 )
+visible = false
 mesh = SubResource( 5 )
 material/0 = null
 
@@ -309,6 +324,7 @@ vel_threshold = 0.5
 
 [node name="MeshInstance" type="MeshInstance" parent="HBack"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, -3.27826e-09, 0, 3.27826e-09, 0.11, 0, 0.143356, -0.0997462 )
+visible = false
 mesh = SubResource( 5 )
 material/0 = null
 
@@ -333,6 +349,7 @@ vel_threshold = 0.54
 
 [node name="MeshInstance" type="MeshInstance" parent="HLeft"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, 0, 0, 0, 0.11, 0, 0, 0 )
+visible = false
 mesh = SubResource( 5 )
 material/0 = null
 
@@ -357,6 +374,7 @@ vel_threshold = 0.5
 
 [node name="MeshInstance" type="MeshInstance" parent="HRight"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, 0, 0, 0, 0.11, 0, 0, 0 )
+visible = false
 mesh = SubResource( 5 )
 material/0 = null
 

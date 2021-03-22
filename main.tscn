@@ -74,9 +74,9 @@ data = PoolVector3Array( -1, 1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -1
 [node name="Camera" type="Camera" parent="." groups=[
 "Camera",
 ]]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -21.18, 17.64, 4.56 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -21.18, 92.96, 4.56 )
 fov = 72.8
-size = 20.0
+size = 127.79
 near = 0.02
 far = 287.6
 script = ExtResource( 8 )
@@ -99,6 +99,8 @@ __meta__ = {
 
 [node name="PlayerShipContainer" parent="." instance=ExtResource( 13 )]
 transform = Transform( 0.31051, 0, -0.95057, 0, 1, 0, 0.95057, 0, 0.31051, -14.3067, 2.9267, 4.43387 )
+pitch_factor = 0.1
+yaw_factor = 0.1
 
 [node name="ImmediateGeometry" type="ImmediateGeometry" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.49139, 0.16108, -1.08455 )
@@ -237,7 +239,7 @@ stringToHuman1 = "../PlayerShipContainer/Ship/Human"
 stringToHuman2 = "../NavMeshCont/Navigation/Human"
 pathToC1 = "../PlayerShipContainer/Ship"
 pathToC2 = "../NavMeshCont"
-a = 398703.0
+a = 492129.0
 
 [node name="Terrain" type="MeshInstance" parent="."]
 transform = Transform( 598.053, 1.20345, 0, -1.93904, 2.1846, 0, 0, 0, 395.96, -28.2458, -6.3907, 10.6939 )
