@@ -29,7 +29,6 @@ func _input(event):
 	# Receives key input
 	if event.is_action_released("FireCannons"):
 		var scene = load("res://nodes/Ball.tscn")
-		print(scene)
 		var ball = scene.instance()
 		get_tree().get_root().add_child(ball)
 		ball.set_name("Ball")

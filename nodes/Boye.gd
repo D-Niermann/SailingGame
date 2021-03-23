@@ -14,7 +14,7 @@ only transforms the coordinate
 # var a = 2
 # var b = "text"
 export var doPrint = 0
-export var vel_threshold = 0.22
+export var vel_threshold = 0.15
 export var run = 1
 var last_pos
 var camera

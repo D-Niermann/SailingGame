@@ -15,6 +15,9 @@ viewport_path = NodePath("render_targets/vector_map_buffer")
 
 [node name="ocean" type="Spatial"]
 script = ExtResource( 4 )
+__meta__ = {
+"_editor_description_": "	"
+}
 
 [node name="render_targets" type="Spatial" parent="."]
 
@@ -34,6 +37,7 @@ texture = SubResource( 1 )
 expand = true
 
 [node name="waterplane" type="MeshInstance" parent="."]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0.0249643, 0.504447, -3.99258 )
 layers = 2147483650
 material_override = ExtResource( 2 )
 cast_shadow = 0

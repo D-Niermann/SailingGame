@@ -97,8 +97,8 @@ vec3 get_normal(sampler2D tex, vec2 uv, float offset, float intensity) {
 }
 
 void vertex() {
-	vec2 uv_gerstner = (vec4(UV.x, 0.0, UV.y-1.0, 1.0) + WORLD_MATRIX[3] * 0.25 ).xz * gerstner_tiling + vec2((time-time_offset) * gerstner_speed.x, (time-time_offset) * gerstner_speed.y);
-	vec2 uv_gerstner_2 = (vec4(UV.x, 0.0, UV.y-1.0, 1.0) + WORLD_MATRIX[3] * 0.25 ).xz * gerstner_2_tiling + vec2(gerstner_2_speed.x * (time-time_offset), gerstner_2_speed.y * (time-time_offset));
+	vec2 uv_gerstner = (vec4(UV.x*2.0, 0.0, UV.y*2.0-1.0, 1.0) + WORLD_MATRIX[3] * 0.25 ).xz * gerstner_tiling + vec2((time-time_offset) * gerstner_speed.x, (time-time_offset) * gerstner_speed.y);
+	vec2 uv_gerstner_2 = (vec4(UV.x*2.0, 0.0, UV.y*2.0-1.0, 1.0) + WORLD_MATRIX[3] * 0.25 ).xz * gerstner_2_tiling + vec2(gerstner_2_speed.x * (time-time_offset), gerstner_2_speed.y * (time-time_offset));
 	
 	//vec2 uv = fract( vec4(UV.x, UV.y, UV.y, 1.0) + WORLD_MATRIX[3] * 0.25 ).xz;
 	
@@ -117,10 +117,10 @@ void vertex() {
 }
 
 void fragment() {
-	vec2 uv_gerstner = (vec4(UV.x, 0.0, UV.y-1.0, 1.0) + WORLD_MATRIX[3] * 0.25 ).xz * gerstner_tiling + vec2((time-time_offset) * gerstner_speed.x, (time-time_offset) * gerstner_speed.y);
-	vec2 uv_gerstner_2 = (vec4(UV.x, 0.0, UV.y-1.0, 1.0) + WORLD_MATRIX[3] * 0.25 ).xz * gerstner_2_tiling + vec2(gerstner_2_speed.x * (time-time_offset), gerstner_2_speed.y * (time-time_offset));
+	vec2 uv_gerstner = (vec4(2.0*UV.x, 0.0, 2.0*UV.y-1.0, 1.0) + WORLD_MATRIX[3] * 0.25 ).xz * gerstner_tiling + vec2((time-time_offset) * gerstner_speed.x, (time-time_offset) * gerstner_speed.y);
+	vec2 uv_gerstner_2 = (vec4(2.0*UV.x, 0.0, 2.0*UV.y-1.0, 1.0) + WORLD_MATRIX[3] * 0.25 ).xz * gerstner_2_tiling + vec2(gerstner_2_speed.x * (time-time_offset), gerstner_2_speed.y * (time-time_offset));
 	
-	vec2 uv = fract( vec4(UV.x, UV.y, UV.y, 1.0) + WORLD_MATRIX[3] * 0.25 ).xz;
+	vec2 uv = fract( vec4(2.0*UV.x, 2.0*UV.y, 2.0*UV.y, 1.0) + WORLD_MATRIX[3] * 0.25 ).xz;
 	
 	vec3 normal_output;
 	float height = texture(vector_map, uv).z;

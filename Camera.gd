@@ -101,3 +101,5 @@ func _update_mouselook():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _input(event):
 	
+func _on_Body_mouse_entered(a):
+	print("Mouse2")
