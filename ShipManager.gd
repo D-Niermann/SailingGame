@@ -17,7 +17,7 @@ var hRight
 var def_transform
 var height
 var ship
-export var height_offset = 1.5
+export var height_offset = 3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

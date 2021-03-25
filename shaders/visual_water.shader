@@ -106,11 +106,11 @@ void vertex() {
 	
 	float camera_distance = length(CAMERA_MATRIX[3].xyz - (WORLD_MATRIX[3].xyz - VERTEX)) / 1000.0;
 	
-//	vec2 gerstner_normal_read = ( texture(gerstner_normal_map, uv_gerstner).xy - vec2(0.5, 0.5) ) * gerstner_height;
-//	vec2 gerstner_2_normal_read = ( texture(gerstner_normal_map, uv_gerstner_2).xy - vec2(0.5, 0.5) ) * gerstner_2_height;
+	vec2 gerstner_normal_read = ( texture(gerstner_normal_map, uv_gerstner).xy - vec2(0.5, 0.5) ) * gerstner_height;
+	vec2 gerstner_2_normal_read = ( texture(gerstner_normal_map, uv_gerstner_2).xy - vec2(0.5, 0.5) ) * gerstner_2_height;
 	
-	vec3 gerstner = vec3(0.0 * gerstner_stretch, texture(gerstner_height_map, uv_gerstner).x* gerstner_height, 0.0 * gerstner_stretch);
-	vec3 gerstner_2 = vec3(0.0 * gerstner_2_stretch, pow(texture(gerstner_height_map, uv_gerstner_2).x, 0.5) * gerstner_2_height, 0.0 * gerstner_2_stretch);
+	vec3 gerstner = vec3(-gerstner_normal_read.x  * gerstner_stretch, texture(gerstner_height_map, uv_gerstner).x* gerstner_height, gerstner_normal_read.y  * gerstner_stretch);
+	vec3 gerstner_2 = vec3(-gerstner_2_normal_read.x  * gerstner_2_stretch, pow(texture(gerstner_height_map, uv_gerstner_2).x, 0.5) * gerstner_2_height, gerstner_2_normal_read.y  * gerstner_2_stretch);
 	
 //	float height = get_height(vector_map, uv, 0.007);
 //	VERTEX += vec3(0,uv_gerstner.y,0);
@@ -258,8 +258,8 @@ void fragment() {
 void light() {
 	// LAMBER DIFFUSE LIGHTING
 	float pi = 3.14159265358979323846;
-	float water_highlight_mask_1 = texture(water_highlight_map, fract( UV - (WORLD_MATRIX[3].xz * 0.25) + (time-time_offset) * 0.051031 ) ).x;
-	float water_highlight_mask_2 = texture(water_highlight_map, fract( UV - (WORLD_MATRIX[3].xz * 0.25) + (time-time_offset) * -0.047854) * 2.0 ).x;
+	float water_highlight_mask_1 = texture(water_highlight_map, fract( UV - (WORLD_MATRIX[3].xz * 0.25)+ (time-time_offset) * 0.051031 ) ).x;
+	float water_highlight_mask_2 = texture(water_highlight_map, fract( UV - (WORLD_MATRIX[3].xz * 0.25)+ (time-time_offset) * -0.047854) * 2.0 ).x;
 	
 	// SUBSURFACE SCATTERING
 //	float sss = clamp( smoothstep(0.65, 0.7, dot(NORMAL , VIEW) * 0.5 + 0.5 ) * smoothstep(0.5, 1.0, (dot(-LIGHT, VIEW) * 0.5 + 0.5) ) * ( dot (-CAMERA_MATRIX[2].xyz, vec3(0.0, 1.0, 0.0)) * 0.5 + 0.5), 0.0, 1.0) * sss_strength;

@@ -55,7 +55,7 @@ func _input(event):
 	if event is InputEventKey and event.pressed:
 		if event.scancode == KEY_F:
 			time_offset = time
-			gerstner_speed1 = Vector2(0.125*imSize,0.125*imSize) ## 5 times faster since img / tiling is 5 times smaller
+			gerstner_speed1 = Vector2(0.1*imSize,0.1*imSize) ## 5 times faster since img / tiling is 5 times smaller
 			gerstner_speed2 = Vector2(0.025*imSize,0.025*imSize)
 
 

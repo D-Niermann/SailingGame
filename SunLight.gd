@@ -2,7 +2,7 @@ extends DirectionalLight
 
 
 # Declare member variables here. Examples:
-var time = 1
+var time = 10
 onready var start_transform = self.transform
 
 
@@ -13,4 +13,5 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	time+=delta*0.1
 	self.transform = start_transform.rotated(Vector3(1,0,0), time)

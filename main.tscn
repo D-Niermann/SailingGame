@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://nodes/ocean.tscn" type="PackedScene" id=1]
 [ext_resource path="res://textures/sky/evening_01.hdr" type="Texture" id=2]
@@ -14,6 +14,9 @@
 [ext_resource path="res://SunLight.gd" type="Script" id=12]
 [ext_resource path="res://nodes/PlayerShipContainer.tscn" type="PackedScene" id=13]
 [ext_resource path="res://shaders/camera_lense.shader" type="Shader" id=14]
+[ext_resource path="res://Sprites/island.png" type="Texture" id=15]
+[ext_resource path="res://Sprites/island_blur.png" type="Texture" id=16]
+[ext_resource path="res://Sprites/tree.png" type="Texture" id=17]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 14 )
@@ -79,11 +82,11 @@ data = PoolVector3Array( -1, 1, 1, 1, 1, 1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, -1
 [node name="Camera" type="Camera" parent="." groups=[
 "Camera",
 ]]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -21.18, 27.81, 4.56 )
-fov = 83.4
-size = 20.0
-near = 0.02
-far = 800.0
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 16.33, 148.94, -10.16 )
+current = true
+fov = 26.1
+size = 96.2
+far = 1354.0
 script = ExtResource( 8 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Camera"]
@@ -104,6 +107,11 @@ __meta__ = {
 
 [node name="PlayerShipContainer" parent="." instance=ExtResource( 13 )]
 transform = Transform( 0.31051, 0, -0.95057, 0, 1, 0, 0.95057, 0, 0.31051, -14.3067, 6.26637, 4.43387 )
+pitch_factor = 0.1
+yaw_factor = 0.1
+
+[node name="PlayerShipContainer2" parent="." instance=ExtResource( 13 )]
+transform = Transform( 0.31051, 0, -0.95057, 0, 1, 0, 0.95057, 0, 0.31051, 48.8958, 6.26637, -35.5592 )
 pitch_factor = 0.1
 yaw_factor = 0.1
 
@@ -244,7 +252,7 @@ stringToHuman1 = "../PlayerShipContainer/Ship/Human"
 stringToHuman2 = "../NavMeshCont/Navigation/Human"
 pathToC1 = "../PlayerShipContainer/Ship"
 pathToC2 = "../NavMeshCont"
-a = 744816.0
+a = 919572.0
 
 [node name="Terrain" type="MeshInstance" parent="."]
 transform = Transform( 598.053, 1.20345, 0, -1.93904, 2.1846, 0, 0, 0, 395.96, -28.2458, -6.3907, 10.6939 )
@@ -277,6 +285,78 @@ collision_mask = 2147483649
 
 [node name="CollisionShape" type="CollisionShape" parent="MeshInstance/Body"]
 shape = SubResource( 11 )
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( -0.548814, -0.350442, -1.53183e-08, 0, -4.89131e-08, 1.119, -0.350442, 0.548814, 2.39894e-08, 70.3787, 1.528, 48.5409 )
+pixel_size = 0.1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 15 )
+
+[node name="Sprite3D2" type="Sprite3D" parent="Sprite3D"]
+transform = Transform( 1, -2.98023e-08, -1.77636e-15, 2.98023e-08, 1, 0, -1.77636e-15, 3.55271e-15, 1, 0, 0, 2.68341 )
+pixel_size = 0.09
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 15 )
+
+[node name="Sprite3D3" type="Sprite3D" parent="Sprite3D"]
+transform = Transform( 0.45927, 0.888297, 3.88286e-08, -0.888297, 0.45927, -2.3636e-08, -3.88287e-08, -2.36361e-08, 1, 11.4518, -8.13632, -0.217483 )
+pixel_size = 0.09
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 16 )
+
+[node name="Sprite3D4" type="Sprite3D" parent="Sprite3D"]
+transform = Transform( -0.486677, 0.27808, 1.21553e-08, -0.351498, -0.349407, -4.15498e-08, -1.53645e-08, -4.15499e-08, 0.601143, 17.4589, 18.4745, -0.217482 )
+modulate = Color( 0.913725, 1, 0.756863, 0.388235 )
+pixel_size = 0.09
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 16 )
+
+[node name="Sprite3D6" type="Sprite3D" parent="Sprite3D"]
+transform = Transform( -0.880319, 0.503001, 2.1987e-08, -0.635803, -0.632021, -5.39032e-08, -2.77918e-08, -5.39033e-08, 0.601143, 1.07348, 8.51697, 6.12997 )
+pixel_size = 0.09
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 17 )
+
+[node name="Sprite3D7" type="Sprite3D" parent="Sprite3D"]
+transform = Transform( -0.594992, -0.0387264, -1.69273e-09, 0.0799346, -0.444875, -4.57229e-08, 3.49406e-09, -4.57229e-08, 0.601143, 7.80003, 5.09916, 4.43244 )
+pixel_size = 0.09
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 17 )
+
+[node name="Sprite3D8" type="Sprite3D" parent="Sprite3D"]
+transform = Transform( -1.10749, -0.0720838, -3.15077e-09, 0.148787, -0.828072, -6.2473e-08, 6.50369e-09, -6.2473e-08, 0.601143, 25.4121, 9.98087, 4.43244 )
+pixel_size = 0.09
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 17 )
+
+[node name="Sprite3D9" type="Sprite3D" parent="Sprite3D"]
+transform = Transform( -0.614532, -0.534977, -2.33845e-08, 0.748719, -0.482625, -4.7373e-08, 3.27276e-08, -4.7373e-08, 0.601143, 27.1851, -2.0703, 4.3396 )
+pixel_size = 0.09
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 17 )
+
+[node name="Sprite3D10" type="Sprite3D" parent="Sprite3D"]
+transform = Transform( -1.02971, -0.0670213, -2.92949e-09, 0.138337, -0.769917, -5.99309e-08, 6.04695e-09, -5.99309e-08, 0.601143, 20.2027, -5.45749, 4.3396 )
+pixel_size = 0.09
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 17 )
+
+[node name="Sprite3D5" type="Sprite3D" parent="Sprite3D"]
+transform = Transform( -0.48022, 0.361609, 1.58065e-08, -0.361609, -0.48022, -4.72678e-08, -1.58064e-08, -4.72679e-08, 0.601143, -24.9883, 16.5658, -0.217482 )
+modulate = Color( 1, 1, 1, 0.576471 )
+pixel_size = 0.09
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 16 )
 [connection signal="body_entered" from="MeshInstance/Body" to="ToolNode" method="_on_Body_body_entered"]
 [connection signal="mouse_entered" from="MeshInstance/Body" to="ToolNode" method="_on_Body_mouse_entered"]
 [connection signal="mouse_entered" from="MeshInstance/Body" to="Camera" method="_on_Body_mouse_entered"]

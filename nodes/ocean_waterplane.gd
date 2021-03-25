@@ -24,6 +24,6 @@ func _physics_process(delta):
 		transform.origin = camera.transform.origin
 
 		# snapping the waterplane to world grid to avoid wobbling
-		transform.origin.x = round(transform.origin.x / 2.0) * 2.0 # 4.0 = 4 meter grid
-		transform.origin.z = round(transform.origin.z / 2.0) * 2.0
+		# transform.origin.x = round(transform.origin.x / 2.0) * 2.0 # 4.0 = 4 meter grid
+		# transform.origin.z = round(transform.origin.z / 2.0) * 2.0
 		transform.origin.y = ocean_height # waterheight
