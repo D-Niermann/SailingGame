@@ -35,7 +35,7 @@ var time
 var time_b = 0
 var time_offset = 0
 var imSize = 1024.0 # size in px of the height map
-var gerstner_tiling1 = imSize/40.0
+var gerstner_tiling1 = imSize/40.0 ##measured distance from origin of ocean mesh to corner of heightmap img in world space
 var gerstner_tiling2 = imSize/200.0
 var gerstner_height1 = 1
 var gerstner_height2 = 4
@@ -55,8 +55,8 @@ func _input(event):
 	if event is InputEventKey and event.pressed:
 		if event.scancode == KEY_F:
 			time_offset = time
-			gerstner_speed1 = Vector2(0.1*imSize,0.1*imSize) ## 5 times faster since img / tiling is 5 times smaller
-			gerstner_speed2 = Vector2(0.025*imSize,0.025*imSize)
+			gerstner_speed1 = Vector2(0.03*imSize,0.03*imSize) ## 5 times faster since img / tiling is 5 times smaller
+			gerstner_speed2 = Vector2(0.0085*imSize,0.0085*imSize)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

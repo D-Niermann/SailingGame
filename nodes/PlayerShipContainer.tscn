@@ -127,8 +127,8 @@ color_ramp = SubResource( 11 )
 "Ship",
 ]]
 script = ExtResource( 2 )
-pitch_factor = 0.05
-yaw_factor = 0.05
+pitch_factor = 0.15
+yaw_factor = 0.15
 
 [node name="Ship" type="Spatial" parent="."]
 transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0 )
@@ -169,6 +169,7 @@ material/0 = ExtResource( 4 )
 
 [node name="FrontSegel" type="Sprite3D" parent="Ship"]
 transform = Transform( 2.05214e-07, 2.81824, 0.259662, -1.14422e-07, -0.757782, 0.9657, 2.91834, -2.27886e-07, 1.96039e-08, 37.08, 4.65129, -4.84044 )
+shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
@@ -177,6 +178,7 @@ transform = Transform( 1, 0, 0, 0, 1.18474, 0, 0, 0, 1, 0.454072, 0, 0.163235 )
 
 [node name="Segel1" type="Sprite3D" parent="Ship/MainMast"]
 transform = Transform( -2.10818e-07, 4.82294, 7.8976e-08, 0, -2.10818e-07, 1.80676, 4.82294, 2.10818e-07, 3.45215e-15, 0.48702, 9.78134, 0.625 )
+shaded = true
 alpha_cut = 2
 texture = ExtResource( 7 )
 
@@ -188,6 +190,7 @@ material/0 = null
 
 [node name="Segel2" type="Sprite3D" parent="Ship/MainMast"]
 transform = Transform( -1.82392e-07, 4.17264, 7.8976e-08, 0, -1.82392e-07, 1.80676, 4.17264, 1.82392e-07, 3.45215e-15, 0.48702, 17.6104, 0.625 )
+shaded = true
 alpha_cut = 2
 texture = ExtResource( 7 )
 
@@ -199,6 +202,7 @@ material/0 = null
 
 [node name="Segel3" type="Sprite3D" parent="Ship/MainMast"]
 transform = Transform( -1.26399e-07, 2.89167, 7.8976e-08, 0, -1.26399e-07, 1.80676, 2.89167, 1.26399e-07, 3.45215e-15, 0.487021, 22.8972, 0.625 )
+shaded = true
 alpha_cut = 2
 texture = ExtResource( 8 )
 
@@ -218,6 +222,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -18.4943, 0, 0.4176 )
 
 [node name="Segel1" type="Sprite3D" parent="Ship/BackMast"]
 transform = Transform( -2.10818e-07, 4.82294, 7.8976e-08, 0, -2.10818e-07, 1.80676, 4.82294, 2.10818e-07, 3.45215e-15, 0.48702, 9.78134, 0.625 )
+shaded = true
 alpha_cut = 2
 texture = ExtResource( 7 )
 
@@ -229,6 +234,7 @@ material/0 = null
 
 [node name="Segel2" type="Sprite3D" parent="Ship/BackMast"]
 transform = Transform( -1.82392e-07, 4.17264, 7.8976e-08, 0, -1.82392e-07, 1.80676, 4.17264, 1.82392e-07, 3.45215e-15, 0.48702, 17.6104, 0.625 )
+shaded = true
 alpha_cut = 2
 texture = ExtResource( 7 )
 
@@ -240,6 +246,7 @@ material/0 = null
 
 [node name="Segel3" type="Sprite3D" parent="Ship/BackMast"]
 transform = Transform( -1.26399e-07, 2.89167, 7.8976e-08, 0, -1.26399e-07, 1.80676, 2.89167, 1.26399e-07, 3.45215e-15, 0.487021, 22.8972, 0.625 )
+shaded = true
 alpha_cut = 2
 texture = ExtResource( 8 )
 
@@ -259,6 +266,7 @@ transform = Transform( 0.981959, 0, 0.189095, 0, 1, 0, -0.189095, 0, 0.981959, 2
 
 [node name="Segel1" type="Sprite3D" parent="Ship/FrontMast"]
 transform = Transform( -2.10818e-07, 4.82294, 7.8976e-08, 0, -2.10818e-07, 1.80676, 4.82294, 2.10818e-07, 3.45215e-15, 0.48702, 9.78134, 0.625 )
+shaded = true
 alpha_cut = 2
 texture = ExtResource( 7 )
 
@@ -270,6 +278,7 @@ material/0 = null
 
 [node name="Segel2" type="Sprite3D" parent="Ship/FrontMast"]
 transform = Transform( -1.82392e-07, 4.17264, 7.8976e-08, 0, -1.82392e-07, 1.80676, 4.17264, 1.82392e-07, 3.45215e-15, 0.48702, 17.6104, 0.625 )
+shaded = true
 alpha_cut = 2
 texture = ExtResource( 7 )
 
@@ -281,6 +290,7 @@ material/0 = null
 
 [node name="Segel3" type="Sprite3D" parent="Ship/FrontMast"]
 transform = Transform( -1.26399e-07, 2.89167, 7.8976e-08, 0, -1.26399e-07, 1.80676, 2.89167, 1.26399e-07, 3.45215e-15, 0.487021, 22.8972, 0.625 )
+shaded = true
 alpha_cut = 2
 texture = ExtResource( 8 )
 
@@ -356,9 +366,10 @@ transform = Transform( -1.71703e-07, 3.30026e-08, 4, 0.73306, 3.93225, -9.76517e
 transform = Transform( -1.71703e-07, 3.30026e-08, 4, 0.73306, 3.93225, -9.76517e-10, -3.93225, 0.73306, -1.74843e-07, -6.23833, 0.352856, -7.03106 )
 
 [node name="HFront" type="Spatial" parent="."]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 8.17266, 0, 0 )
+transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 5.70147, 0, 0 )
 script = ExtResource( 1 )
 doPrint = 1
+reactionSpeed = 0.02
 
 [node name="MeshInstance" type="MeshInstance" parent="HFront"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, -3.91826e-09, 0, 3.91826e-09, 0.11, 0, 0, 0 )
@@ -380,12 +391,13 @@ process_material = SubResource( 14 )
 draw_pass_1 = SubResource( 15 )
 
 [node name="HBack" type="Spatial" parent="."]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 8.17266, 0, 0 )
+transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -4.40235, 0, 0 )
 script = ExtResource( 1 )
 doPrint = 1
+reactionSpeed = 0.02
 
 [node name="MeshInstance" type="MeshInstance" parent="HBack"]
-transform = Transform( 0.12, 0, 0, 0, 0.11, -3.91826e-09, 0, 3.91826e-09, 0.11, 0, 0, 0 )
+transform = Transform( 0.12, 0, 0, 0, 0.11, -3.72529e-09, 0, 3.72529e-09, 0.11, 0, 0, 0 )
 visible = false
 mesh = SubResource( 8 )
 material/0 = null
@@ -408,6 +420,7 @@ draw_pass_1 = SubResource( 15 )
 transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 0.403394, 0, -1.91274 )
 script = ExtResource( 1 )
 doPrint = 1
+reactionSpeed = 0.02
 
 [node name="MeshInstance" type="MeshInstance" parent="HLeft"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, 0, 0, 0, 0.11, 0, 0, 0 )
@@ -432,6 +445,7 @@ draw_pass_1 = SubResource( 15 )
 transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 1.10096, 0, 2.3751 )
 script = ExtResource( 1 )
 doPrint = 1
+reactionSpeed = 0.02
 
 [node name="MeshInstance" type="MeshInstance" parent="HRight"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, 0, 0, 0, 0.11, 0, 0, 0 )

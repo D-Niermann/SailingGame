@@ -6,7 +6,7 @@ extends KinematicBody
 # var b = "text"
 var velocity = 6 
 var dir = Vector3(-1,0,0)
-var default_gravity = 20
+var default_gravity = 10
 var gravity = default_gravity
 var gravity_dir = Vector3(0,-1,0)
 var water_gravity = default_gravity/4 # gravity force when underwater

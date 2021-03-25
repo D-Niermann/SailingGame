@@ -42,6 +42,12 @@ func _ready():
 	shift_vector = physical_material.get_shader_param("shift_vector")
 	curl_strength = physical_material.get_shader_param("curl_strength")
 
+	## start the ocean movement
+	visual_material.set_shader_param("time_offset", time)
+	visual_material.set_shader_param("gerstner_speed", Vector2(0.03, 0.03)) ## 5 times faster sinze image is 5 times smaller
+	visual_material.set_shader_param("gerstner_2_speed", Vector2(0.0085,0.0085))
+
+
 func update_water(wind):
 	visual_material.set_shader_param("gerstner_height", gerstner_height * wind)
 	visual_material.set_shader_param("gerstner_normal", gerstner_normal * wind)
@@ -104,9 +110,9 @@ func _process(delta):
 	time+=delta
 	visual_material.set_shader_param("time", time)
 
-func _input(event):
-	if event is InputEventKey and event.pressed:
-		if event.scancode == KEY_F:
-			visual_material.set_shader_param("time_offset", time)
-			visual_material.set_shader_param("gerstner_speed", Vector2(0.1, 0.1)) ## 5 times faster sinze image is 5 times smaller
-			visual_material.set_shader_param("gerstner_2_speed", Vector2(0.025,0.025))
+# func _input(event):
+# 	if event is InputEventKey and event.pressed:
+# 		if event.scancode == KEY_F:
+# 			visual_material.set_shader_param("time_offset", time)
+# 			visual_material.set_shader_param("gerstner_speed", Vector2(0.01, 0.01)) ## 5 times faster sinze image is 5 times smaller
+# 			visual_material.set_shader_param("gerstner_2_speed", Vector2(0.0025,0.0025))

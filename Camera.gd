@@ -1,7 +1,10 @@
 extends Camera
 
 export(float, 0.0, 1.0) var sensitivity = 0.25
-
+export var playerShipPath = ""
+export var gameCam = true
+var camLock = false
+var playerShip
 # Mouse state
 var _mouse_position = Vector2(0.0, 0.0)
 var _total_pitch = 0.0
@@ -21,7 +24,14 @@ var _d = false
 var _q = false
 var _e = false
 
+
+func _ready():
+	playerShip = get_node(playerShipPath)
+
 func _input(event):
+
+	if event.is_action_pressed("centerCamera"):
+		camLock = not camLock
 
 	# Receives mouse motion
 	if event is InputEventMouseMotion:
@@ -33,11 +43,13 @@ func _input(event):
 			BUTTON_RIGHT: # Only allows rotation if right click down
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if event.pressed else Input.MOUSE_MODE_VISIBLE)
 			BUTTON_WHEEL_UP: # Increases max velocity
+				transform.origin.y -= 5
 				_vel_multiplier = clamp(_vel_multiplier * 1.1, 0.2, 100)
-				size -= 10
+				size -= 5
 			BUTTON_WHEEL_DOWN: # Decereases max velocity
+				transform.origin.y += 5
 				_vel_multiplier = clamp(_vel_multiplier / 1.1, 0.2, 100)
-				size += 10
+				size += 5
 
 	# Receives key input
 	if event is InputEventKey:
@@ -54,19 +66,29 @@ func _input(event):
 			# 	_q = event.pressed
 			# KEY_E:
 			# 	_e = event.pressed
+				
+
 
 # Updates mouselook and movement every frame
 func _process(delta):
 	_update_mouselook()
 	_update_movement(delta)
+	if camLock:
+		transform.origin.x = get_node(playerShipPath).transform.origin.x
+		transform.origin.z = get_node(playerShipPath).transform.origin.z
 
 # Updates camera movement
 func _update_movement(delta):
 	# Computes desired direction from key states
-	_direction = Vector3(_d as float - _a as float, 
-						 _e as float - _q as float,
-						 _s as float - _w as float)
-	
+	if not gameCam:
+		_direction = Vector3(_d as float - _a as float, 
+							_e as float - _q as float,
+							_s as float - _w as float)
+	else:
+		_direction = Vector3(_d as float - _a as float, 
+							_w as float - _s as float,
+							_e as float - _q as float)
+
 	# Computes the change in velocity due to desired direction and "drag"
 	# The "drag" is a constant acceleration on the camera to bring it's velocity to 0
 	var offset = _direction.normalized() * _acceleration * _vel_multiplier * delta \
@@ -98,7 +120,8 @@ func _update_mouselook():
 		_total_pitch += pitch
 	
 		rotate_y(deg2rad(-yaw))
-		rotate_object_local(Vector3(1,0,0), deg2rad(-pitch))
+		if not gameCam:
+			rotate_object_local(Vector3(1,0,0), deg2rad(-pitch))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _input(event):

@@ -7,7 +7,7 @@ extends Spatial
 # var ball
 var forward
 var up
-var force = 5
+var force = 2
 
 
 # Called when the node enters the scene tree for the first time.
