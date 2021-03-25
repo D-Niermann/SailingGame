@@ -28,10 +28,12 @@ top_radius = 0.2
 height = 25.0
 
 [sub_resource type="SpatialMaterial" id=6]
-albedo_color = Color( 0.321569, 0.231373, 0.156863, 1 )
+flags_unshaded = true
+albedo_color = Color( 0.152941, 0.117647, 0.0862745, 1 )
 
 [sub_resource type="SpatialMaterial" id=7]
-albedo_color = Color( 0.34902, 0.25098, 0.133333, 1 )
+flags_unshaded = true
+albedo_color = Color( 0.168627, 0.12549, 0.0705882, 1 )
 
 [sub_resource type="CapsuleMesh" id=8]
 
@@ -67,8 +69,8 @@ emission_shape = 2
 emission_box_extents = Vector3( 1, 1, 1 )
 direction = Vector3( 0, 0, 1 )
 spread = 2.16
-gravity = Vector3( 0, -6, 4 )
-initial_velocity = 10.0
+gravity = Vector3( 0, -6, 3 )
+initial_velocity = 7.0
 initial_velocity_random = 0.24
 damping = 5.3
 damping_random = 0.12
@@ -133,14 +135,26 @@ yaw_factor = 0.15
 [node name="Ship" type="Spatial" parent="."]
 transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 0 )
 
-[node name="ShipSprite" type="Sprite3D" parent="Ship"]
+[node name="TopDeck" type="Sprite3D" parent="Ship"]
 transform = Transform( 2.52772, -8.64024e-08, -5.21079e-15, 0, -1.1049e-07, 3.48748, -8.64024e-08, -2.52772, -1.52443e-07, 11.9723, 0, -4.09235e-07 )
 layers = 3
 shaded = true
 alpha_cut = 2
 texture = SubResource( 1 )
 
-[node name="ShipSprite2" type="Sprite3D" parent="Ship"]
+[node name="Cannon" parent="Ship/TopDeck" instance=ExtResource( 12 )]
+transform = Transform( -1.47528e-08, 3.14322e-09, 1.58245, 1.55565, -0.290008, 1.50789e-08, 0.210198, 1.12753, -2.80006e-10, -10.0865, 3.01429, 0.231448 )
+
+[node name="Cannon2" parent="Ship/TopDeck" instance=ExtResource( 12 )]
+transform = Transform( -1.47528e-08, 3.14322e-09, 1.58245, 1.55565, -0.290008, 1.50789e-08, 0.210198, 1.12753, -2.80006e-10, 0.264982, 2.6666, 0.232855 )
+
+[node name="Cannon3" parent="Ship/TopDeck" instance=ExtResource( 12 )]
+transform = Transform( -1.47528e-08, 3.14322e-09, 1.58245, 1.55565, -0.290008, 1.50789e-08, 0.210198, 1.12753, -2.80006e-10, -3.55504, 2.5571, -0.100696 )
+
+[node name="Cannon4" parent="Ship/TopDeck" instance=ExtResource( 12 )]
+transform = Transform( -1.47528e-08, 3.14322e-09, 1.58245, 1.55565, -0.290008, 1.50789e-08, 0.210198, 1.12753, -2.80006e-10, -7.20437, 2.78158, 0.101178 )
+
+[node name="LowerDeck" type="Sprite3D" parent="Ship"]
 transform = Transform( 3.8417, -1.31317e-07, -7.91951e-15, 0, -1.67926e-07, 5.30037, -1.31317e-07, -3.8417, -2.31687e-07, 2.62692, -5.76378, 0.995317 )
 layers = 3
 shaded = true
@@ -150,19 +164,33 @@ texture = ExtResource( 5 )
 [node name="Human" type="MeshInstance" parent="Ship" groups=[
 "Human",
 ]]
-transform = Transform( 0.686675, 2.98023e-08, 1.77636e-15, 0, -3.00155e-08, -0.686675, -2.98023e-08, 0.686675, -3.00155e-08, 0.0166593, 0.534605, -2.06205 )
+transform = Transform( 0.686675, 2.98023e-08, 1.77636e-15, 0, -3.00155e-08, -0.686675, -2.98023e-08, 0.686675, -3.00155e-08, 5.68618, 0.0694675, -2.41087 )
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
 [node name="Human2" type="MeshInstance" parent="Ship" groups=[
 "Human",
 ]]
-transform = Transform( 0.521004, 0, -8.88178e-16, 0, -2.27738e-08, 0.521004, 0, -0.521004, -2.27738e-08, 6.81837, 0.639531, 5.18027e-08 )
+transform = Transform( 0.521004, 0, -8.88178e-16, 0, -2.27738e-08, 0.521004, 0, -0.521004, -2.27738e-08, 5.34291, 0.775069, 3.30825 )
+mesh = SubResource( 2 )
+material/0 = ExtResource( 3 )
+
+[node name="Human3" type="MeshInstance" parent="Ship" groups=[
+"Human",
+]]
+transform = Transform( 0.521004, 0, -8.88178e-16, 0, -2.27738e-08, 0.521004, 0, -0.521004, -2.27738e-08, 3.3289, 0.775069, -2.44822 )
+mesh = SubResource( 2 )
+material/0 = ExtResource( 3 )
+
+[node name="Human4" type="MeshInstance" parent="Ship" groups=[
+"Human",
+]]
+transform = Transform( 0.521004, 0, -8.88178e-16, 0, -2.27738e-08, 0.521004, 0, -0.521004, -2.27738e-08, -5.08558, 0.35216, 7.41718 )
 mesh = SubResource( 2 )
 material/0 = ExtResource( 3 )
 
 [node name="Mesh" type="MeshInstance" parent="Ship"]
-transform = Transform( 31.0462, 0, 1.20407e-06, 0, 9.67506, 0, -5.72205e-06, 0, 6.53295, -2.64106, -10.3709, 0.0937042 )
+transform = Transform( 31.0462, 0, 1.20407e-06, 0, 9.67506, 0, -5.72205e-06, 0, 6.53295, -2.64106, -15.8812, 0.0937042 )
 cast_shadow = 3
 mesh = SubResource( 3 )
 material/0 = ExtResource( 4 )
@@ -353,18 +381,6 @@ omni_range = 1.5
 omni_attenuation = 0.406126
 script = ExtResource( 10 )
 
-[node name="Cannon" parent="Ship" instance=ExtResource( 12 )]
-transform = Transform( -1.71703e-07, 3.30026e-08, 4, 0.73306, 3.93225, -9.76517e-10, -3.93225, 0.73306, -1.74843e-07, -13.5236, 0.80717, -7.61927 )
-
-[node name="Cannon2" parent="Ship" instance=ExtResource( 12 )]
-transform = Transform( -1.71703e-07, 3.30026e-08, 4, 0.73306, 3.93225, -9.76517e-10, -3.93225, 0.73306, -1.74843e-07, 12.6421, 0.812078, -6.74041 )
-
-[node name="Cannon3" parent="Ship" instance=ExtResource( 12 )]
-transform = Transform( -1.71703e-07, 3.30026e-08, 4, 0.73306, 3.93225, -9.76517e-10, -3.93225, 0.73306, -1.74843e-07, 2.98616, -0.351177, -6.46362 )
-
-[node name="Cannon4" parent="Ship" instance=ExtResource( 12 )]
-transform = Transform( -1.71703e-07, 3.30026e-08, 4, 0.73306, 3.93225, -9.76517e-10, -3.93225, 0.73306, -1.74843e-07, -6.23833, 0.352856, -7.03106 )
-
 [node name="HFront" type="Spatial" parent="."]
 transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 5.70147, 0, 0 )
 script = ExtResource( 1 )
@@ -378,10 +394,9 @@ mesh = SubResource( 8 )
 material/0 = null
 
 [node name="Particles" type="Particles" parent="HFront"]
-transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.000314459, -0.235371, -0.163769, 0.00045183, 0.16377, -0.23537, 0.191698, 0, 0 )
+transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.00045183, 0.16377, -0.23537, -0.000314459, 0.235371, 0.163769, 0.559953, 0.599354, -0.567806 )
 material_override = SubResource( 9 )
 cast_shadow = 0
-emitting = false
 amount = 30
 lifetime = 3.0
 randomness = 0.26
