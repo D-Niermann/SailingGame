@@ -2,7 +2,7 @@ extends Node
 
 
 # Declare member variables here.
-var tile = 1.0
+var tile = 1
 export var path: NodePath # this is the path to floor body which you want to place stuff on
 var target = null
 var highlight = null
@@ -66,9 +66,9 @@ func _physics_process(delta):
 						originOfRay = selected.global_transform.origin + backward
 						hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [selected], 0b1)
 						if !hit.empty() && hit.collider == target:
-							var area: Area = selected.get_node("Area")
-							var colliders: Array = area.get_overlapping_areas()
-							if colliders.empty():
+							var coll = selected.move_and_collide(Vector3(0.0,0,0), false,false,true)
+							print(coll.collider_id)
+							if !coll || coll.collider == target:
 								canPlace = true
 		if Input.is_action_just_pressed("ui_cancel"):
 			if parent != null:

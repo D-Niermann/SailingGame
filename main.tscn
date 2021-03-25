@@ -84,6 +84,11 @@ transform = Transform( 0.31051, 0, -0.95057, 0, 1, 0, 0.95057, 0, 0.31051, -14.3
 pitch_factor = 0.1
 yaw_factor = 0.1
 
+[node name="OtherShip" parent="." instance=ExtResource( 13 )]
+transform = Transform( -0.3471, 0, -0.937828, 0, 1, 0, 0.937828, 0, -0.3471, 12.1572, 6.26637, -42.8521 )
+pitch_factor = 0.1
+yaw_factor = 0.1
+
 [node name="Camera" type="Camera" parent="." groups=[
 "Camera",
 ]]
@@ -253,7 +258,7 @@ stringToHuman1 = "../PlayerShipContainer/Ship/Human"
 stringToHuman2 = "../NavMeshCont/Navigation/Human"
 pathToC1 = "../PlayerShipContainer/Ship"
 pathToC2 = "../NavMeshCont"
-a = 1.24785e+06
+a = 1.25614e+06
 
 [node name="Terrain" type="MeshInstance" parent="."]
 transform = Transform( 598.053, 1.20345, 0, -1.93904, 2.1846, 0, 0, 0, 395.96, 109.61, -5.91, 20.75 )
@@ -274,10 +279,10 @@ mesh = SubResource( 9 )
 material/0 = ExtResource( 5 )
 
 [node name="Cloud" type="Sprite3D" parent="."]
-transform = Transform( -5.83686, -2.14116, -9.35852e-08, 6.57252e-14, -4.89131e-08, 1.119, -2.14116, 5.83686, 2.55135e-07, 65.7378, 129.746, 118.046 )
+transform = Transform( -6.14913, 0.91858, 4.01572e-08, 6.57252e-14, -4.89131e-08, 1.119, 0.91858, 6.14913, 2.6878e-07, 65.7378, 129.746, 118.046 )
 cast_shadow = 3
 modulate = Color( 0.52549, 0.541176, 1, 0.498039 )
-opacity = 0.190217
+opacity = 0.779001
 pixel_size = 0.09
 shaded = true
 alpha_cut = 2
@@ -285,10 +290,10 @@ texture = ExtResource( 18 )
 script = ExtResource( 19 )
 
 [node name="Sprite3D12" type="Sprite3D" parent="Cloud"]
-transform = Transform( 0.156084, -0.988204, -4.32142e-08, 0.988204, 0.156084, -3.6885e-08, 4.31942e-08, -3.68955e-08, 0.99951, -1.02624, -49.6376, 0.136757 )
+transform = Transform( 0.0312608, -0.999972, -4.3727e-08, 0.999972, 0.0312608, -4.23449e-08, 4.37073e-08, -4.23518e-08, 0.999493, -1.02594, -49.6479, 0.136757 )
 cast_shadow = 3
 modulate = Color( 0.52549, 0.541176, 1, 0.498039 )
-opacity = 0.160631
+opacity = 0.923354
 pixel_size = 0.09
 shaded = true
 alpha_cut = 2
@@ -296,10 +301,10 @@ texture = ExtResource( 18 )
 script = ExtResource( 19 )
 
 [node name="Sprite3D13" type="Sprite3D" parent="Cloud"]
-transform = Transform( 0.0820736, -1.85297, -8.09376e-08, 1.85297, 0.0820736, -4.00922e-08, 8.09977e-08, -4.01234e-08, 0.99951, -18.2515, -55.7599, 0.143547 )
+transform = Transform( 0.867722, -1.63933, -7.15979e-08, 1.63933, 0.867722, -5.77691e-09, 7.16581e-08, -5.78216e-09, 0.999493, -18.2494, -55.7695, 0.143547 )
 cast_shadow = 3
 modulate = Color( 0.52549, 0.541176, 1, 0.498039 )
-opacity = 0.841005
+opacity = 0.00492709
 pixel_size = 0.09
 shaded = true
 alpha_cut = 2
@@ -307,10 +312,10 @@ texture = ExtResource( 18 )
 script = ExtResource( 19 )
 
 [node name="Sprite3D14" type="Sprite3D" parent="Cloud"]
-transform = Transform( -0.929503, -0.369658, -1.61565e-08, 0.369658, -0.929503, -8.4337e-08, 1.61704e-08, -8.43551e-08, 0.99951, -20.9117, -30.0099, 0 )
+transform = Transform( -0.738574, -0.674653, -2.94942e-08, 0.674653, -0.738574, -7.59902e-08, 2.95005e-08, -7.6006e-08, 0.999493, -20.9109, -30.0093, 0 )
 cast_shadow = 3
 modulate = Color( 0.52549, 0.541176, 1, 0.498039 )
-opacity = 0.846479
+opacity = 0.574066
 pixel_size = 0.09
 shaded = true
 alpha_cut = 2

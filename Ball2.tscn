@@ -1,14 +1,60 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://nodes/TestCollision.gd" type="Script" id=1]
 [ext_resource path="res://materials/Black.tres" type="Material" id=2]
 [ext_resource path="res://nodes/Boye.gd" type="Script" id=3]
 [ext_resource path="res://nodes/WaterEnteredParticles.tscn" type="PackedScene" id=4]
+[ext_resource path="res://addons/kenney_particle_pack/smoke_03.png" type="Texture" id=5]
 
 [sub_resource type="SphereMesh" id=1]
 
 [sub_resource type="SphereShape" id=2]
 radius = 1.04042
+
+[sub_resource type="SpatialMaterial" id=3]
+render_priority = 1
+flags_transparent = true
+flags_vertex_lighting = true
+vertex_color_use_as_albedo = true
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_color = Color( 1, 1, 1, 0.392157 )
+albedo_texture = ExtResource( 5 )
+metallic_specular = 0.45
+
+[sub_resource type="Gradient" id=10]
+offsets = PoolRealArray( 0, 0.162602, 0.633423, 0.781671 )
+colors = PoolColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0.0304779, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=11]
+gradient = SubResource( 10 )
+
+[sub_resource type="Curve" id=6]
+_data = [ Vector2( 0, 0.2125 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.839773 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=7]
+curve = SubResource( 6 )
+
+[sub_resource type="ParticlesMaterial" id=8]
+lifetime_randomness = 0.22
+direction = Vector3( 0, 1, 0 )
+spread = 2.16
+gravity = Vector3( 0, -5, 4 )
+angular_velocity = 56.55
+angular_velocity_random = 1.0
+damping = 5.3
+damping_random = 0.12
+angle = 263.7
+angle_random = 1.0
+scale = 0.5
+scale_random = 1.0
+scale_curve = SubResource( 7 )
+color_ramp = SubResource( 11 )
+
+[sub_resource type="QuadMesh" id=9]
+size = Vector2( 5, 5 )
 
 [node name="Ball" type="KinematicBody"]
 transform = Transform( 0.368184, 0, 0, 0, 0.368184, 0, 0, 0, 0.368184, 0, 0, 0 )
@@ -28,3 +74,14 @@ script = ExtResource( 3 )
 reactionSpeed = 1.0
 
 [node name="Particles" parent="." instance=ExtResource( 4 )]
+lifetime = 3.0
+
+[node name="trail" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0211141, 0, 0.00772725 )
+material_override = SubResource( 3 )
+emitting = true
+amount = 150
+explosiveness = 0.0
+randomness = 0.44
+process_material = SubResource( 8 )
+draw_pass_1 = SubResource( 9 )

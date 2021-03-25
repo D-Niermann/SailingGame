@@ -11,18 +11,15 @@
 [ext_resource path="res://textures/water/gerstner_normal.png" type="Texture" id=9]
 [ext_resource path="res://textures/water/plankton_albedo.png" type="Texture" id=10]
 [ext_resource path="res://textures/water/underwater_overlay.png" type="Texture" id=11]
+[ext_resource path="res://textures/water/gradients/water_gradient_a.tres" type="Gradient" id=12]
 [ext_resource path="res://textures/post/lense_glare_a.png" type="Texture" id=13]
 
 [sub_resource type="ViewportTexture" id=1]
 flags = 4
 viewport_path = NodePath("render_targets/vector_map_buffer")
 
-[sub_resource type="Gradient" id=2]
-offsets = PoolRealArray( 0.00483092, 0.384279, 0.694323, 1 )
-colors = PoolColorArray( 0.308754, 0.552734, 0.538439, 1, 0.171387, 0.457031, 0.390083, 1, 0.108765, 0.28234, 0.316406, 1, 0.0419922, 0.137871, 0.25, 1 )
-
 [sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
+gradient = ExtResource( 12 )
 
 [resource]
 resource_local_to_scene = true
