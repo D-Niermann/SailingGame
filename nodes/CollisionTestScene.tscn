@@ -12,9 +12,9 @@ albedo_color = Color( 0.454902, 0.454902, 0.454902, 0.333333 )
 
 [sub_resource type="BoxShape" id=3]
 
-[sub_resource type="SphereMesh" id=5]
+[sub_resource type="SphereMesh" id=4]
 
-[sub_resource type="SphereShape" id=4]
+[sub_resource type="SphereShape" id=5]
 radius = 0.537208
 
 [node name="Spatial" type="Spatial"]
@@ -72,11 +72,11 @@ contact_monitor = true
 script = ExtResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="Body"]
-mesh = SubResource( 5 )
+mesh = SubResource( 4 )
 material/0 = null
 
 [node name="CollisionShape2" type="CollisionShape" parent="Body"]
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.947713, 0.319125, 0, -0.319125, 0.947713, -4.66, 3.5, 7.32 )

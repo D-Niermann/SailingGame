@@ -48,10 +48,10 @@ func _input(event):
 				_a = event.pressed
 			KEY_D:
 				_d = event.pressed
-			KEY_Q:
-				_q = event.pressed
-			KEY_E:
-				_e = event.pressed
+			# KEY_Q:
+			# 	_q = event.pressed
+			# KEY_E:
+			# 	_e = event.pressed
 
 # Updates mouselook and movement every frame
 func _process(delta):
