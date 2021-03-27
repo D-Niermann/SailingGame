@@ -13,7 +13,10 @@ var hFront
 var hBack
 var hLeft
 var hRight
-
+var speed = 0
+var maxSpeed = 0.2
+var turnSpeed = 0
+var maxTurnSpeed = 0.002
 var def_transform
 var height
 var ship
@@ -45,9 +48,23 @@ func _process(delta):
 	ship.transform = def_transform.rotated(Vector3(0,0,1),pitch).rotated(Vector3(1,0,0),yaw)
 	# ship.rotate(Vector3(0,0,1),pitch)
 	ship.transform.origin.y = height+height_offset
-	self.transform.origin += self.transform.basis.x*0.02
-	# self.transform = self.transform.rotated(Vector3(0,1,0),0.01)
-	rotate(Vector3(0,1,0),0.001)
+
+	## move and rotate
+	self.transform.origin += self.transform.basis.x*speed
+	rotate(Vector3(0,1,0),turnSpeed)
+
+func _input(event):
+	if Input.is_action_pressed("turnLeft"):
+		turnSpeed += 0.0001
+	if Input.is_action_pressed("turnRight"):
+		turnSpeed -= 0.0001
+	if Input.is_action_pressed("sailsUp"):
+		speed += 0.001
+	if Input.is_action_pressed("sailsDown"):
+		speed -= 0.001
+	turnSpeed = clamp(turnSpeed,-maxTurnSpeed,maxTurnSpeed)
+	speed = clamp(speed,-maxSpeed,maxSpeed)
+	
 
 # func _physics_process(delta):
 	# var space_state = get_world().direct_space_state

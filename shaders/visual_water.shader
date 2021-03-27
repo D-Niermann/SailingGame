@@ -29,7 +29,7 @@ uniform vec2 gerstner_speed = vec2(0.00, 0.0);
 uniform vec2 gerstner_2_speed = vec2(0.0, 0.0);
 uniform float time_offset = 0;
 uniform float time = 0;
-uniform float CustomUVScale = 2.0;
+uniform float CustomUVScale = 1.0;
 
 
 uniform float normal_base_intensity = 0.7;

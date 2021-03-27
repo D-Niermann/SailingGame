@@ -385,7 +385,7 @@ script = ExtResource( 10 )
 transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 5.70147, 0, 0 )
 script = ExtResource( 1 )
 doPrint = 1
-reactionSpeed = 0.02
+reactionSpeed = 0.01
 
 [node name="MeshInstance" type="MeshInstance" parent="HFront"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, -3.91826e-09, 0, 3.91826e-09, 0.11, 0, 0, 0 )
@@ -397,6 +397,7 @@ material/0 = null
 transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.00045183, 0.16377, -0.23537, -0.000314459, 0.235371, 0.163769, 0.559953, 0.599354, -0.567806 )
 material_override = SubResource( 9 )
 cast_shadow = 0
+emitting = false
 amount = 30
 lifetime = 3.0
 randomness = 0.26
@@ -409,7 +410,7 @@ draw_pass_1 = SubResource( 15 )
 transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -4.40235, 0, 0 )
 script = ExtResource( 1 )
 doPrint = 1
-reactionSpeed = 0.02
+reactionSpeed = 0.01
 
 [node name="MeshInstance" type="MeshInstance" parent="HBack"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, -3.72529e-09, 0, 3.72529e-09, 0.11, 0, 0, 0 )
@@ -435,7 +436,7 @@ draw_pass_1 = SubResource( 15 )
 transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 0.403394, 0, -1.91274 )
 script = ExtResource( 1 )
 doPrint = 1
-reactionSpeed = 0.02
+reactionSpeed = 0.01
 
 [node name="MeshInstance" type="MeshInstance" parent="HLeft"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, 0, 0, 0, 0.11, 0, 0, 0 )
@@ -460,7 +461,7 @@ draw_pass_1 = SubResource( 15 )
 transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 1.10096, 0, 2.3751 )
 script = ExtResource( 1 )
 doPrint = 1
-reactionSpeed = 0.02
+reactionSpeed = 0.01
 
 [node name="MeshInstance" type="MeshInstance" parent="HRight"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, 0, 0, 0, 0.11, 0, 0, 0 )

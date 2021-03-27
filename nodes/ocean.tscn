@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://materials/vector_map_a.tres" type="Material" id=1]
-[ext_resource path="res://materials/visual_water_aORG.tres" type="Material" id=2]
+[ext_resource path="res://materials/visual_water_2.tres" type="Material" id=2]
 [ext_resource path="res://objects/waterplane/waterplane_high.obj" type="ArrayMesh" id=3]
 [ext_resource path="res://nodes/ocean.gd" type="Script" id=4]
 [ext_resource path="res://nodes/ocean_waterplane.gd" type="Script" id=5]
@@ -39,7 +39,7 @@ texture = SubResource( 1 )
 expand = true
 
 [node name="waterplane" type="MeshInstance" parent="."]
-transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 2, 0.0249643, 0.504447, -3.99258 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0249643, 0.504447, -3.99258 )
 layers = 2147483650
 material_override = ExtResource( 2 )
 cast_shadow = 0
@@ -52,7 +52,8 @@ transform = Transform( 1, 0, 0, 0, -0.160054, 0.987109, 0, -0.987109, -0.160054,
 visible = false
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 4.16144, 0, 0, 0, 4.16144, 0, 0, 0, 4.16144, -0.615302, -0.925942, 0 )
+transform = Transform( 4.16144, 0, 0, 0, 4.16144, 0, 0, 0, 4.16144, -0.615302, -1.92132, 0 )
+visible = false
 mesh = SubResource( 2 )
 material/0 = SubResource( 3 )
 

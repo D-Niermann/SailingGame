@@ -81,8 +81,7 @@ albedo_color = Color( 0.266667, 0.207843, 0.0666667, 1 )
 
 [node name="PlayerShipContainer" parent="." instance=ExtResource( 13 )]
 transform = Transform( 0.31051, 0, -0.95057, 0, 1, 0, 0.95057, 0, 0.31051, -14.3067, 6.26637, 4.43387 )
-pitch_factor = 0.1
-yaw_factor = 0.1
+height_offset = 2
 
 [node name="OtherShip" parent="." instance=ExtResource( 13 )]
 transform = Transform( -0.3471, 0, -0.937828, 0, 1, 0, 0.937828, 0, -0.3471, 12.1572, 6.26637, -42.8521 )
@@ -93,9 +92,8 @@ yaw_factor = 0.1
 "Camera",
 ]]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 16.33, 148.94, -10.16 )
-projection = 1
 current = true
-fov = 69.8
+fov = 37.6
 size = 96.2
 far = 300.0
 script = ExtResource( 8 )
@@ -136,10 +134,11 @@ light_color = Color( 1, 0.929412, 0.823529, 1 )
 light_specular = 1.0
 shadow_enabled = true
 directional_shadow_mode = 1
-directional_shadow_split_1 = 0.033
-directional_shadow_split_2 = 0.29
+directional_shadow_split_1 = 0.152
+directional_shadow_split_2 = 0.0
+directional_shadow_split_3 = 0.268
 directional_shadow_blend_splits = true
-directional_shadow_max_distance = 300.0
+directional_shadow_max_distance = 500.0
 script = ExtResource( 12 )
 __meta__ = {
 "_editor_description_": ""
@@ -258,10 +257,10 @@ stringToHuman1 = "../PlayerShipContainer/Ship/Human"
 stringToHuman2 = "../NavMeshCont/Navigation/Human"
 pathToC1 = "../PlayerShipContainer/Ship"
 pathToC2 = "../NavMeshCont"
-a = 1.25614e+06
+a = 1.55553e+06
 
 [node name="Terrain" type="MeshInstance" parent="."]
-transform = Transform( 598.053, 1.20345, 0, -1.93904, 2.1846, 0, 0, 0, 395.96, 109.61, -5.91, 20.75 )
+transform = Transform( 598.053, 1.20345, 0, -1.93904, 2.1846, 0, 0, 0, 395.96, 29.7657, -12.3204, 1.57804 )
 cast_shadow = 0
 mesh = SubResource( 8 )
 material/0 = ExtResource( 5 )
@@ -278,44 +277,43 @@ cast_shadow = 0
 mesh = SubResource( 9 )
 material/0 = ExtResource( 5 )
 
-[node name="Cloud" type="Sprite3D" parent="."]
-transform = Transform( -6.14913, 0.91858, 4.01572e-08, 6.57252e-14, -4.89131e-08, 1.119, 0.91858, 6.14913, 2.6878e-07, 65.7378, 129.746, 118.046 )
+[node name="Node" type="Node" parent="."]
+
+[node name="Sprite3D14" type="Sprite3D" parent="Node"]
+transform = Transform( 2.76716, -5.58086, -2.41018e-07, 2.10221e-07, 2.71151e-08, 1.11823, -5.58086, -2.76716, -3.4402e-07, 31.3976, 154.51, -54.2618 )
 cast_shadow = 3
-modulate = Color( 0.52549, 0.541176, 1, 0.498039 )
-opacity = 0.779001
+modulate = Color( 0.52549, 0.541176, 1, 0.227451 )
+opacity = 0.89
 pixel_size = 0.09
 shaded = true
 alpha_cut = 2
 texture = ExtResource( 18 )
 script = ExtResource( 19 )
 
-[node name="Sprite3D12" type="Sprite3D" parent="Cloud"]
-transform = Transform( 0.0312608, -0.999972, -4.3727e-08, 0.999972, 0.0312608, -4.23449e-08, 4.37073e-08, -4.23518e-08, 0.999493, -1.02594, -49.6479, 0.136757 )
+[node name="Sprite3D13" type="Sprite3D" parent="Node"]
+transform = Transform( 6.13716, -9.78076, -2.29309e-07, 3.3461e-07, -2.93374e-07, 1.11823, -9.78076, -6.13716, -3.7113e-07, 38.8294, 154.662, 28.5288 )
 cast_shadow = 3
-modulate = Color( 0.52549, 0.541176, 1, 0.498039 )
-opacity = 0.923354
+modulate = Color( 0.52549, 0.541176, 1, 0.145098 )
 pixel_size = 0.09
 shaded = true
 alpha_cut = 2
 texture = ExtResource( 18 )
 script = ExtResource( 19 )
 
-[node name="Sprite3D13" type="Sprite3D" parent="Cloud"]
-transform = Transform( 0.867722, -1.63933, -7.15979e-08, 1.63933, 0.867722, -5.77691e-09, 7.16581e-08, -5.78216e-09, 0.999493, -18.2494, -55.7695, 0.143547 )
+[node name="Sprite3D12" type="Sprite3D" parent="Node"]
+transform = Transform( -0.954468, -6.15357, -8.73484e-08, -1.66552e-07, -1.97607e-07, 1.11823, -6.15357, 0.954468, 1.712e-07, -123.518, 154.744, -163.478 )
 cast_shadow = 3
-modulate = Color( 0.52549, 0.541176, 1, 0.498039 )
-opacity = 0.00492709
+modulate = Color( 0.52549, 0.541176, 1, 0.160784 )
 pixel_size = 0.09
 shaded = true
 alpha_cut = 2
 texture = ExtResource( 18 )
 script = ExtResource( 19 )
 
-[node name="Sprite3D14" type="Sprite3D" parent="Cloud"]
-transform = Transform( -0.738574, -0.674653, -2.94942e-08, 0.674653, -0.738574, -7.59902e-08, 2.95005e-08, -7.6006e-08, 0.999493, -20.9109, -30.0093, 0 )
+[node name="Cloud" type="Sprite3D" parent="Node"]
+transform = Transform( -4.42257, 4.37693, 3.44255e-08, 0, -2.71836e-07, 1.119, 4.37693, 4.42257, 3.47845e-08, 89.2925, 154.506, 60.6187 )
 cast_shadow = 3
-modulate = Color( 0.52549, 0.541176, 1, 0.498039 )
-opacity = 0.574066
+modulate = Color( 0.52549, 0.541176, 1, 0.219608 )
 pixel_size = 0.09
 shaded = true
 alpha_cut = 2
@@ -330,14 +328,15 @@ alpha_cut = 2
 texture = ExtResource( 15 )
 
 [node name="Sprite3D2" type="Sprite3D" parent="Island"]
-transform = Transform( 1, 2.98023e-08, -1.77636e-15, -2.98023e-08, 1, -7.10543e-15, -1.77636e-15, 0, 1, 0, 0, 2.68341 )
+transform = Transform( 1, 1.49012e-07, -3.55271e-15, -1.49012e-07, 1, -1.06581e-14, -3.55271e-15, 0, 1, 0, 0, 4.98415 )
 pixel_size = 0.09
 shaded = true
 alpha_cut = 2
 texture = ExtResource( 15 )
 
 [node name="Sprite3D3" type="Sprite3D" parent="Island"]
-transform = Transform( 1.18725, 0.470544, 2.0568e-08, -0.470544, 1.18725, 8.18477e-09, -2.05681e-08, 8.18479e-09, 1, 11.4518, -8.13631, 0.636235 )
+transform = Transform( 1.18725, 0.470544, 2.0568e-08, -0.470544, 1.18725, 8.18477e-09, -2.05681e-08, 8.18479e-09, 1, 11.4518, -8.13631, 2.93697 )
+cast_shadow = 0
 modulate = Color( 0.52549, 0.541176, 1, 0.498039 )
 pixel_size = 0.09
 shaded = true
@@ -345,7 +344,8 @@ alpha_cut = 2
 texture = ExtResource( 16 )
 
 [node name="Sprite3D4" type="Sprite3D" parent="Island"]
-transform = Transform( -1.41729, -0.0540558, -2.36285e-09, 0.139009, -1.05792, -7.252e-08, 6.07619e-09, -7.25201e-08, 0.601143, 6.97132, 12.788, -2.27374 )
+transform = Transform( -1.41729, -0.0540559, -2.36287e-09, 0.139009, -1.05792, -7.252e-08, 6.07619e-09, -7.25201e-08, 0.601143, 6.97132, 12.788, 0.0269964 )
+cast_shadow = 0
 modulate = Color( 0.572549, 0.713726, 1, 0.388235 )
 pixel_size = 0.09
 shaded = true
@@ -353,42 +353,43 @@ alpha_cut = 2
 texture = ExtResource( 16 )
 
 [node name="Sprite3D6" type="Sprite3D" parent="Island"]
-transform = Transform( -0.880319, 0.503001, 2.1987e-08, -0.635803, -0.632021, -5.39032e-08, -2.77918e-08, -5.39033e-08, 0.601143, 1.07348, 8.51697, 6.12997 )
+transform = Transform( -0.880319, 0.503001, 2.1987e-08, -0.635803, -0.632021, -5.39032e-08, -2.77918e-08, -5.39033e-08, 0.601143, 1.07348, 8.51696, 8.43071 )
 pixel_size = 0.09
 shaded = true
 alpha_cut = 2
 texture = ExtResource( 17 )
 
 [node name="Sprite3D7" type="Sprite3D" parent="Island"]
-transform = Transform( -0.594992, -0.0387264, -1.69273e-09, 0.0799346, -0.444875, -4.57229e-08, 3.49406e-09, -4.57229e-08, 0.601143, 7.80003, 5.09916, 4.43244 )
+transform = Transform( -0.594992, -0.0387264, -1.69273e-09, 0.0799346, -0.444875, -4.57229e-08, 3.49406e-09, -4.57229e-08, 0.601143, 7.80003, 5.09915, 6.73318 )
 pixel_size = 0.09
 shaded = true
 alpha_cut = 2
 texture = ExtResource( 17 )
 
 [node name="Sprite3D8" type="Sprite3D" parent="Island"]
-transform = Transform( -1.10749, -0.0720838, -3.15077e-09, 0.148787, -0.828072, -6.2473e-08, 6.50369e-09, -6.2473e-08, 0.601143, 25.4121, 9.98087, 4.43244 )
+transform = Transform( -1.10749, -0.0720839, -3.15078e-09, 0.148787, -0.828072, -6.2473e-08, 6.50369e-09, -6.2473e-08, 0.601143, 25.4121, 9.98085, 6.73318 )
 pixel_size = 0.09
 shaded = true
 alpha_cut = 2
 texture = ExtResource( 17 )
 
 [node name="Sprite3D9" type="Sprite3D" parent="Island"]
-transform = Transform( -0.614532, -0.534977, -2.33845e-08, 0.748719, -0.482625, -4.7373e-08, 3.27276e-08, -4.7373e-08, 0.601143, 27.1851, -2.0703, 4.3396 )
+transform = Transform( -0.614532, -0.534977, -2.33845e-08, 0.748719, -0.482625, -4.7373e-08, 3.27276e-08, -4.7373e-08, 0.601143, 27.1851, -2.07031, 6.64034 )
 pixel_size = 0.09
 shaded = true
 alpha_cut = 2
 texture = ExtResource( 17 )
 
 [node name="Sprite3D10" type="Sprite3D" parent="Island"]
-transform = Transform( -1.02971, -0.0670213, -2.92949e-09, 0.138337, -0.769917, -5.99309e-08, 6.04695e-09, -5.99309e-08, 0.601143, 20.2027, -5.45749, 4.3396 )
+transform = Transform( -1.02971, -0.0670213, -2.9295e-09, 0.138337, -0.769917, -5.99309e-08, 6.04695e-09, -5.99309e-08, 0.601143, 20.2027, -5.4575, 6.64034 )
 pixel_size = 0.09
 shaded = true
 alpha_cut = 2
 texture = ExtResource( 17 )
 
 [node name="Sprite3D5" type="Sprite3D" parent="Island"]
-transform = Transform( -0.299148, -1.41467, -6.18371e-08, 1.41467, -0.299148, -3.93532e-08, 6.18372e-08, -3.9353e-08, 0.601143, -19.1934, 2.24346, -0.217492 )
+transform = Transform( -0.299148, -1.41467, -6.18371e-08, 1.41467, -0.299148, -3.93532e-08, 6.18372e-08, -3.9353e-08, 0.601143, -19.1934, 2.24346, 2.08324 )
+cast_shadow = 0
 modulate = Color( 0.498039, 0.65098, 1, 0.270588 )
 pixel_size = 0.09
 shaded = true
@@ -396,7 +397,13 @@ alpha_cut = 2
 texture = ExtResource( 16 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="Island"]
-transform = Transform( -12.7287, -0.00192949, 34.982, 36.5075, 0.00551354, 12.1968, -0.0145077, 5.27106, 1.57938e-05, 6.27348, -3.34324, -5.4465 )
+transform = Transform( -10.7692, -0.00163246, 29.5969, 30.8876, 0.00466429, 10.3192, -0.0439699, 15.9742, 4.66993e-05, -1.99279, 17.2732, -19.3626 )
+cast_shadow = 0
+mesh = SubResource( 9 )
+material/0 = ExtResource( 5 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="Island"]
+transform = Transform( -10.42, -0.00157994, 31.0085, 31.1106, 0.00469793, 11.2206, -0.0377091, 13.6998, 4.01537e-05, 6.99171, -6.12271, -17.8174 )
 cast_shadow = 0
 mesh = SubResource( 9 )
 material/0 = SubResource( 10 )

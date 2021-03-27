@@ -1,4 +1,3 @@
-tool
 extends Sprite3D
 
 
@@ -11,6 +10,7 @@ var start_opacity
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
 	pass # Replace with function body.
 	rand = rand_range(-1,1)
 	time = 0
