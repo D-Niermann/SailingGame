@@ -2,7 +2,7 @@ extends DirectionalLight
 
 
 # Declare member variables here. Examples:
-var time = 90
+var time = 0
 onready var start_transform = self.transform
 
 

@@ -87,7 +87,7 @@ size = Vector2( 5, 5 )
 [sub_resource type="ParticlesMaterial" id=16]
 lifetime_randomness = 0.32
 emission_shape = 2
-emission_box_extents = Vector3( 2.62, 1, 0.54 )
+emission_box_extents = Vector3( 2.11, 1, 0.54 )
 direction = Vector3( 1, 1, 0 )
 spread = 18.64
 gravity = Vector3( -10, 0, -4 )
@@ -394,14 +394,13 @@ mesh = SubResource( 8 )
 material/0 = null
 
 [node name="Particles" type="Particles" parent="HFront"]
-transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.00045183, 0.16377, -0.23537, -0.000314459, 0.235371, 0.163769, 0.559953, 0.599354, -0.567806 )
+transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.00045183, 0.16377, -0.23537, -0.000314459, 0.235371, 0.163769, 0.907872, 0.119683, -0.234054 )
 material_override = SubResource( 9 )
 cast_shadow = 0
-emitting = false
 amount = 30
 lifetime = 3.0
 randomness = 0.26
-visibility_aabb = AABB( -9.27938, -5.19, -10.2165, 24.82, 20.92, 22.0981 )
+visibility_aabb = AABB( -9.27938, -5.19, -16.7651, 24.82, 20.92, 35.1953 )
 local_coords = false
 process_material = SubResource( 14 )
 draw_pass_1 = SubResource( 15 )
@@ -445,14 +444,14 @@ mesh = SubResource( 8 )
 material/0 = null
 
 [node name="Particles" type="Particles" parent="HLeft"]
-transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.000314459, -0.235371, -0.163769, 0.000451831, 0.16377, -0.23537, 0, 0, 0 )
+transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.000355047, 0.219108, -0.184963, -0.000420687, 0.184964, 0.219107, 0, 0.595014, -0.414007 )
 material_override = SubResource( 9 )
 cast_shadow = 0
 emitting = false
 amount = 30
 lifetime = 2.0
 randomness = 0.26
-visibility_aabb = AABB( -12.8607, -9.59574, -10.2165, 24.82, 20.92, 22.0981 )
+visibility_aabb = AABB( -12.8197, -9.59574, -15.9361, 24.82, 20.92, 33.0715 )
 local_coords = false
 process_material = SubResource( 14 )
 draw_pass_1 = SubResource( 15 )
@@ -470,7 +469,7 @@ mesh = SubResource( 8 )
 material/0 = null
 
 [node name="Particles" type="Particles" parent="HRight"]
-transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.000314459, -0.235371, -0.163769, 0.000451831, 0.16377, -0.23537, 0.0115791, 1.26958e-05, 1.8239e-05 )
+transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.000314459, -0.235371, -0.163769, 0.000451831, 0.16377, -0.23537, 0.0115792, 0.456603, -0.423875 )
 material_override = SubResource( 9 )
 cast_shadow = 0
 emitting = false

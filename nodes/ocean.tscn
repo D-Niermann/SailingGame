@@ -46,6 +46,9 @@ cast_shadow = 0
 mesh = ExtResource( 3 )
 material/0 = null
 script = ExtResource( 5 )
+__meta__ = {
+"_editor_description_": ""
+}
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, -0.160054, 0.987109, 0, -0.987109, -0.160054, 0, 0, 0 )

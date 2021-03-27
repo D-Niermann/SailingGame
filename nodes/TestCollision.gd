@@ -51,6 +51,7 @@ func _process(delta):
 			default_drag_factor = water_drag
 			# default_gravity = water_gravity ## TODO: lets bullets shoot a bit up when hitting water, why?
 			waterEntered = true
+			$Trail.emitting = false
 			$Particles.emitting = true
 	## check collisions and move the object 
 	var coll = move_and_collide(dir*velocity, false,false,true)

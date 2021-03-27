@@ -77,7 +77,9 @@ albedo_color = Color( 0.266667, 0.207843, 0.0666667, 1 )
 
 [node name="ocean" parent="." instance=ExtResource( 1 )]
 
-[node name="ui" parent="." instance=ExtResource( 4 )]
+[node name="ui" parent="." groups=[
+"GUI",
+] instance=ExtResource( 4 )]
 
 [node name="PlayerShipContainer" parent="." instance=ExtResource( 13 )]
 transform = Transform( 0.31051, 0, -0.95057, 0, 1, 0, 0.95057, 0, 0.31051, -14.3067, 6.26637, 4.43387 )
@@ -257,7 +259,7 @@ stringToHuman1 = "../PlayerShipContainer/Ship/Human"
 stringToHuman2 = "../NavMeshCont/Navigation/Human"
 pathToC1 = "../PlayerShipContainer/Ship"
 pathToC2 = "../NavMeshCont"
-a = 1.55553e+06
+a = 1.57049e+06
 
 [node name="Terrain" type="MeshInstance" parent="."]
 transform = Transform( 598.053, 1.20345, 0, -1.93904, 2.1846, 0, 0, 0, 395.96, 29.7657, -12.3204, 1.57804 )

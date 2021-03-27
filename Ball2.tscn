@@ -24,12 +24,12 @@ albedo_color = Color( 1, 1, 1, 0.392157 )
 albedo_texture = ExtResource( 5 )
 metallic_specular = 0.45
 
-[sub_resource type="Gradient" id=10]
+[sub_resource type="Gradient" id=4]
 offsets = PoolRealArray( 0, 0.162602, 0.633423, 0.781671 )
 colors = PoolColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0.0304779, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=11]
-gradient = SubResource( 10 )
+[sub_resource type="GradientTexture" id=5]
+gradient = SubResource( 4 )
 
 [sub_resource type="Curve" id=6]
 _data = [ Vector2( 0, 0.2125 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.839773 ), 0.0, 0.0, 0, 0 ]
@@ -51,7 +51,7 @@ angle_random = 1.0
 scale = 0.5
 scale_random = 1.0
 scale_curve = SubResource( 7 )
-color_ramp = SubResource( 11 )
+color_ramp = SubResource( 5 )
 
 [sub_resource type="QuadMesh" id=9]
 size = Vector2( 5, 5 )
@@ -76,7 +76,7 @@ reactionSpeed = 1.0
 [node name="Particles" parent="." instance=ExtResource( 4 )]
 lifetime = 3.0
 
-[node name="trail" parent="." instance=ExtResource( 4 )]
+[node name="Trail" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0211141, 0, 0.00772725 )
 material_override = SubResource( 3 )
 emitting = true
