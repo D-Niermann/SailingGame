@@ -19,12 +19,13 @@ var maxRotateAngle = 20 # in degree
 var camera
 var org_rotation 
 var position3D
+var particles
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	camera = get_tree().get_nodes_in_group("Camera")[0]
 	org_rotation = transform.basis.get_euler().y*180/PI
-
+	particles = $Particles
 
 	# line = $LineRenderer
 	# line.points = []
@@ -41,7 +42,7 @@ func _process(delta):
 	up = global_transform.basis.y.normalized()
 
 	forward = global_transform.basis.x.normalized()
-
+	
 	# predictTrajectory()
 
 func _input(event):
@@ -78,6 +79,7 @@ func predictTrajectory():
 		point += forward*force
 		
 func fireBall():
+	doParticles()
 	yield(get_tree().create_timer(rand_range(0,rand_max_delay)),"timeout")
 	var scene = load("res://Ball2.tscn")
 	var ball = scene.instance()
@@ -105,3 +107,8 @@ func getAngleDist_deg(from, to):
 	var max_angle = 360
 	var difference = fmod(to - from, max_angle)
 	return fmod(2 * difference, max_angle) - difference
+
+func doParticles():
+	particles.emitting = true
+	yield(get_tree().create_timer(1),"timeout")
+	particles.emitting = false
