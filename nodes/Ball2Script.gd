@@ -6,7 +6,7 @@ extends KinematicBody
 # var b = "text"
 var velocity = 6 
 var dir = Vector3(-1,0,0)
-var default_gravity = 10
+var default_gravity = 5
 var gravity = default_gravity
 var gravity_dir = Vector3(0,-1,0)
 var water_gravity = default_gravity/4 # gravity force when underwater
@@ -57,12 +57,17 @@ func _process(delta):
 	var coll = move_and_collide(dir*velocity, false,false,true)
 	# var coll2 = move_and_collide(gravity_dir*gravity*delta, false,false,true)
 	# print(coll)
+
+	## vertical move
 	if velocity>vel_penetrate_thresh:
 		translate(dir*velocity)
 	else:
 		move_and_slide(dir*velocity)
 	if not isInsideBody:
+		## gravity move
 		move_and_slide(gravity_dir*gravity*grav_time*pow(drag_factor,4))
+	if velocity<1:
+		$Trail.emitting = false
 		# if coll2!=null:
 		# 	time = 0
 	
@@ -76,7 +81,7 @@ func _process(delta):
 		## if collision with object
 		if not isInsideBody:
 			angle = abs(coll.normal.normalized().angle_to(translation-last_pos)*180/PI-180)
-			print(angle)
+			# print(angle)
 			if angle>ricochet_thresh and velocity>vel_penetrate_thresh:
 				## redirect ball
 				dir += (coll.normal.normalized()) ## reflext direction at normal

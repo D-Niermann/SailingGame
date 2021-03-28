@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://nodes/TestCollision.gd" type="Script" id=1]
+[ext_resource path="res://nodes/Ball2Script.gd" type="Script" id=1]
 [ext_resource path="res://materials/Black.tres" type="Material" id=2]
 [ext_resource path="res://nodes/Boye.gd" type="Script" id=3]
 [ext_resource path="res://nodes/WaterEnteredParticles.tscn" type="PackedScene" id=4]

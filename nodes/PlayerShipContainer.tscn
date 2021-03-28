@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://nodes/Boye.gd" type="Script" id=1]
 [ext_resource path="res://ShipManager.gd" type="Script" id=2]
@@ -35,12 +35,12 @@ albedo_color = Color( 0.152941, 0.117647, 0.0862745, 1 )
 flags_unshaded = true
 albedo_color = Color( 0.168627, 0.12549, 0.0705882, 1 )
 
-[sub_resource type="BoxShape" id=8]
+[sub_resource type="BoxShape" id=20]
 extents = Vector3( 5, 1.8183, 0.2 )
 
-[sub_resource type="CapsuleMesh" id=9]
+[sub_resource type="CapsuleMesh" id=21]
 
-[sub_resource type="SpatialMaterial" id=10]
+[sub_resource type="SpatialMaterial" id=22]
 render_priority = 1
 flags_transparent = true
 flags_vertex_lighting = true
@@ -53,20 +53,20 @@ albedo_color = Color( 1, 1, 1, 0.392157 )
 albedo_texture = ExtResource( 6 )
 metallic_specular = 0.45
 
-[sub_resource type="Gradient" id=11]
+[sub_resource type="Gradient" id=23]
 offsets = PoolRealArray( 0, 0.162602, 0.548781 )
 colors = PoolColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=12]
-gradient = SubResource( 11 )
+[sub_resource type="GradientTexture" id=24]
+gradient = SubResource( 23 )
 
-[sub_resource type="Curve" id=13]
+[sub_resource type="Curve" id=25]
 _data = [ Vector2( 0, 0.535838 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=14]
-curve = SubResource( 13 )
+[sub_resource type="CurveTexture" id=26]
+curve = SubResource( 25 )
 
-[sub_resource type="ParticlesMaterial" id=15]
+[sub_resource type="ParticlesMaterial" id=27]
 lifetime_randomness = 0.32
 emission_shape = 2
 emission_box_extents = Vector3( 1, 1, 1 )
@@ -81,13 +81,13 @@ angle = 263.7
 angle_random = 1.0
 scale = 0.46
 scale_random = 1.0
-scale_curve = SubResource( 14 )
-color_ramp = SubResource( 12 )
+scale_curve = SubResource( 26 )
+color_ramp = SubResource( 24 )
 
-[sub_resource type="QuadMesh" id=16]
+[sub_resource type="QuadMesh" id=28]
 size = Vector2( 5, 5 )
 
-[sub_resource type="ParticlesMaterial" id=17]
+[sub_resource type="ParticlesMaterial" id=29]
 lifetime_randomness = 0.32
 emission_shape = 2
 emission_box_extents = Vector3( 2.11, 1, 0.54 )
@@ -101,10 +101,10 @@ angular_velocity_random = 1.0
 damping = 12.68
 damping_random = 0.12
 scale_random = 1.0
-scale_curve = SubResource( 14 )
-color_ramp = SubResource( 12 )
+scale_curve = SubResource( 26 )
+color_ramp = SubResource( 24 )
 
-[sub_resource type="SpatialMaterial" id=18]
+[sub_resource type="SpatialMaterial" id=30]
 flags_transparent = true
 flags_vertex_lighting = true
 vertex_color_use_as_albedo = true
@@ -112,6 +112,19 @@ params_billboard_mode = 2
 albedo_color = Color( 1, 1, 1, 0.121569 )
 albedo_texture = ExtResource( 11 )
 metallic_specular = 0.45
+
+[sub_resource type="Gradient" id=11]
+offsets = PoolRealArray( 0, 0.162602, 0.548781 )
+colors = PoolColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=12]
+gradient = SubResource( 11 )
+
+[sub_resource type="Curve" id=13]
+_data = [ Vector2( 0, 0.535838 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=14]
+curve = SubResource( 13 )
 
 [sub_resource type="ParticlesMaterial" id=19]
 lifetime_randomness = 0.32
@@ -373,208 +386,208 @@ omni_attenuation = 0.406126
 script = ExtResource( 10 )
 
 [node name="Cannon" parent="Ship" instance=ExtResource( 12 )]
-transform = Transform( -1.38316e-07, 1.5937e-07, 3.99999, 1.03527, 3.86424, -1.18119e-07, -3.8637, 1.03542, -1.74845e-07, -16.3093, 1.25261, -6.3353 )
+transform = Transform( -1.38316e-07, 1.5937e-07, 3.99999, 0.119358, 3.99877, -1.55149e-07, -3.99821, 0.119379, -1.43009e-07, -16.3093, 1.36852, -6.35216 )
 
 [node name="Cannon2" parent="Ship" instance=ExtResource( 12 )]
-transform = Transform( -1.64024e-07, 6.3405e-08, 3.99999, 1.03527, 3.86369, -1.87922e-08, -3.8637, 1.03527, -1.74845e-07, 16.4925, 1.60241, -6.61749 )
+transform = Transform( -1.64024e-07, 6.3405e-08, 3.99999, 0.119358, 3.9982, -5.84823e-08, -3.99821, 0.11936, -1.65843e-07, 16.4925, 1.64408, -6.70721 )
 
 [node name="Cannon3" parent="Ship" instance=ExtResource( 12 )]
-transform = Transform( -1.64024e-07, 6.3405e-08, 3.99999, 1.03527, 3.86369, -1.87922e-08, -3.8637, 1.03527, -1.74845e-07, 2.98615, 0.873991, -6.90934 )
+transform = Transform( -1.64024e-07, 6.3405e-08, 3.99999, 0.119358, 3.9982, -5.84823e-08, -3.99821, 0.11936, -1.65843e-07, 2.98615, 0.868089, -6.82379 )
 
 [node name="Cannon4" parent="Ship" instance=ExtResource( 12 )]
-transform = Transform( -1.64024e-07, 6.3405e-08, 3.99999, 1.03527, 3.86369, -1.87922e-08, -3.8637, 1.03527, -1.74845e-07, -6.23833, 1.15969, -7.34717 )
+transform = Transform( -1.64024e-07, 6.3405e-08, 3.99999, 0.119358, 3.9982, -5.84823e-08, -3.99821, 0.11936, -1.65843e-07, -6.23833, 1.04549, -7.31557 )
 
 [node name="Cannon5" parent="Ship" instance=ExtResource( 12 )]
-transform = Transform( 2.91425e-07, -7.91925e-08, -3.99999, 1.03527, 3.86369, -1.068e-09, 3.8637, -1.03527, 3.01991e-07, 13.0326, 1.68001, 9.1745 )
+transform = Transform( 2.91425e-07, -7.91925e-08, -3.99999, 0.195394, 3.99521, -6.48621e-08, 3.99522, -0.195396, 2.94945e-07, 13.0326, 1.54486, 9.28329 )
 
 [node name="Cannon6" parent="Ship" instance=ExtResource( 12 )]
-transform = Transform( 2.91425e-07, -7.91925e-08, -3.99999, 1.03527, 3.86369, -1.068e-09, 3.8637, -1.03527, 3.01991e-07, -13.133, 1.68507, 8.29564 )
+transform = Transform( 2.91425e-07, -7.91925e-08, -3.99999, 0.195394, 3.99521, -6.48621e-08, 3.99522, -0.195396, 2.94945e-07, -13.133, 1.73553, 8.42534 )
 
 [node name="Cannon7" parent="Ship" instance=ExtResource( 12 )]
-transform = Transform( 2.91425e-07, -7.91925e-08, -3.99999, 1.03527, 3.86369, -1.068e-09, 3.8637, -1.03527, 3.01991e-07, -3.47707, 0.521869, 8.01866 )
+transform = Transform( 2.91425e-07, -7.91925e-08, -3.99999, 0.195394, 3.99521, -6.48621e-08, 3.99522, -0.195396, 2.94945e-07, -3.47707, 0.657133, 7.9088 )
 
 [node name="Cannon8" parent="Ship" instance=ExtResource( 12 )]
-transform = Transform( 2.91425e-07, -7.91925e-08, -3.99999, 1.03527, 3.86369, -1.068e-09, 3.8637, -1.03527, 3.01991e-07, 5.74743, 1.2258, 8.58619 )
+transform = Transform( 2.91425e-07, -7.91925e-08, -3.99999, 0.195394, 3.99521, -6.48621e-08, 3.99522, -0.195396, 2.94945e-07, 5.74743, 1.22523, 8.61228 )
 
 [node name="RightTopWalls" type="Spatial" parent="Ship"]
-transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, 0.10144, 0, -0.206089 )
+transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 4, 0.10144, -2.30138, -0.206089 )
 
 [node name="Wall" type="KinematicBody" parent="Ship/RightTopWalls"]
 transform = Transform( 0.249373, 0, -0.0177003, 0, 0.25, 0, 0.0177003, 0, 0.249373, -1.52931, 0.49058, 2.33137 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/RightTopWalls/Wall"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall3" type="KinematicBody" parent="Ship/RightTopWalls"]
 transform = Transform( 0.247299, 0, -0.0366503, 0, 0.25, 0, 0.0366503, 0, 0.247299, -4.02016, 0.49058, 2.07543 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/RightTopWalls/Wall3"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall4" type="KinematicBody" parent="Ship/RightTopWalls"]
 transform = Transform( 0.245382, 0, -0.0478307, 0, 0.25, 0, 0.0478307, 0, 0.245382, -5.69074, 0.49058, 1.72873 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/RightTopWalls/Wall4"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall2" type="KinematicBody" parent="Ship/RightTopWalls"]
 transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0.905159, 0.444099, 2.39639 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/RightTopWalls/Wall2"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall5" type="KinematicBody" parent="Ship/RightTopWalls"]
 transform = Transform( 0.249216, 0, 0.0197888, 0, 0.25, 0, -0.0197888, 0, 0.249216, 3.38977, 0.444099, 2.29895 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/RightTopWalls/Wall5"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall6" type="KinematicBody" parent="Ship/RightTopWalls"]
 transform = Transform( 0.237178, 0, 0.0790364, 0, 0.25, 0, -0.0790364, 0, 0.237178, 5.77427, 0.444099, 1.78931 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/RightTopWalls/Wall6"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall7" type="KinematicBody" parent="Ship/RightTopWalls"]
 transform = Transform( 0.223304, 0, 0.112408, 0, 0.25, 0, -0.112408, 0, 0.223304, 8.06975, 0.444099, 0.80727 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/RightTopWalls/Wall7"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="RightBottomWalls" type="Spatial" parent="Ship"]
-transform = Transform( 4, 0, 0, 0, 5.83, 0, 0, 0, 4, 0.10144, -5.42128, -0.206089 )
+transform = Transform( 4, 0, 0, 0, 5.83, 0, 0, 0, 4, 0.10144, -7.72266, -0.206089 )
 
 [node name="Wall" type="KinematicBody" parent="Ship/RightBottomWalls"]
 transform = Transform( 0.249373, 0, -0.0177003, 0, 0.25, 0, 0.0177003, 0, 0.249373, -1.52931, 0.49058, 2.33137 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/RightBottomWalls/Wall"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall3" type="KinematicBody" parent="Ship/RightBottomWalls"]
 transform = Transform( 0.247299, 0, -0.0366503, 0, 0.25, 0, 0.0366503, 0, 0.247299, -4.02016, 0.49058, 2.07543 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/RightBottomWalls/Wall3"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall4" type="KinematicBody" parent="Ship/RightBottomWalls"]
 transform = Transform( 0.245382, 0, -0.0478307, 0, 0.25, 0, 0.0478307, 0, 0.245382, -5.69074, 0.49058, 1.72873 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/RightBottomWalls/Wall4"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall2" type="KinematicBody" parent="Ship/RightBottomWalls"]
 transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0.905159, 0.444099, 2.39639 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/RightBottomWalls/Wall2"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall5" type="KinematicBody" parent="Ship/RightBottomWalls"]
 transform = Transform( 0.249216, 0, 0.0197888, 0, 0.25, 0, -0.0197888, 0, 0.249216, 3.38977, 0.444099, 2.29895 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/RightBottomWalls/Wall5"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall6" type="KinematicBody" parent="Ship/RightBottomWalls"]
 transform = Transform( 0.237178, 0, 0.0790364, 0, 0.25, 0, -0.0790364, 0, 0.237178, 5.77427, 0.444099, 1.78931 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/RightBottomWalls/Wall6"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall7" type="KinematicBody" parent="Ship/RightBottomWalls"]
 transform = Transform( 0.223304, 0, 0.112408, 0, 0.25, 0, -0.112408, 0, 0.223304, 8.06975, 0.444099, 0.80727 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/RightBottomWalls/Wall7"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="LeftTopWalls" type="Spatial" parent="Ship"]
-transform = Transform( 4, 3.49691e-07, 3.49691e-07, -3.49691e-07, 4, 0, 3.49691e-07, 3.0571e-14, -4, 0.116604, -9.53674e-07, 1.53873 )
+transform = Transform( 4, 3.49691e-07, 3.49691e-07, -3.49691e-07, 4, 0, 3.49691e-07, 3.0571e-14, -4, 0.116604, -2.30138, 1.53873 )
 
 [node name="Wall" type="KinematicBody" parent="Ship/LeftTopWalls"]
 transform = Transform( 0.249373, 0, -0.0177003, 0, 0.25, 0, 0.0177003, 0, 0.249373, -1.52931, 0.49058, 2.33137 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/LeftTopWalls/Wall"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall3" type="KinematicBody" parent="Ship/LeftTopWalls"]
 transform = Transform( 0.247299, 0, -0.0366503, 0, 0.25, 0, 0.0366503, 0, 0.247299, -4.02016, 0.49058, 2.07543 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/LeftTopWalls/Wall3"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall4" type="KinematicBody" parent="Ship/LeftTopWalls"]
 transform = Transform( 0.245382, 0, -0.0478307, 0, 0.25, 0, 0.0478307, 0, 0.245382, -5.69074, 0.49058, 1.72873 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/LeftTopWalls/Wall4"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall2" type="KinematicBody" parent="Ship/LeftTopWalls"]
 transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0.905159, 0.444099, 2.39639 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/LeftTopWalls/Wall2"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall5" type="KinematicBody" parent="Ship/LeftTopWalls"]
 transform = Transform( 0.249216, 0, 0.0197888, 0, 0.25, 0, -0.0197888, 0, 0.249216, 3.38977, 0.444099, 2.29895 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/LeftTopWalls/Wall5"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall6" type="KinematicBody" parent="Ship/LeftTopWalls"]
 transform = Transform( 0.237178, 0, 0.0790364, 0, 0.25, 0, -0.0790364, 0, 0.237178, 5.77427, 0.444099, 1.78931 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/LeftTopWalls/Wall6"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall7" type="KinematicBody" parent="Ship/LeftTopWalls"]
 transform = Transform( 0.223304, 0, 0.112408, 0, 0.25, 0, -0.112408, 0, 0.223304, 8.06975, 0.444099, 0.80727 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/LeftTopWalls/Wall7"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="LeftBottomWalls" type="Spatial" parent="Ship"]
-transform = Transform( 4, 8.80305e-07, 3.49691e-07, -6.03983e-07, 5.83, 0, 3.49691e-07, 7.69588e-14, -4, 0.116603, -5.4011, 1.53873 )
+transform = Transform( 4, 8.80305e-07, 3.49691e-07, -6.03983e-07, 5.83, 0, 3.49691e-07, 7.69588e-14, -4, 0.116603, -7.70248, 1.53873 )
 
 [node name="Wall" type="KinematicBody" parent="Ship/LeftBottomWalls"]
 transform = Transform( 0.249373, 0, -0.0177003, 0, 0.25, 0, 0.0177003, 0, 0.249373, -1.52931, 0.49058, 2.33137 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/LeftBottomWalls/Wall"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall3" type="KinematicBody" parent="Ship/LeftBottomWalls"]
 transform = Transform( 0.247299, 0, -0.0366503, 0, 0.25, 0, 0.0366503, 0, 0.247299, -4.02016, 0.49058, 2.07543 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/LeftBottomWalls/Wall3"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall4" type="KinematicBody" parent="Ship/LeftBottomWalls"]
 transform = Transform( 0.245382, 0, -0.0478307, 0, 0.25, 0, 0.0478307, 0, 0.245382, -5.69074, 0.49058, 1.72873 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/LeftBottomWalls/Wall4"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall2" type="KinematicBody" parent="Ship/LeftBottomWalls"]
 transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0.905159, 0.444099, 2.39639 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/LeftBottomWalls/Wall2"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall5" type="KinematicBody" parent="Ship/LeftBottomWalls"]
 transform = Transform( 0.249216, 0, 0.0197888, 0, 0.25, 0, -0.0197888, 0, 0.249216, 3.38977, 0.444099, 2.29895 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/LeftBottomWalls/Wall5"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall6" type="KinematicBody" parent="Ship/LeftBottomWalls"]
 transform = Transform( 0.237178, 0, 0.0790364, 0, 0.25, 0, -0.0790364, 0, 0.237178, 5.77427, 0.444099, 1.78931 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/LeftBottomWalls/Wall6"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="Wall7" type="KinematicBody" parent="Ship/LeftBottomWalls"]
 transform = Transform( 0.223304, 0, 0.112408, 0, 0.25, 0, -0.112408, 0, 0.223304, 8.06975, 0.444099, 0.80727 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/LeftBottomWalls/Wall7"]
-shape = SubResource( 8 )
+shape = SubResource( 20 )
 
 [node name="HFront" type="Spatial" parent="."]
 transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 5.70147, 0, 0 )
@@ -584,12 +597,12 @@ doPrint = 1
 [node name="MeshInstance" type="MeshInstance" parent="HFront"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, -3.91826e-09, 0, 3.91826e-09, 0.11, 0, 0, 0 )
 visible = false
-mesh = SubResource( 9 )
+mesh = SubResource( 21 )
 material/0 = null
 
 [node name="Particles" type="Particles" parent="HFront"]
 transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.00045183, 0.16377, -0.23537, -0.000314459, 0.235371, 0.163769, 0.907872, 0.119683, -0.234054 )
-material_override = SubResource( 10 )
+material_override = SubResource( 22 )
 cast_shadow = 0
 emitting = false
 amount = 30
@@ -597,8 +610,8 @@ lifetime = 3.0
 randomness = 0.26
 visibility_aabb = AABB( -9.27938, -5.19, -16.7651, 24.82, 20.92, 35.1953 )
 local_coords = false
-process_material = SubResource( 15 )
-draw_pass_1 = SubResource( 16 )
+process_material = SubResource( 27 )
+draw_pass_1 = SubResource( 28 )
 
 [node name="HBack" type="Spatial" parent="."]
 transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -4.40235, 0, 0 )
@@ -608,13 +621,13 @@ doPrint = 1
 [node name="MeshInstance" type="MeshInstance" parent="HBack"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, -3.72529e-09, 0, 3.72529e-09, 0.11, 0, 0, 0 )
 visible = false
-mesh = SubResource( 9 )
+mesh = SubResource( 21 )
 material/0 = null
 
 [node name="Particles" type="Particles" parent="HBack"]
 transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.000314459, -0.235371, -0.163769, 0.00045183, 0.16377, -0.23537, 0.191698, 0, 0 )
 visible = false
-material_override = SubResource( 10 )
+material_override = SubResource( 22 )
 cast_shadow = 0
 emitting = false
 amount = 30
@@ -622,8 +635,8 @@ lifetime = 3.0
 randomness = 0.26
 visibility_aabb = AABB( -9.27938, -5.19, -10.2165, 24.82, 20.92, 22.0981 )
 local_coords = false
-process_material = SubResource( 15 )
-draw_pass_1 = SubResource( 16 )
+process_material = SubResource( 27 )
+draw_pass_1 = SubResource( 28 )
 
 [node name="HLeft" type="Spatial" parent="."]
 transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 0.403394, 0, -1.91274 )
@@ -633,12 +646,12 @@ doPrint = 1
 [node name="MeshInstance" type="MeshInstance" parent="HLeft"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, 0, 0, 0, 0.11, 0, 0, 0 )
 visible = false
-mesh = SubResource( 9 )
+mesh = SubResource( 21 )
 material/0 = null
 
 [node name="Particles" type="Particles" parent="HLeft"]
 transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.000355047, 0.219108, -0.184963, -0.000420687, 0.184964, 0.219107, 0, 0.595014, -0.414007 )
-material_override = SubResource( 10 )
+material_override = SubResource( 22 )
 cast_shadow = 0
 emitting = false
 amount = 30
@@ -646,8 +659,8 @@ lifetime = 2.0
 randomness = 0.26
 visibility_aabb = AABB( -12.8197, -9.59574, -15.9361, 24.82, 20.92, 33.0715 )
 local_coords = false
-process_material = SubResource( 15 )
-draw_pass_1 = SubResource( 16 )
+process_material = SubResource( 27 )
+draw_pass_1 = SubResource( 28 )
 
 [node name="HRight" type="Spatial" parent="."]
 transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 1.10096, 0, 2.3751 )
@@ -657,12 +670,12 @@ doPrint = 1
 [node name="MeshInstance" type="MeshInstance" parent="HRight"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, 0, 0, 0, 0.11, 0, 0, 0 )
 visible = false
-mesh = SubResource( 9 )
+mesh = SubResource( 21 )
 material/0 = null
 
 [node name="Particles" type="Particles" parent="HRight"]
 transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.000314459, -0.235371, -0.163769, 0.000451831, 0.16377, -0.23537, 0.0115792, 0.456603, -0.423875 )
-material_override = SubResource( 10 )
+material_override = SubResource( 22 )
 cast_shadow = 0
 emitting = false
 amount = 30
@@ -670,17 +683,17 @@ lifetime = 2.0
 randomness = 0.26
 visibility_aabb = AABB( -12.8607, -9.59574, -10.2165, 24.82, 20.92, 22.0981 )
 local_coords = false
-process_material = SubResource( 17 )
-draw_pass_1 = SubResource( 16 )
+process_material = SubResource( 29 )
+draw_pass_1 = SubResource( 28 )
 
 [node name="Rain" type="Particles" parent="."]
 transform = Transform( 0.941114, 0.338082, 0.00180669, 0.00191982, 6.14514e-07, -0.999997, -0.33808, 0.941119, -0.00064929, 0.726925, 15.5942, 0.461242 )
 visible = false
-material_override = SubResource( 18 )
+material_override = SubResource( 30 )
 amount = 3000
 lifetime = 3.0
 randomness = 0.26
 visibility_aabb = AABB( -12.8607, -9.59574, -10.2165, 24.82, 20.92, 22.0981 )
 local_coords = false
 process_material = SubResource( 19 )
-draw_pass_1 = SubResource( 16 )
+draw_pass_1 = SubResource( 28 )

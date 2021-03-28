@@ -88,7 +88,7 @@ func predictTrajectory():
 	for i in range(lineSize):
 		line.points[i] = point
 		point += Vector3(1,0,0)*force*1
-		point += Vector3(0,-1,0)*0.04*i
+		point += Vector3(0,-1,0)*0.02*i
 func clearTrajectory():
 	var point = Vector3(0,0,0)
 	for i in range(lineSize):
