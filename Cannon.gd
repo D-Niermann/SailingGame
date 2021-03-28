@@ -12,8 +12,8 @@ var rand_max_delay = 0.4 # max delay in seconds
 var ship # parent ship container
 ### vars for line rendering (but the gitHub LineRenderer lags so hard that i canceled it for now)
 var line
-var lineSize = 5
-var rotateSpeed = 0.02
+var lineSize = 30
+var rotateSpeed = 0.01
 var rotateMargin = 0.2 # error in rotation that is accepted (mouse position)
 var maxRotateAngle = 20 # in degree
 var camera
@@ -27,12 +27,13 @@ func _ready():
 	org_rotation = transform.basis.get_euler().y*180/PI
 	particles = $Particles
 
-	# line = $LineRenderer
-	# line.points = []
-	# for _i in range(lineSize):
-	# 	line.points.append(Vector3(0,0,0))
+	line = $LineRenderer
+	line.points = []
+	for _i in range(lineSize):
+		line.points.append(Vector3(0,0,0))
 	# ship = get_parent().get_parent().get_parent()
 	set_process_input(true) 
+	clearTrajectory()
 	pass
 
 
@@ -43,7 +44,7 @@ func _process(delta):
 
 	forward = global_transform.basis.x.normalized()
 	
-	# predictTrajectory()
+	
 
 func _input(event):
 	# Receives key input
@@ -52,8 +53,9 @@ func _input(event):
 		var from = camera.project_ray_origin(get_viewport().get_mouse_position())
 		var to = from + camera.project_ray_normal(get_viewport().get_mouse_position()) * 2000
 		position3D = to_local(dropPlane.intersects_ray( from, to ))
-		print((position3D))
+		# print((position3D))
 		if position3D.x >= 0:
+			predictTrajectory()
 			if position3D.z<-rotateMargin:
 				rotateLeft(position3D.z)
 			elif position3D.z>rotateMargin:
@@ -62,6 +64,7 @@ func _input(event):
 	if event.is_action_released("FireCannons"):
 		if position3D.x >= 0:
 			fireBall()
+			clearTrajectory()
 		
 	if event.is_action_released("RotateCannonLeft"):
 		rotateLeft()
@@ -76,8 +79,13 @@ func predictTrajectory():
 	var point = Vector3(0,0,0)
 	for i in range(lineSize):
 		line.points[i] = point
-		point += forward*force
-		
+		point += Vector3(1,0,0)*force*1
+		point += Vector3(0,-1,0)*0.04*i
+func clearTrajectory():
+	var point = Vector3(0,0,0)
+	for i in range(lineSize):
+		line.points[i] = point
+
 func fireBall():
 	doParticles()
 	yield(get_tree().create_timer(rand_range(0,rand_max_delay)),"timeout")

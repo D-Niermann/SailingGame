@@ -25,9 +25,13 @@ settings/stdout/print_fps=true
 
 [display]
 
+window/size/width=1680
+window/size/height=1050
 window/size/always_on_top=true
-window/size/test_width=946
-window/size/test_height=532
+window/size/test_width=1680
+window/size/test_height=1050
+window/stretch/mode="viewport"
+window/stretch/aspect="expand"
 
 [global]
 
