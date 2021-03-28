@@ -20,6 +20,7 @@ var camera
 var org_rotation 
 var position3D
 var particles
+var aimCannons
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -44,11 +45,7 @@ func _process(delta):
 
 	forward = global_transform.basis.x.normalized()
 	
-	
-
-func _input(event):
-	# Receives key input
-	if event.is_action("FireCannons"):
+	if aimCannons:
 		var dropPlane  = Plane(Vector3(0, 1, 0), 0)
 		var from = camera.project_ray_origin(get_viewport().get_mouse_position())
 		var to = from + camera.project_ray_normal(get_viewport().get_mouse_position()) * 2000
@@ -60,16 +57,27 @@ func _input(event):
 				rotateLeft(position3D.z)
 			elif position3D.z>rotateMargin:
 				rotateRight(position3D.z)
+		else:
+			clearTrajectory()
 
+
+	
+
+func _input(event):
+	# Receives key input
+	if event.is_action_pressed("FireCannons"):
+		aimCannons = true
 	if event.is_action_released("FireCannons"):
+		aimCannons = false
+		clearTrajectory()
 		if position3D.x >= 0:
 			fireBall()
-			clearTrajectory()
 		
 	if event.is_action_released("RotateCannonLeft"):
 		rotateLeft()
 	if event.is_action_released("RotateCannonRight"):
 		rotateRight()
+
 	# if Input.is_key_pressed(KEY_R):
 	# 	self.add_child(ball)
 	# 	ball.linear_velocity = Vector3(0,0,0)
@@ -93,7 +101,7 @@ func fireBall():
 	var ball = scene.instance()
 	get_tree().get_root().add_child(ball)
 	ball.set_name("Ball")
-	ball.transform.origin = self.global_transform.origin
+	ball.transform.origin = self.global_transform.origin+forward
 	ball.dir = forward
 	# ball.apply_impulse(ball.transform.origin,forward*force)
 	ball.velocity = force
@@ -118,5 +126,6 @@ func getAngleDist_deg(from, to):
 
 func doParticles():
 	particles.emitting = true
-	yield(get_tree().create_timer(1),"timeout")
-	particles.emitting = false
+	particles.restart()
+	# yield(get_tree().create_timer(1),"timeout")
+	
