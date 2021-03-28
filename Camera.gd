@@ -1,7 +1,6 @@
 extends Camera
 
 export(float, 0.0, 1.0) var sensitivity = 0.25
-export var playerShipPath = ""
 export var gameCam = true
 var camLock = false
 var playerShip
@@ -26,7 +25,8 @@ var _e = false
 
 
 func _ready():
-	playerShip = get_node(playerShipPath)
+	if get_tree().get_nodes_in_group("PlayerShip").size()>0:
+		playerShip = get_tree().get_nodes_in_group("PlayerShip")[0]
 
 func _input(event):
 
@@ -44,11 +44,11 @@ func _input(event):
 				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if event.pressed else Input.MOUSE_MODE_VISIBLE)
 			BUTTON_WHEEL_UP: # Increases max velocity
 				transform.origin.y -= 5
-				_vel_multiplier = clamp(_vel_multiplier * 1.1, 0.2, 100)
+				_vel_multiplier = clamp(_vel_multiplier / 1.05, 0.2, 100)
 				size -= 5
 			BUTTON_WHEEL_DOWN: # Decereases max velocity
 				transform.origin.y += 5
-				_vel_multiplier = clamp(_vel_multiplier / 1.1, 0.2, 100)
+				_vel_multiplier = clamp(_vel_multiplier * 1.05, 0.2, 100)
 				size += 5
 
 	# Receives key input
@@ -74,8 +74,8 @@ func _process(delta):
 	_update_mouselook()
 	_update_movement(delta)
 	if camLock:
-		transform.origin.x = get_node(playerShipPath).transform.origin.x
-		transform.origin.z = get_node(playerShipPath).transform.origin.z
+		transform.origin.x = playerShip.transform.origin.x
+		transform.origin.z = playerShip.transform.origin.z
 
 # Updates camera movement
 func _update_movement(delta):
@@ -125,6 +125,12 @@ func _update_mouselook():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _input(event):
+	# var space_state = get_world().direct_space_state
+	# # use global coordinates, not local to node
+	# var camera = get_node("../Camera")
+	
+	# var result = space_state.intersect_ray(camera.transform.origin, Vector3(0, -1000,0))
+#	print(result)
 	
 func _on_Body_mouse_entered(a):
 	print("Mouse2")

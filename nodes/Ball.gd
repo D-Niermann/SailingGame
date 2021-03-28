@@ -26,6 +26,7 @@ func _process(delta):
 	if global_transform.origin.y<-1000 or time>timeout_s:
 		self.queue_free()
 	if water.global_transform.origin.y > transform.origin.y:
+		## if under water
 		if not waterEntered:
 			waterEntered = true
 			$Particles.emitting = true

@@ -19,7 +19,7 @@ viewport_path = NodePath("render_targets/vector_map_buffer")
 
 [sub_resource type="Gradient" id=2]
 offsets = PoolRealArray( 0.0600522, 1 )
-colors = PoolColorArray( 0.194504, 0.592773, 0.473759, 1, 0.0590096, 0.285755, 0.487305, 1 )
+colors = PoolColorArray( 0.195642, 0.575684, 0.501086, 1, 0.0590096, 0.285755, 0.487305, 1 )
 
 [sub_resource type="GradientTexture" id=3]
 gradient = SubResource( 2 )
@@ -61,7 +61,7 @@ shader_param/underwater_tex_border = 4.0
 shader_param/underwater_texture = 0.14
 shader_param/underwater_color = 0.8
 shader_param/underwater_tiling = 3
-shader_param/beach_alpha_fadeout = 0.21
+shader_param/beach_alpha_fadeout = 0.22
 shader_param/beach_normal_fadeout = 0.3
 shader_param/beach_foam_depth = 2.0
 shader_param/beach_foam_distortion = 3.74
@@ -71,7 +71,7 @@ shader_param/swimthings_intensity = 0.0
 shader_param/swimthings_tiling = 1
 shader_param/flow_blend_timing = 1.0
 shader_param/flow_blend_stretch = 1.62
-shader_param/water_color_depth = 0.09
+shader_param/water_color_depth = 0.11
 shader_param/sss_strength = 5.0
 shader_param/water_color = SubResource( 3 )
 shader_param/vector_map = SubResource( 1 )

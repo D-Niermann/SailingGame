@@ -142,18 +142,6 @@ shaded = true
 alpha_cut = 2
 texture = SubResource( 1 )
 
-[node name="Cannon" parent="Ship/TopDeck" instance=ExtResource( 12 )]
-transform = Transform( -1.47528e-08, 3.14322e-09, 1.58245, 1.55565, -0.290008, 1.50789e-08, 0.210198, 1.12753, -2.80006e-10, -10.0865, 3.01429, 0.231448 )
-
-[node name="Cannon2" parent="Ship/TopDeck" instance=ExtResource( 12 )]
-transform = Transform( -1.47528e-08, 3.14322e-09, 1.58245, 1.55565, -0.290008, 1.50789e-08, 0.210198, 1.12753, -2.80006e-10, 0.264982, 2.6666, 0.232855 )
-
-[node name="Cannon3" parent="Ship/TopDeck" instance=ExtResource( 12 )]
-transform = Transform( -1.47528e-08, 3.14322e-09, 1.58245, 1.55565, -0.290008, 1.50789e-08, 0.210198, 1.12753, -2.80006e-10, -3.55504, 2.5571, -0.100696 )
-
-[node name="Cannon4" parent="Ship/TopDeck" instance=ExtResource( 12 )]
-transform = Transform( -1.47528e-08, 3.14322e-09, 1.58245, 1.55565, -0.290008, 1.50789e-08, 0.210198, 1.12753, -2.80006e-10, -7.20437, 2.78158, 0.101178 )
-
 [node name="LowerDeck" type="Sprite3D" parent="Ship"]
 transform = Transform( 3.8417, -1.31317e-07, -7.91951e-15, 0, -1.67926e-07, 5.30037, -1.31317e-07, -3.8417, -2.31687e-07, 2.62692, -5.76378, 0.995317 )
 layers = 3
@@ -381,11 +369,34 @@ omni_range = 1.5
 omni_attenuation = 0.406126
 script = ExtResource( 10 )
 
+[node name="Cannon" parent="Ship" instance=ExtResource( 12 )]
+transform = Transform( -1.38316e-07, 1.5937e-07, 3.99999, 1.03527, 3.86424, -1.18119e-07, -3.8637, 1.03542, -1.74845e-07, -13.5235, 1.60971, -7.66804 )
+
+[node name="Cannon2" parent="Ship" instance=ExtResource( 12 )]
+transform = Transform( -1.64024e-07, 6.3405e-08, 3.99999, 1.03527, 3.86369, -1.87922e-08, -3.8637, 1.03527, -1.74845e-07, 12.6421, 1.56598, -6.80564 )
+
+[node name="Cannon3" parent="Ship" instance=ExtResource( 12 )]
+transform = Transform( -1.64024e-07, 6.3405e-08, 3.99999, 1.03527, 3.86369, -1.87922e-08, -3.8637, 1.03527, -1.74845e-07, 2.98615, 0.436993, -6.41173 )
+
+[node name="Cannon4" parent="Ship" instance=ExtResource( 12 )]
+transform = Transform( -1.64024e-07, 6.3405e-08, 3.99999, 1.03527, 3.86369, -1.87922e-08, -3.8637, 1.03527, -1.74845e-07, -6.23833, 1.07952, -7.04796 )
+
+[node name="Cannon5" parent="Ship" instance=ExtResource( 12 )]
+transform = Transform( 2.91425e-07, -7.91925e-08, -3.99999, 1.03527, 3.86369, -1.068e-09, 3.8637, -1.03527, 3.01991e-07, 13.0326, 1.68001, 9.1745 )
+
+[node name="Cannon6" parent="Ship" instance=ExtResource( 12 )]
+transform = Transform( 2.91425e-07, -7.91925e-08, -3.99999, 1.03527, 3.86369, -1.068e-09, 3.8637, -1.03527, 3.01991e-07, -13.133, 1.68507, 8.29564 )
+
+[node name="Cannon7" parent="Ship" instance=ExtResource( 12 )]
+transform = Transform( 2.91425e-07, -7.91925e-08, -3.99999, 1.03527, 3.86369, -1.068e-09, 3.8637, -1.03527, 3.01991e-07, -3.47707, 0.521869, 8.01866 )
+
+[node name="Cannon8" parent="Ship" instance=ExtResource( 12 )]
+transform = Transform( 2.91425e-07, -7.91925e-08, -3.99999, 1.03527, 3.86369, -1.068e-09, 3.8637, -1.03527, 3.01991e-07, 5.74743, 1.2258, 8.58619 )
+
 [node name="HFront" type="Spatial" parent="."]
 transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 5.70147, 0, 0 )
 script = ExtResource( 1 )
 doPrint = 1
-reactionSpeed = 0.01
 
 [node name="MeshInstance" type="MeshInstance" parent="HFront"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, -3.91826e-09, 0, 3.91826e-09, 0.11, 0, 0, 0 )
@@ -397,6 +408,7 @@ material/0 = null
 transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.00045183, 0.16377, -0.23537, -0.000314459, 0.235371, 0.163769, 0.907872, 0.119683, -0.234054 )
 material_override = SubResource( 9 )
 cast_shadow = 0
+emitting = false
 amount = 30
 lifetime = 3.0
 randomness = 0.26
@@ -409,7 +421,6 @@ draw_pass_1 = SubResource( 15 )
 transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -4.40235, 0, 0 )
 script = ExtResource( 1 )
 doPrint = 1
-reactionSpeed = 0.01
 
 [node name="MeshInstance" type="MeshInstance" parent="HBack"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, -3.72529e-09, 0, 3.72529e-09, 0.11, 0, 0, 0 )
@@ -435,7 +446,6 @@ draw_pass_1 = SubResource( 15 )
 transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 0.403394, 0, -1.91274 )
 script = ExtResource( 1 )
 doPrint = 1
-reactionSpeed = 0.01
 
 [node name="MeshInstance" type="MeshInstance" parent="HLeft"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, 0, 0, 0, 0.11, 0, 0, 0 )
@@ -460,7 +470,6 @@ draw_pass_1 = SubResource( 15 )
 transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 1.10096, 0, 2.3751 )
 script = ExtResource( 1 )
 doPrint = 1
-reactionSpeed = 0.01
 
 [node name="MeshInstance" type="MeshInstance" parent="HRight"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, 0, 0, 0, 0.11, 0, 0, 0 )
