@@ -1,12 +1,19 @@
-extends Node
+extends Control
 
 
-# Declare member variables here.
-var tile = 1
-export var path: NodePath # this is the path to floor body which you want to place stuff on
+const CURRENCY: String = "g"
+const ITEM: PackedScene = preload("res://listItem.tscn")
+var open = null
+var selected = null
+var container = null
+
+const TEXTUREWIDTH: float = 64.0 # number of pixels in texture which will be considered as one tile
+const TILEWIDTH: float = 1.0 # width of one tile which all items must be designed accordingly
+const STACKED: bool = false
 var target = null
 var highlight = null
-var selected = null
+var hologram = null
+var resource = null
 var parent = null
 var coords = null
 var angle = 0.0
@@ -16,85 +23,116 @@ var rotSize = Vector3.ONE
 export var extra = -0.45 # height offset for three dimensional sprites and such
 export var switch: bool = true
 
+var leftClick: bool = false
+var rightClick: bool = false
+var scrollUp: bool = false
+var scrollDown: bool = false
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	container = get_node("TabContainer/ScrollContainer/VBoxContainer")
+
+
+# Catches only the input which has not been handled yet.
+func _unhandled_input(event):
+	if event.is_action_pressed("leftClick") && !event.is_echo():
+		leftClick = true
+	if event.is_action_pressed("rightClick") && !event.is_echo():
+		rightClick = true
+	if event.is_action_released("scrollUp"):
+		scrollUp = true
+	if event.is_action_released("scrollDown"):
+		scrollDown = true
+
 
 # Called every physics frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	target = get_node_or_null(path)
-	if switch != true || target == null:
+	if selected != null && (rightClick || switch == false):
+		selected = null
+	if open == null || selected == null:
+		deselect()
+	elif resource == null:
+		var itemName: String = selected.get_node("Name").text
+		var good: Dictionary = Economy.goods[itemName]
+		hologramFromResource(good["res"])
+	if switch == true && target == null:
 		if highlight != null:
 			var sprite = highlight.get_node("Sprite3D")
 			sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
 			highlight = null
+			placeOrDestroyHologram()
 		return
-	var viewport: Viewport = get_viewport()
+	var viewport: Viewport = get_tree().get_root().get_node("Terminal/ViewportContainer/Viewport")
 	var camera: Camera = viewport.get_camera()
 	var spaceState: PhysicsDirectSpaceState = camera.get_world().direct_space_state
-	var cursor = viewport.get_mouse_position()
+	var viewportContainer: ViewportContainer = viewport.get_parent()
+	var cursor = get_viewport().get_mouse_position() / viewportContainer.stretch_shrink
 	var hit: Dictionary
 	var from = camera.project_ray_origin(cursor)
 	var toward = camera.project_ray_normal(cursor)
 	var upward = target.global_transform.basis.y.normalized()
 	var intersection = Plane(upward, target.global_transform.origin.length()).intersects_ray(from, toward)
 	if intersection != null:
-		hit = spaceState.intersect_ray(from, intersection, [selected], 0b1)
+		hit = spaceState.intersect_ray(from, intersection, [hologram], 0b1)
 	var newHighlight = null
-	if selected != null:
-		if Input.is_action_just_pressed("ui_left"):
+	if hologram != null:
+		if scrollUp:# Input.is_action_just_released("scrollUp"):
 			rot += PI * 0.5
 			rotSize = Vector3(rotSize.z, size.y, rotSize.x)
-		elif Input.is_action_just_pressed("ui_right"):
+		elif scrollDown:# Input.is_action_just_released("scrollDown"):
 			rot -= PI * 0.5
 			rotSize = Vector3(rotSize.z, size.y, rotSize.x)
 		var canPlace = false
-		if !hit.empty() && hit.collider == target:
-			var offset = Vector3(fmod(rotSize.x, 2), 0, fmod(rotSize.z, 2)) * tile * 0.5 + tile * Vector3.UP * (size.y + extra)
-			var partition: Vector3 = (target.global_transform.xform_inv(hit.position) / tile).floor()
-			selected.global_transform.origin = target.global_transform.xform(partition + offset)
-			selected.global_transform.basis = target.global_transform.basis.rotated(upward, angle + rot)
-			var downward = -selected.global_transform.basis.y.normalized() * (size.y * tile * 0.5 + tile * 0.05)
-			var backward = selected.global_transform.basis.z.normalized() * (size.z * 0.5 * tile - 0.05 * tile)
-			var leftward = selected.global_transform.basis.x.normalized() * (size.x * 0.5 * tile - 0.05 * tile)
-			var originOfRay = selected.global_transform.origin - leftward
-			hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [selected], 0b1)
+		if !hit.empty() && (STACKED || hit.collider == target):
+			var offset = Vector3(fmod(rotSize.x, 2), 0, fmod(rotSize.z, 2)) * TILEWIDTH * 0.5 + TILEWIDTH * Vector3.UP * (size.y + extra)
+			var partition: Vector3 = (target.global_transform.xform_inv(hit.position) / TILEWIDTH).floor()
+			hologram.global_transform.origin = target.global_transform.xform(partition * TILEWIDTH + offset)
+			hologram.global_transform.basis = target.global_transform.basis.rotated(upward, rot)
+			var downward = -hologram.global_transform.basis.y.normalized() * (size.y * TILEWIDTH * 0.5 + TILEWIDTH * 0.25 - TILEWIDTH * extra)
+			var backward = hologram.global_transform.basis.z.normalized() * (size.z * 0.5 * TILEWIDTH - 0.05 * TILEWIDTH)
+			var leftward = hologram.global_transform.basis.x.normalized() * (size.x * 0.5 * TILEWIDTH - 0.05 * TILEWIDTH)
+			var originOfRay = hologram.global_transform.origin - leftward
+			hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], 0b1)
 			if !hit.empty() && hit.collider == target:
-				originOfRay = selected.global_transform.origin - backward
-				hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [selected], 0b1)
+				originOfRay = hologram.global_transform.origin - backward
+				hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], 0b1)
 				if !hit.empty() && hit.collider == target:
-					originOfRay = selected.global_transform.origin + leftward
-					hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [selected], 0b1)
+					originOfRay = hologram.global_transform.origin + leftward
+					hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], 0b1)
 					if !hit.empty() && hit.collider == target:
-						originOfRay = selected.global_transform.origin + backward
-						hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [selected], 0b1)
+						originOfRay = hologram.global_transform.origin + backward
+						hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], 0b1)
 						if !hit.empty() && hit.collider == target:
-							var coll = selected.move_and_collide(Vector3(0.0,0,0), false,false,true)
-							print(coll.collider_id)
-							if !coll || coll.collider == target:
+							var collision: KinematicCollision = hologram.move_and_collide(Vector3.ZERO, false, false, true)
+							if !collision:
 								canPlace = true
-		if Input.is_action_just_pressed("ui_cancel"):
+		if rightClick:
 			if parent != null:
-				placeOrDestroy()
+				placeOrDestroyHologram()
 		elif canPlace:
-			var sprite = selected.get_node("Sprite3D")
+			var sprite = hologram.get_node("Sprite3D")
 			sprite.modulate = Color(0.0, 1.0, 0.0, 0.5)
-			if Input.is_action_just_pressed("ui_accept"):
+			if leftClick:
 				parent = target
-				coords = selected.global_transform.origin -  parent.global_transform.origin
-				angle = angle + rot
-				placeOrDestroy()
+				coords = hologram.global_transform.origin -  parent.global_transform.origin
+				angle = rot
+				placeOrDestroyHologram()
 		else:
-			var sprite = selected.get_node("Sprite3D")
+			var sprite = hologram.get_node("Sprite3D")
 			sprite.modulate = Color(1.0, 0.0, 0.0, 0.5)
 	else:
 		if !hit.empty():
 			var temp = hit.collider.get_parent()
 			if temp != null && temp == target:
-				if Input.is_action_just_pressed("ui_accept"):
-					selected = hit.collider
+				if leftClick:
+					resource = null
+					hologram = hit.collider
 					parent = temp
-					coords = selected.global_transform.origin - parent.global_transform.origin
-					angle = -signedAngle(parent.global_transform.basis.x.normalized(), selected.global_transform.basis.x.normalized(), parent.global_transform.basis.y.normalized())
+					coords = hologram.global_transform.origin - parent.global_transform.origin
+					angle = -Utility.signedAngle(parent.global_transform.basis.x.normalized(), hologram.global_transform.basis.x.normalized(), parent.global_transform.basis.y.normalized())
 					setSize()
-					rot = 0.0
+					rot = angle
 				else:
 					newHighlight = hit.collider
 	if highlight != null:
@@ -106,34 +144,68 @@ func _physics_process(delta):
 	if highlight != null:
 		var sprite = highlight.get_node("Sprite3D")
 		sprite.modulate = Color(1.0, 1.0, 0.0, 1.0)
+	leftClick = false
+	rightClick = false
+	scrollUp = false
+	scrollDown = false
 
 
-# Sets an external body as the selected node to be placed. May be useful at store/market.
-func selectOther(thing: KinematicBody):
-	selected = thing
+# Spawns and sets an external body as the hologram to be placed. May be useful at store/market.
+func hologramFromResource(path: String):
+	if resource != null:
+		hologram.queue_free()
+	resource = path
+	hologram = load(path).instance()
+	get_tree().get_root().get_node("Terminal/ViewportContainer/Viewport").add_child(hologram)
 	parent = null
 	coords = null
 	angle = 0.0
-	var sprite: Sprite3D = selected.get_node("Sprite3D")
-	var dimensions: Vector2 = sprite.texture.get_size() / 64.0
+	var sprite: Sprite3D = hologram.get_node("Sprite3D")
+	var dimensions: Vector2 = sprite.texture.get_size() / TEXTUREWIDTH
 	size = Vector3(dimensions.x, 1.0, dimensions.y)
-	selected.global_transform.basis = target.global_transform.basis
+	hologram.global_transform.basis = target.global_transform.basis
 	rotSize = size
 	rot = 0.0
 
 
-# Places an object, or destroys is if no parent is available.
-func placeOrDestroy():
-	if parent != null: # if there is no parent, it'll be destroyed
-		if selected.get_parent() != parent:
-			parent.add_child(selected)
-		selected.global_transform.origin = coords + parent.global_transform.origin
-		selected.global_transform.basis = parent.global_transform.basis.rotated(parent.global_transform.basis.y.normalized(), angle)
-		var sprite = selected.get_node("Sprite3D")
+# Destroys any hologram or resource.
+func destroyHologram():
+	parent = null
+	placeOrDestroyHologram()
+
+
+# Places current hologram or destroys it.
+func placeOrDestroyHologram():
+	if resource != null:
+		if parent != null:
+			var duplicate = load(resource).instance()
+			if duplicate.get_parent() != parent:
+				parent.add_child(duplicate)
+			duplicate.global_transform.origin = coords + parent.global_transform.origin
+			duplicate.global_transform.basis = parent.global_transform.basis.rotated(parent.global_transform.basis.y.normalized(), angle)
+			parent = null
+			purchase(duplicate)
+		else:
+			resource = null
+			if hologram != null:
+				hologram.queue_free()
+				hologram = null
+			coords = null
+			angle = null
+			size = null
+			rot = null
+			rotSize = null
+		return
+	elif parent != null:
+		if hologram.get_parent() != parent:
+			parent.add_child(hologram)
+		hologram.global_transform.origin = coords + parent.global_transform.origin
+		hologram.global_transform.basis = parent.global_transform.basis.rotated(parent.global_transform.basis.y.normalized(), angle)
+		var sprite = hologram.get_node("Sprite3D")
 		sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
-	else:
-		selected.queue_free()
-	selected = null
+	elif hologram != null:
+		hologram.queue_free()
+	hologram = null
 	parent = null
 	coords = null
 	angle = null
@@ -144,15 +216,185 @@ func placeOrDestroy():
 
 # Sets size and rotated size for the selected item.
 func setSize():
-	var sprite: Sprite3D = selected.get_node("Sprite3D")
-	var dimensions: Vector2 = sprite.texture.get_size() / 64.0
+	var sprite: Sprite3D = hologram.get_node("Sprite3D")
+	var dimensions: Vector2 = sprite.texture.get_size() / TEXTUREWIDTH
 	size = Vector3(dimensions.x, 1.0, dimensions.y)
-	var temp = -signedAngle(parent.global_transform.basis.x.normalized(), selected.global_transform.basis.x.normalized(), parent.global_transform.basis.y.normalized())
+	var temp = -Utility.signedAngle(parent.global_transform.basis.x.normalized(), hologram.global_transform.basis.x.normalized(), parent.global_transform.basis.y.normalized())
 	dimensions = dimensions.rotated(temp).round().abs()
 	rotSize = Vector3(dimensions.x, 1.0, dimensions.y)
-	print(rotSize)
 
 
-# Returns signed angle between two three dimensional vectors.
-func signedAngle(from: Vector3, to: Vector3, up: Vector3):
-	return atan2(to.cross(from).dot(up), from.dot(to))
+# Updates the shopping line for the open shopping screen.
+func updateLine(item: Button):
+	if open == null:
+		return
+	var mall: Dictionary = Economy.malls[open]
+	var goods: Dictionary = mall["goods"]
+	var itemName = item.get_node("Name").text
+	if !goods.has(itemName):
+		item.queue_free()
+		return
+	var amount = Economy.getAmount(itemName, open)
+	if amount <= 0:
+		item.queue_free()
+		return
+	elif amount == INF:
+		amount = "INF"
+	else:
+		amount = "x" + str(amount)
+	item.get_node("Amount").text = amount
+	var price = Economy.getPrice(itemName, open)
+	item.get_node("Price").text = str(price) + CURRENCY
+	if price > Economy.money:
+		item.disabled = true
+		if item == selected:
+			deselect()
+	else:
+		item.disabled = false
+
+
+# Updates the shopping list for the open shopping screen.
+func updateList():
+	if open == null:
+		return
+	var mall: Dictionary = Economy.malls[open]
+	var goods: Dictionary = mall["goods"]
+	var items: Dictionary = {}
+	for item in container.get_children():
+		var itemName = item.get_node("Name").text
+		items[itemName] = null
+		if !goods.has(itemName):
+			item.queue_free()
+			continue
+		var amount = Economy.getAmount(itemName, open)
+		if amount <= 0:
+			item.queue_free()
+			continue
+		elif amount == INF:
+			amount = "INF"
+		else:
+			amount = "x" + str(amount)
+		item.get_node("Amount").text = amount
+		var price = Economy.getPrice(itemName, open)
+		item.get_node("Price").text = str(price) + CURRENCY
+		if price > Economy.money:
+			item.disabled = true
+			if item == selected:
+				deselect()
+		else:
+			item.disabled = false
+	for good in goods.keys():
+		if items.has(good):
+			continue
+		var amount = Economy.getAmount(good, open)
+		if amount <= 0:
+			continue
+		elif amount == INF:
+			amount = "INF"
+		else:
+			amount = "x" + str(amount)
+		var item = ITEM.instance()
+		container.add_child(item)
+		item.get_node("Name").text = good
+		item.get_node("Amount").text = amount
+		var price = Economy.getPrice(good, open)
+		item.get_node("Price").text = str(price) + CURRENCY
+		item.get_node("Icon").texture = load(Economy.getIcon(good))
+		item.connect("pressed", self, "pressed", [item])
+		if price > Economy.money:
+			item.disabled = true
+			if item == selected:
+				deselect()
+		else:
+			item.disabled = false
+
+
+# Opens the given shop.
+func openShop(shop: String):
+	if open != null:
+		closeShop()
+	var mall: Dictionary = Economy.malls[shop]
+	var goods: Dictionary = mall["goods"]
+	for good in goods.keys():
+		var amount = Economy.getAmount(good, shop)
+		if amount <= 0:
+			continue
+		elif amount == INF:
+			amount = "INF"
+		else:
+			amount = "x" + str(amount)
+		var item = ITEM.instance()
+		container.add_child(item)
+		item.get_node("Name").text = good
+		item.get_node("Amount").text = amount
+		var price = Economy.getPrice(good, shop)
+		item.get_node("Price").text = str(price) + CURRENCY
+		item.get_node("Icon").texture = load(Economy.getIcon(good))
+		item.connect("pressed", self, "pressed", [item])
+		if price > Economy.money:
+			item.disabled = true
+			if item == selected:
+				deselect()
+		else:
+			item.disabled = false
+	visible = true
+	open = shop
+
+
+# Closes any open shop.
+func closeShop():
+	visible = false
+	for item in container.get_children():
+		item.queue_free()
+	open = null
+	deselect()
+	return
+
+
+# Called when an item is pressed on the shop.
+func pressed(item):
+	if selected != null:
+		destroyHologram()
+	selected = item
+
+
+# Deselects items.
+func deselect():
+	selected = null
+	if resource != null:
+		destroyHologram()
+
+
+# Removes selected item from the open shop, and handles payment.
+func purchase(node: Node):
+	if open == null || selected == null:
+		return
+	var itemName = selected.get_node("Name").text
+	node.name = itemName
+	var itemPrice = float(selected.get_node("Price").text.rstrip(CURRENCY))
+	Economy.money -= itemPrice
+	var mall: Dictionary = Economy.malls[open]
+	mall["goods"][itemName] -= 1
+	mall["money"] += itemPrice
+	updateList()
+
+
+func sell():
+	if hologram != null:
+		if resource == null:
+			var itemName: String
+			var parts: Array = hologram.name.split("@", 2)
+			if parts[0] == "":
+				itemName = parts[1]
+			else:
+				itemName = parts[0]
+			var mall: Dictionary = Economy.malls[open]
+			var itemPrice = Economy.getPrice(itemName, open)
+			if itemPrice < mall["money"]:
+				mall["money"] -= itemPrice
+				mall["goods"][itemName] += 1
+				Economy.money += itemPrice
+				destroyHologram()
+				updateList()
+			else:
+				print("the shop doesn't have enough money to buy this item")
