@@ -6,6 +6,7 @@ const ITEM: PackedScene = preload("res://listItem.tscn")
 var open = null
 var selected = null
 var container = null
+var viewport: Viewport
 
 const TEXTUREWIDTH: float = 64.0 # number of pixels in texture which will be considered as one tile
 const TILEWIDTH: float = 1.0 # width of one tile which all items must be designed accordingly
@@ -32,6 +33,7 @@ var scrollDown: bool = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	container = get_node("TabContainer/ScrollContainer/VBoxContainer")
+	viewport = get_tree().get_root().get_node("Terminal/ViewportContainer/Viewport")
 
 
 # Catches only the input which has not been handled yet.
@@ -63,7 +65,6 @@ func _physics_process(delta):
 			highlight = null
 			placeOrDestroyHologram()
 		return
-	var viewport: Viewport = get_tree().get_root().get_node("Terminal/ViewportContainer/Viewport")
 	var camera: Camera = viewport.get_camera()
 	var spaceState: PhysicsDirectSpaceState = camera.get_world().direct_space_state
 	var viewportContainer: ViewportContainer = viewport.get_parent()
@@ -156,7 +157,7 @@ func hologramFromResource(path: String):
 		hologram.queue_free()
 	resource = path
 	hologram = load(path).instance()
-	get_tree().get_root().get_node("Terminal/ViewportContainer/Viewport").add_child(hologram)
+	viewport.add_child(hologram)
 	parent = null
 	coords = null
 	angle = 0.0
