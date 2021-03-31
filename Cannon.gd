@@ -20,6 +20,7 @@ var camera
 var org_rotation 
 var position3D
 var particles
+var particles_flash
 var aimCannons
 
 # Called when the node enters the scene tree for the first time.
@@ -27,6 +28,7 @@ func _ready():
 	camera = get_tree().get_nodes_in_group("Camera")[0]
 	org_rotation = transform.basis.get_euler().y*180/PI
 	particles = $Particles
+	particles_flash = $ParticlesFlash
 
 	line = $LineRenderer
 	line.points = []
@@ -125,7 +127,9 @@ func getAngleDist_deg(from, to):
 	return fmod(2 * difference, max_angle) - difference
 
 func doParticles():
-	particles.emitting = true
 	particles.restart()
+	particles_flash.restart()
+	particles.emitting = true
+	particles_flash.emitting = true
 	# yield(get_tree().create_timer(1),"timeout")
 	
