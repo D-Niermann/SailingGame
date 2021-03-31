@@ -85,4 +85,3 @@ transform = Transform( 1, 0, 0, 0, 0.304033, 0.952662, 0, -0.952662, 0.304033, -
 
 [node name="placement" type="Spatial" parent="."]
 script = ExtResource( 1 )
-path = NodePath("../Ship")
