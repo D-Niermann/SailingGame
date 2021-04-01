@@ -16,6 +16,7 @@ func _ready():
 	time = 0
 	start_opacity = rand_range(0,1)
 	print(rand)
+	# layers = 2 # change the cull mask layers visibility to 2
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
