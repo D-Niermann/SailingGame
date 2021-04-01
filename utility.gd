@@ -87,6 +87,17 @@ func secondsToStamp(seconds: float):
 	return stamp
 
 
+# Tries to find the preprocessed form of the given node name from any scene.
+func resName(text: String):
+	var result = text
+	var parts: Array = text.split("@", 2)
+	if parts[0] == "":
+		result = parts[1]
+	else:
+		result = parts[0]
+	return result
+
+
 # Creates hash out of given pixels.
 func img2Hash(image: Image):
 	image.resize(8, 8)
