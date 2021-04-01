@@ -5,88 +5,1399 @@ OpenGL ES 3.0 Renderer: GeForce GTX 1050 Ti/PCIe/SSE2
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
-**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
-**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
-**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
-**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
-**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
-78.17205
-78.192759
-79.251752
-89.999861
-90.000045
-89.999957
-90.000018
-90.000011
-90.000004
-89.999984
-90.000045
-89.999943
-89.999936
-90.000018
-89.999997
-89.999936
-89.999963
-90.000032
-89.999997
-90.000011
-89.999957
-89.99997
-89.999997
-89.999991
-**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
-**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
-**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
-88.992292
-**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
-**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
 **ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'FireCannons'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonLeft'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'RotateCannonRight'.
+   At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false
+**ERROR**: Request for nonexistent InputMap action 'centerCamera'.
    At: core/input_map.cpp:195:event_get_action_status() - Condition "!E" is true. Returned: false

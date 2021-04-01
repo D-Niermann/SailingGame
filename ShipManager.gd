@@ -14,20 +14,26 @@ var hBack
 var hLeft
 var hRight
 var speed = 0
+var sails = 0.01 # 0.01 = no sails , 1 = full sails - modifies the ships speed, should never be 0, at least should be something like 0.01 (ship always has some drag)
+var wind_dir : Vector2 = Vector2(0,1)  ## TODO: change this constant to the actual wind direction from a wind manager (ocean manager)
+var angle_to_wind = 0 # agnle to the wind direction interval [0, 180,-180?]
+var speed_mod = 0.2 # speed modifier, more = more max speed
 var maxSpeed = 0.2
 var turnSpeed = 0
-var maxTurnSpeed = 0.002
+var reverse_speed_factor = 0.02 # factor on how much sailing against the wind will reverse the speed direction (0 for still stand, 0.05 for pretty heavy reverse)
+var maxTurnSpeed = 0.004
 var def_transform
 var height
 var ship
+var forward : Vector3
 export var height_offset = 3
-var wheel : TextureRect
+var wheelTexture : TextureRect
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	humans = get_tree().get_nodes_in_group("Ship/Human")
-	wheel = get_tree().get_nodes_in_group("GUI")[0].get_node("Wheel")
-	print("W",wheel)
+	wheelTexture = get_tree().get_nodes_in_group("GUI")[0].get_node("Wheel")
+	print("W",wheelTexture)
 	hFront = $HFront
 	hBack = $HBack
 	hLeft = $HLeft
@@ -48,13 +54,19 @@ func _process(delta):
 	height = (hFront.transform.origin.y + hBack.transform.origin.y 
 	+ hLeft.transform.origin.y + hRight.transform.origin.y)/4.0
 	# rotate(Vector3(0,0,1)
+	print(pitch)
 	ship.transform = def_transform.rotated(Vector3(0,0,1),pitch).rotated(Vector3(1,0,0),yaw)
 	# ship.rotate(Vector3(0,0,1),pitch)
 	ship.transform.origin.y = height+height_offset
 
 	## move and rotate
-	self.transform.origin += self.transform.basis.x*speed
+	forward = global_transform.basis.x.normalized()
+	self.transform.origin += forward*speed
 	rotate(Vector3(0,1,0),turnSpeed)
+	angle_to_wind = wind_dir.angle_to(Vector2(forward.x,forward.z))
+	calcSpeed()
+	
+
 
 func _input(event):
 	if Input.is_action_pressed("turnLeft"):
@@ -62,13 +74,24 @@ func _input(event):
 	if Input.is_action_pressed("turnRight"):
 		turnSpeed -= 0.0001
 	if Input.is_action_pressed("sailsUp"):
-		speed += 0.001
+		sails += 0.01
 	if Input.is_action_pressed("sailsDown"):
-		speed -= 0.001
+		sails -= 0.01
 	turnSpeed = clamp(turnSpeed,-maxTurnSpeed,maxTurnSpeed)
-	wheel.set_rotation(-turnSpeed * 1000)
-	speed = clamp(speed,-maxSpeed,maxSpeed)
+	sails = clamp(sails,-0.01, 1)
+	print(sails)
+	wheelTexture.set_rotation(-turnSpeed * 1000)
+
+func calcSpeed():
+	var deg = abs(rad2deg(angle_to_wind))/180
+	self.speed =  sails*speed_mod*(pow(deg,2) - 0.8*pow(deg,3))-(reverse_speed_factor*speed_mod*sails)
+
+
+func angle_deg_diff(angle1, angle2):
+	var diff = angle2 - angle1
+	return diff if abs(diff) < 180 else diff + (360 * -sign(diff))
 	
+
 # func _physics_process(delta):
 	# var space_state = get_world().direct_space_state
 	# # use global coordinates, not local to node

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://nodes/ocean.tscn" type="PackedScene" id=1]
 [ext_resource path="res://textures/sky/evening_01.hdr" type="Texture" id=2]
@@ -19,7 +19,6 @@
 [ext_resource path="res://Sprites/tree.png" type="Texture" id=17]
 [ext_resource path="res://Sprites/cloudShadow3.png" type="Texture" id=18]
 [ext_resource path="res://Cloud.gd" type="Script" id=19]
-[ext_resource path="res://addons/LineRenderer/LineRenderer.tscn" type="PackedScene" id=20]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 14 )
@@ -76,12 +75,6 @@ albedo_color = Color( 0.266667, 0.207843, 0.0666667, 1 )
 
 [node name="main" type="Spatial"]
 
-[node name="LineRenderer" parent="." instance=ExtResource( 20 )]
-points = [ Vector3( 0, 0, 0 ), Vector3( 0, 4, 0 ), Vector3( 3, 1, 3 ) ]
-drawCaps = false
-drawCorners = false
-scaleTexture = false
-
 [node name="ocean" parent="." instance=ExtResource( 1 )]
 
 [node name="ui" parent="." groups=[
@@ -96,9 +89,9 @@ yaw_factor = 0.2
 height_offset = 2
 
 [node name="OtherShip" parent="." instance=ExtResource( 13 )]
-transform = Transform( -0.154194, 0, -0.988041, 0, 1, 0, 0.988041, 0, -0.154194, 34.1519, 6.26637, 2.06279 )
-pitch_factor = 0.1
-yaw_factor = 0.1
+transform = Transform( 0.197828, 0, -0.980237, 0, 1, 0, 0.980237, 0, 0.197828, 18.1711, 4.39559, -28.071 )
+yaw_factor = 0.2
+height_offset = 2
 
 [node name="Camera" type="Camera" parent="." groups=[
 "Camera",
@@ -269,7 +262,7 @@ stringToHuman1 = "../PlayerShipContainer/Ship/Human"
 stringToHuman2 = "../NavMeshCont/Navigation/Human"
 pathToC1 = "../PlayerShipContainer/Ship"
 pathToC2 = "../NavMeshCont"
-a = 1.93434e+06
+a = 2.0392e+06
 
 [node name="Terrain" type="MeshInstance" parent="."]
 transform = Transform( 598.053, 1.20345, 0, -1.93904, 2.1846, 0, 0, 0, 395.96, 29.7657, -12.3204, 1.57804 )
@@ -289,9 +282,9 @@ cast_shadow = 0
 mesh = SubResource( 9 )
 material/0 = ExtResource( 5 )
 
-[node name="Node" type="Node" parent="."]
+[node name="Clouds" type="Node" parent="."]
 
-[node name="Sprite3D14" type="Sprite3D" parent="Node"]
+[node name="C2" type="Sprite3D" parent="Clouds"]
 transform = Transform( 2.76716, -5.58086, -2.41018e-07, 2.10221e-07, 2.71151e-08, 1.11823, -5.58086, -2.76716, -3.4402e-07, 31.3976, 154.51, -54.2618 )
 cast_shadow = 3
 modulate = Color( 0.52549, 0.541176, 1, 0.227451 )
@@ -302,7 +295,7 @@ alpha_cut = 2
 texture = ExtResource( 18 )
 script = ExtResource( 19 )
 
-[node name="Sprite3D13" type="Sprite3D" parent="Node"]
+[node name="C4" type="Sprite3D" parent="Clouds"]
 transform = Transform( 6.13716, -9.78076, -2.29309e-07, 3.3461e-07, -2.93374e-07, 1.11823, -9.78076, -6.13716, -3.7113e-07, 38.8294, 154.662, 28.5288 )
 cast_shadow = 3
 modulate = Color( 0.52549, 0.541176, 1, 0.145098 )
@@ -312,7 +305,7 @@ alpha_cut = 2
 texture = ExtResource( 18 )
 script = ExtResource( 19 )
 
-[node name="Sprite3D12" type="Sprite3D" parent="Node"]
+[node name="C3" type="Sprite3D" parent="Clouds"]
 transform = Transform( -0.954468, -6.15357, -8.73484e-08, -1.66552e-07, -1.97607e-07, 1.11823, -6.15357, 0.954468, 1.712e-07, -123.518, 154.744, -163.478 )
 cast_shadow = 3
 modulate = Color( 0.52549, 0.541176, 1, 0.160784 )
@@ -322,7 +315,7 @@ alpha_cut = 2
 texture = ExtResource( 18 )
 script = ExtResource( 19 )
 
-[node name="Cloud" type="Sprite3D" parent="Node"]
+[node name="Cloud" type="Sprite3D" parent="Clouds"]
 transform = Transform( -4.42257, 4.37693, 3.44255e-08, 0, -2.71836e-07, 1.119, 4.37693, 4.42257, 3.47845e-08, 89.2925, 154.506, 60.6187 )
 cast_shadow = 3
 modulate = Color( 0.52549, 0.541176, 1, 0.219608 )

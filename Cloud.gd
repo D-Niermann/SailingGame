@@ -20,5 +20,5 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	time += delta
-	global_rotate(Vector3(0,1,0),0.0002*rand)
+	global_rotate(Vector3(0,1,0),0.0001*rand)
 	opacity = start_opacity #-clamp(sin(time*0.005),0,1)

@@ -44,7 +44,7 @@ func _ready():
 func _process(delta):
 	pass
 	up = global_transform.basis.y.normalized()
-
+	
 	forward = global_transform.basis.x.normalized()
 	
 	if aimCannons:
@@ -53,12 +53,18 @@ func _process(delta):
 		var to = from + camera.project_ray_normal(get_viewport().get_mouse_position()) * 2000
 		position3D = to_local(dropPlane.intersects_ray( from, to ))
 		# print((position3D))
-		if position3D.x >= 0:
+		## if mouse position in front of cannon (x>0)
+		if position3D.x >= 0: 
+			var dist = position3D.x
 			predictTrajectory()
-			if position3D.z<-rotateMargin:
-				rotateLeft(position3D.z)
-			elif position3D.z>rotateMargin:
-				rotateRight(position3D.z)
+			if dist>20: ## TODO: change these controls
+				rotateUp(position3D.x)
+			else:
+				rotateDown(position3D.x)
+			# if position3D.z<0:
+			# 	rotateLeft(position3D.z)
+			# else:
+			# 	rotateRight(position3D.z)
 		else:
 			clearTrajectory()
 
@@ -72,7 +78,7 @@ func _input(event):
 	if event.is_action_released("FireCannons"):
 		aimCannons = false
 		clearTrajectory()
-		if position3D.x >= 0:
+		if position3D!= null and position3D.x >= 0:
 			fireBall()
 		
 	if event.is_action_released("RotateCannonLeft"):
@@ -89,8 +95,10 @@ func predictTrajectory():
 	var point = Vector3(0,0,0)
 	for i in range(lineSize):
 		line.points[i] = point
-		point += Vector3(1,0,0)*force*1
-		point += Vector3(0,-1,0)*0.02*i
+		if point.y>-3: ## TODO: put in the water height on the current point here isntead of -3
+			point += Vector3(1,0,0)*force*1
+			point += Vector3(0,-1,0)*0.02*i
+			
 func clearTrajectory():
 	var point = Vector3(0,0,0)
 	for i in range(lineSize):
@@ -121,6 +129,19 @@ func rotateRight(multiplicator=1):
 	if abs(getAngleDist_deg(transform.basis.get_euler().y*180/PI,org_rotation))>maxRotateAngle:
 		rotate(up,rotateSpeed*multiplicator)
 
+func rotateUp(multiplicator=1):
+	# check if current rotation angle doesnt exeed the max angle
+	multiplicator = clamp(abs(multiplicator),0,1)
+	rotate(global_transform.basis.z.normalized(),rotateSpeed*0.1*multiplicator)
+	if abs(getAngleDist_deg(transform.basis.get_euler().z*180/PI,org_rotation))>maxRotateAngle:
+		rotate(global_transform.basis.z.normalized(),rotateSpeed*0.1*multiplicator)
+func rotateDown(multiplicator=1):
+	# check if current rotation angle doesnt exeed the max angle
+	multiplicator = clamp(abs(multiplicator),0,1)
+	rotate(global_transform.basis.z.normalized(),-rotateSpeed*0.1*multiplicator)
+	if abs(getAngleDist_deg(transform.basis.get_euler().z*180/PI,org_rotation))>maxRotateAngle:
+		rotate(global_transform.basis.z.normalized(),-rotateSpeed*0.1*multiplicator)
+		
 func getAngleDist_deg(from, to):
 	var max_angle = 360
 	var difference = fmod(to - from, max_angle)
