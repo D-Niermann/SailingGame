@@ -28,11 +28,20 @@ var ship
 var forward : Vector3
 export var height_offset = 3
 var wheelTexture : TextureRect
+var shoppingScreen: Control
+var shopIndicator: Button
+var shopArea: Area
+var deck = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	humans = get_tree().get_nodes_in_group("Ship/Human")
-	wheelTexture = get_tree().get_nodes_in_group("GUI")[0].get_node("Wheel")
+	wheelTexture = get_tree().get_root().get_node("Terminal/Interface/Ship/Wheel")
+	shoppingScreen = get_tree().get_root().get_node("Terminal/Interface/Shopping")
+	shopIndicator = get_tree().get_root().get_node("Terminal/Interface/VBoxContainer/ShopIndicator")
+	shopArea = get_node("ShopRangeArea")
+	deck = get_node("Ship/Decks/0")
+	resetDecksVisibility()
 	print("W",wheelTexture)
 	hFront = $HFront
 	hBack = $HBack
@@ -46,6 +55,14 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	# shop detection
+	var colliders: Array = shopArea.get_overlapping_bodies()
+	if !colliders.empty():
+		shopIndicator.visible = true
+	else:
+		shopIndicator.visible = false
+		if shoppingScreen.open != null:
+			shoppingScreen.closeShop()
 	# for i in humans:
 	# 	print(i)
 	# print(global_transform)
@@ -99,3 +116,39 @@ func angle_deg_diff(angle1, angle2):
 	
 	# var result = space_state.intersect_ray(camera.transform.origin, Vector3(0, -1000,0))
 #	print(result)
+
+func _on_ShopIndicator_pressed():
+	if shoppingScreen.open != null:
+		shoppingScreen.closeShop()
+	else:
+		var colliders: Array = shopArea.get_overlapping_bodies()
+		if !colliders.empty():
+			shoppingScreen.openShop(Utility.resName(colliders[0].name))
+			shoppingScreen.target = deck
+
+
+func _on_DeckUp_pressed():
+	var order = int(deck.name) - 1
+	if order < 0:
+		order = get_node("Ship/Decks").get_child_count() - 1
+	deck = get_node("Ship/Decks/" + str(order))
+	shoppingScreen.target = deck
+	resetDecksVisibility()
+
+
+func _on_DeckDown_pressed():
+	var order = int(deck.name) + 1
+	if order > get_node("Ship/Decks").get_child_count() - 1:
+		order = 0
+	deck = get_node("Ship/Decks/" + str(order))
+	shoppingScreen.target = deck
+	resetDecksVisibility()
+
+
+func resetDecksVisibility():
+	var order = int(deck.name)
+	for child in get_node("Ship/Decks").get_children():
+		if int(child.name) < order:
+			child.visible = false
+		else:
+			child.visible = true
