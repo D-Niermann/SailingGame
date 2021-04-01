@@ -21,8 +21,8 @@ var angle = 0.0
 var rot = 0.0
 var size = Vector3.ONE # in terms of tile size given above, each component must be an integer
 var rotSize = Vector3.ONE
-export var extra = -0.45 # height offset for three dimensional sprites and such
-export var switch: bool = true
+var extra = -0.45 # height offset for three dimensional sprites and such
+var switch: bool = true
 
 var leftClick: bool = false
 var rightClick: bool = false
@@ -65,6 +65,20 @@ func _physics_process(delta):
 			highlight = null
 			placeOrDestroyHologram()
 		return
+	var layer = 0b1
+	if hologram != null:
+		if target.name == "0":
+			layer = 0b10
+		if target.name == "1":
+			layer = 0b100
+		elif target.name == "2":
+			layer = 0b1000
+		elif target.name == "3":
+			layer = 0b10000
+		elif target.name == "4":
+			layer = 0b100000
+		elif target.name == "5":
+			layer = 0b1000000
 	var camera: Camera = viewport.get_camera()
 	var spaceState: PhysicsDirectSpaceState = camera.get_world().direct_space_state
 	var viewportContainer: ViewportContainer = viewport.get_parent()
@@ -75,7 +89,7 @@ func _physics_process(delta):
 	var upward = target.global_transform.basis.y.normalized()
 	var intersection = Plane(upward, target.global_transform.origin.length()).intersects_ray(from, toward)
 	if intersection != null:
-		hit = spaceState.intersect_ray(from, intersection, [hologram], 0b1)
+		hit = spaceState.intersect_ray(from, intersection, [hologram], layer)
 	var newHighlight = null
 	if hologram != null:
 		if scrollUp:# Input.is_action_just_released("scrollUp"):
@@ -86,6 +100,7 @@ func _physics_process(delta):
 			rotSize = Vector3(rotSize.z, size.y, rotSize.x)
 		var canPlace = false
 		if !hit.empty() && (STACKED || hit.collider == target):
+			print("hit")
 			var offset = Vector3(fmod(rotSize.x, 2), 0, fmod(rotSize.z, 2)) * TILEWIDTH * 0.5 + TILEWIDTH * Vector3.UP * (size.y + extra)
 			var partition: Vector3 = (target.global_transform.xform_inv(hit.position) / TILEWIDTH).floor()
 			hologram.global_transform.origin = target.global_transform.xform(partition * TILEWIDTH + offset)
@@ -94,20 +109,22 @@ func _physics_process(delta):
 			var backward = hologram.global_transform.basis.z.normalized() * (size.z * 0.5 * TILEWIDTH - 0.05 * TILEWIDTH)
 			var leftward = hologram.global_transform.basis.x.normalized() * (size.x * 0.5 * TILEWIDTH - 0.05 * TILEWIDTH)
 			var originOfRay = hologram.global_transform.origin - leftward
-			hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], 0b1)
+			hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], layer)
 			if !hit.empty() && hit.collider == target:
 				originOfRay = hologram.global_transform.origin - backward
-				hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], 0b1)
+				hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], layer)
 				if !hit.empty() && hit.collider == target:
 					originOfRay = hologram.global_transform.origin + leftward
-					hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], 0b1)
+					hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], layer)
 					if !hit.empty() && hit.collider == target:
 						originOfRay = hologram.global_transform.origin + backward
-						hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], 0b1)
+						hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], layer)
 						if !hit.empty() && hit.collider == target:
+							print("almost")
 							var collision: KinematicCollision = hologram.move_and_collide(Vector3.ZERO, false, false, true)
 							if !collision:
 								canPlace = true
+								print("canPlace")
 		if rightClick:
 			if parent != null:
 				placeOrDestroyHologram()
