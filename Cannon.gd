@@ -71,7 +71,7 @@ func _process(delta):
 
 	
 
-func _input(event):
+func _unhandled_input(event):
 	# Receives key input
 	if event.is_action_pressed("FireCannons"):
 		aimCannons = true
