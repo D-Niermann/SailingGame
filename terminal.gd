@@ -10,7 +10,7 @@ var placementHandler: Control
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	placementHandler = get_tree().get_root().get_node("Terminal/Interface/Shopping")
-	# some code to initiate stuff for testing purposes, can be removed later on
+	# TODO: some code to initiate stuff for testing purposes, can be removed later on
 	placementHandler.target = get_tree().get_root().get_node("Terminal/ViewportContainer/Viewport/Spatial/Ship")
 	placementHandler.openShop("bananaTown")
 
