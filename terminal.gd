@@ -4,15 +4,11 @@ extends Control
 var time: int = 0
 var frac: float = 0.0
 var updatePeriodForEconomy: float = 60.0
-var placementHandler: Control
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	placementHandler = get_tree().get_root().get_node("Terminal/Interface/Shopping")
-	# TODO: some code to initiate stuff for testing purposes, can be removed later on
-	placementHandler.target = get_tree().get_root().get_node("Terminal/ViewportContainer/Viewport/Spatial/Ship")
-	placementHandler.openShop("bananaTown")
+	pass
 
 
 # Called every physics frame. 'delta' is the elapsed time since the previous frame.
