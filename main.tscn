@@ -272,7 +272,7 @@ stringToHuman1 = "../PlayerShipContainer/Ship/Human"
 stringToHuman2 = "../NavMeshCont/Navigation/Human"
 pathToC1 = "../PlayerShipContainer/Ship"
 pathToC2 = "../NavMeshCont"
-a = 2.22805e+06
+a = 2.24968e+06
 
 [node name="Terrain" type="MeshInstance" parent="."]
 transform = Transform( 598.053, 1.20345, 0, -1.93904, 2.1846, 0, 0, 0, 395.96, 29.7657, -12.3204, 1.57804 )
@@ -424,7 +424,7 @@ mesh = SubResource( 9 )
 material/0 = SubResource( 10 )
 
 [node name="RigidBody" type="RigidBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -15.7479, 4.607, 17.4525 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -16.0335, 3.63865, 20.2283 )
 contact_monitor = true
 linear_damp = 1.0
 angular_damp = 2.0
@@ -443,6 +443,30 @@ script = ExtResource( 21 )
 run = 0
 
 [node name="MeshInstance" type="MeshInstance" parent="RigidBody/Spatial"]
+transform = Transform( 0.13954, 0, 0, 0, 0.13954, 0, 0, 0, 0.13954, 0, 0, 0 )
+mesh = SubResource( 13 )
+material/0 = null
+
+[node name="RigidBody2" type="RigidBody" parent="."]
+transform = Transform( 0.00244351, 0, -0.999997, 0, 1, 0, 0.999997, 0, 0.00244351, -21.7163, 4.607, 17.6304 )
+contact_monitor = true
+linear_damp = 1.0
+angular_damp = 2.0
+script = ExtResource( 20 )
+
+[node name="MeshInstance" type="MeshInstance" parent="RigidBody2"]
+mesh = SubResource( 11 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="RigidBody2"]
+shape = SubResource( 12 )
+
+[node name="Spatial" type="Spatial" parent="RigidBody2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.88175 )
+script = ExtResource( 21 )
+run = 0
+
+[node name="MeshInstance" type="MeshInstance" parent="RigidBody2/Spatial"]
 transform = Transform( 0.13954, 0, 0, 0, 0.13954, 0, 0, 0, 0.13954, 0, 0, 0 )
 mesh = SubResource( 13 )
 material/0 = null

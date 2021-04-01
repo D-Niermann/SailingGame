@@ -54,7 +54,7 @@ func _process(delta):
 	height = (hFront.transform.origin.y + hBack.transform.origin.y 
 	+ hLeft.transform.origin.y + hRight.transform.origin.y)/4.0
 	# rotate(Vector3(0,0,1)
-	print(pitch)
+	# print(pitch)
 	ship.transform = def_transform.rotated(Vector3(0,0,1),pitch).rotated(Vector3(1,0,0),yaw)
 	# ship.rotate(Vector3(0,0,1),pitch)
 	ship.transform.origin.y = height+height_offset
