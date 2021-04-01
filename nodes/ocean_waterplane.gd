@@ -9,7 +9,7 @@ onready var myMesh
 export(float) var ocean_height = 0.0
 
 func _ready():
-	camera = get_tree().get_nodes_in_group("Camera")[0]
+	camera = get_viewport().get_camera()
 	
 
 	
