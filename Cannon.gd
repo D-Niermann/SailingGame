@@ -57,14 +57,14 @@ func _process(delta):
 		if position3D.x >= 0: 
 			var dist = position3D.x
 			predictTrajectory()
-			if dist>20: ## TODO: change these controls
-				rotateUp(position3D.x)
-			else:
-				rotateDown(position3D.x)
-			# if position3D.z<0:
-			# 	rotateLeft(position3D.z)
+			# if dist>20: ## TODO: change these controls
+			# 	rotateUp(position3D.x)
 			# else:
-			# 	rotateRight(position3D.z)
+			# 	rotateDown(position3D.x)
+			if position3D.z<0:
+				rotateLeft(position3D.z)
+			else:
+				rotateRight(position3D.z)
 		else:
 			clearTrajectory()
 
@@ -95,7 +95,7 @@ func predictTrajectory():
 	var point = Vector3(0,0,0)
 	for i in range(lineSize):
 		line.points[i] = point
-		if point.y>-3: ## TODO: put in the water height on the current point here isntead of -3
+		if point.y>-30: ## TODO: put in the water height on the current point here isntead of -30
 			point += Vector3(1,0,0)*force*1
 			point += Vector3(0,-1,0)*0.02*i
 			
