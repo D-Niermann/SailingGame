@@ -3,7 +3,8 @@ extends Control
 var ocean = null
 
 func _ready():
-	ocean = get_tree().get_root().get_node("Terminal/ViewportContainer/Viewport/ocean")
+	if get_tree().get_nodes_in_group("Ocean").size()>0:
+		ocean = get_tree().get_nodes_in_group("Ocean")[0]
 
 func _on_wind_speed_value_changed(value):
 	ocean.set_wind_strength(value)

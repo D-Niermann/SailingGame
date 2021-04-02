@@ -5,6 +5,7 @@ extends Spatial
 # var a = 2
 # var b = "text"
 # var ball
+export var BallScene: PackedScene
 var forward
 var up
 var force = 3
@@ -22,11 +23,16 @@ var position3D
 var particles
 var particles_flash
 var aimCannons
+var ocean
+var waterHitMarker
 
-# Called when the node enters the scene tree for the first time.
+# Called when the node enters the BallScene tree for the first time.
 func _ready():
 	camera = get_viewport().get_camera()
 	org_rotation = transform.basis.get_euler().y*180/PI
+	if get_tree().get_nodes_in_group("Ocean").size()>0:
+		ocean = get_tree().get_nodes_in_group("Ocean")[0]
+	waterHitMarker = $WaterHitMarker
 	particles = $Particles
 	particles_flash = $ParticlesFlash
 
@@ -95,20 +101,24 @@ func predictTrajectory():
 	var point = Vector3(0,0,0)
 	for i in range(lineSize):
 		line.points[i] = point
-		if point.y>-30: ## TODO: put in the water height on the current point here isntead of -30
+		if to_global(point).y>ocean.getWaterHeight(to_global(point)):
 			point += Vector3(1,0,0)*force*1
 			point += Vector3(0,-1,0)*0.02*i
+	waterHitMarker.visible = true
+	waterHitMarker.translation += (point - waterHitMarker.translation)*0.05
+
 			
 func clearTrajectory():
 	var point = Vector3(0,0,0)
+	waterHitMarker.translation = point
+	waterHitMarker.visible = false
 	for i in range(lineSize):
 		line.points[i] = point
 
 func fireBall():
 	doParticles()
 	yield(get_tree().create_timer(rand_range(0,rand_max_delay)),"timeout")
-	var scene = load("res://Ball2.tscn")
-	var ball = scene.instance()
+	var ball = BallScene.instance()
 	get_tree().get_root().add_child(ball)
 	ball.set_name("Ball")
 	ball.transform.origin = self.global_transform.origin+forward

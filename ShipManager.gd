@@ -103,6 +103,10 @@ func _process(delta):
 	# wheelTexture.set_rotation(-turnSpeed * 1000)
 
 func calcSpeed():
+	"""
+	Using an accurate formular to get the ships speed, based on angle to wind.
+	Directly with the wind is a bit slower than at a steep angle with the wind.
+	"""
 	var deg = abs(rad2deg(angle_to_wind))/180
 	self.speed =  sails*speed_mod*(pow(deg,2) - 0.8*pow(deg,3))-(reverse_speed_factor*speed_mod*sails)
 

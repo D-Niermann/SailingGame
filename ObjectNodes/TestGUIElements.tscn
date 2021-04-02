@@ -81,6 +81,7 @@ __meta__ = {
 }
 
 [node name="Label2" type="Label" parent="."]
+visible = false
 margin_top = 40.9535
 margin_right = 121.0
 margin_bottom = 62.9535
@@ -91,6 +92,7 @@ __meta__ = {
 }
 
 [node name="water_style" type="HSlider" parent="."]
+visible = false
 anchor_right = 1.0
 margin_top = 59.7239
 margin_bottom = 75.7239
@@ -101,6 +103,7 @@ __meta__ = {
 }
 
 [node name="Label3" type="Label" parent="."]
+visible = false
 margin_top = 84.751
 margin_right = 121.0
 margin_bottom = 106.751
@@ -111,6 +114,7 @@ __meta__ = {
 }
 
 [node name="subsurface_scattering" type="HSlider" parent="."]
+visible = false
 anchor_right = 1.0
 margin_top = 103.521
 margin_bottom = 119.521
@@ -122,9 +126,10 @@ __meta__ = {
 }
 
 [node name="Label4" type="Label" parent="."]
-margin_top = 130.824
-margin_right = 121.0
-margin_bottom = 152.824
+margin_left = 1.88776
+margin_top = 40.2121
+margin_right = 122.888
+margin_bottom = 62.2121
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Time of Day"
 __meta__ = {
@@ -133,8 +138,10 @@ __meta__ = {
 
 [node name="Time" type="HSlider" parent="."]
 anchor_right = 1.0
-margin_top = 149.594
-margin_bottom = 165.594
+margin_left = 1.88776
+margin_top = 58.9821
+margin_right = 1.88776
+margin_bottom = 74.9821
 min_value = -3.0
 max_value = 3.0
 step = 0.1

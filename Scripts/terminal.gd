@@ -26,7 +26,6 @@ func _physics_process(delta):
 			# fluctuating prices
 			Economy.cycle()
 			var shopping = get_tree().get_root().get_node_or_null("Terminal/Interface/Shopping")
-			if shopping!=null:
-				if shopping.open != null:
-					shopping.updateList()
+			if shopping.open != null:
+				shopping.updateList()
 		time = newTime

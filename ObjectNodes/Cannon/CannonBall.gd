@@ -30,12 +30,13 @@ var grav_time
 var timeout_s = 10
 var water
 var waterEntered = false
-
+var ocean
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	time = 0
 	grav_time = 0
-	water = $WaterHeight
+	if get_tree().get_nodes_in_group("Ocean").size()>0:
+		ocean = get_tree().get_nodes_in_group("Ocean")[0]
 	# last_pos.push_back(translation)
 	# apply_impulse(transform.origin,Vector3(1,0,0)*-15)
 	pass # Replace with function body.
@@ -46,7 +47,7 @@ func _process(delta):
 	grav_time += delta
 	if global_transform.origin.y<-1000 or time>timeout_s:
 		self.queue_free()
-	if water.global_transform.origin.y > transform.origin.y:
+	if ocean.getWaterHeight(global_transform.origin) > transform.origin.y:
 		if not waterEntered:
 			default_drag_factor = water_drag
 			# default_gravity = water_gravity ## TODO: lets bullets shoot a bit up when hitting water, why?

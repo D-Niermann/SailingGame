@@ -3,8 +3,8 @@
 [ext_resource path="res://placement.gd" type="Script" id=1]
 [ext_resource path="res://nodes/ocean.tscn" type="PackedScene" id=2]
 [ext_resource path="res://nodes/PlayerShipContainer.tscn" type="PackedScene" id=3]
-[ext_resource path="res://terminal.gd" type="Script" id=4]
-[ext_resource path="res://nodes/ui.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scripts/terminal.gd" type="Script" id=4]
+[ext_resource path="res://ObjectNodes/TestGUIElements.tscn" type="PackedScene" id=5]
 [ext_resource path="res://icon.png" type="Texture" id=6]
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=7]
 

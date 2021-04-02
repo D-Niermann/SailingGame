@@ -30,8 +30,15 @@ var imgToWorld = 4 # if gerstner tiling = 1, the height map has size 4x4 units i
 var gerstner_tiling1
 var gerstner_tiling2
 var imSize = 1024.0 # size in px of the height map
-var gerstner_speed1 = Vector2(0.01, 0.014)
-var gerstner_speed2 = Vector2(0.007,0.01)
+var gerstner_speed1 = Vector2(0.02, 0.02)
+var gerstner_speed2 = Vector2(0.007,0.01) 
+
+
+# time of day
+var sunLight
+var sky
+
+
 func _ready():
 	## load the image
 	## Warning: the shader and the get_pixel() functions have different origin definitions (top-left vs bottom left) the this image needs to be flipped!
@@ -62,6 +69,9 @@ func _ready():
 	shift_vector = physical_material.get_shader_param("shift_vector")
 	curl_strength = physical_material.get_shader_param("curl_strength")
 
+	sunLight = $DirectionalLight
+	sky = $Sky
+	
 
 
 
@@ -118,14 +128,20 @@ func _physics_process(delta):
 	visual_material.set_shader_param("gerstner_speed", gerstner_speed1) 
 	visual_material.set_shader_param("gerstner_2_speed", gerstner_speed2)
 	time += delta
-	wind_modified = wind_modified + ((wind_strength + sin(time) * 0.2) - wind_modified) * delta * 0.5
+	wind_modified += ((wind_strength + sin(time*0.5) * 0.2 * wind_strength) - wind_modified) * delta * 0.5
 	
 	# DEBUG WIND VAR
 	# print(wind_modified)
 	
 	update_water(wind_modified)
 
+	sunLight.rotate(Vector3(1,0,0), time*0.00001) 
+
+
 func getWaterHeight(position : Vector3):
+	"""
+	Get the height of the water mesh on the global position.
+	"""
 	var pos2d : Vector2 = Vector2(position.x, position.z)
 	var pxPos1 : Vector2 = imSize * pos2d/imgToWorld*gerstner_tiling1 # pixel postion on the height map (ony use x and z!)
 	var pxPos2 : Vector2 = imSize * pos2d/imgToWorld*gerstner_tiling2

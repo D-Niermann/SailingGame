@@ -1,11 +1,13 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://Sprites/cannon.png" type="Texture" id=1]
 [ext_resource path="res://addons/kenney_particle_pack/smoke_07.png" type="Texture" id=2]
-[ext_resource path="res://Cannon.gd" type="Script" id=3]
+[ext_resource path="res://ObjectNodes/Cannon/Cannon.gd" type="Script" id=3]
 [ext_resource path="res://addons/LineRenderer/LineRenderer.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/kenney_particle_pack/smoke_02.png" type="Texture" id=5]
 [ext_resource path="res://materials/Black.tres" type="Material" id=6]
+[ext_resource path="res://ObjectNodes/Cannon/CannonBall.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ObjectNodes/Cannon/WaterHitRing.png" type="Texture" id=8]
 
 [sub_resource type="SpatialMaterial" id=1]
 render_priority = 1
@@ -23,7 +25,7 @@ albedo_color = Color( 1, 1, 1, 0.392157 )
 albedo_texture = ExtResource( 2 )
 
 [sub_resource type="Gradient" id=2]
-offsets = PoolRealArray( 0, 0.0404313, 0.765499, 1 )
+offsets = PoolRealArray( 0, 0.0404313, 0.726087, 1 )
 colors = PoolColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0.0304779, 1, 1, 1, 0 )
 
 [sub_resource type="GradientTexture" id=3]
@@ -97,6 +99,7 @@ size = Vector3( 1, 0.2, 0.5 )
 
 [node name="Cannon" type="Spatial"]
 script = ExtResource( 3 )
+BallScene = ExtResource( 7 )
 
 [node name="Gun" type="Spatial" parent="."]
 
@@ -144,7 +147,9 @@ __meta__ = {
 
 [node name="LineRenderer" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.404077, 0 )
-endThickness = 0.01
+visible = false
+startThickness = 0.05
+endThickness = 0.0
 drawCaps = false
 drawCorners = false
 globalCoords = false
@@ -153,3 +158,10 @@ globalCoords = false
 cast_shadow = 3
 mesh = SubResource( 13 )
 material/0 = ExtResource( 6 )
+
+[node name="WaterHitMarker" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.78526, 0, 0.481648 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 8 )

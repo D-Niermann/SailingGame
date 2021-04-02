@@ -1,16 +1,13 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=1]
 [ext_resource path="res://nodes/ocean_waterplane.gd" type="Script" id=2]
 [ext_resource path="res://SceneNodes/OceanEnv/OceanEnvManager.gd" type="Script" id=3]
-[ext_resource path="res://textures/sky/evening_01.hdr" type="Texture" id=4]
+[ext_resource path="res://SceneNodes/OceanEnv/Sky.tres" type="Environment" id=4]
 [ext_resource path="res://SceneNodes/OceanEnv/vector_map_a.tres" type="Material" id=5]
 [ext_resource path="res://SceneNodes/OceanEnv/waterplane/waterplane_high.obj" type="ArrayMesh" id=6]
 [ext_resource path="res://SceneNodes/OceanEnv/MyWater1.tres" type="Material" id=7]
-[ext_resource path="res://Sprites/topDeck.png" type="Texture" id=8]
 [ext_resource path="res://Scripts/Boye.gd" type="Script" id=9]
-[ext_resource path="res://materials/human.tres" type="Material" id=10]
-[ext_resource path="res://RigidShipController.gd" type="Script" id=11]
 
 [sub_resource type="ViewportTexture" id=1]
 flags = 4
@@ -25,40 +22,6 @@ mid_height = 4.15
 
 [sub_resource type="SpatialMaterial" id=4]
 albedo_color = Color( 0.501961, 0.501961, 0.501961, 1 )
-
-[sub_resource type="PanoramaSky" id=5]
-panorama = ExtResource( 4 )
-
-[sub_resource type="Environment" id=6]
-background_mode = 2
-background_sky = SubResource( 5 )
-fog_color = Color( 0.368627, 0.435294, 0.505882, 1 )
-fog_depth_end = 500.0
-fog_depth_curve = 0.659754
-fog_transmit_enabled = true
-auto_exposure_min_luma = 0.28
-auto_exposure_speed = 2.25
-ss_reflections_depth_tolerance = 100.0
-ssao_radius = 10.0
-ssao_intensity = 3.0
-ssao_radius2 = 1.0
-ssao_intensity2 = 1.5
-ssao_light_affect = 0.5
-dof_blur_far_distance = 70.0
-dof_blur_far_transition = 30.0
-dof_blur_far_quality = 2
-dof_blur_near_quality = 2
-glow_enabled = true
-glow_bicubic_upscale = true
-
-[sub_resource type="CubeMesh" id=7]
-size = Vector3( 10, 3, 5 )
-
-[sub_resource type="CubeMesh" id=8]
-size = Vector3( 3, 1, 1 )
-
-[sub_resource type="BoxShape" id=9]
-extents = Vector3( 4.97722, 1.41936, 1.91638 )
 
 [node name="OceanEnvironment" type="Spatial" groups=[
 "Ocean",
@@ -99,8 +62,8 @@ script = ExtResource( 9 )
 doParticles = false
 reactionSpeed = 0.42
 
-[node name="MeshInstance2" type="MeshInstance" parent="."]
-transform = Transform( -7.70275, 0.0433496, -0.00954488, 0.0921403, -0.034119, -1.40054, 0.0592813, 5.66276, -0.00471632, -0.766546, -9.68068, -1.82693 )
+[node name="Terrain" type="MeshInstance" parent="."]
+transform = Transform( -5.97865, 0.0336467, -0.00740846, 0.0921403, -0.034119, -1.40054, 0.0460125, 4.39527, -0.00366066, -0.766546, -9.84169, -1.82693 )
 mesh = SubResource( 3 )
 material/0 = SubResource( 4 )
 __meta__ = {
@@ -120,86 +83,11 @@ transform = Transform( 1, 0, 0, 0, 0.896796, 0.442445, 0, -0.442445, 0.896796, -
 script = ExtResource( 1 )
 gameCam = false
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 6 )
+[node name="Sky" type="WorldEnvironment" parent="."]
+environment = ExtResource( 4 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 0.863191, 0.152025, -0.481446, 0.413218, 0.33518, 0.846703, 0.290091, -0.929808, 0.226505, 0, 0, 0 )
-light_color = Color( 0.996078, 0.870588, 0.690196, 1 )
+transform = Transform( 0.959251, 0.193823, -0.205601, 0.173715, 0.169344, 0.970127, 0.22285, -0.96631, 0.128774, 0, 0, 0 )
 light_specular = 1.0
 shadow_enabled = true
 directional_shadow_max_distance = 200.0
-
-[node name="ShipRigid" type="RigidBody" parent="."]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -24.8488, 5.05542, 19.9352 )
-linear_damp = 5.0
-angular_damp = 4.0
-script = ExtResource( 11 )
-
-[node name="Sprite3D" type="Sprite3D" parent="ShipRigid"]
-transform = Transform( -0.389, -3.40075e-08, 1.48651e-15, 0, -4.37114e-08, -1, 3.40075e-08, -0.389, 1.70037e-08, -1.48448, 1.82401, 1.90735e-06 )
-alpha_cut = 2
-texture = ExtResource( 8 )
-
-[node name="MeshInstance" type="MeshInstance" parent="ShipRigid"]
-visible = false
-mesh = SubResource( 7 )
-material/0 = ExtResource( 10 )
-
-[node name="MeshInstance2" type="MeshInstance" parent="ShipRigid"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.45382, -0.0183039, 0.104887 )
-visible = false
-mesh = SubResource( 8 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="ShipRigid"]
-shape = SubResource( 9 )
-
-[node name="HFront" type="Spatial" parent="ShipRigid"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.08039, 0, 0 )
-
-[node name="HBack" type="Spatial" parent="ShipRigid"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.44936, 0, 0 )
-
-[node name="HLeft" type="Spatial" parent="ShipRigid"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.204397, -9.53674e-07, 2.37019 )
-
-[node name="HRight" type="Spatial" parent="ShipRigid"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0808775, 0, -2.46706 )
-
-[node name="ShipRigid2" type="RigidBody" parent="."]
-transform = Transform( 0.208424, 0, 0.978039, 0, 1, 0, -0.978039, 0, 0.208424, -23.0197, 5.05542, 10.2252 )
-linear_damp = 5.0
-angular_damp = 4.0
-script = ExtResource( 11 )
-
-[node name="Sprite3D" type="Sprite3D" parent="ShipRigid2"]
-transform = Transform( -0.389, -3.40075e-08, 1.48651e-15, 0, -4.37114e-08, -1, 3.40075e-08, -0.389, 1.70037e-08, -1.48448, 1.82401, 1.90735e-06 )
-alpha_cut = 2
-texture = ExtResource( 8 )
-
-[node name="MeshInstance" type="MeshInstance" parent="ShipRigid2"]
-visible = false
-mesh = SubResource( 7 )
-material/0 = ExtResource( 10 )
-
-[node name="MeshInstance2" type="MeshInstance" parent="ShipRigid2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5.45382, -0.0183039, 0.104887 )
-visible = false
-mesh = SubResource( 8 )
-material/0 = null
-
-[node name="CollisionShape" type="CollisionShape" parent="ShipRigid2"]
-shape = SubResource( 9 )
-
-[node name="HFront" type="Spatial" parent="ShipRigid2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.08039, 0, 0 )
-
-[node name="HBack" type="Spatial" parent="ShipRigid2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.44936, 0, 0 )
-
-[node name="HLeft" type="Spatial" parent="ShipRigid2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.204397, -9.53674e-07, 2.37019 )
-
-[node name="HRight" type="Spatial" parent="ShipRigid2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0808775, 0, -2.46706 )
