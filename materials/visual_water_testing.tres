@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=16 format=2]
 
-[ext_resource path="res://shaders/visual_water.shader" type="Shader" id=1]
+[ext_resource path="res://SceneNodes/OceanEnv/visual_water.shader" type="Shader" id=1]
 [ext_resource path="res://SceneNodes/OceanEnv/Textures/beach_mask.png" type="Texture" id=2]
 [ext_resource path="res://SceneNodes/OceanEnv/Textures/bubbles_albedo.png" type="Texture" id=3]
 [ext_resource path="res://SceneNodes/OceanEnv/Textures/bubbles_normal.png" type="Texture" id=4]
@@ -12,6 +12,8 @@
 [ext_resource path="res://SceneNodes/OceanEnv/Textures/plankton_albedo.png" type="Texture" id=10]
 [ext_resource path="res://SceneNodes/OceanEnv/Textures/underwater_overlay.png" type="Texture" id=11]
 [ext_resource path="res://textures/post/lense_glare_a.png" type="Texture" id=13]
+
+
 
 
 

@@ -27,9 +27,9 @@ uniform float gerstner_2_tiling = 0.02;
 uniform float gerstner_distance_fadeout = 0.03;
 uniform vec2 gerstner_speed = vec2(0.00, 0.0);
 uniform vec2 gerstner_2_speed = vec2(0.0, 0.0);
-uniform float time_offset = 0; // can be deleted i guess
-uniform float time = 0; 
-uniform float CustomUVScale = 1.0; // can be deleted i guess
+uniform float time_offset = 0;
+uniform float time = 0;
+uniform float CustomUVScale = 1.0;
 
 
 uniform float normal_base_intensity = 0.7;

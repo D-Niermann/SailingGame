@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=1]
 [ext_resource path="res://nodes/ocean_waterplane.gd" type="Script" id=2]
@@ -7,13 +7,14 @@
 [ext_resource path="res://SceneNodes/OceanEnv/vector_map_a.tres" type="Material" id=5]
 [ext_resource path="res://SceneNodes/OceanEnv/waterplane/waterplane_high.obj" type="ArrayMesh" id=6]
 [ext_resource path="res://SceneNodes/OceanEnv/MyWater1.tres" type="Material" id=7]
+[ext_resource path="res://nodes/PlayerShipContainer.tscn" type="PackedScene" id=8]
 
 [sub_resource type="ViewportTexture" id=1]
 flags = 4
 viewport_path = NodePath("render_targets/vector_map_buffer")
 
 [sub_resource type="CubeMesh" id=2]
-size = Vector3( 10, 1, 5 )
+size = Vector3( 1, 1, 1 )
 
 [sub_resource type="CapsuleMesh" id=3]
 radius = 4.937
@@ -46,15 +47,10 @@ dof_blur_far_quality = 2
 dof_blur_near_quality = 2
 glow_bicubic_upscale = true
 
-[node name="OceanEnvironment" type="Spatial"]
+[node name="OceanEnvironment" type="Spatial" groups=[
+"Ocean",
+]]
 script = ExtResource( 3 )
-
-[node name="waterplane" type="MeshInstance" parent="."]
-material_override = ExtResource( 7 )
-cast_shadow = 0
-mesh = ExtResource( 6 )
-material/0 = null
-script = ExtResource( 2 )
 
 [node name="render_targets" type="Spatial" parent="."]
 
@@ -74,15 +70,45 @@ margin_bottom = 1024.0
 texture = SubResource( 1 )
 expand = true
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0 )
-visible = false
+[node name="waterplane" type="MeshInstance" parent="."]
+material_override = ExtResource( 7 )
+cast_shadow = 0
+mesh = ExtResource( 6 )
+material/0 = null
+script = ExtResource( 2 )
+
+[node name="testHeightMesh" type="MeshInstance" parent="."]
+transform = Transform( 0.877565, 0, -0.479458, 0, 1, 0, 0.479458, 0, 0.877565, -15.693, 0, -15.2759 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="testHeightMesh2" type="MeshInstance" parent="."]
+transform = Transform( 0.877565, 0, -0.479458, 0, 1, 0, 0.479458, 0, 0.877565, 0.998225, 0.101692, -4.97251 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="testHeightMesh3" type="MeshInstance" parent="."]
+transform = Transform( 0.877565, 0, -0.479458, 0, 1, 0, 0.479458, 0, 0.877565, 19.0571, 10.4429, 3.96422 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="testHeightMesh4" type="MeshInstance" parent="."]
+transform = Transform( 0.877565, 0, -0.479458, 0, 1, 0, 0.479458, 0, 0.877565, -18.1746, 5.34014, -10.7338 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="testHeightMesh5" type="MeshInstance" parent="."]
+transform = Transform( 0.877565, 0, -0.479458, 0, 1, 0, 0.479458, 0, 0.877565, -1.48338, 0.101692, -0.430364 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="testHeightMesh6" type="MeshInstance" parent="."]
+transform = Transform( 0.877565, 0, -0.479458, 0, 1, 0, 0.479458, 0, 0.877565, 16.5755, 10.4429, 8.50637 )
 mesh = SubResource( 2 )
 material/0 = null
 
 [node name="MeshInstance2" type="MeshInstance" parent="."]
-transform = Transform( -9.21808, 0.0518776, -0.0114226, 0.0830715, -0.0307609, -1.26269, 0.0709435, 6.77677, -0.00564414, -0.766546, -9.44093, -1.82693 )
-visible = false
+transform = Transform( -9.21808, 0.0518776, -0.0114226, 0.0830715, -0.0307609, -1.26269, 0.0709435, 6.77677, -0.00564414, -0.766546, -7.56251, -1.82693 )
 mesh = SubResource( 3 )
 material/0 = SubResource( 4 )
 __meta__ = {
@@ -102,3 +128,9 @@ light_color = Color( 0.996078, 0.870588, 0.690196, 1 )
 light_specular = 1.0
 shadow_enabled = true
 directional_shadow_max_distance = 200.0
+
+[node name="ShipContainer" parent="." instance=ExtResource( 8 )]
+transform = Transform( 0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 1.59158, 11.45, 15.3738 )
+pitch_factor = 0.03
+yaw_factor = 0.04
+height_offset = 1

@@ -56,13 +56,15 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	# shop detection
-	var colliders: Array = shopArea.get_overlapping_bodies()
-	if !colliders.empty():
-		shopIndicator.visible = true
-	else:
-		shopIndicator.visible = false
-		if shoppingScreen.open != null:
-			shoppingScreen.closeShop()
+	# var colliders: Array = shopArea.get_overlapping_bodies()
+	# if !colliders.empty():
+	# 	shopIndicator.visible = true
+	# else:
+	# 	shopIndicator.visible = false
+	# 	if shoppingScreen.open != null:
+	# 		shoppingScreen.closeShop()
+
+	
 	# for i in humans:
 	# 	print(i)
 	# print(global_transform)
@@ -97,7 +99,7 @@ func _input(event):
 	turnSpeed = clamp(turnSpeed,-maxTurnSpeed,maxTurnSpeed)
 	sails = clamp(sails,-0.01, 1)
 	print(sails)
-	wheelTexture.set_rotation(-turnSpeed * 1000)
+	# wheelTexture.set_rotation(-turnSpeed * 1000)
 
 func calcSpeed():
 	var deg = abs(rad2deg(angle_to_wind))/180

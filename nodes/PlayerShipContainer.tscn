@@ -627,13 +627,11 @@ transform = Transform( 0.223304, 0, 0.112408, 0, 0.25, 0, -0.112408, 0, 0.223304
 shape = SubResource( 11 )
 
 [node name="HFront" type="Spatial" parent="."]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 5.70147, 0, 0 )
+transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 34.7533, 1.90735e-06, 0.339165 )
 script = ExtResource( 1 )
-doPrint = 1
 
 [node name="MeshInstance" type="MeshInstance" parent="HFront"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, -3.91826e-09, 0, 3.91826e-09, 0.11, 0, 0, 0 )
-visible = false
 mesh = SubResource( 12 )
 material/0 = null
 
@@ -651,13 +649,11 @@ process_material = SubResource( 18 )
 draw_pass_1 = SubResource( 19 )
 
 [node name="HBack" type="Spatial" parent="."]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -4.40235, 0, 0 )
+transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -27.329, 1.90735e-06, -0.0810394 )
 script = ExtResource( 1 )
-doPrint = 1
 
 [node name="MeshInstance" type="MeshInstance" parent="HBack"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, -3.72529e-09, 0, 3.72529e-09, 0.11, 0, 0, 0 )
-visible = false
 mesh = SubResource( 12 )
 material/0 = null
 
@@ -676,13 +672,11 @@ process_material = SubResource( 18 )
 draw_pass_1 = SubResource( 19 )
 
 [node name="HLeft" type="Spatial" parent="."]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 0.403394, 0, -1.91274 )
+transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 0.98208, -1.90735e-06, -9.84517 )
 script = ExtResource( 1 )
-doPrint = 1
 
 [node name="MeshInstance" type="MeshInstance" parent="HLeft"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, 0, 0, 0, 0.11, 0, 0, 0 )
-visible = false
 mesh = SubResource( 12 )
 material/0 = null
 
@@ -700,13 +694,11 @@ process_material = SubResource( 18 )
 draw_pass_1 = SubResource( 19 )
 
 [node name="HRight" type="Spatial" parent="."]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 1.10096, 0, 2.3751 )
+transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 0.986094, -1.90735e-06, 10.229 )
 script = ExtResource( 1 )
-doPrint = 1
 
 [node name="MeshInstance" type="MeshInstance" parent="HRight"]
 transform = Transform( 0.12, 0, 0, 0, 0.11, 0, 0, 0, 0.11, 0, 0, 0 )
-visible = false
 mesh = SubResource( 12 )
 material/0 = null
 
