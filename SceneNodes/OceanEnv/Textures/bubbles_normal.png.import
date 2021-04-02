@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/detail_normal.png-96f63ac50dc64919b07ea387c3fb31e6.s3tc.stex"
-path.etc2="res://.import/detail_normal.png-96f63ac50dc64919b07ea387c3fb31e6.etc2.stex"
+path.s3tc="res://.import/bubbles_normal.png-46d4a6ba04c274c6dd421db7da8698e3.s3tc.stex"
+path.etc2="res://.import/bubbles_normal.png-46d4a6ba04c274c6dd421db7da8698e3.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/water/detail_normal.png"
-dest_files=[ "res://.import/detail_normal.png-96f63ac50dc64919b07ea387c3fb31e6.s3tc.stex", "res://.import/detail_normal.png-96f63ac50dc64919b07ea387c3fb31e6.etc2.stex" ]
+source_file="res://SceneNodes/OceanEnv/Textures/bubbles_normal.png"
+dest_files=[ "res://.import/bubbles_normal.png-46d4a6ba04c274c6dd421db7da8698e3.s3tc.stex", "res://.import/bubbles_normal.png-46d4a6ba04c274c6dd421db7da8698e3.etc2.stex" ]
 
 [params]
 

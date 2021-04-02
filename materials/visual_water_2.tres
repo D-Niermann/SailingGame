@@ -1,17 +1,19 @@
 [gd_resource type="ShaderMaterial" load_steps=16 format=2]
 
 [ext_resource path="res://shaders/visual_water.shader" type="Shader" id=1]
-[ext_resource path="res://textures/water/beach_mask.png" type="Texture" id=2]
-[ext_resource path="res://textures/water/bubbles_albedo.png" type="Texture" id=3]
-[ext_resource path="res://textures/water/bubbles_normal.png" type="Texture" id=4]
-[ext_resource path="res://textures/water/detail_normal.png" type="Texture" id=5]
-[ext_resource path="res://textures/water/foam_albedo.png" type="Texture" id=6]
-[ext_resource path="res://textures/water/foam_normal.png" type="Texture" id=7]
-[ext_resource path="res://textures/water/gerstner_height.png" type="Texture" id=8]
-[ext_resource path="res://textures/water/gerstner_normal.png" type="Texture" id=9]
-[ext_resource path="res://textures/water/plankton_albedo.png" type="Texture" id=10]
-[ext_resource path="res://textures/water/underwater_overlay.png" type="Texture" id=11]
+[ext_resource path="res://SceneNodes/OceanEnv/Textures/beach_mask.png" type="Texture" id=2]
+[ext_resource path="res://SceneNodes/OceanEnv/Textures/bubbles_albedo.png" type="Texture" id=3]
+[ext_resource path="res://SceneNodes/OceanEnv/Textures/bubbles_normal.png" type="Texture" id=4]
+[ext_resource path="res://SceneNodes/OceanEnv/Textures/detail_normal.png" type="Texture" id=5]
+[ext_resource path="res://SceneNodes/OceanEnv/Textures/foam_albedo.png" type="Texture" id=6]
+[ext_resource path="res://SceneNodes/OceanEnv/Textures/foam_normal.png" type="Texture" id=7]
+[ext_resource path="res://SceneNodes/OceanEnv/Textures/gerstner_height.png" type="Texture" id=8]
+[ext_resource path="res://SceneNodes/OceanEnv/Textures/gerstner_normal.png" type="Texture" id=9]
+[ext_resource path="res://SceneNodes/OceanEnv/Textures/plankton_albedo.png" type="Texture" id=10]
+[ext_resource path="res://SceneNodes/OceanEnv/Textures/underwater_overlay.png" type="Texture" id=11]
 [ext_resource path="res://textures/post/lense_glare_a.png" type="Texture" id=13]
+
+
 
 [sub_resource type="ViewportTexture" id=1]
 flags = 4

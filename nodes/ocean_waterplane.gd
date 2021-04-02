@@ -2,7 +2,7 @@ extends MeshInstance
 
 var vtx
 var n = 0
-var mtool = MeshDataTool.new()
+# var mtool = MeshDataTool.new()
 var camera
 var value = 0
 onready var myMesh

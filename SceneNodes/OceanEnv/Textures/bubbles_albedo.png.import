@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/gerstner_height.png-d5b8045315c5ff7ab3738457534f5a32.s3tc.stex"
-path.etc2="res://.import/gerstner_height.png-d5b8045315c5ff7ab3738457534f5a32.etc2.stex"
+path.s3tc="res://.import/bubbles_albedo.png-1ad5babf6c72207627816a4357fe439d.s3tc.stex"
+path.etc2="res://.import/bubbles_albedo.png-1ad5babf6c72207627816a4357fe439d.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/water/gerstner_height.png"
-dest_files=[ "res://.import/gerstner_height.png-d5b8045315c5ff7ab3738457534f5a32.s3tc.stex", "res://.import/gerstner_height.png-d5b8045315c5ff7ab3738457534f5a32.etc2.stex" ]
+source_file="res://SceneNodes/OceanEnv/Textures/bubbles_albedo.png"
+dest_files=[ "res://.import/bubbles_albedo.png-1ad5babf6c72207627816a4357fe439d.s3tc.stex", "res://.import/bubbles_albedo.png-1ad5babf6c72207627816a4357fe439d.etc2.stex" ]
 
 [params]
 

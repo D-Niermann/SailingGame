@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/underwater_overlay.png-fb2e3ff2d6ee5b391e66e71c9487c1ae.s3tc.stex"
-path.etc2="res://.import/underwater_overlay.png-fb2e3ff2d6ee5b391e66e71c9487c1ae.etc2.stex"
+path.s3tc="res://.import/detail_normal.png-b25121c4d71717e643af3518745ab48a.s3tc.stex"
+path.etc2="res://.import/detail_normal.png-b25121c4d71717e643af3518745ab48a.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/water/underwater_overlay.png"
-dest_files=[ "res://.import/underwater_overlay.png-fb2e3ff2d6ee5b391e66e71c9487c1ae.s3tc.stex", "res://.import/underwater_overlay.png-fb2e3ff2d6ee5b391e66e71c9487c1ae.etc2.stex" ]
+source_file="res://SceneNodes/OceanEnv/Textures/detail_normal.png"
+dest_files=[ "res://.import/detail_normal.png-b25121c4d71717e643af3518745ab48a.s3tc.stex", "res://.import/detail_normal.png-b25121c4d71717e643af3518745ab48a.etc2.stex" ]
 
 [params]
 
@@ -20,12 +20,12 @@ compress/mode=2
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
-compress/normal_map=0
+compress/normal_map=1
 flags/repeat=true
 flags/filter=true
 flags/mipmaps=true
 flags/anisotropic=false
-flags/srgb=1
+flags/srgb=2
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false

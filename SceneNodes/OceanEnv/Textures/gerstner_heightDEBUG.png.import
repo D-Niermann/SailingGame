@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/plankton_albedo.png-7ab4486fcefb5e78646c8e2ed618bdf6.s3tc.stex"
-path.etc2="res://.import/plankton_albedo.png-7ab4486fcefb5e78646c8e2ed618bdf6.etc2.stex"
+path.s3tc="res://.import/gerstner_heightDEBUG.png-61ff2f583f9a768829dfae07ab53a55d.s3tc.stex"
+path.etc2="res://.import/gerstner_heightDEBUG.png-61ff2f583f9a768829dfae07ab53a55d.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/water/plankton_albedo.png"
-dest_files=[ "res://.import/plankton_albedo.png-7ab4486fcefb5e78646c8e2ed618bdf6.s3tc.stex", "res://.import/plankton_albedo.png-7ab4486fcefb5e78646c8e2ed618bdf6.etc2.stex" ]
+source_file="res://SceneNodes/OceanEnv/Textures/gerstner_heightDEBUG.png"
+dest_files=[ "res://.import/gerstner_heightDEBUG.png-61ff2f583f9a768829dfae07ab53a55d.s3tc.stex", "res://.import/gerstner_heightDEBUG.png-61ff2f583f9a768829dfae07ab53a55d.etc2.stex" ]
 
 [params]
 

@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/foam_albedo.png-99c422e2f1b91ce3821de954a7b44aa3.s3tc.stex"
-path.etc2="res://.import/foam_albedo.png-99c422e2f1b91ce3821de954a7b44aa3.etc2.stex"
+path.s3tc="res://.import/plankton_albedo.png-33a78d4ff03eb15811fd1f383d80d512.s3tc.stex"
+path.etc2="res://.import/plankton_albedo.png-33a78d4ff03eb15811fd1f383d80d512.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://textures/water/foam_albedo.png"
-dest_files=[ "res://.import/foam_albedo.png-99c422e2f1b91ce3821de954a7b44aa3.s3tc.stex", "res://.import/foam_albedo.png-99c422e2f1b91ce3821de954a7b44aa3.etc2.stex" ]
+source_file="res://SceneNodes/OceanEnv/Textures/plankton_albedo.png"
+dest_files=[ "res://.import/plankton_albedo.png-33a78d4ff03eb15811fd1f383d80d512.s3tc.stex", "res://.import/plankton_albedo.png-33a78d4ff03eb15811fd1f383d80d512.etc2.stex" ]
 
 [params]
 
