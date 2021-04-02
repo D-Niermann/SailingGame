@@ -1,0 +1,76 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://materials/vector_map_a.tres" type="Material" id=1]
+[ext_resource path="res://materials/MyWater1.tres" type="Material" id=2]
+[ext_resource path="res://objects/waterplane/waterplane_high.obj" type="ArrayMesh" id=3]
+[ext_resource path="res://nodes/ocean.gd" type="Script" id=4]
+[ext_resource path="res://nodes/ocean_waterplane.gd" type="Script" id=5]
+[ext_resource path="res://nodes/tod/evening_01.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Camera.gd" type="Script" id=7]
+
+[sub_resource type="ViewportTexture" id=1]
+flags = 4
+viewport_path = NodePath("render_targets/vector_map_buffer")
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 10, 1, 5 )
+
+[sub_resource type="CapsuleMesh" id=3]
+radius = 4.937
+mid_height = 4.15
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.501961, 0.501961, 0.501961, 1 )
+
+[node name="ocean" type="Spatial"]
+script = ExtResource( 4 )
+
+[node name="waterplane" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0707808, 0 )
+material_override = ExtResource( 2 )
+cast_shadow = 0
+mesh = ExtResource( 3 )
+material/0 = null
+script = ExtResource( 5 )
+
+[node name="render_targets" type="Spatial" parent="."]
+
+[node name="vector_map_buffer" type="Viewport" parent="render_targets"]
+size = Vector2( 1024, 1024 )
+hdr = false
+disable_3d = true
+usage = 0
+render_target_v_flip = true
+render_target_clear_mode = 2
+render_target_update_mode = 3
+
+[node name="image" type="TextureRect" parent="render_targets/vector_map_buffer"]
+material = ExtResource( 1 )
+margin_right = 1024.0
+margin_bottom = 1024.0
+texture = SubResource( 1 )
+expand = true
+
+[node name="evening_01" parent="." instance=ExtResource( 6 )]
+
+[node name="DirectionalLight" parent="evening_01" index="1"]
+transform = Transform( 0.863191, 0.152025, -0.481446, 0.413218, 0.33518, 0.846703, 0.290091, -0.929808, 0.226505, 0, 0, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]
+transform = Transform( -9.21808, 0.0518776, -0.0114226, 0.0830715, -0.0307609, -1.26269, 0.0709435, 6.77677, -0.00564414, -0.766546, -9.576, -1.82693 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Camera" type="Camera" parent="."]
+script = ExtResource( 7 )
+gameCam = false
+
+[editable path="evening_01"]

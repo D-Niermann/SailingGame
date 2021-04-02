@@ -10,14 +10,15 @@ var value = 0
 var audio
 
 func set_sun_glare(value):
-	$post_fx_1.material.set_shader_param("glare_amount", value)
+	# $post_fx_1.material.set_shader_param("glare_amount", value)
+	pass
 
 func _ready():
-	camera = $camera
+	camera = get_viewport().get_camera()
 	audio = $audio_waves
 	
 	# start position and angle
-	camera.transform.origin = camera_start_pos
+	# camera.transform.origin = camera_start_pos
 
 func _input(event):
 	if (event is InputEventMouseMotion and event.button_mask & BUTTON_MASK_RIGHT):
@@ -35,14 +36,14 @@ func _process(delta):
 			ui.hide()
 		else:
 			ui.show()
-	if Input.is_action_pressed("game_left"):
-		camera.transform.origin -= camera.transform.basis[0] * Input.get_action_strength("game_left") * camera_speed * delta
-	if Input.is_action_pressed("game_right"):
-		camera.transform.origin += camera.transform.basis[0] * Input.get_action_strength("game_right") * camera_speed * delta
-	if Input.is_action_pressed("game_up"):
-		camera.transform.origin -= camera.transform.basis[2] * Input.get_action_strength("game_up") * camera_speed * delta
-	if Input.is_action_pressed("game_down"):
-		camera.transform.origin += camera.transform.basis[2] * Input.get_action_strength("game_down") * camera_speed * delta
+	if Input.is_action_pressed("cam_left"):
+		camera.transform.origin -= camera.transform.basis[0] * Input.get_action_strength("cam_left") * camera_speed * delta
+	if Input.is_action_pressed("cam_right"):
+		camera.transform.origin += camera.transform.basis[0] * Input.get_action_strength("cam_right") * camera_speed * delta
+	if Input.is_action_pressed("cam_up"):
+		camera.transform.origin -= camera.transform.basis[2] * Input.get_action_strength("cam_up") * camera_speed * delta
+	if Input.is_action_pressed("cam_down"):
+		camera.transform.origin += camera.transform.basis[2] * Input.get_action_strength("cam_down") * camera_speed * delta
 	if Input.is_action_pressed("game_turn_left"):
 		camera.look_at(camera.transform.origin - camera.transform.basis[2] - camera.transform.basis[0] * Input.get_action_strength("game_turn_left") * camera_turn_speed * delta, Vector3.UP)
 	if Input.is_action_pressed("game_turn_right"):
@@ -52,5 +53,5 @@ func _process(delta):
 	if Input.is_action_pressed("game_turn_down"):
 		camera.look_at(camera.transform.origin - camera.transform.basis[2] - camera.transform.basis[1] * Input.get_action_strength("game_turn_down") * camera_turn_speed * delta, Vector3.UP)
 		
-	audio.transform.origin = get_node("../game_camera/camera").transform.origin
-	audio.transform.origin.y = 0.0
+	# audio.transform.origin = get_node("../game_camera/camera").transform.origin
+	# audio.transform.origin.y = 0.0

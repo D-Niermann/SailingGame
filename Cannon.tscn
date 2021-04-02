@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Sprites/cannon.png" type="Texture" id=1]
 [ext_resource path="res://addons/kenney_particle_pack/smoke_07.png" type="Texture" id=2]
 [ext_resource path="res://Cannon.gd" type="Script" id=3]
 [ext_resource path="res://addons/LineRenderer/LineRenderer.tscn" type="PackedScene" id=4]
 [ext_resource path="res://addons/kenney_particle_pack/smoke_02.png" type="Texture" id=5]
+[ext_resource path="res://materials/Black.tres" type="Material" id=6]
 
 [sub_resource type="SpatialMaterial" id=1]
 render_priority = 1
@@ -91,13 +92,16 @@ color_ramp = SubResource( 3 )
 hue_variation = 0.21
 hue_variation_random = 0.33
 
+[sub_resource type="CubeMesh" id=13]
+size = Vector3( 1, 0.2, 0.5 )
+
 [node name="Cannon" type="Spatial"]
 script = ExtResource( 3 )
 
 [node name="Gun" type="Spatial" parent="."]
 
 [node name="Sprite3D" type="Sprite3D" parent="Gun"]
-transform = Transform( 0.349777, -0.201944, -2.18557e-08, 0, -1.76545e-08, 1, -0.201944, -0.349777, -3.78552e-08, 0.113681, 0, -0.00625759 )
+transform = Transform( 0.349777, -0.201944, -2.18557e-08, 0, -1.76545e-08, 1, -0.201944, -0.349777, -3.78552e-08, 0.113681, 0.121206, -0.00625759 )
 shaded = true
 alpha_cut = 2
 texture = ExtResource( 1 )
@@ -144,3 +148,8 @@ endThickness = 0.01
 drawCaps = false
 drawCorners = false
 globalCoords = false
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+cast_shadow = 3
+mesh = SubResource( 13 )
+material/0 = ExtResource( 6 )

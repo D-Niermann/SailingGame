@@ -136,6 +136,7 @@ func _physics_process(delta):
 				coords = hologram.global_transform.origin -  parent.global_transform.origin
 				angle = rot
 				placeOrDestroyHologram()
+
 		else:
 			var sprite = hologram.get_node("Sprite3D")
 			sprite.modulate = Color(1.0, 0.0, 0.0, 0.5)
@@ -194,6 +195,8 @@ func destroyHologram():
 
 # Places current hologram or destroys it.
 func placeOrDestroyHologram():
+	get_tree().set_input_as_handled()
+
 	if resource != null:
 		if parent != null:
 			var duplicate = load(resource).instance()

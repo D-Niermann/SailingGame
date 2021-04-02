@@ -25,7 +25,7 @@ var aimCannons
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	camera = get_tree().get_nodes_in_group("Camera")[0]
+	camera = get_viewport().get_camera()
 	org_rotation = transform.basis.get_euler().y*180/PI
 	particles = $Particles
 	particles_flash = $ParticlesFlash
