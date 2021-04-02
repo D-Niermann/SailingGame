@@ -1,22 +1,15 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=29 format=2]
 
-[ext_resource path="res://Scripts/Boye.gd" type="Script" id=1]
 [ext_resource path="res://ShipManager.gd" type="Script" id=2]
 [ext_resource path="res://materials/human.tres" type="Material" id=3]
 [ext_resource path="res://materials/Invisible.tres" type="Material" id=4]
 [ext_resource path="res://Sprites/shipDeck.png" type="Texture" id=5]
-[ext_resource path="res://addons/kenney_particle_pack/fire_01.png" type="Texture" id=6]
 [ext_resource path="res://Sprites/segel-schatten.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/segel.png" type="Texture" id=8]
 [ext_resource path="res://Sprites/segelVorn.png" type="Texture" id=9]
 [ext_resource path="res://nodes/OmniLight.gd" type="Script" id=10]
 [ext_resource path="res://addons/kenney_particle_pack/trace_01.png" type="Texture" id=11]
 [ext_resource path="res://Cannon.tscn" type="PackedScene" id=12]
-
-
-[sub_resource type="CapsuleShape" id=1]
-radius = 2.0938
-height = 13.1857
 
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 27.128, 0.1, 7.905 )
@@ -48,72 +41,6 @@ albedo_color = Color( 0.168627, 0.12549, 0.0705882, 1 )
 
 [sub_resource type="BoxShape" id=11]
 extents = Vector3( 5, 1.8183, 0.2 )
-
-[sub_resource type="CapsuleMesh" id=12]
-
-[sub_resource type="SpatialMaterial" id=13]
-render_priority = 1
-flags_transparent = true
-flags_vertex_lighting = true
-vertex_color_use_as_albedo = true
-params_billboard_mode = 3
-particles_anim_h_frames = 1
-particles_anim_v_frames = 1
-particles_anim_loop = false
-albedo_color = Color( 1, 1, 1, 0.392157 )
-albedo_texture = ExtResource( 6 )
-metallic_specular = 0.45
-
-[sub_resource type="Gradient" id=14]
-offsets = PoolRealArray( 0, 0.162602, 0.548781 )
-colors = PoolColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 )
-
-[sub_resource type="GradientTexture" id=15]
-gradient = SubResource( 14 )
-
-[sub_resource type="Curve" id=16]
-_data = [ Vector2( 0, 0.535838 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=17]
-curve = SubResource( 16 )
-
-[sub_resource type="ParticlesMaterial" id=18]
-lifetime_randomness = 0.32
-emission_shape = 2
-emission_box_extents = Vector3( 1, 1, 1 )
-direction = Vector3( 0, 0, 1 )
-spread = 2.16
-gravity = Vector3( 0, -6, 3 )
-initial_velocity = 7.0
-initial_velocity_random = 0.24
-damping = 5.3
-damping_random = 0.12
-angle = 263.7
-angle_random = 1.0
-scale = 0.46
-scale_random = 1.0
-scale_curve = SubResource( 17 )
-color_ramp = SubResource( 15 )
-
-[sub_resource type="QuadMesh" id=19]
-size = Vector2( 5, 5 )
-
-[sub_resource type="ParticlesMaterial" id=20]
-lifetime_randomness = 0.32
-emission_shape = 2
-emission_box_extents = Vector3( 2.11, 1, 0.54 )
-direction = Vector3( 1, 1, 0 )
-spread = 18.64
-gravity = Vector3( -10, 0, -4 )
-initial_velocity = 5.0
-initial_velocity_random = 0.1
-angular_velocity = 20.0
-angular_velocity_random = 1.0
-damping = 12.68
-damping_random = 0.12
-scale_random = 1.0
-scale_curve = SubResource( 17 )
-color_ramp = SubResource( 15 )
 
 [sub_resource type="SpatialMaterial" id=21]
 flags_transparent = true
@@ -152,19 +79,18 @@ scale_random = 1.0
 scale_curve = SubResource( 25 )
 color_ramp = SubResource( 23 )
 
+[sub_resource type="QuadMesh" id=19]
+size = Vector2( 5, 5 )
+
 [sub_resource type="SphereShape" id=27]
 radius = 33.4429
 
-[node name="ShipContainer" type="KinematicBody" groups=[
+[node name="ShipContainer" type="Spatial" groups=[
 "Ship",
 ]]
 script = ExtResource( 2 )
 pitch_factor = 0.15
 yaw_factor = 0.15
-
-[node name="ShipCollision" type="CollisionShape" parent="."]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -1.4708, 0 )
-shape = SubResource( 1 )
 
 [node name="Ship" type="Spatial" parent="."]
 
@@ -407,7 +333,7 @@ light_indirect_energy = 0.69
 light_cull_mask = 2147483647
 shadow_enabled = true
 shadow_color = Color( 0.470588, 0.470588, 0.470588, 1 )
-omni_range = 1.5
+omni_range = 7.3
 omni_attenuation = 0.406126
 script = ExtResource( 10 )
 
@@ -419,19 +345,19 @@ light_indirect_energy = 0.69
 light_cull_mask = 2147483647
 shadow_enabled = true
 shadow_color = Color( 0.470588, 0.470588, 0.470588, 1 )
-omni_range = 1.5
+omni_range = 7.4
 omni_attenuation = 0.406126
 script = ExtResource( 10 )
 
 [node name="OmniLight4" type="OmniLight" parent="Ship"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.1107, 2.94966, 4.32937 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.1107, 3.60687, 4.32937 )
 light_color = Color( 1, 0.952941, 0.631373, 1 )
-light_energy = 1.75
+light_energy = 1.13
 light_indirect_energy = 0.69
 light_cull_mask = 2147483647
 shadow_enabled = true
 shadow_color = Color( 0.470588, 0.470588, 0.470588, 1 )
-omni_range = 1.5
+omni_range = 9.2
 omni_attenuation = 0.406126
 script = ExtResource( 10 )
 
@@ -443,7 +369,7 @@ light_indirect_energy = 0.69
 light_cull_mask = 2147483647
 shadow_enabled = true
 shadow_color = Color( 0.470588, 0.470588, 0.470588, 1 )
-omni_range = 1.5
+omni_range = 5.7
 omni_attenuation = 0.406126
 script = ExtResource( 10 )
 
@@ -626,95 +552,6 @@ transform = Transform( 0.223304, 0, 0.112408, 0, 0.25, 0, -0.112408, 0, 0.223304
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/LeftBottomWalls/Wall7"]
 shape = SubResource( 11 )
-
-[node name="HFront" type="Spatial" parent="."]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 34.7533, 1.90735e-06, 0.339165 )
-script = ExtResource( 1 )
-
-[node name="MeshInstance" type="MeshInstance" parent="HFront"]
-transform = Transform( 0.12, 0, 0, 0, 0.11, -3.91826e-09, 0, 3.91826e-09, 0.11, 0, 0, 0 )
-mesh = SubResource( 12 )
-material/0 = null
-
-[node name="Particles" type="Particles" parent="HFront"]
-transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.00045183, 0.16377, -0.23537, -0.000314459, 0.235371, 0.163769, 0.907872, 0.119683, -0.234054 )
-material_override = SubResource( 13 )
-cast_shadow = 0
-emitting = false
-amount = 30
-lifetime = 3.0
-randomness = 0.26
-visibility_aabb = AABB( -9.27938, -5.19, -16.7651, 24.82, 20.92, 35.1953 )
-local_coords = false
-process_material = SubResource( 18 )
-draw_pass_1 = SubResource( 19 )
-
-[node name="HBack" type="Spatial" parent="."]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, -27.329, 1.90735e-06, -0.0810394 )
-script = ExtResource( 1 )
-
-[node name="MeshInstance" type="MeshInstance" parent="HBack"]
-transform = Transform( 0.12, 0, 0, 0, 0.11, -3.72529e-09, 0, 3.72529e-09, 0.11, 0, 0, 0 )
-mesh = SubResource( 12 )
-material/0 = null
-
-[node name="Particles" type="Particles" parent="HBack"]
-transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.000314459, -0.235371, -0.163769, 0.00045183, 0.16377, -0.23537, 0.191698, 0, 0 )
-visible = false
-material_override = SubResource( 13 )
-cast_shadow = 0
-emitting = false
-amount = 30
-lifetime = 3.0
-randomness = 0.26
-visibility_aabb = AABB( -9.27938, -5.19, -10.2165, 24.82, 20.92, 22.0981 )
-local_coords = false
-process_material = SubResource( 18 )
-draw_pass_1 = SubResource( 19 )
-
-[node name="HLeft" type="Spatial" parent="."]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 0.98208, -1.90735e-06, -9.84517 )
-script = ExtResource( 1 )
-
-[node name="MeshInstance" type="MeshInstance" parent="HLeft"]
-transform = Transform( 0.12, 0, 0, 0, 0.11, 0, 0, 0, 0.11, 0, 0, 0 )
-mesh = SubResource( 12 )
-material/0 = null
-
-[node name="Particles" type="Particles" parent="HLeft"]
-transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.000355047, 0.219108, -0.184963, -0.000420687, 0.184964, 0.219107, 0, 0.595014, -0.414007 )
-material_override = SubResource( 13 )
-cast_shadow = 0
-emitting = false
-amount = 30
-lifetime = 2.0
-randomness = 0.26
-visibility_aabb = AABB( -12.8197, -9.59574, -15.9361, 24.82, 20.92, 33.0715 )
-local_coords = false
-process_material = SubResource( 18 )
-draw_pass_1 = SubResource( 19 )
-
-[node name="HRight" type="Spatial" parent="."]
-transform = Transform( 3.48748, 0, 0, 0, -2.8627, 1.99185, 0, -1.99185, -2.8627, 0.986094, -1.90735e-06, 10.229 )
-script = ExtResource( 1 )
-
-[node name="MeshInstance" type="MeshInstance" parent="HRight"]
-transform = Transform( 0.12, 0, 0, 0, 0.11, 0, 0, 0, 0.11, 0, 0, 0 )
-mesh = SubResource( 12 )
-material/0 = null
-
-[node name="Particles" type="Particles" parent="HRight"]
-transform = Transform( 0.286739, 6.3791e-08, 0.000550485, 0.000314459, -0.235371, -0.163769, 0.000451831, 0.16377, -0.23537, 0.0115792, 0.456603, -0.423875 )
-material_override = SubResource( 13 )
-cast_shadow = 0
-emitting = false
-amount = 30
-lifetime = 2.0
-randomness = 0.26
-visibility_aabb = AABB( -12.8607, -9.59574, -10.2165, 24.82, 20.92, 22.0981 )
-local_coords = false
-process_material = SubResource( 20 )
-draw_pass_1 = SubResource( 19 )
 
 [node name="Rain" type="Particles" parent="."]
 transform = Transform( 0.941114, 0.338082, 0.00180669, 0.00191982, 6.14514e-07, -0.999997, -0.33808, 0.941119, -0.00064929, 0.726925, 15.5942, 0.461242 )

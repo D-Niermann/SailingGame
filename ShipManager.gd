@@ -55,6 +55,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	pass
 	# shop detection
 	# var colliders: Array = shopArea.get_overlapping_bodies()
 	# if !colliders.empty():
@@ -64,41 +65,41 @@ func _process(delta):
 	# 	if shoppingScreen.open != null:
 	# 		shoppingScreen.closeShop()
 
-	
+
 	# for i in humans:
 	# 	print(i)
 	# print(global_transform)
-	pitch = (hFront.transform.origin.y - hBack.transform.origin.y)*pitch_factor
-	yaw = (hLeft.transform.origin.y - hRight.transform.origin.y)*yaw_factor
-	height = (hFront.transform.origin.y + hBack.transform.origin.y 
-	+ hLeft.transform.origin.y + hRight.transform.origin.y)/4.0
-	# rotate(Vector3(0,0,1)
-	# print(pitch)
-	ship.transform = def_transform.rotated(Vector3(0,0,1),pitch).rotated(Vector3(1,0,0),yaw)
-	# ship.rotate(Vector3(0,0,1),pitch)
-	ship.transform.origin.y = height+height_offset
+	# pitch = (hFront.transform.origin.y - hBack.transform.origin.y)*pitch_factor
+	# yaw = (hLeft.transform.origin.y - hRight.transform.origin.y)*yaw_factor
+	# height = (hFront.transform.origin.y + hBack.transform.origin.y 
+	# + hLeft.transform.origin.y + hRight.transform.origin.y)/4.0
+	# # rotate(Vector3(0,0,1)
+	# # print(pitch)
+	# ship.transform = def_transform.rotated(Vector3(0,0,1),pitch).rotated(Vector3(1,0,0),yaw)
+	# # ship.rotate(Vector3(0,0,1),pitch)
+	# ship.transform.origin.y = height+height_offset
 
-	## move and rotate
-	forward = global_transform.basis.x.normalized()
-	self.transform.origin += forward*speed
-	rotate(Vector3(0,1,0),turnSpeed)
-	angle_to_wind = wind_dir.angle_to(Vector2(forward.x,forward.z))
-	calcSpeed()
+	# ## move and rotate
+	# forward = global_transform.basis.x.normalized()
+	# self.transform.origin += forward*speed
+	# rotate(Vector3(0,1,0),turnSpeed)
+	# angle_to_wind = wind_dir.angle_to(Vector2(forward.x,forward.z))
+	# calcSpeed()
 	
 
 
-func _input(event):
-	if Input.is_action_pressed("turnLeft"):
-		turnSpeed += 0.0001
-	if Input.is_action_pressed("turnRight"):
-		turnSpeed -= 0.0001
-	if Input.is_action_pressed("sailsUp"):
-		sails += 0.01
-	if Input.is_action_pressed("sailsDown"):
-		sails -= 0.01
-	turnSpeed = clamp(turnSpeed,-maxTurnSpeed,maxTurnSpeed)
-	sails = clamp(sails,-0.01, 1)
-	print(sails)
+# func _input(event):
+# 	if Input.is_action_pressed("turnLeft"):
+# 		turnSpeed += 0.0001
+# 	if Input.is_action_pressed("turnRight"):
+# 		turnSpeed -= 0.0001
+# 	if Input.is_action_pressed("sailsUp"):
+# 		sails += 0.01
+# 	if Input.is_action_pressed("sailsDown"):
+# 		sails -= 0.01
+# 	turnSpeed = clamp(turnSpeed,-maxTurnSpeed,maxTurnSpeed)
+# 	sails = clamp(sails,-0.01, 1)
+# 	print(sails)
 	# wheelTexture.set_rotation(-turnSpeed * 1000)
 
 func calcSpeed():

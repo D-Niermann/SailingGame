@@ -126,7 +126,6 @@ func _physics_process(delta):
 	update_water(wind_modified)
 
 func getWaterHeight(position : Vector3):
-	## i think for negative values the pos needs to be flipped somehow
 	var pos2d : Vector2 = Vector2(position.x, position.z)
 	var pxPos1 : Vector2 = imSize * pos2d/imgToWorld*gerstner_tiling1 # pixel postion on the height map (ony use x and z!)
 	var pxPos2 : Vector2 = imSize * pos2d/imgToWorld*gerstner_tiling2

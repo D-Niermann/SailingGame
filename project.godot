@@ -135,6 +135,10 @@ cam_down={
  ]
 }
 
+[memory]
+
+limits/message_queue/max_size_kb=2048
+
 [rendering]
 
 quality/shadows/filter_mode=2
