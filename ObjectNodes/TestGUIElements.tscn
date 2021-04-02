@@ -1,9 +1,10 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://nodes/ui.gd" type="Script" id=1]
+[ext_resource path="res://_OLDnodes/ui.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/mockupGUI.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/wheel.png" type="Texture" id=3]
 [ext_resource path="res://icon.png" type="Texture" id=4]
+
 
 [node name="ui" type="Control"]
 margin_left = 7.0

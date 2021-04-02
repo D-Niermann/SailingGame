@@ -1,8 +1,10 @@
 [gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://ObjectNodes/Cannon/CannonBall.gd" type="Script" id=1]
-[ext_resource path="res://nodes/ObjectCollisionArea.gd" type="Script" id=2]
+[ext_resource path="res://_OLDnodes/ObjectCollisionArea.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=3]
+
+
 
 
 

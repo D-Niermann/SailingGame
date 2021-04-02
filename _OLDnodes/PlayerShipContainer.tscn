@@ -7,9 +7,11 @@
 [ext_resource path="res://Sprites/segel-schatten.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/segel.png" type="Texture" id=8]
 [ext_resource path="res://Sprites/segelVorn.png" type="Texture" id=9]
-[ext_resource path="res://nodes/OmniLight.gd" type="Script" id=10]
+[ext_resource path="res://_OLDnodes/OmniLight.gd" type="Script" id=10]
 [ext_resource path="res://addons/kenney_particle_pack/trace_01.png" type="Texture" id=11]
 [ext_resource path="res://ObjectNodes/Cannon/Cannon.tscn" type="PackedScene" id=12]
+
+
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 27.128, 0.1, 7.905 )

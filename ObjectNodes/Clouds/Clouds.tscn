@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Scripts/Cloud.gd" type="Script" id=1]
+[ext_resource path="res://ObjectNodes/Clouds/Cloud.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/cloudShadow3.png" type="Texture" id=2]
+
 
 
 [node name="Clouds" type="Spatial"]
