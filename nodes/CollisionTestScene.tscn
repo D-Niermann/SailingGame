@@ -2,7 +2,8 @@
 
 [ext_resource path="res://nodes/Ball2Script.gd" type="Script" id=1]
 [ext_resource path="res://nodes/ObjectCollisionArea.gd" type="Script" id=2]
-[ext_resource path="res://Camera.gd" type="Script" id=3]
+[ext_resource path="res://Scripts/Camera.gd" type="Script" id=3]
+
 
 
 [sub_resource type="CubeMesh" id=1]

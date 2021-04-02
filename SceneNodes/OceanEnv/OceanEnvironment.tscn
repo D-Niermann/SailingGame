@@ -1,12 +1,12 @@
 [gd_scene load_steps=12 format=2]
 
-[ext_resource path="res://materials/vector_map_a.tres" type="Material" id=1]
-[ext_resource path="res://materials/MyWater1.tres" type="Material" id=2]
-[ext_resource path="res://objects/waterplane/waterplane_high.obj" type="ArrayMesh" id=3]
-[ext_resource path="res://nodes/ocean.gd" type="Script" id=4]
-[ext_resource path="res://nodes/ocean_waterplane.gd" type="Script" id=5]
-[ext_resource path="res://nodes/tod/evening_01.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Camera.gd" type="Script" id=7]
+[ext_resource path="res://Scripts/Camera.gd" type="Script" id=1]
+[ext_resource path="res://nodes/ocean_waterplane.gd" type="Script" id=2]
+[ext_resource path="res://nodes/ocean.gd" type="Script" id=3]
+[ext_resource path="res://nodes/tod/evening_01.tscn" type="PackedScene" id=4]
+[ext_resource path="res://materials/vector_map_a.tres" type="Material" id=5]
+[ext_resource path="res://objects/waterplane/waterplane_high.obj" type="ArrayMesh" id=6]
+[ext_resource path="res://materials/MyWater1.tres" type="Material" id=7]
 
 [sub_resource type="ViewportTexture" id=1]
 flags = 4
@@ -23,15 +23,15 @@ mid_height = 4.15
 albedo_color = Color( 0.501961, 0.501961, 0.501961, 1 )
 
 [node name="ocean" type="Spatial"]
-script = ExtResource( 4 )
+script = ExtResource( 3 )
 
 [node name="waterplane" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0707808, 0 )
-material_override = ExtResource( 2 )
+material_override = ExtResource( 7 )
 cast_shadow = 0
-mesh = ExtResource( 3 )
+mesh = ExtResource( 6 )
 material/0 = null
-script = ExtResource( 5 )
+script = ExtResource( 2 )
 
 [node name="render_targets" type="Spatial" parent="."]
 
@@ -45,13 +45,13 @@ render_target_clear_mode = 2
 render_target_update_mode = 3
 
 [node name="image" type="TextureRect" parent="render_targets/vector_map_buffer"]
-material = ExtResource( 1 )
+material = ExtResource( 5 )
 margin_right = 1024.0
 margin_bottom = 1024.0
 texture = SubResource( 1 )
 expand = true
 
-[node name="evening_01" parent="." instance=ExtResource( 6 )]
+[node name="evening_01" parent="." instance=ExtResource( 4 )]
 
 [node name="DirectionalLight" parent="evening_01" index="1"]
 transform = Transform( 0.863191, 0.152025, -0.481446, 0.413218, 0.33518, 0.846703, 0.290091, -0.929808, 0.226505, 0, 0, 0 )
@@ -70,7 +70,7 @@ __meta__ = {
 }
 
 [node name="Camera" type="Camera" parent="."]
-script = ExtResource( 7 )
+script = ExtResource( 1 )
 gameCam = false
 
 [editable path="evening_01"]
