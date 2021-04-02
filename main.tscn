@@ -20,7 +20,7 @@
 [ext_resource path="res://Sprites/cloudShadow3.png" type="Texture" id=18]
 [ext_resource path="res://Cloud.gd" type="Script" id=19]
 [ext_resource path="res://RigidShip.gd" type="Script" id=20]
-[ext_resource path="res://nodes/Boye.gd" type="Script" id=21]
+[ext_resource path="res://Scripts/Boye.gd" type="Script" id=21]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 14 )
@@ -271,7 +271,7 @@ stringToHuman1 = "../PlayerShipContainer/Ship/Human"
 stringToHuman2 = "../NavMeshCont/Navigation/Human"
 pathToC1 = "../PlayerShipContainer/Ship"
 pathToC2 = "../NavMeshCont"
-a = 2.42552e+06
+a = 2.42695e+06
 
 [node name="Terrain" type="MeshInstance" parent="."]
 transform = Transform( 598.053, 1.20345, 0, -1.93904, 2.1846, 0, 0, 0, 395.96, 29.7657, -12.3204, 1.57804 )
@@ -439,7 +439,6 @@ shape = SubResource( 12 )
 [node name="Spatial" type="Spatial" parent="RigidBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.88175 )
 script = ExtResource( 21 )
-run = 0
 
 [node name="MeshInstance" type="MeshInstance" parent="RigidBody/Spatial"]
 transform = Transform( 0.13954, 0, 0, 0, 0.13954, 0, 0, 0, 0.13954, 0, 0, 0 )
@@ -463,7 +462,6 @@ shape = SubResource( 12 )
 [node name="Spatial" type="Spatial" parent="RigidBody2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.88175 )
 script = ExtResource( 21 )
-run = 0
 
 [node name="MeshInstance" type="MeshInstance" parent="RigidBody2/Spatial"]
 transform = Transform( 0.13954, 0, 0, 0, 0.13954, 0, 0, 0, 0.13954, 0, 0, 0 )

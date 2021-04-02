@@ -1,6 +1,6 @@
 [gd_scene load_steps=40 format=2]
 
-[ext_resource path="res://nodes/Boye.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Boye.gd" type="Script" id=1]
 [ext_resource path="res://ShipManager.gd" type="Script" id=2]
 [ext_resource path="res://materials/human.tres" type="Material" id=3]
 [ext_resource path="res://materials/Invisible.tres" type="Material" id=4]
@@ -12,6 +12,7 @@
 [ext_resource path="res://nodes/OmniLight.gd" type="Script" id=10]
 [ext_resource path="res://addons/kenney_particle_pack/trace_01.png" type="Texture" id=11]
 [ext_resource path="res://Cannon.tscn" type="PackedScene" id=12]
+
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 2.0938

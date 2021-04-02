@@ -1,6 +1,6 @@
 extends Spatial
 
-export(float) var wind_strength = 0.7 setget set_wind_strength
+export(float) var wind_strength = 0.5 setget set_wind_strength
 
 var time = 0.0
 var wind_modified = 1.0
@@ -23,12 +23,6 @@ var detail_normal_intensity
 var shift_vector
 var curl_strength
 
-var mesh
-var mesh2
-var mesh3
-var mesh4
-var mesh5
-var mesh6
 
 var image
 var data
@@ -44,12 +38,7 @@ func _ready():
 	image = load("res://SceneNodes/OceanEnv/Textures/gerstner_height_get_height.jpg")
 	data = image.get_data()
 	data.lock()
-	mesh = $testHeightMesh
-	mesh2 = $testHeightMesh2
-	mesh3 = $testHeightMesh3
-	mesh4 = $testHeightMesh4
-	mesh5 = $testHeightMesh5
-	mesh6 = $testHeightMesh6
+
 	visual_material = $waterplane.material_override
 	physical_material = $render_targets/vector_map_buffer/image.material
 	
@@ -65,10 +54,10 @@ func _ready():
 	bubble_gerstner = visual_material.get_shader_param("bubble_gerstner")
 	foam_gerstner = visual_material.get_shader_param("foam_gerstner")
 	
-	## todo later not only get tiling but also set it
+
 	gerstner_tiling1 = visual_material.get_shader_param("gerstner_tiling")
 	gerstner_tiling2 = visual_material.get_shader_param("gerstner_2_tiling")
-	print("tiling1:", gerstner_tiling1)
+
 
 	shift_vector = physical_material.get_shader_param("shift_vector")
 	curl_strength = physical_material.get_shader_param("curl_strength")
@@ -79,10 +68,10 @@ func _ready():
 func update_water(wind):
 	visual_material.set_shader_param("gerstner_height", gerstner_height * wind)
 	visual_material.set_shader_param("gerstner_normal", gerstner_normal * wind)
-	visual_material.set_shader_param("gerstner_stretch", gerstner_stretch * wind)
+	# visual_material.set_shader_param("gerstner_stretch", gerstner_stretch * wind)
 	visual_material.set_shader_param("gerstner_2_height", gerstner_2_height * wind)
 	visual_material.set_shader_param("gerstner_2_normal", gerstner_2_normal * wind)
-	visual_material.set_shader_param("gerstner_2_stretch", gerstner_2_stretch * wind)
+	# visual_material.set_shader_param("gerstner_2_stretch", gerstner_2_stretch * wind)
 	visual_material.set_shader_param("bubble_amount", bubble_amount * wind)
 	visual_material.set_shader_param("foam_amount", foam_amount * wind)
 	visual_material.set_shader_param("detail_normal_intensity", detail_normal_intensity * wind)
@@ -123,24 +112,18 @@ func set_subsurface_scattering(value):
 	visual_material.set_shader_param("sss_strength", value);
 
 func _physics_process(delta):
-	pass
-	mesh.transform.origin.y = getWaterHeight(mesh.translation)
-	mesh2.transform.origin.y = getWaterHeight(mesh2.translation)
-	mesh3.transform.origin.y = getWaterHeight(mesh3.translation)
-	mesh4.transform.origin.y = getWaterHeight(mesh4.translation)
-	mesh5.transform.origin.y = getWaterHeight(mesh5.translation)
-	mesh6.transform.origin.y = getWaterHeight(mesh6.translation)
+	
 	## ocean movement
 	visual_material.set_shader_param("time", time)
 	visual_material.set_shader_param("gerstner_speed", gerstner_speed1) 
 	visual_material.set_shader_param("gerstner_2_speed", gerstner_speed2)
 	time += delta
-	# wind_modified = wind_modified + ((wind_strength + sin(time) * 0.2) - wind_modified) * delta * 0.5
+	wind_modified = wind_modified + ((wind_strength + sin(time) * 0.2) - wind_modified) * delta * 0.5
 	
 	# DEBUG WIND VAR
-	#print(wind_modified)
+	# print(wind_modified)
 	
-	# update_water(wind_modified)
+	update_water(wind_modified)
 
 func getWaterHeight(position : Vector3):
 	## i think for negative values the pos needs to be flipped somehow
@@ -166,22 +149,13 @@ func getWaterHeight(position : Vector3):
 	if px_y2<0:
 		px_y2 = abs(abs(px_y2)-imSize)
 		
-	var h1 = gerstner_height * pow(data.get_pixel(px_x1, px_y1)[0],1) ## TODO add gerstern height
-	var h2 = gerstner_2_height * pow(data.get_pixel(px_x2, px_y2)[0],0.5)
+	var h1 = gerstner_height * wind_modified * pow(data.get_pixel(px_x1, px_y1)[0],1) ## TODO add gerstern height
+	var h2 = gerstner_2_height * wind_modified * pow(data.get_pixel(px_x2, px_y2)[0],0.5)
 	# print("px: ", px_x1,",",px_y1)
 	var h_target = h1 + h2 ## TODO measure the actual height
-	print("height: ", h_target)
 	return h_target
 
-# func _process(delta):
-# 	pass
 
-# func _input(event):
-# 	if event is InputEventKey and event.pressed:
-# 		if event.scancode == KEY_F:
-# 			visual_material.set_shader_param("time_offset", time)
-# 			visual_material.set_shader_param("gerstner_speed", Vector2(0.01, 0.01)) ## 5 times faster sinze image is 5 times smaller
-# 			visual_material.set_shader_param("gerstner_2_speed", Vector2(0.0025,0.0025))
 func _notification(what): 
 	if what == NOTIFICATION_PREDELETE: 
 		data.unlock()
