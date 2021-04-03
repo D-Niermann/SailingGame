@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=1]
 [ext_resource path="res://_OLDnodes/ocean_waterplane.gd" type="Script" id=2]
@@ -7,21 +7,10 @@
 [ext_resource path="res://SceneNodes/OceanEnv/vector_map_a.tres" type="Material" id=5]
 [ext_resource path="res://SceneNodes/OceanEnv/waterplane/waterplane_high.obj" type="ArrayMesh" id=6]
 [ext_resource path="res://SceneNodes/OceanEnv/MyWater1.tres" type="Material" id=7]
-[ext_resource path="res://Scripts/Boye.gd" type="Script" id=9]
 
 [sub_resource type="ViewportTexture" id=1]
 flags = 4
 viewport_path = NodePath("render_targets/vector_map_buffer")
-
-[sub_resource type="CubeMesh" id=2]
-size = Vector3( 1, 1, 1 )
-
-[sub_resource type="CapsuleMesh" id=3]
-radius = 4.937
-mid_height = 4.15
-
-[sub_resource type="SpatialMaterial" id=4]
-albedo_color = Color( 0.501961, 0.501961, 0.501961, 1 )
 
 [node name="OceanEnvironment" type="Spatial" groups=[
 "Ocean",
@@ -54,24 +43,9 @@ mesh = ExtResource( 6 )
 material/0 = null
 script = ExtResource( 2 )
 
-[node name="testHeightMesh" type="MeshInstance" parent="."]
-transform = Transform( 0.877565, 0, -0.479458, 0, 1, 0, 0.479458, 0, 0.877565, -6.76487, 4.14514, 13.6558 )
-mesh = SubResource( 2 )
-material/0 = null
-script = ExtResource( 9 )
-doParticles = false
-reactionSpeed = 0.42
-
-[node name="MeshInstance3" type="MeshInstance" parent="."]
-transform = Transform( -7.70277, 0.0431722, 0.188481, 0.0921529, -0.0341214, 15.6946, 0.0592803, 5.66275, 0.0931322, 37.5463, -112.974, -36.6276 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
-__meta__ = {
-"_editor_description_": ""
-}
-
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.896796, 0.442445, 0, -0.442445, 0.896796, -0.03, 12.83, 21.72 )
+visible = false
 script = ExtResource( 1 )
 gameCam = false
 

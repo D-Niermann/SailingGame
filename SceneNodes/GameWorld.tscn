@@ -71,7 +71,7 @@ isPlayer = true
 [node name="PlayerShipRigid2" parent="." groups=[
 "PlayerShip",
 ] instance=ExtResource( 2 )]
-transform = Transform( 0.118057, 0, -0.993007, 0, 1, 0, 0.993007, 0, 0.118057, 46.9658, -8.59221, -7.05948 )
+transform = Transform( 0.118057, 0, -0.993007, 0, 1, 0, 0.993007, 0, 0.118057, 46.9658, 0.729285, -7.05948 )
 
 [node name="PlayerShipRigid3" parent="." groups=[
 "PlayerShip",

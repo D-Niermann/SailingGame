@@ -57,10 +57,11 @@ shaded = true
 alpha_cut = 2
 texture = ExtResource( 7 )
 
-[node name="Sprite3D" type="Sprite3D" parent="Sails/FrontMast"]
+[node name="FrontSail" type="Sprite3D" parent="Sails/FrontMast"]
 transform = Transform( -0.0418228, 0.0669867, -0.500788, -0.01806, 0.501981, 0.0686546, 0.504925, 0.0235032, -0.0390245, 3.30414, 0.907627, -0.564183 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 8 )
 
 [node name="MainMast" type="Spatial" parent="Sails"]
