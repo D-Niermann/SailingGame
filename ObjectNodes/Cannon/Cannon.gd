@@ -29,6 +29,8 @@ var particles_flash
 var aimCannons
 var ocean
 var waterHitMarker
+var myShip
+var isPlayerControlable = false
 
 # Called when the node enters the BallScene tree for the first time.
 func _ready():
@@ -36,6 +38,9 @@ func _ready():
 	org_rotation = transform.basis.get_euler()*180/PI
 	if get_tree().get_nodes_in_group("Ocean").size()>0:
 		ocean = get_tree().get_nodes_in_group("Ocean")[0]
+	myShip = get_parent().get_parent().get_parent()
+	if myShip.isPlayer:
+		isPlayerControlable = true
 	waterHitMarker = $WaterHitMarker
 	particles = $Particles
 	particles_flash = $ParticlesFlash
@@ -84,18 +89,19 @@ func _process(delta):
 
 func _unhandled_input(event):
 	# Receives key input
-	if event.is_action_pressed("FireCannons"):
-		aimCannons = true
-	if event.is_action_released("FireCannons"):
-		aimCannons = false
-		clearTrajectory()
-		if position3D!= null and position3D.x >= 0:
-			fireBall()
+	if isPlayerControlable:
+		if event.is_action_pressed("FireCannons"):
+			aimCannons = true
+		if event.is_action_released("FireCannons"):
+			aimCannons = false
+			clearTrajectory()
+			if position3D!= null and position3D.x >= 0:
+				fireBall()
 		
-	if event.is_action_released("RotateCannonLeft"):
-		rotateLeft()
-	if event.is_action_released("RotateCannonRight"):
-		rotateRight()
+	# if event.is_action_released("RotateCannonLeft"):
+	# 	rotateLeft()
+	# if event.is_action_released("RotateCannonRight"):
+	# 	rotateRight()
 
 	# if Input.is_key_pressed(KEY_R):
 	# 	self.add_child(ball)

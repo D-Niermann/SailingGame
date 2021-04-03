@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/shipDeck.png-cf47e7d8004af4b808d1ac31830f6737.s3tc.stex"
-path.etc2="res://.import/shipDeck.png-cf47e7d8004af4b808d1ac31830f6737.etc2.stex"
+path.s3tc="res://.import/segel.png-327ce9f8c97338ef186ca18714f33ef5.s3tc.stex"
+path.etc2="res://.import/segel.png-327ce9f8c97338ef186ca18714f33ef5.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://ObjectNodes/ShipModels/DefaultModel/shipDeck.png"
-dest_files=[ "res://.import/shipDeck.png-cf47e7d8004af4b808d1ac31830f6737.s3tc.stex", "res://.import/shipDeck.png-cf47e7d8004af4b808d1ac31830f6737.etc2.stex" ]
+source_file="res://ObjectNodes/ShipModels/DefaultModel/Sprites/segel.png"
+dest_files=[ "res://.import/segel.png-327ce9f8c97338ef186ca18714f33ef5.s3tc.stex", "res://.import/segel.png-327ce9f8c97338ef186ca18714f33ef5.etc2.stex" ]
 
 [params]
 
