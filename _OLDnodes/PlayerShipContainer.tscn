@@ -3,13 +3,15 @@
 [ext_resource path="res://ShipManager.gd" type="Script" id=2]
 [ext_resource path="res://materials/human.tres" type="Material" id=3]
 [ext_resource path="res://materials/Invisible.tres" type="Material" id=4]
-[ext_resource path="res://Sprites/shipDeck.png" type="Texture" id=5]
+[ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/shipDeck.png" type="Texture" id=5]
 [ext_resource path="res://Sprites/segel-schatten.png" type="Texture" id=7]
 [ext_resource path="res://Sprites/segel.png" type="Texture" id=8]
 [ext_resource path="res://Sprites/segelVorn.png" type="Texture" id=9]
-[ext_resource path="res://_OLDnodes/OmniLight.gd" type="Script" id=10]
+[ext_resource path="res://ObjectNodes/DefaultDeckLight/OmniLight.gd" type="Script" id=10]
 [ext_resource path="res://addons/kenney_particle_pack/trace_01.png" type="Texture" id=11]
 [ext_resource path="res://ObjectNodes/Cannon/Cannon.tscn" type="PackedScene" id=12]
+
+
 
 
 

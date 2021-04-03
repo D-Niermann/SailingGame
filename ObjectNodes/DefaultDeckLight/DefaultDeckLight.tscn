@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ObjectNodes/DefaultDeckLight/OmniLight.gd" type="Script" id=1]
+
+[node name="OmniLight3" type="OmniLight"]
+light_color = Color( 1, 0.952941, 0.631373, 1 )
+light_energy = 1.75
+light_indirect_energy = 0.69
+light_cull_mask = 2147483647
+shadow_enabled = true
+shadow_color = Color( 0.470588, 0.470588, 0.470588, 1 )
+omni_range = 5.7
+omni_attenuation = 0.406126
+script = ExtResource( 1 )
+amp = 0.01

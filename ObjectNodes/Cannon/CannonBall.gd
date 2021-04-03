@@ -25,7 +25,7 @@ var last_pos = translation
 var coll_obj
 var drag = 0
 var grav_time
-
+var isMarkedasDestruct : bool = false
 ## old ball stuff
 var timeout_s = 10
 var water
@@ -35,25 +35,37 @@ var ocean
 func _ready():
 	time = 0
 	grav_time = 0
-	if get_tree().get_nodes_in_group("Ocean").size()>0:
+	$Trail.emitting = true
+	if get_tree().get_nodes_in_group("Ocean").size()>0: ## TODO: ocean get water height could put into Utils script?
 		ocean = get_tree().get_nodes_in_group("Ocean")[0]
 	# last_pos.push_back(translation)
 	# apply_impulse(transform.origin,Vector3(1,0,0)*-15)
 	pass # Replace with function body.
 
+func checkAndDestroy():
+	if !isMarkedasDestruct:
+		if global_transform.origin.y<-1000 or time>timeout_s or abs(velocity)<0.0001:
+			isMarkedasDestruct = true
+			yield(get_tree().create_timer(1),"timeout")
+			self.queue_free()
+
 
 func _process(delta):
+	if isMarkedasDestruct:
+		$Mesh.get_surface_material(0).albedo_color.a -= 1/60.0
 	time += delta
 	grav_time += delta
-	if global_transform.origin.y<-1000 or time>timeout_s:
-		self.queue_free()
-	if ocean.getWaterHeight(global_transform.origin) > transform.origin.y:
+	var waterHeight = 0
+	checkAndDestroy()
+	if ocean!= null:
+		waterHeight = ocean.getWaterHeight(global_transform.origin)
+	if  waterHeight > transform.origin.y:
 		if not waterEntered:
 			default_drag_factor = water_drag
 			# default_gravity = water_gravity ## TODO: lets bullets shoot a bit up when hitting water, why?
 			waterEntered = true
 			$Trail.emitting = false
-			$Particles.emitting = true
+			$WaterSplash.emitting = true
 	## check collisions and move the object 
 	var coll = move_and_collide(dir*velocity, false,false,true)
 	# var coll2 = move_and_collide(gravity_dir*gravity*delta, false,false,true)
@@ -67,7 +79,7 @@ func _process(delta):
 	if not isInsideBody:
 		## gravity move
 		move_and_slide(gravity_dir*gravity*grav_time*pow(drag_factor,4))
-	if velocity<1:
+	if velocity<0.1:
 		$Trail.emitting = false
 		# if coll2!=null:
 		# 	time = 0

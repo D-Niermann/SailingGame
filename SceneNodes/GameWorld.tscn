@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://SceneNodes/OceanEnv/OceanEnvironment.tscn" type="PackedScene" id=1]
-[ext_resource path="res://SceneNodes/ShipRigidController/ShipRigidController.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ObjectNodes/ShipRigidController/ShipRigidController.tscn" type="PackedScene" id=2]
+[ext_resource path="res://SceneNodes/Islands/Island_Small.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/terminal.gd" type="Script" id=4]
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=5]
 [ext_resource path="res://ObjectNodes/TestGUIElements.tscn" type="PackedScene" id=6]
@@ -53,6 +54,7 @@ __meta__ = {
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.76, 39.67, 0 )
 fov = 47.5
+size = 63.36
 far = 891.1
 script = ExtResource( 5 )
 gameCam = false
@@ -60,10 +62,25 @@ gameCam = false
 [node name="OceanEnvironment" parent="." instance=ExtResource( 1 )]
 wind_strength = 0.4
 
-[node name="ShipRigid" parent="." groups=[
+[node name="PlayerShipRigid" parent="." groups=[
 "PlayerShip",
 ] instance=ExtResource( 2 )]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 11.8211, 0, 4.43032 )
+transform = Transform( -0.659608, 0, 0.75161, 0, 1, 0, -0.75161, 0, -0.659608, 11.8211, 0, 4.43032 )
+isPlayer = true
+
+[node name="PlayerShipRigid2" parent="." groups=[
+"PlayerShip",
+] instance=ExtResource( 2 )]
+transform = Transform( 0.118057, 0, -0.993007, 0, 1, 0, 0.993007, 0, 0.118057, 46.9658, -8.59221, -7.05948 )
+
+[node name="PlayerShipRigid3" parent="." groups=[
+"PlayerShip",
+] instance=ExtResource( 2 )]
+transform = Transform( -0.0488494, 0, 0.998806, 0, 1, 0, -0.998806, 0, -0.0488494, -17.9775, 0, -0.0389614 )
 
 [node name="Clouds" parent="." instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35.9931, 89.2955, 23.6778 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35.99, 10, 23.68 )
+visible = false
+
+[node name="Island" parent="." instance=ExtResource( 3 )]
+transform = Transform( -0.548814, -0.350442, -1.53183e-08, 0, -4.89131e-08, 1.119, -0.350442, 0.548814, 2.39894e-08, -2.98232, 0.660044, -30.5378 )

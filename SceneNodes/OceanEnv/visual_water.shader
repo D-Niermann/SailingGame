@@ -136,10 +136,10 @@ void fragment() {
 	
 	normal_output = get_normal(vector_map, uv, 0.000976, 4.0 * normal_peak_intensity); // 1.0 / 1024.0
 //	normal_output += get_normal(vector_map, uv, 0.001953, 3.0 * normal_peak_intensity); // 1.0 / 512.0
-	// normal_output += get_normal(vector_map, uv, 0.003906, 2.0 * normal_base_intensity); // 1.0 / 256.0
-	// normal_output += get_normal(vector_map, uv, 0.007812, 2.0 * normal_base_intensity); // 1.0 / 128.0
-	// normal_output += get_normal(vector_map, uv, 0.015625, 1.0 * normal_base_intensity); // 1.0 / 64.0
-	// normal_output += get_normal(vector_map, uv, 0.03125, 1.0 * normal_base_intensity); // 1.0 / 32.0
+//	 normal_output += get_normal(vector_map, uv, 0.003906, 2.0 * normal_base_intensity); // 1.0 / 256.0
+//	 normal_output += get_normal(vector_map, uv, 0.007812, 2.0 * normal_base_intensity); // 1.0 / 128.0
+//	 normal_output += get_normal(vector_map, uv, 0.015625, 1.0 * normal_base_intensity); // 1.0 / 64.0
+//	 normal_output += get_normal(vector_map, uv, 0.03125, 1.0 * normal_base_intensity); // 1.0 / 32.0
 	
 	normal_output /= 1.0;
 	
@@ -166,13 +166,13 @@ void fragment() {
 	depth = depth * 2.0 - 1.0;
 	depth = PROJECTION_MATRIX[3][2] / (depth + PROJECTION_MATRIX[2][2]); // Camera Z Depth to World Space Z
 	depth = depth + VERTEX.z;
-	
+
 	// NORMAL APPLIED TO DEPTH AND READ FROM BUFFER AGAIN (DISTORTED Z-DEPTH)
 	depth = texture(DEPTH_TEXTURE, SCREEN_UV + ((normal_output.xy - vec2(0.5, 0.5)) * clamp(depth * 0.2, 0.0, 0.1) )).r;
 	depth = depth * 2.0 - 1.0;
 	depth = PROJECTION_MATRIX[3][2] / (depth + PROJECTION_MATRIX[2][2]); // Camera Z Depth to World Space Z
 	depth = depth + VERTEX.z;
-	
+//
 	float depth_mask = clamp(depth * underwater_tex_border, 0.0, 1.0);
 	
 	// WATER COLOR GRADIENT

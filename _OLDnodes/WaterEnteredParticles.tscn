@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://addons/kenney_particle_pack/fire_01.png" type="Texture" id=1]
 
@@ -11,7 +11,7 @@ params_billboard_mode = 3
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
-albedo_color = Color( 1, 1, 1, 0.392157 )
+albedo_color = Color( 0.921569, 0.980392, 0.984314, 0.0862745 )
 albedo_texture = ExtResource( 1 )
 metallic_specular = 0.45
 
@@ -23,31 +23,40 @@ colors = PoolColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 )
 gradient = SubResource( 2 )
 
 [sub_resource type="Curve" id=4]
-_data = [ Vector2( 0, 0.535838 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+max_value = 13.0
+_data = [ Vector2( 0, 5.51023 ), 0.0, 0.0, 0, 0, Vector2( 0.221344, 3.50114 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=5]
 curve = SubResource( 4 )
 
-[sub_resource type="ParticlesMaterial" id=6]
-lifetime_randomness = 0.32
+[sub_resource type="Curve" id=6]
+_data = [ Vector2( 0, 0.535838 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=7]
+curve = SubResource( 6 )
+
+[sub_resource type="ParticlesMaterial" id=8]
+lifetime_randomness = 1.0
 emission_shape = 2
-emission_box_extents = Vector3( 1, 1, 1 )
+emission_box_extents = Vector3( 0.1, 0.1, 0.1 )
 direction = Vector3( 0, 1, 0 )
 spread = 2.16
-gravity = Vector3( 0, -5, 4 )
-initial_velocity = 30.0
+gravity = Vector3( 0, -4, 2 )
+initial_velocity = 8.31
 initial_velocity_random = 1.0
 angular_velocity = 56.55
 angular_velocity_random = 1.0
-damping = 5.3
+damping = 1.0
 damping_random = 0.12
+damping_curve = SubResource( 5 )
 angle = 263.7
 angle_random = 1.0
+scale = 0.5
 scale_random = 1.0
-scale_curve = SubResource( 5 )
+scale_curve = SubResource( 7 )
 color_ramp = SubResource( 3 )
 
-[sub_resource type="QuadMesh" id=7]
+[sub_resource type="QuadMesh" id=9]
 size = Vector2( 5, 5 )
 
 [node name="Particles" type="Particles"]
@@ -55,14 +64,14 @@ material_override = SubResource( 1 )
 cast_shadow = 2
 emitting = false
 amount = 57
-lifetime = 2.0
+lifetime = 3.0
 one_shot = true
 explosiveness = 1.0
-randomness = 0.16
+randomness = 0.71
 visibility_aabb = AABB( -181.604, -196.936, -272.78, 362.306, 395.6, 547.224 )
 local_coords = false
-process_material = SubResource( 6 )
-draw_pass_1 = SubResource( 7 )
+process_material = SubResource( 8 )
+draw_pass_1 = SubResource( 9 )
 __meta__ = {
 "_editor_description_": ""
 }

@@ -2,7 +2,6 @@
 
 [ext_resource path="res://SceneNodes/OceanEnv/Textures/sky/evening_01.hdr" type="Texture" id=1]
 
-
 [sub_resource type="PanoramaSky" id=1]
 panorama = ExtResource( 1 )
 
