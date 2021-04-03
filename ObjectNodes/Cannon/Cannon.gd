@@ -38,9 +38,11 @@ func _ready():
 	org_rotation = transform.basis.get_euler()*180/PI
 	if get_tree().get_nodes_in_group("Ocean").size()>0:
 		ocean = get_tree().get_nodes_in_group("Ocean")[0]
-	myShip = get_parent().get_parent().get_parent()
-	if myShip.isPlayer:
-		isPlayerControlable = true
+	if get_parent()!=null:
+		if get_parent().get_parent()!=null:
+			myShip = get_parent().get_parent().get_parent()
+			if myShip.isPlayer:
+				isPlayerControlable = true
 	waterHitMarker = $WaterHitMarker
 	particles = $Particles
 	particles_flash = $ParticlesFlash
