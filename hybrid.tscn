@@ -1,13 +1,11 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://placement.gd" type="Script" id=1]
+[ext_resource path="res://Shopping.gd" type="Script" id=1]
 [ext_resource path="res://SceneNodes/OceanEnv/OceanEnvironment.tscn" type="PackedScene" id=2]
 [ext_resource path="res://_OLDnodes/PlayerShipContainer.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scripts/terminal.gd" type="Script" id=4]
 [ext_resource path="res://ObjectNodes/TestGUIElements.tscn" type="PackedScene" id=5]
 [ext_resource path="res://icon.png" type="Texture" id=6]
-[ext_resource path="res://Scripts/Camera.gd" type="Script" id=7]
-
 
 [sub_resource type="SphereShape" id=1]
 
@@ -43,7 +41,6 @@ shadow_atlas_size = 4096
 
 [node name="Camera" type="Camera" parent="ViewportContainer/Viewport"]
 transform = Transform( 1, 0, 0, 0, 0.642788, 0.766044, 0, -0.766044, 0.642788, 0, 12.1455, 13.3887 )
-script = ExtResource( 7 )
 
 [node name="ocean" parent="ViewportContainer/Viewport" instance=ExtResource( 2 )]
 

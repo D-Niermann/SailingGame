@@ -16,9 +16,10 @@ var indicator = null
 var viewport: Viewport
 
 const TEXTUREWIDTH: float = 64.0 # number of pixels in texture which will be considered as one tile
-const TILEWIDTH: float = 1.0 # width of one tile which all items must be designed accordingly
+const TILEWIDTH: float = 0.2 # width of one tile which all items must be designed accordingly
 const STACKED: bool = false
 var target = null
+var selected_deck : int = 0 # index of the  get_tree().get_nodes_in_group("Deck") array
 var highlight = null
 var hologram = null
 var resource = null
@@ -44,8 +45,8 @@ func _ready():
 	indicator = get_node("Indicator")
 	tabs = get_node("Shop/Tabs/Container")
 	list = get_node("Shop/List/Container")
-	viewport = get_tree().get_root().get_node("Terminal/ViewportContainer/Viewport")
-
+	viewport = get_tree().get_root().get_node("GameWorld/ViewportContainer/Viewport")
+	target = get_tree().get_nodes_in_group("Deck")[selected_deck] 
 
 # Catches only the input which has not been handled yet.
 func _unhandled_input(event):
@@ -61,6 +62,7 @@ func _unhandled_input(event):
 
 # Called every physics frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	target = get_tree().get_nodes_in_group("Deck")[selected_deck] 
 	if connected != null:
 		if open == null:
 			indicator.visible = true
@@ -85,20 +87,20 @@ func _physics_process(delta):
 			highlight = null
 			placeOrDestroyHologram()
 		return
-	var layer = 0b1
-	if hologram != null:
-		if target.name == "0":
-			layer = 0b10
-		if target.name == "1":
-			layer = 0b100
-		elif target.name == "2":
-			layer = 0b1000
-		elif target.name == "3":
-			layer = 0b10000
-		elif target.name == "4":
-			layer = 0b100000
-		elif target.name == "5":
-			layer = 0b1000000
+	var layer = 0b10000000000000000000
+
+	# if hologram != null: 
+	print("selected: ", selected_deck)
+	if selected_deck == 0:
+		layer = 0b10000000000000000000
+	elif selected_deck == 1:
+		layer = 0b01000000000000000000
+	elif selected_deck == 2:
+		layer = 0b00100000000000000000
+	elif selected_deck == 3:
+		layer = 0b00010000000000000000
+	elif selected_deck == 4:
+		layer = 0b00001000000000000000
 	var camera: Camera = viewport.get_camera()
 	var spaceState: PhysicsDirectSpaceState = camera.get_world().direct_space_state
 	var viewportContainer: ViewportContainer = viewport.get_parent()
@@ -125,26 +127,33 @@ func _physics_process(delta):
 			var partition: Vector3 = (target.global_transform.xform_inv(hit.position) / TILEWIDTH).floor()
 			hologram.global_transform.origin = target.global_transform.xform(partition * TILEWIDTH + offset)
 			hologram.global_transform.basis = target.global_transform.basis.rotated(upward, rot)
-			var downward = -hologram.global_transform.basis.y.normalized() * (size.y * TILEWIDTH * 0.5 + TILEWIDTH * 0.25 - TILEWIDTH * extra)
-			var backward = hologram.global_transform.basis.z.normalized() * (size.z * 0.5 * TILEWIDTH - 0.05 * TILEWIDTH)
-			var leftward = hologram.global_transform.basis.x.normalized() * (size.x * 0.5 * TILEWIDTH - 0.05 * TILEWIDTH)
-			var originOfRay = hologram.global_transform.origin - leftward
-			hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], layer)
-			if !hit.empty() && hit.collider == target:
-				originOfRay = hologram.global_transform.origin - backward
-				hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], layer)
-				if !hit.empty() && hit.collider == target:
-					originOfRay = hologram.global_transform.origin + leftward
-					hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], layer)
-					if !hit.empty() && hit.collider == target:
-						originOfRay = hologram.global_transform.origin + backward
-						hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], layer)
-						if !hit.empty() && hit.collider == target:
-							print("almost")
-							var collision: KinematicCollision = hologram.move_and_collide(Vector3.ZERO, false, false, true)
-							if !collision:
-								canPlace = true
-								print("canPlace")
+
+			"""
+			I dont get this part, it can be left out? Better performance
+			"""
+			# var downward = -hologram.global_transform.basis.y.normalized() * (size.y * TILEWIDTH * 0.5 + TILEWIDTH * 0.25 - TILEWIDTH * extra)
+			# var backward = hologram.global_transform.basis.z.normalized() * (size.z * 0.5 * TILEWIDTH - 0.05 * TILEWIDTH)
+			# var leftward = hologram.global_transform.basis.x.normalized() * (size.x * 0.5 * TILEWIDTH - 0.05 * TILEWIDTH)
+			# var originOfRay = hologram.global_transform.origin - leftward
+			# hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], layer)
+			# if !hit.empty() && hit.collider == target:
+			# 	originOfRay = hologram.global_transform.origin - backward
+			# 	hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], layer)
+			# 	if !hit.empty() && hit.collider == target:
+			# 		originOfRay = hologram.global_transform.origin + leftward
+			# 		hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], layer)
+			# 		if !hit.empty() && hit.collider == target:
+			# 			originOfRay = hologram.global_transform.origin + backward
+			# 			hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], layer)
+			# 			if !hit.empty() && hit.collider == target:
+			# 				print("almost")
+			"""
+			##########################################
+			"""
+			var collision: KinematicCollision = hologram.move_and_collide(Vector3.ZERO, false, false, true)
+			if !collision:
+				canPlace = true
+				print("canPlace")
 		if rightClick:
 			if parent != null:
 				placeOrDestroyHologram()
@@ -480,3 +489,11 @@ func sell():
 
 func indicator():
 	openShop(connected)
+
+
+func _on_Deck1_button_up():
+	selected_deck = 1
+
+
+func _on_Deck0_button_up():
+	selected_deck = 0

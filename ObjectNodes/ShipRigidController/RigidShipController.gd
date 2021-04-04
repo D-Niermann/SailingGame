@@ -10,16 +10,18 @@ Needs a linear damping of approx 5!
 
 export(bool) var isPlayer = false
 
+var model # ref to ship model
+
 const impulse_factor = 5 # overall impulse stength, all impulses should be multiplied by this
 var turnSpeed = 0
-var ocean
+var ocean # ref to ocean object
 
 # force spatials
-var hLeft
-var hRight
-var hFront
-var hBack
-var mainSail # Spatial - where the force of main sail wind is applied
+var hLeft # positions where boynacy attacks
+var hRight # positions where boynacy attacks
+var hFront # positions where boynacy attacks
+var hBack # positions where boynacy attacks
+var mainSailForce # Spatial - where the force of main sail wind is applied
 
 # directional vectors (updated every frame)
 var up 
@@ -41,7 +43,8 @@ func _ready():
 	hBack = $HBack
 	hRight = $HRight
 	hLeft = $HLeft
-	mainSail = $MainSail
+	mainSailForce = $MainSailForce
+	model = $Model
 
 func _physics_process(delta):
 	sails = clamp(sails,-0.01, 1)
@@ -59,7 +62,7 @@ func _physics_process(delta):
 	## sail speed impulse
 	apply_central_impulse(forward*calcWindForce()*delta*impulse_factor)
 	# sail wind attack to tilt the ship a bit if cross wind
-	apply_impulse(mainSail.translation, Vector3(0,0,-1)*crossWindForce*sails*delta*impulse_factor)
+	apply_impulse(mainSailForce.translation, Vector3(0,0,-1)*crossWindForce*sails*delta*impulse_factor)
 
 func _input(event):
 	if isPlayer:
@@ -91,4 +94,17 @@ func calcWindForce():
 	var deg = abs(rad2deg(angle_to_wind))/180
 	return sails*speed_mod*(pow(deg,2) - 0.8*pow(deg,3))-(reverse_speed_factor*speed_mod*sails)
 		
-		
+func _on_Deck0_button_up():
+	toggleDeckVisible(0)
+
+func toggleDeckVisible(deckNumber : int):
+	var a = model.get_children()
+	for i in range(a.size()):
+		if i < deckNumber+1:
+			a[i].visible = false 
+		else:
+			a[i].visible = true
+
+
+func _on_Deck1_button_up():
+	toggleDeckVisible(1)

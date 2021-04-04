@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://SceneNodes/OceanEnv/OceanEnvironment.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ObjectNodes/ShipRigidController/ShipRigidController.tscn" type="PackedScene" id=2]
@@ -7,10 +7,32 @@
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=5]
 [ext_resource path="res://ObjectNodes/TestGUIElements.tscn" type="PackedScene" id=6]
 [ext_resource path="res://ObjectNodes/Clouds/Clouds.tscn" type="PackedScene" id=7]
+[ext_resource path="res://sounds/level/ocean/ocean_waves_crisp.wav" type="AudioStream" id=8]
 [ext_resource path="res://Shopping.tscn" type="PackedScene" id=9]
 [ext_resource path="res://icon.png" type="Texture" id=10]
 [ext_resource path="res://SceneNodes/OceanEnv/Sky.tscn" type="PackedScene" id=11]
 [ext_resource path="res://ObjectNodes/Terrain/ExampleTerrain.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Sprites/wide.png" type="Texture" id=13]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 1.9503, 0.180563, 1.53888 )
+
+[sub_resource type="BoxShape" id=2]
+margin = 0.001
+extents = Vector3( 1.4037, 1, 0.8 )
+
+[sub_resource type="CubeMesh" id=3]
+size = Vector3( 2, 0.125, 1 )
+
+[sub_resource type="BoxShape" id=4]
+extents = Vector3( 3.5328, 0.167918, 1.99957 )
+
+[sub_resource type="DynamicFontData" id=5]
+font_path = "res://Fonts/OpenSans-Bold.ttf"
+
+[sub_resource type="DynamicFont" id=6]
+size = 23
+font_data = SubResource( 5 )
 
 [node name="GameWorld" type="Control"]
 anchor_right = 1.0
@@ -43,7 +65,9 @@ __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="Camera" type="Camera" parent="ViewportContainer/Viewport"]
+[node name="Camera" type="Camera" parent="ViewportContainer/Viewport" groups=[
+"Camera",
+]]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.76, 39.67, 0 )
 fov = 47.5
 size = 63.36
@@ -51,17 +75,82 @@ far = 500.0
 script = ExtResource( 5 )
 gameCam = false
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="ViewportContainer/Viewport/Camera"]
+stream = ExtResource( 8 )
+autoplay = true
+
 [node name="Clouds" parent="ViewportContainer/Viewport" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35.99, 10, 23.68 )
+visible = false
 
 [node name="OceanEnvironment" parent="ViewportContainer/Viewport" instance=ExtResource( 1 )]
+visible = false
 wind_strength = 0.4
 
 [node name="PlayerShipRigid" parent="ViewportContainer/Viewport" groups=[
 "PlayerShip",
 ] instance=ExtResource( 2 )]
-transform = Transform( -0.659608, 0, 0.75161, 0, 1, 0, -0.75161, 0, -0.659608, 11.8211, 0, 4.43032 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.42168, 0, 1.07124 )
 isPlayer = true
+
+[node name="0" type="KinematicBody" parent="ViewportContainer/Viewport/PlayerShipRigid" groups=[
+"Deck",
+]]
+transform = Transform( -0.999462, 0, 0.0328059, 0, 1, 0, -0.0328059, 0, -0.999462, -9.14432, 3.36242, -1.30595 )
+collision_layer = 524288
+collision_mask = 524288
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/PlayerShipRigid/0"]
+transform = Transform( 0.999367, 0, 0.0355972, 0, 1, 0, -0.0355972, 0, 0.999367, -2.32609, 0, 0.0128547 )
+shape = SubResource( 1 )
+
+[node name="RestrictedBuildZone" type="KinematicBody" parent="ViewportContainer/Viewport/PlayerShipRigid/0"]
+transform = Transform( -0.922605, 0, -0.385744, 0, 1, 0, 0.385744, 0, -0.922605, -4.12176, 1, -1.70208 )
+collision_layer = 16384
+collision_mask = 2147500032
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/PlayerShipRigid/0/RestrictedBuildZone"]
+shape = SubResource( 2 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ViewportContainer/Viewport/PlayerShipRigid/0/RestrictedBuildZone"]
+visible = false
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Sprite3D" type="Sprite3D" parent="ViewportContainer/Viewport/PlayerShipRigid/0/RestrictedBuildZone"]
+transform = Transform( 2.18061, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 2.18061, 0, 0, 0 )
+modulate = Color( 0.619608, 0, 0, 1 )
+axis = 1
+texture = ExtResource( 13 )
+
+[node name="RestrictedBuildZone2" type="KinematicBody" parent="ViewportContainer/Viewport/PlayerShipRigid/0"]
+transform = Transform( -0.999461, 0, -0.0328059, 0, 1, 0, 0.0328059, 0, -0.999461, -1.10415, -0.339314, 1.4807 )
+collision_layer = 16384
+collision_mask = 2147500032
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/PlayerShipRigid/0/RestrictedBuildZone2"]
+shape = SubResource( 2 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ViewportContainer/Viewport/PlayerShipRigid/0/RestrictedBuildZone2"]
+visible = false
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Sprite3D" type="Sprite3D" parent="ViewportContainer/Viewport/PlayerShipRigid/0/RestrictedBuildZone2"]
+transform = Transform( 2.27557, 0, 0, 0, 1, 0, 0, 0, 2.27557, 0, 0, 0 )
+modulate = Color( 0.619608, 0, 0, 1 )
+axis = 1
+texture = ExtResource( 13 )
+
+[node name="1" type="KinematicBody" parent="ViewportContainer/Viewport/PlayerShipRigid" groups=[
+"Deck",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.34885, 2.30446, -1.55932 )
+collision_layer = 917504
+collision_mask = 917504
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/PlayerShipRigid/1"]
+shape = SubResource( 4 )
 
 [node name="PlayerShipRigid2" parent="ViewportContainer/Viewport" groups=[
 "PlayerShip",
@@ -107,13 +196,32 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="DeckUp" type="Button" parent="Interface/Decks"]
+[node name="Deck0" type="Button" parent="Interface/Decks"]
 margin_right = 76.0
 margin_bottom = 70.0
 icon = ExtResource( 10 )
 
-[node name="DeckDown" type="Button" parent="Interface/Decks"]
+[node name="Deck1" type="Button" parent="Interface/Decks"]
 margin_top = 74.0
 margin_right = 76.0
 margin_bottom = 144.0
 icon = ExtResource( 10 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Interface"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1342.0
+margin_top = 26.0
+margin_right = -25.0
+margin_bottom = -883.0
+custom_fonts/normal_font = SubResource( 6 )
+text = "1 grid (tilewidth) = 0.2 units = 1 meter
+1 Unit = 5 meters
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="button_up" from="Interface/Decks/Deck0" to="ViewportContainer/Viewport/PlayerShipRigid" method="_on_Deck0_button_up"]
+[connection signal="button_up" from="Interface/Decks/Deck0" to="Interface/Shopping" method="_on_Deck0_button_up"]
+[connection signal="button_up" from="Interface/Decks/Deck1" to="ViewportContainer/Viewport/PlayerShipRigid" method="_on_Deck1_button_up"]
+[connection signal="button_up" from="Interface/Decks/Deck1" to="Interface/Shopping" method="_on_Deck1_button_up"]

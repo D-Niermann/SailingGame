@@ -4,22 +4,25 @@
 
 [sub_resource type="BoxShape" id=1]
 margin = 0.001
-extents = Vector3( 0.99, 0.0747858, 0.49 )
+extents = Vector3( -0.1, 0.07, 0.1 )
 
 [sub_resource type="CubeMesh" id=2]
-size = Vector3( 2, 0.125, 1 )
+size = Vector3( 0.2, 0.13, 0.2 )
 
 [node name="banana" type="KinematicBody"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.98023e-08, 0.81238, 4.87823 )
+collision_layer = 16385
+collision_mask = 16385
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
-visible = false
 mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( 0.160648, 0, 0, 0, 0.590852, 0, 0, 0, 0.340192, 0, 0.111963, 0 )
 axis = 1
+alpha_cut = 2
 texture = ExtResource( 1 )

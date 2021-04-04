@@ -11,14 +11,6 @@
 [ext_resource path="res://addons/kenney_particle_pack/trace_01.png" type="Texture" id=11]
 [ext_resource path="res://ObjectNodes/Cannon/Cannon.tscn" type="PackedScene" id=12]
 
-
-
-
-
-
-
-
-
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 27.128, 0.1, 7.905 )
 
@@ -146,8 +138,8 @@ transform = Transform( 2.91425e-07, -7.91925e-08, -3.99999, 0.195394, 3.99521, -
 
 [node name="1" type="KinematicBody" parent="Ship/Decks"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5, 0 )
-collision_layer = 4
-collision_mask = 0
+collision_layer = 262144
+collision_mask = 262144
 
 [node name="CollisionShape" type="CollisionShape" parent="Ship/Decks/1"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.14815, 0, 0 )

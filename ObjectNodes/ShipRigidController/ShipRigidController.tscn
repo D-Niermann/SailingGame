@@ -125,7 +125,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.204397, -9.53674e-07, -1.51
 [node name="HRight" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12325, 0, 1.17193 )
 
-[node name="MainSail" type="Spatial" parent="."]
+[node name="MainSailForce" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0711889, 4.23114, -0.0664575 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]

@@ -121,10 +121,13 @@ hue_variation_random = 0.33
 
 [node name="Cannon" type="Spatial"]
 script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
 BallScene = ExtResource( 7 )
 
 [node name="Gun" type="Spatial" parent="."]
-transform = Transform( 0.656227, 0, 0, 0, 1, 0, 0, 0, 0.656227, 0, 0, 0 )
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0 )
 
 [node name="Sprite3D" type="Sprite3D" parent="Gun"]
 transform = Transform( 0.349777, -0.201944, -2.18557e-08, 0, -1.76545e-08, 1, -0.201944, -0.349777, -3.78552e-08, 0.113681, 0.121206, -0.00625759 )

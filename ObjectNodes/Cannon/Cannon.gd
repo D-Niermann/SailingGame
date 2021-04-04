@@ -43,12 +43,10 @@ func _ready():
 	org_rotation = transform.basis.get_euler()*180/PI
 	if get_tree().get_nodes_in_group("Ocean").size()>0:
 		ocean = get_tree().get_nodes_in_group("Ocean")[0]
-	if get_parent()!=null:
-		if get_parent().get_parent()!=null:
-			if get_parent().get_parent().get_parent()!=null:
-				myShip = get_parent().get_parent().get_parent()
-				if myShip.isPlayer:
-					isPlayerControlable = true
+	myShip = get_parent().get_parent().get_parent()
+	if myShip!= null and "isPlayer" in myShip:
+		if myShip.isPlayer:
+			isPlayerControlable = true
 	fireSounds.push_back(get_node("Audio1"))
 	fireSounds.push_back(get_node("Audio2"))
 	fireSounds.push_back(get_node("Audio3"))
@@ -200,7 +198,7 @@ func rotateRight(multiplicator=1):
 		rotate(up,rotateSpeed*multiplicator)
 
 func rotateUp(multiplicator=1):
-	print("rotateUp")
+	# print("rotateUp")
 	# check if current rotation angle doesnt exeed the max angle
 	multiplicator = clamp(abs(multiplicator),0,1)
 	# if abs(getAngleDist_deg(transform.basis.get_euler().z*180/PI,org_rotation.z))<maxUpAngle:
@@ -208,7 +206,7 @@ func rotateUp(multiplicator=1):
 	# # counter rotation of above threshold
 	# 	rotate(transform.basis.z.normalized(),-rotateSpeed*0.21*multiplicator)
 func rotateDown(multiplicator=1):
-	print("rotateDown")
+	# print("rotateDown")
 	# check if current rotation angle doesnt exeed the max angle
 	multiplicator = clamp(abs(multiplicator),0,1)
 	# if abs(getAngleDist_deg(transform.basis.get_euler().z*180/PI,org_rotation.z))>minUpAngle:

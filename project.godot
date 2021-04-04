@@ -154,6 +154,12 @@ cam_down={
 
 3d_physics/layer_1="BulletCollisions"
 3d_physics/layer_2="ShipCollisions"
+3d_physics/layer_15="BuildRestrictionZone"
+3d_physics/layer_16="Deck4"
+3d_physics/layer_17="Deck3"
+3d_physics/layer_18="Deck2"
+3d_physics/layer_19="Deck1"
+3d_physics/layer_20="Deck0"
 
 [memory]
 
