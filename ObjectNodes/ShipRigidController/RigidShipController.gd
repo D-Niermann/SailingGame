@@ -46,6 +46,16 @@ func _ready():
 	mainSailForce = $MainSailForce
 	model = $Model
 
+	## add Decks to item placeable deck group if ship belongs to player
+	if isPlayer:
+		var a = model.get_children()
+		for i in range(1, a.size()):
+			# iterate through children, skip 1st because it is Sails
+			a[i].add_to_group("PlayerDeck")
+			
+
+
+
 func _physics_process(delta):
 	sails = clamp(sails,-0.01, 1)
 	turnSpeed = clamp(turnSpeed,-maxTurnSpeed,maxTurnSpeed)	

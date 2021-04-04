@@ -19,7 +19,7 @@ const TEXTUREWIDTH: float = 64.0 # number of pixels in texture which will be con
 const TILEWIDTH: float = 0.2 # width of one tile which all items must be designed accordingly
 const STACKED: bool = false
 var target = null
-var selected_deck : int = -1 # index of the  get_tree().get_nodes_in_group("Deck") array
+var selected_deck : int = -1 # index of the  get_tree().get_nodes_in_group("PlayerDeck") array
 var highlight = null
 var hologram = null
 var resource = null
@@ -62,7 +62,7 @@ func _unhandled_input(event):
 # Called every physics frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	if selected_deck!=-1:
-		target = get_tree().get_nodes_in_group("Deck")[selected_deck] 
+		target = get_tree().get_nodes_in_group("PlayerDeck")[selected_deck] 
 	if connected != null:
 		if open == null:
 			indicator.visible = true
