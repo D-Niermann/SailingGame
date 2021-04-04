@@ -90,7 +90,6 @@ func _physics_process(delta):
 	var layer = 0b10000000000000000000
 
 	# if hologram != null: 
-	print("selected: ", selected_deck)
 	if selected_deck == 0:
 		layer = 0b10000000000000000000
 	elif selected_deck == 1:
@@ -109,9 +108,9 @@ func _physics_process(delta):
 	var from = camera.project_ray_origin(cursor)
 	var toward = camera.project_ray_normal(cursor)
 	var upward = target.global_transform.basis.y.normalized()
-	var intersection = Plane(upward, target.global_transform.origin.length()).intersects_ray(from, toward)
-	if intersection != null:
-		hit = spaceState.intersect_ray(from, intersection, [hologram], layer)
+	# var intersection = Plane(target.global_transform.origin, target.global_transform.origin + target.global_transform.basis.x, target.global_transform.origin + target.global_transform.basis.z).intersects_ray(from, toward)
+	# if intersection != null:
+	hit = spaceState.intersect_ray(from, from+toward*2000, [hologram], layer)
 	var newHighlight = null
 	if hologram != null:
 		if scrollUp:# Input.is_action_just_released("scrollUp"):

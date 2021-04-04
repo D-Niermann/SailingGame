@@ -48,13 +48,13 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.45825, 2.82754, 0.00588534 )
 transform = Transform( 0.985556, 0, 0.16935, 0, 1, 0, -0.16935, 0, 0.985556, -3.14652, 1.47845, -0.859704 )
 
 [node name="Wall" type="MeshInstance" parent="Body"]
-transform = Transform( 1.06099, 0, 0, 0, 1, 0, 0, 0, 1, 0.0537491, 0, 0 )
+transform = Transform( 1.06099, 0, 0, 0, 1, 0, 0, 0, 1, -0.2229, 0, -0.03546 )
 cast_shadow = 3
 mesh = SubResource( 1 )
 material/0 = ExtResource( 3 )
 
 [node name="Wall9" type="MeshInstance" parent="Body"]
-transform = Transform( -0.0721072, 0, -0.985527, 0, 1, 0, 0.419201, 0, -0.169521, -1.59361, 0.00238037, 0.675636 )
+transform = Transform( -0.0721072, 0, -0.985527, 0, 1, 0, 0.419201, 0, -0.169521, -2.06748, 0.00238037, 0.594125 )
 cast_shadow = 3
 mesh = SubResource( 1 )
 material/0 = ExtResource( 3 )
@@ -78,7 +78,7 @@ mesh = SubResource( 1 )
 material/0 = ExtResource( 3 )
 
 [node name="Wall5" type="MeshInstance" parent="Body"]
-transform = Transform( 0.975416, 0, -0.393461, 0, 1, 0, 0.41746, 0, 0.919342, -0.322018, 0, 1.94999 )
+transform = Transform( 0.975416, 0, -0.393461, 0, 1, 0, 0.41746, 0, 0.919342, -0.530217, 0, 1.80709 )
 cast_shadow = 3
 mesh = SubResource( 1 )
 material/0 = ExtResource( 3 )
@@ -161,5 +161,5 @@ transform = Transform( 0.673391, 0, 0.423568, 0, 1, 0, -0.314867, 0, 0.905865, 4
 shape = SubResource( 9 )
 
 [node name="CollisionShape9" type="CollisionShape" parent="."]
-transform = Transform( -7.41928e-05, 0, -1, 0, 1, 0, 0.425357, 0, -0.000174386, -4.60269, 1.48083, 0.0760496 )
+transform = Transform( -7.41928e-05, 0, -1, 0, 1, 0, 0.425357, 0, -0.000174386, -5.06695, 1.48083, 0.0759686 )
 shape = SubResource( 10 )

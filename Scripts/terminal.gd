@@ -48,7 +48,7 @@ func _physics_process(delta):
 		if floor(newTime / updatePeriodForEconomy) > floor(time / updatePeriodForEconomy):
 			# fluctuating prices
 			Economy.cycle()
-			var shopping = get_tree().get_root().get_node_or_null("Terminal/Interface/Shopping")
+			var shopping = get_tree().get_root().get_node_or_null("GameWorld/Interface/Shopping")
 			if shopping.open != null:
 				shopping.updateList()
 		time = newTime

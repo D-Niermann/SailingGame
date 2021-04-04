@@ -16,14 +16,14 @@ var ship # parent ship container
 ### vars for line rendering (but the gitHub LineRenderer lags so hard that i canceled it for now)
 var line
 const lineSize = 30 # length of trjactory prediction line (number of points) / needs some rework
-const rotateSpeed = 0.005
-const unprecision = 1
+const rotateSpeed = 0.005 # max rotation speed of cannons (up/down rotation is scaled down )
+const unprecision = 3 # in units, how max unprecise a connon is (random)
 onready var rotateMargin = rand_range(-unprecision,unprecision) # error in rotation that is accepted (mouse position) left right
 const maxRotateAngle = 20 # in degree
 onready var upDownMargin = rand_range(-unprecision,unprecision) # what difference to mouse pos units to ignore when rotating  up down
 export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
-var maxUpAngle = 20
-var minUpAngle= 0 
+var maxUpAngle = 10 # angle distance in degreee from original rotation that is allowed
+var minUpAngle= -5 # angle distance in degreee from original rotation that is allowed
 var camera
 var org_rotation : Vector3
 var position3D
@@ -84,13 +84,13 @@ func _process(delta):
 			var dist = (position3D).x
 			var diff = dist - (line.points[lineSize-1]).x
 			if diff>upDownMargin: 
-				rotateUp(diff-upDownMargin)
+				rotateUpDown(diff-upDownMargin, "up")
 			elif diff<-upDownMargin:
-				rotateDown(diff+upDownMargin)
+				rotateUpDown(diff+upDownMargin, "down")
 			if position3D.z<-rotateMargin:
-				rotateLeft(position3D.z+rotateMargin)
+				rotateLeftRight(position3D.z+rotateMargin, "left")
 			elif position3D.z>rotateMargin:
-				rotateRight(position3D.z-rotateMargin)
+				rotateLeftRight(position3D.z-rotateMargin, "right")
 		else:
 			clearTrajectory()
 
@@ -134,8 +134,8 @@ func predictTrajectory():
 		if ocean!=null:
 			waterHeight = ocean.getWaterHeight(to_global(point))
 		if to_global(point).y>waterHeight:
-			fakeBullet.transform.origin += Vector3(1,0,0)*force*2.5
-			fakeBullet.global_transform.origin += Vector3(0,-1,0)*0.02*i ## TODO: does the vector (0,-1,0) always point down globally (gravity)? -> if so why does (1,0,0) always point forwards loccally
+			fakeBullet.transform.origin += Vector3(1,0,0)*force*3.2
+			fakeBullet.global_transform.origin += Vector3(0,-1,0)*0.03*i ## TODO: does the vector (0,-1,0) always point down globally (gravity)? -> if so why does (1,0,0) always point forwards loccally
 		else:
 			last_i = i
 			break
@@ -182,37 +182,32 @@ func fireBall():
 
 
 ## TODO: change these funtions into 1 or 2 functions
-func rotateLeft(multiplicator=1):
-	# check if current rotation angle doesnt exeed the max angle
+func rotateLeftRight(multiplicator=1, dir : String = ""):
+	"""
+	Rotate the cannons around either left or right. Speed Weighted by multiplicator e[0,1]
+	dir :: either 'left' or 'right'
+	"""
 	multiplicator = clamp(abs(multiplicator),0,1)
-	rotate(up,rotateSpeed*multiplicator)
-	# counter rotation of above threshold
-	if abs(getAngleDist_deg(transform.basis.get_euler().y*180/PI,org_rotation.y))>maxRotateAngle:
-		rotate(up,-rotateSpeed*multiplicator)
-func rotateRight(multiplicator=1):
-	# check if current rotation angle doesnt exeed the max angle
-	multiplicator = clamp(abs(multiplicator),0,1)
-	rotate(up,-rotateSpeed*multiplicator)
-	# counter rotation of above threshold
-	if abs(getAngleDist_deg(transform.basis.get_euler().y*180/PI,org_rotation.y))>maxRotateAngle:
+	## left rotation = negative angle distance
+	var angle_dist = getAngleDist_deg(transform.basis.get_euler().y*180/PI,org_rotation.y)
+	if dir == "left" and angle_dist>-maxRotateAngle:
 		rotate(up,rotateSpeed*multiplicator)
+	elif dir == "right" and angle_dist<maxRotateAngle:
+		rotate(up,-rotateSpeed*multiplicator)
 
-func rotateUp(multiplicator=1):
-	# print("rotateUp")
-	# check if current rotation angle doesnt exeed the max angle
+
+func rotateUpDown(multiplicator=1, dir : String = ""):
+	"""
+	Rotate the cannons around either left or right. Speed Weighted by multiplicator e[0,1]
+	dir :: either 'left' or 'right'
+	"""
 	multiplicator = clamp(abs(multiplicator),0,1)
-	# if abs(getAngleDist_deg(transform.basis.get_euler().z*180/PI,org_rotation.z))<maxUpAngle:
-	rotate(transform.basis.z.normalized(),rotateSpeed*0.2*multiplicator)
-	# # counter rotation of above threshold
-	# 	rotate(transform.basis.z.normalized(),-rotateSpeed*0.21*multiplicator)
-func rotateDown(multiplicator=1):
-	# print("rotateDown")
-	# check if current rotation angle doesnt exeed the max angle
-	multiplicator = clamp(abs(multiplicator),0,1)
-	# if abs(getAngleDist_deg(transform.basis.get_euler().z*180/PI,org_rotation.z))>minUpAngle:
-	rotate(transform.basis.z.normalized(),-rotateSpeed*0.2*multiplicator)
-	# counter rotation of above threshold
-		# rotate(transform.basis.z.normalized(),rotateSpeed*0.21*multiplicator)
+	## up rotation = positive angle distance
+	var angle_dist = -getAngleDist_deg(transform.basis.get_euler().z*180/PI,org_rotation.z)
+	if dir == "up" and angle_dist<maxUpAngle:
+		rotate(transform.basis.z.normalized(),rotateSpeed*0.2*multiplicator)
+	elif dir == "down" and angle_dist>minUpAngle:
+		rotate(transform.basis.z.normalized(),-rotateSpeed*0.2*multiplicator)
 		
 func getAngleDist_deg(from, to):
 	var max_angle = 360

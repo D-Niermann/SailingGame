@@ -178,6 +178,7 @@ __meta__ = {
 
 [node name="LineRenderer" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0400125, 0 )
+visible = false
 startThickness = 0.01
 endThickness = 0.01
 drawCaps = false

@@ -15,7 +15,7 @@
 [ext_resource path="res://Sprites/wide.png" type="Texture" id=13]
 
 [sub_resource type="BoxShape" id=1]
-extents = Vector3( 1.9503, 0.180563, 1.53888 )
+extents = Vector3( 5.01352, 0.180563, 1.50246 )
 
 [sub_resource type="BoxShape" id=2]
 margin = 0.001
@@ -25,7 +25,7 @@ extents = Vector3( 1.4037, 1, 0.8 )
 size = Vector3( 2, 0.125, 1 )
 
 [sub_resource type="BoxShape" id=4]
-extents = Vector3( 3.5328, 0.167918, 1.99957 )
+extents = Vector3( 5.0327, 0.167918, 1.61134 )
 
 [sub_resource type="DynamicFontData" id=5]
 font_path = "res://Fonts/OpenSans-Bold.ttf"
@@ -57,6 +57,7 @@ __meta__ = {
 [node name="Viewport" type="Viewport" parent="ViewportContainer"]
 size = Vector2( 1680, 1050 )
 handle_input_locally = false
+msaa = 2
 render_target_update_mode = 3
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
@@ -81,7 +82,6 @@ autoplay = true
 
 [node name="Clouds" parent="ViewportContainer/Viewport" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35.99, 10, 23.68 )
-visible = false
 
 [node name="OceanEnvironment" parent="ViewportContainer/Viewport" instance=ExtResource( 1 )]
 visible = false
@@ -96,16 +96,17 @@ isPlayer = true
 [node name="0" type="KinematicBody" parent="ViewportContainer/Viewport/PlayerShipRigid" groups=[
 "Deck",
 ]]
-transform = Transform( -0.999462, 0, 0.0328059, 0, 1, 0, -0.0328059, 0, -0.999462, -9.14432, 3.36242, -1.30595 )
+transform = Transform( -0.999462, 0, 0.0328059, 0, 1, 0, -0.0328059, 0, -0.999462, -4.00328, 2.84514, 0.196599 )
 collision_layer = 524288
 collision_mask = 524288
 
 [node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/PlayerShipRigid/0"]
-transform = Transform( 0.999367, 0, 0.0355972, 0, 1, 0, -0.0355972, 0, 0.999367, -2.32609, 0, 0.0128547 )
+transform = Transform( 0.999367, 0, 0.0355972, 0, 1, 0, -0.0355972, 0, 0.999367, -3.75195, 0, 0.239744 )
 shape = SubResource( 1 )
 
 [node name="RestrictedBuildZone" type="KinematicBody" parent="ViewportContainer/Viewport/PlayerShipRigid/0"]
-transform = Transform( -0.922605, 0, -0.385744, 0, 1, 0, 0.385744, 0, -0.922605, -4.12176, 1, -1.70208 )
+transform = Transform( -0.96987, 0, 0.243615, 0, 1, 0, -0.243615, 0, -0.96987, 0.0698934, 0.411193, -1.76612 )
+visible = false
 collision_layer = 16384
 collision_mask = 2147500032
 
@@ -124,7 +125,8 @@ axis = 1
 texture = ExtResource( 13 )
 
 [node name="RestrictedBuildZone2" type="KinematicBody" parent="ViewportContainer/Viewport/PlayerShipRigid/0"]
-transform = Transform( -0.999461, 0, -0.0328059, 0, 1, 0, 0.0328059, 0, -0.999461, -1.10415, -0.339314, 1.4807 )
+transform = Transform( -0.910682, 0, -0.413103, 0, 1, 0, 0.413103, 0, -0.910682, -8.21712, 0.0290389, -1.09743 )
+visible = false
 collision_layer = 16384
 collision_mask = 2147500032
 
@@ -142,14 +144,55 @@ modulate = Color( 0.619608, 0, 0, 1 )
 axis = 1
 texture = ExtResource( 13 )
 
+[node name="RestrictedBuildZone3" type="KinematicBody" parent="ViewportContainer/Viewport/PlayerShipRigid/0"]
+transform = Transform( 0.942055, 0, -0.335451, 0, 1, 0, 0.335451, 0, 0.942055, -7.96855, 0.411193, 1.83524 )
+visible = false
+collision_layer = 16384
+collision_mask = 2147500032
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/PlayerShipRigid/0/RestrictedBuildZone3"]
+shape = SubResource( 2 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ViewportContainer/Viewport/PlayerShipRigid/0/RestrictedBuildZone3"]
+visible = false
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Sprite3D" type="Sprite3D" parent="ViewportContainer/Viewport/PlayerShipRigid/0/RestrictedBuildZone3"]
+transform = Transform( 2.18061, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 2.18061, 0, 0, 0 )
+modulate = Color( 0.619608, 0, 0, 1 )
+axis = 1
+texture = ExtResource( 13 )
+
+[node name="RestrictedBuildZone4" type="KinematicBody" parent="ViewportContainer/Viewport/PlayerShipRigid/0"]
+transform = Transform( 0.946084, 0, 0.323916, 0, 1, 0, -0.323916, 0, 0.946084, 0.344398, 0.212049, 1.96391 )
+visible = false
+collision_layer = 16384
+collision_mask = 2147500032
+
+[node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/PlayerShipRigid/0/RestrictedBuildZone4"]
+shape = SubResource( 2 )
+
+[node name="MeshInstance" type="MeshInstance" parent="ViewportContainer/Viewport/PlayerShipRigid/0/RestrictedBuildZone4"]
+visible = false
+mesh = SubResource( 3 )
+material/0 = null
+
+[node name="Sprite3D" type="Sprite3D" parent="ViewportContainer/Viewport/PlayerShipRigid/0/RestrictedBuildZone4"]
+transform = Transform( 2.27557, 0, 0, 0, 1, 0, 0, 0, 2.27557, 0, 0, 0 )
+modulate = Color( 0.619608, 0, 0, 1 )
+axis = 1
+texture = ExtResource( 13 )
+
 [node name="1" type="KinematicBody" parent="ViewportContainer/Viewport/PlayerShipRigid" groups=[
 "Deck",
 ]]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.34885, 2.30446, -1.55932 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.206024, 2.04836, 0.415002 )
 collision_layer = 917504
 collision_mask = 917504
 
 [node name="CollisionShape" type="CollisionShape" parent="ViewportContainer/Viewport/PlayerShipRigid/1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00185204, -0.12991, -0.333063 )
 shape = SubResource( 4 )
 
 [node name="PlayerShipRigid2" parent="ViewportContainer/Viewport" groups=[
@@ -184,6 +227,36 @@ __meta__ = {
 [node name="ui" parent="Interface" instance=ExtResource( 6 )]
 
 [node name="Shopping" parent="Interface" instance=ExtResource( 9 )]
+
+[node name="Label1" type="RichTextLabel" parent="Interface"]
+anchor_left = 1.0
+anchor_top = 0.457
+anchor_right = 1.0
+anchor_bottom = 0.491
+margin_left = -216.0
+margin_top = 0.149994
+margin_right = -60.0
+margin_bottom = 0.449951
+custom_fonts/normal_font = SubResource( 6 )
+text = "Top Deck"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label2" type="RichTextLabel" parent="Interface"]
+anchor_left = 1.0
+anchor_top = 0.524
+anchor_right = 1.0
+anchor_bottom = 0.593
+margin_left = -232.0
+margin_top = 0.499939
+margin_right = -80.0
+margin_bottom = -0.500061
+custom_fonts/normal_font = SubResource( 6 )
+text = "Lower Deck"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Decks" type="VBoxContainer" parent="Interface"]
 anchor_left = 1.0
