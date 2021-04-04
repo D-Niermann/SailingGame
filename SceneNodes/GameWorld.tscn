@@ -90,7 +90,7 @@ transform = Transform( -0.548814, -0.350442, -1.53183e-08, 0, -4.89131e-08, 1.11
 [node name="Sky" parent="ViewportContainer/Viewport" instance=ExtResource( 8 )]
 
 [node name="HTerrain" type="Spatial" parent="ViewportContainer/Viewport"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -250, -10.38, -250 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -250, -10.64, -250 )
 script = ExtResource( 12 )
 _terrain_data = ExtResource( 11 )
 chunk_size = 32
