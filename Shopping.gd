@@ -3,7 +3,7 @@ extends Control
 
 const CURRENCY: String = "g"
 const ITEM: PackedScene = preload("res://listItem.tscn")
-const TYPE: PackedScene = preload("res://tabType.tscn")
+const TYPE: PackedScene = preload("res://tabsType.tscn")
 
 var open = null
 var tabs = null
