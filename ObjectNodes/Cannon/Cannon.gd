@@ -86,9 +86,9 @@ func _process(delta):
 			var dist = (position3D).x
 			var diff = dist - (line.points[lineSize-1]).x
 			if diff>upDownMargin: 
-				rotateUp(diff)
+				rotateUp(diff-upDownMargin)
 			elif diff<-upDownMargin:
-				rotateDown(diff)
+				rotateDown(diff+upDownMargin)
 			if position3D.z<-rotateMargin:
 				rotateLeft(position3D.z+rotateMargin)
 			elif position3D.z>rotateMargin:
