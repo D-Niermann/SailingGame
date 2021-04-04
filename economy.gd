@@ -11,6 +11,8 @@ var malls: Dictionary = {
 		"consumption": 0,
 		"grows": {"banana": 2.0},
 		"goods": {"banana": 10, "apple": INF},
+		"white": ["food", "gear"],
+		"black": ["drug"],
 		"money": 1000
 	},
 	"appleCity": {
@@ -18,12 +20,18 @@ var malls: Dictionary = {
 		"consumption": 0,
 		"grows": {"apple": 1.0},
 		"goods": {},
+		"white": ["food"],
+		"black": [],
 		"money": 1000
 	}
 }
 var goods: Dictionary = {
-	"banana": {"price": 10, "weight": 1.0, "res": "res://exampleItem.tscn", "icon": "res://icon.png"},
-	"apple": {"price": 10, "weight": 1.0, "res": "res://exampleItem.tscn", "icon": "res://icon.png"}
+	"banana": {"type": "food", "price": 10, "weight": 1.0, "res": "res://exampleItem.tscn", "icon": "res://icon.png"},
+	"apple": {"type": "food", "price": 10, "weight": 1.0, "res": "res://exampleItem.tscn", "icon": "res://icon.png"}
+}
+var types: Dictionary = {
+	"food": ["banana", "apple"],
+	"gear": ["cannon"]
 }
 var cases: Dictionary = {
 	"storm": {
@@ -38,6 +46,11 @@ var cases: Dictionary = {
 # Returns icon for the given product.
 func getIcon(of: String):
 	return goods[of]["icon"]
+
+
+# Returns type for the given product.
+func getType(of: String):
+	return goods[of]["type"]
 
 
 # Returns weight for the given product.
