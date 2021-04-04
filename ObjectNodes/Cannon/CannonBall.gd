@@ -60,7 +60,7 @@ func _process(delta):
 	if ocean!= null:
 		waterHeight = ocean.getWaterHeight(global_transform.origin)
 	if  waterHeight > transform.origin.y:
-		drag_factor = 0.8
+		drag_factor = 0.6
 		if not waterEntered:
 			default_drag_factor = water_drag
 			# default_gravity = water_gravity ## TODO: lets bullets shoot a bit up when hitting water, why?

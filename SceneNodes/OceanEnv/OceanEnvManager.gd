@@ -38,7 +38,7 @@ var gerstner_speed2 = baseSpeed2
 
 # time of day
 var sunLight
-var sky
+
 
 
 func _ready():
@@ -72,7 +72,7 @@ func _ready():
 	curl_strength = physical_material.get_shader_param("curl_strength")
 
 	sunLight = $DirectionalLight
-	sky = $Sky
+
 	
 
 

@@ -3,7 +3,7 @@
 [ext_resource path="res://SceneNodes/OceanEnv/OceanEnvironment.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ObjectNodes/ShipRigidController/ShipRigidController.tscn" type="PackedScene" id=2]
 [ext_resource path="res://SceneNodes/Islands/Island_Small.tscn" type="PackedScene" id=3]
-[ext_resource path="res://terminal.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/terminal.gd" type="Script" id=4]
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=5]
 [ext_resource path="res://ObjectNodes/TestGUIElements.tscn" type="PackedScene" id=6]
 [ext_resource path="res://ObjectNodes/Clouds/Clouds.tscn" type="PackedScene" id=7]
@@ -35,7 +35,6 @@ __meta__ = {
 [node name="Viewport" type="Viewport" parent="ViewportContainer"]
 size = Vector2( 1680, 1050 )
 handle_input_locally = false
-msaa = 1
 render_target_update_mode = 3
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
@@ -80,6 +79,9 @@ transform = Transform( -0.548814, -0.350442, -1.53183e-08, 0, -4.89131e-08, 1.11
 [node name="Sky" parent="ViewportContainer/Viewport" instance=ExtResource( 11 )]
 
 [node name="HTerrain" parent="ViewportContainer/Viewport" instance=ExtResource( 12 )]
+ambient_wind = 0.0
+lod_scale = 2.0
+map_scale = Vector3( 1, 1, 1 )
 
 [node name="Interface" type="Control" parent="."]
 anchor_right = 1.0

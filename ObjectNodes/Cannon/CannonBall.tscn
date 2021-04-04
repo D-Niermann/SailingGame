@@ -24,5 +24,9 @@ transform = Transform( 0.42317, 0, 0, 0, 0.42317, 0, 0, 0, 0.42317, 0, 0, 0 )
 shape = SubResource( 2 )
 
 [node name="WaterSplash" parent="." instance=ExtResource( 4 )]
+amount = 25
+lifetime = 5.2
+explosiveness = 0.98
+randomness = 0.49
 
 [node name="Trail" parent="." instance=ExtResource( 3 )]
