@@ -108,3 +108,7 @@ func toggleDeckVisible(deckNumber : int):
 
 func _on_Deck1_button_up():
 	toggleDeckVisible(1)
+
+
+func _on_DeckAll_button_up():
+	toggleDeckVisible(-1)

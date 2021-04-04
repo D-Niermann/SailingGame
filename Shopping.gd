@@ -19,7 +19,7 @@ const TEXTUREWIDTH: float = 64.0 # number of pixels in texture which will be con
 const TILEWIDTH: float = 0.2 # width of one tile which all items must be designed accordingly
 const STACKED: bool = false
 var target = null
-var selected_deck : int = 0 # index of the  get_tree().get_nodes_in_group("Deck") array
+var selected_deck : int = -1 # index of the  get_tree().get_nodes_in_group("Deck") array
 var highlight = null
 var hologram = null
 var resource = null
@@ -46,7 +46,6 @@ func _ready():
 	tabs = get_node("Shop/Tabs/Container")
 	list = get_node("Shop/List/Container")
 	viewport = get_tree().get_root().get_node("GameWorld/ViewportContainer/Viewport")
-	target = get_tree().get_nodes_in_group("Deck")[selected_deck] 
 
 # Catches only the input which has not been handled yet.
 func _unhandled_input(event):
@@ -62,7 +61,8 @@ func _unhandled_input(event):
 
 # Called every physics frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	target = get_tree().get_nodes_in_group("Deck")[selected_deck] 
+	if selected_deck!=-1:
+		target = get_tree().get_nodes_in_group("Deck")[selected_deck] 
 	if connected != null:
 		if open == null:
 			indicator.visible = true
@@ -198,6 +198,8 @@ func _physics_process(delta):
 	if highlight != null:
 		var sprite = highlight.get_node("Sprite3D")
 		sprite.modulate = Color(1.0, 1.0, 0.0, 1.0)
+	if selected_deck==-1:
+		closeShop()
 	leftClick = false
 	rightClick = false
 	scrollUp = false
@@ -378,6 +380,7 @@ func updateList():
 
 # Opens the given shop.
 func openShop(shop: String):
+	selected_deck = 0
 	if open != null:
 		closeShop()
 	var mall: Dictionary = Economy.malls[shop]
@@ -496,3 +499,7 @@ func _on_Deck1_button_up():
 
 func _on_Deck0_button_up():
 	selected_deck = 0
+
+
+func _on_DeckAll_button_up():
+	selected_deck = -1
