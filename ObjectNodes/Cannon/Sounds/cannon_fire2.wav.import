@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/cannon_fire2.wav-ab42a99259fd12bd5c820e62a3326073.sample"
+
+[deps]
+
+source_file="res://ObjectNodes/Cannon/Sounds/cannon_fire2.wav"
+dest_files=[ "res://.import/cannon_fire2.wav-ab42a99259fd12bd5c820e62a3326073.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

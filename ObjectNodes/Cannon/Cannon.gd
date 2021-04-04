@@ -6,6 +6,7 @@ extends Spatial
 # var b = "text"
 # var ball
 export var BallScene: PackedScene
+var fireSounds : Array = []
 var forward
 var up
 export(float) var force = 0.6 # for trajectory prediction: force of ball
@@ -43,6 +44,10 @@ func _ready():
 			myShip = get_parent().get_parent().get_parent()
 			if myShip.isPlayer:
 				isPlayerControlable = true
+	fireSounds.push_back(get_node("Audio1"))
+	fireSounds.push_back(get_node("Audio2"))
+	fireSounds.push_back(get_node("Audio3"))
+	
 	waterHitMarker = $WaterHitMarker
 	particles = $Particles
 	particles_flash = $ParticlesFlash
@@ -138,6 +143,7 @@ func clearTrajectory():
 
 func fireBall():
 	yield(get_tree().create_timer(fire_delay_sec),"timeout")
+	playAudio()
 	doParticles()
 	yield(get_tree().create_timer(rand_range(0,rand_max_delay)),"timeout")
 	var ball = BallScene.instance()
@@ -148,6 +154,8 @@ func fireBall():
 	# ball.apply_impulse(ball.transform.origin,forward*force)
 	ball.velocity = force
 
+
+## TODO: change these funtions into 1 or 2 functions
 func rotateLeft(multiplicator=1):
 	# check if current rotation angle doesnt exeed the max angle
 	multiplicator = clamp(abs(multiplicator),0,1)
@@ -189,4 +197,7 @@ func doParticles():
 	particles.emitting = true
 	particles_flash.emitting = true
 	# yield(get_tree().create_timer(1),"timeout")
-	
+
+func playAudio():
+	fireSounds[int(rand_range(0,2.4))].set_pitch_scale(rand_range(0.8,1.2))
+	fireSounds[int(rand_range(0,2.4))].play()
