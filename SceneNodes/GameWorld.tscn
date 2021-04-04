@@ -41,10 +41,11 @@ __meta__ = {
 [node name="Viewport" type="Viewport" parent="ViewportContainer"]
 size = Vector2( 1680, 1050 )
 handle_input_locally = false
+msaa = 1
 render_target_update_mode = 3
 audio_listener_enable_2d = true
 audio_listener_enable_3d = true
-shadow_atlas_size = 2048
+shadow_atlas_size = 1024
 __meta__ = {
 "_editor_description_": ""
 }
@@ -53,7 +54,7 @@ __meta__ = {
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.76, 39.67, 0 )
 fov = 40.0
 size = 63.36
-far = 891.1
+far = 500.0
 script = ExtResource( 5 )
 gameCam = false
 
@@ -81,8 +82,7 @@ transform = Transform( 0.118057, 0, -0.993007, 0, 1, 0, 0.993007, 0, 0.118057, 4
 transform = Transform( -0.0488494, 0, 0.998806, 0, 1, 0, -0.998806, 0, -0.0488494, -17.9775, 0, -0.0389614 )
 
 [node name="Clouds" parent="ViewportContainer/Viewport" instance=ExtResource( 7 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35.99, 10, 23.68 )
-visible = false
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35.99, 50, 23.68 )
 
 [node name="Island" parent="ViewportContainer/Viewport" instance=ExtResource( 3 )]
 transform = Transform( -0.548814, -0.350442, -1.53183e-08, 0, -4.89131e-08, 1.119, -0.350442, 0.548814, 2.39894e-08, -2.98232, 0.660044, -30.5378 )

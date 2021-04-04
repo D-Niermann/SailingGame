@@ -3,12 +3,10 @@
 [ext_resource path="res://ObjectNodes/Clouds/Cloud.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/cloudShadow3.png" type="Texture" id=2]
 
-
-
 [node name="Clouds" type="Spatial"]
 
 [node name="C2" type="Sprite3D" parent="."]
-transform = Transform( 2.76716, -5.58086, -2.41018e-07, 2.10221e-07, 2.71151e-08, 1.11823, -5.58086, -2.76716, -3.4402e-07, 31.3976, 74.5704, -54.2618 )
+transform = Transform( 2.76716, -5.58086, -2.41018e-07, 2.10221e-07, 2.71151e-08, 1.11823, -5.58086, -2.76716, -3.4402e-07, 31.4, 0, -54.26 )
 cast_shadow = 3
 modulate = Color( 0.52549, 0.541176, 1, 0.227451 )
 opacity = 0.89
@@ -19,7 +17,7 @@ texture = ExtResource( 2 )
 script = ExtResource( 1 )
 
 [node name="C4" type="Sprite3D" parent="."]
-transform = Transform( 6.13716, -9.78076, -2.29309e-07, 3.3461e-07, -2.93374e-07, 1.11823, -9.78076, -6.13716, -3.7113e-07, 38.8294, 74.7224, 28.5288 )
+transform = Transform( 6.13716, -9.78076, -2.29309e-07, 3.3461e-07, -2.93374e-07, 1.11823, -9.78076, -6.13716, -3.7113e-07, 38.83, 0, 28.53 )
 cast_shadow = 3
 modulate = Color( 0.52549, 0.541176, 1, 0.145098 )
 pixel_size = 0.09
@@ -29,7 +27,7 @@ texture = ExtResource( 2 )
 script = ExtResource( 1 )
 
 [node name="C3" type="Sprite3D" parent="."]
-transform = Transform( -0.954468, -6.15357, -8.73484e-08, -1.66552e-07, -1.97607e-07, 1.11823, -6.15357, 0.954468, 1.712e-07, -123.518, 74.8044, -163.478 )
+transform = Transform( -0.954468, -6.15357, -8.73484e-08, -1.66552e-07, -1.97607e-07, 1.11823, -6.15357, 0.954468, 1.712e-07, -123.52, 0, -163.48 )
 cast_shadow = 3
 modulate = Color( 0.52549, 0.541176, 1, 0.160784 )
 pixel_size = 0.09
@@ -39,7 +37,7 @@ texture = ExtResource( 2 )
 script = ExtResource( 1 )
 
 [node name="Cloud" type="Sprite3D" parent="."]
-transform = Transform( -4.42257, 4.37693, 3.44255e-08, 0, -2.71836e-07, 1.119, 4.37693, 4.42257, 3.47845e-08, 89.2925, 74.5664, 60.6187 )
+transform = Transform( -4.42257, 4.37693, 3.44255e-08, 0, -2.71836e-07, 1.119, 4.37693, 4.42257, 3.47845e-08, 89.29, 0, 60.62 )
 cast_shadow = 3
 modulate = Color( 0.52549, 0.541176, 1, 0.219608 )
 pixel_size = 0.09

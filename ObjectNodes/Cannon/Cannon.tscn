@@ -123,16 +123,16 @@ hue_variation_random = 0.33
 script = ExtResource( 3 )
 BallScene = ExtResource( 7 )
 
-[node name="Gun (scaleable)" type="Spatial" parent="."]
+[node name="Gun" type="Spatial" parent="."]
 transform = Transform( 0.656227, 0, 0, 0, 1, 0, 0, 0, 0.656227, 0, 0, 0 )
 
-[node name="Sprite3D" type="Sprite3D" parent="Gun (scaleable)"]
+[node name="Sprite3D" type="Sprite3D" parent="Gun"]
 transform = Transform( 0.349777, -0.201944, -2.18557e-08, 0, -1.76545e-08, 1, -0.201944, -0.349777, -3.78552e-08, 0.113681, 0.121206, -0.00625759 )
 shaded = true
 alpha_cut = 2
 texture = ExtResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="Gun (scaleable)"]
+[node name="MeshInstance" type="MeshInstance" parent="Gun"]
 cast_shadow = 3
 mesh = SubResource( 1 )
 material/0 = ExtResource( 6 )
@@ -175,7 +175,6 @@ __meta__ = {
 
 [node name="LineRenderer" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0400125, 0 )
-visible = false
 startThickness = 0.05
 endThickness = 0.01
 drawCaps = false
@@ -213,3 +212,5 @@ unit_size = 19.0
 max_db = 6.0
 max_distance = 300.0
 doppler_tracking = 2
+
+[node name="FakeBullet" type="Spatial" parent="."]

@@ -124,8 +124,8 @@ func set_subsurface_scattering(value):
 	visual_material.set_shader_param("sss_strength", value);
 
 func _physics_process(delta):
-	gerstner_speed1 = baseSpeed1*(1+wind_modified*0.05)
-	gerstner_speed2 = baseSpeed2*(1+wind_modified*0.05)
+	gerstner_speed1 = baseSpeed1*(1+wind_modified*0.01)
+	gerstner_speed2 = baseSpeed2*(1+wind_modified*0.01)
 	## ocean movement
 	visual_material.set_shader_param("time", time)
 	visual_material.set_shader_param("gerstner_speed", gerstner_speed1) 
@@ -134,16 +134,16 @@ func _physics_process(delta):
 	wind_modified += ((wind_strength + sin(time*0.5) * 0.2 * wind_strength) - wind_modified) * delta * 0.5
 	
 	# DEBUG WIND VAR
-	print(wind_modified)
+	# print(wind_modified)
 	
 	update_water(wind_modified)
 
 	sunLight.rotate(Vector3(1,0,0), time*0.00001) 
 
 
-func getWaterHeight(position : Vector3):
+func getWaterHeight(position : Vector3) -> float:
 	"""
-	Get the height of the water mesh on the global position.
+	Get the height of the water mesh on the global position. (y value)
 	"""
 	var pos2d : Vector2 = Vector2(position.x, position.z)
 	var pxPos1 : Vector2 = imSize * pos2d/imgToWorld*gerstner_tiling1 # pixel postion on the height map (ony use x and z!)

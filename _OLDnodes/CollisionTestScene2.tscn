@@ -20,7 +20,7 @@ extents = Vector3( 0.48483, 2.62139, 2.53343 )
 [node name="Camera" type="Camera" parent="." groups=[
 "Camera",
 ]]
-transform = Transform( 0.999842, 0.00568086, -0.0168706, 0, 0.947713, 0.319124, 0.0178014, -0.319074, 0.947563, 37.9825, 16.7763, 31.9302 )
+transform = Transform( 0.999842, 0.00568086, -0.0168706, 0, 0.947713, 0.319124, 0.0178014, -0.319074, 0.947563, 68.36, 13.54, 2.84 )
 fov = 82.0619
 script = ExtResource( 3 )
 gameCam = false
@@ -58,11 +58,12 @@ material/0 = null
 [node name="CollisionShape" type="CollisionShape" parent="Wall2"]
 shape = SubResource( 2 )
 
-[node name="Spatial" type="Spatial" parent="."]
-transform = Transform( -0.601672, 0.00826679, 0.7987, 0.000809339, 0.999952, -0.00974012, -0.798743, -0.00521394, -0.60165, 68.3089, 9.21703, -5.61958 )
+[node name="Cannon" parent="." instance=ExtResource( 4 )]
+transform = Transform( -0.82894, 0, -0.559337, 0, 1, 0, 0.559338, 0, -0.82894, 50.7485, 9.21703, 27.3034 )
+isPlayerControlable = true
 
-[node name="Cannon" parent="Spatial" instance=ExtResource( 4 )]
-transform = Transform( 1, 2.76486e-09, 1.30385e-08, 8.73115e-11, 1, 1.49012e-08, -7.45058e-09, -9.31323e-10, 1, 0, 0, 0 )
+[node name="Spatial" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 68.3089, 9.21703, -5.61958 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 transform = Transform( 1.3257, 0, -3.93356, 0, 1, 0, 1.60706, 0, 3.24489, 66.9476, 7.65923, -7.01585 )
