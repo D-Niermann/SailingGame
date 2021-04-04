@@ -1,5 +1,81 @@
 extends Node
 
+var matrix: Image = Image.new()
+
+# Finds path between the given parts.
+func findPath(from: Vector3, to: Vector3, canCross: bool, extended: bool):
+	var paths: Dictionary = {from: {"path": [from], "dist": 0}}
+	var open: Dictionary = {from: null}
+	var close: Dictionary = {}
+	var limit: int = 100
+	while limit > 0 && !open.empty():
+		var lowest: Vector3
+		var value: int = -1
+		for part in open.keys():
+			var score: int = paths[part]["dist"] + chebyshevDistance(part, to)
+			if value < 0 || score < value:
+				value = score
+				lowest = part
+		close[lowest] = null
+		open.erase(lowest)
+		var adjacent: Array = findAdjacent(lowest, canCross, extended)
+		for part in adjacent:
+			if open.has(part) || close.has(part) || !canPass(lowest, part, canCross, extended):
+				continue
+			var path: Array = paths[lowest]["path"].duplicate(true)
+			path.append(part)
+			paths[part] = {"path": [path], "dist": paths[lowest]["dist"] + 1}
+			open[part] = null
+			if part == to:
+				return path
+		limit -= 1
+	var lowest: Vector3
+	var value: int = -1
+	for part in close.keys():
+		var score: int = paths[part]["dist"] + chebyshevDistance(part, to)
+		if value < 0 || score < value:
+			value = score
+			lowest = part
+	return paths[lowest]["path"]
+
+
+# Checks if transition between the given parts is possible.
+func canPass(from: Vector3, to: Vector3, canCross: bool, extended: bool):
+	var difference: Vector3 = to - from
+	var distance: int = chebyshevDistance(from, to)
+	if distance > 1:
+		return false
+	if difference == Vector3.UP || difference == Vector3.DOWN:
+		if !extended:
+			return false
+	if difference.length_squared() > 1:
+		if !canCross:
+			return false
+		var comp: Vector3
+		comp = Vector3(difference.x, 0, 0)
+		if comp != Vector3.ZERO && isOccupied(from + comp):
+			return false
+		comp = Vector3(0, difference.y, 0)
+		if comp != Vector3.ZERO && isOccupied(from + comp):
+			return false
+		comp = Vector3(0, 0, difference.z)
+		if comp != Vector3.ZERO && isOccupied(from + comp):
+			return false
+	else:
+		if isOccupied(to):
+			return false
+	return true
+
+
+# Checks if the given part is occupied.
+func isOccupied(partition: Vector3):
+	matrix.lock()
+	var pixel: Color = matrix.get_pixel(fmod(abs(partition.x), matrix.get_width()), fmod(abs(partition.z), matrix.get_height()))
+	matrix.unlock()
+	if pixel != Color.black:
+		return false
+	return true
+
 
 # Returns adjacent parts for the given part.
 func findAdjacent(partition: Vector3, canCross: bool, extended: bool):
