@@ -13,7 +13,7 @@ flags = 4
 viewport_path = NodePath("render_targets/vector_map_buffer")
 
 [sub_resource type="BoxShape" id=2]
-extents = Vector3( 51.4664, 1, 49.8404 )
+extents = Vector3( 83.2448, 1, 76.3896 )
 
 [sub_resource type="CapsuleMesh" id=3]
 
@@ -72,6 +72,7 @@ directional_shadow_max_distance = 200.0
 [node name="EnvAudioSource" parent="." instance=ExtResource( 4 )]
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 2.79713, 0, 0, 0, 2.79713, 0, 0, 0, 2.79713, 0, 6.05378, 0 )
+transform = Transform( 0.560077, 0, 0, 0, 0.560077, 0, 0, 0, 0.560077, 0, 6.05378, 0 )
+visible = false
 mesh = SubResource( 3 )
 material/0 = null

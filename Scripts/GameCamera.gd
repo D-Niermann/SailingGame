@@ -1,7 +1,7 @@
 extends Camera
 
 
-var ship
+var ship = null
 var targetPos : Vector3
 export var minHeight = 5
 export var maxHeight = 200
@@ -15,15 +15,18 @@ var _total_pitch = 0.0
 var target_yar = 0
 func _ready():
 	targetPos = translation
-	ship = get_tree().get_nodes_in_group("PlayerShip")[0]
+	if get_tree().get_nodes_in_group("PlayerShip").size()>0:
+		ship = get_tree().get_nodes_in_group("PlayerShip")[0]
+
 
 func _process(delta):
-	targetPos.x = ship.global_transform.origin.x
-	targetPos.z = ship.global_transform.origin.z
-	targetPos.y = clamp(targetPos.y,minHeight,maxHeight)
-	translation += (targetPos - translation)*speedScale
-	_update_mouselook()
-	rotate_y(deg2rad(-getAngleDist_deg(target_yar, rad2deg(transform.basis.get_euler().y))*speedScale))
+	if ship!=null:
+		targetPos.x = ship.global_transform.origin.x
+		targetPos.z = ship.global_transform.origin.z
+		targetPos.y = clamp(targetPos.y,minHeight,maxHeight)
+		translation += (targetPos - translation)*speedScale
+		_update_mouselook()
+		rotate_y(deg2rad(-getAngleDist_deg(target_yar, rad2deg(transform.basis.get_euler().y))*speedScale))
 	
 
 func _unhandled_input(event):

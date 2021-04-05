@@ -16,14 +16,14 @@ var ship # parent ship container
 ### vars for line rendering (but the gitHub LineRenderer lags so hard that i canceled it for now)
 # var line
 var lineSize  # length of trjactory prediction line (number of points) / needs some rework
-const rotateSpeed = 0.005 # max rotation speed of cannons (up/down rotation is scaled down )
-const unprecision = 3 # in units, how max unprecise a connon is (random)
-onready var rotateMargin = rand_range(-unprecision,unprecision) # error in rotation that is accepted (mouse position) left right
-const maxRotateAngle = 20 # in degree
-onready var upDownMargin = rand_range(-unprecision,unprecision) # what difference to mouse pos units to ignore when rotating  up down
-export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
+const rotateSpeed = 0.008 # max rotation speed of cannons (up/down rotation is scaled down )
+const maxRotateAngle = 20 # in degree, left right rotation
 var maxUpAngle = 10 # angle distance in degreee from original rotation that is allowed
 var minUpAngle= -5 # angle distance in degreee from original rotation that is allowed
+const unprecision = 4 # in units, how max unprecise a connon is (random)
+onready var rotateMargin = rand_range(-unprecision,unprecision) # error in rotation that is accepted (mouse position) left right
+onready var upDownMargin = rand_range(-unprecision,unprecision) # what difference to mouse pos units to ignore when rotating  up down
+export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
 var camera
 var org_rotation : Vector3
 var position3D
@@ -78,16 +78,21 @@ func _process(delta):
 	forward = global_transform.basis.x.normalized()
 	
 	if aimCannons:
-		var dropPlane  = Plane(Vector3(0, 1, 0), 0) #todo dont use this plane here, et position from ocean?
-		var from = camera.project_ray_origin(get_viewport().get_mouse_position())
-		var to = from + camera.project_ray_normal(get_viewport().get_mouse_position()) * 2000
-		position3D = to_local(dropPlane.intersects_ray( from, to ))
+		# var mousePosition = get_tree().get_root().get_viewport().get_mouse_position()
+		# var from = camera.project_ray_origin(mousePosition)
+		# var to = from + camera.project_ray_normal(mousePosition) * 2000
+		position3D = to_local(ocean.getMousePosition())
+		# var dropPlane  = Plane(Vector3(0, 1, 0), 0) #todo dont use this plane here, et position from ocean?
+		# var from = camera.project_ray_origin(get_tree().get_root().get_viewport().get_mouse_position())
+		# var to = from + camera.project_ray_normal(get_tree().get_root().get_viewport().get_mouse_position()) * 2000
+		# position3D = to_local(dropPlane.intersects_ray( from, to ))
 		# print(position3D)
 		## if mouse position in front of cannon (x>0)
 		if position3D.x >= 2: 
 			predictTrajectory()
 			var dist = (position3D).x
 			var diff = dist - (trajectoryPoints[lineSize-1]).x
+			print(diff)
 			if diff>upDownMargin: 
 				rotateUpDown(diff-upDownMargin, "up")
 			elif diff<-upDownMargin:

@@ -39,7 +39,10 @@ var gerstner_speed2 = baseSpeed2
 # time of day
 var sunLight
 var camera
-
+var viewport
+var space_state
+var from : Vector3 = Vector3(0,0,0)
+var to : Vector3 = Vector3(0,0,0)
 
 func _ready():
 	## load the image
@@ -48,7 +51,10 @@ func _ready():
 	data = image.get_data()
 	data.lock()
 
-	camera = get_viewport().get_camera()
+	viewport = get_tree().get_root().get_viewport()
+	camera = get_tree().get_nodes_in_group("Camera")[0]
+	space_state = get_world().get_direct_space_state()
+
 	visual_material = $waterplane.material_override
 	physical_material = $render_targets/vector_map_buffer/image.material
 	
@@ -138,21 +144,17 @@ func _physics_process(delta):
 	# print(wind_modified)
 	
 	update_water(wind_modified)
-	getMousePosition()
 
 	sunLight.rotate(Vector3(1,0,0), time*0.00001) 
 
 func getMousePosition() -> Vector3:
-	var dropPlane  = Plane(Vector3(0, 1, 0), 0) 
-	var viewportContainer: ViewportContainer = get_viewport().get_parent()
-	var from = camera.project_ray_origin(get_viewport().get_mouse_position())
-	var to = from + camera.project_ray_normal(get_viewport().get_mouse_position()) *2000
-	var space_state = get_world().get_direct_space_state()
-	var position3D = (dropPlane.intersects_ray( from, to ))
+	from = camera.project_ray_origin(viewport.get_mouse_position())
+	to = from + camera.project_ray_normal(viewport.get_mouse_position()) *2000
 	var hit = space_state.intersect_ray( from, to )
 	if hit.size()>0:
-		print(hit.position)
-	return position3D
+		return hit.position
+	else:
+		return Vector3(0,0,0)
 
 func getWaterHeight(position : Vector3) -> float:
 	"""

@@ -50,32 +50,26 @@ __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="Camera" type="Camera" parent="ViewportContainer/Viewport"]
+[node name="Camera" type="Camera" parent="ViewportContainer/Viewport" groups=[
+"Camera",
+]]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.477772, 39.8137, -0.192314 )
+current = true
 fov = 47.5
 size = 63.36
 far = 500.0
 script = ExtResource( 5 )
 gameCam = false
+disabledScript = false
 
 [node name="GameCamera" type="Camera" parent="ViewportContainer/Viewport"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 50, 0 )
-current = true
 fov = 35.0
 far = 1549.5
 script = ExtResource( 8 )
 
 [node name="Clouds" parent="ViewportContainer/Viewport" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35.99, 10.3436, 23.68 )
-
-[node name="PlayerShipRigid" parent="ViewportContainer/Viewport" groups=[
-"PlayerShip",
-] instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.42168, 0, 1.07124 )
-isPlayer = true
-
-[node name="otherShip" parent="ViewportContainer/Viewport" instance=ExtResource( 2 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1194, -0.0626755, 39.5965 )
 
 [node name="Island" parent="ViewportContainer/Viewport" instance=ExtResource( 3 )]
 transform = Transform( -0.548814, -0.350442, -1.53183e-08, 0, -4.89131e-08, 1.119, -0.350442, 0.548814, 2.39894e-08, -2.98232, 3.9151, -30.5378 )
@@ -89,6 +83,11 @@ map_scale = Vector3( 1, 1, 1 )
 
 [node name="OceanEnvironment" parent="ViewportContainer/Viewport" instance=ExtResource( 1 )]
 wind_strength = 0.4
+
+[node name="ShipRigid" parent="ViewportContainer/Viewport" groups=[
+"PlayerShip",
+] instance=ExtResource( 2 )]
+isPlayer = true
 
 [node name="Interface" type="Control" parent="."]
 anchor_right = 1.0
@@ -190,11 +189,8 @@ text = "1 grid (tilewidth) = 0.2 units = 1 meter
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="button_up" from="Interface/Decks/AllDeck" to="ViewportContainer/Viewport/PlayerShipRigid" method="_on_DeckAll_button_up"]
 [connection signal="button_up" from="Interface/Decks/AllDeck" to="Interface/Shopping" method="_on_DeckAll_button_up"]
-[connection signal="button_up" from="Interface/Decks/Deck0" to="ViewportContainer/Viewport/PlayerShipRigid" method="_on_Deck0_button_up"]
 [connection signal="button_up" from="Interface/Decks/Deck0" to="ViewportContainer/Viewport/GameCamera" method="_on_Deck0_button_up"]
 [connection signal="button_up" from="Interface/Decks/Deck0" to="Interface/Shopping" method="_on_Deck0_button_up"]
-[connection signal="button_up" from="Interface/Decks/Deck1" to="ViewportContainer/Viewport/PlayerShipRigid" method="_on_Deck1_button_up"]
 [connection signal="button_up" from="Interface/Decks/Deck1" to="ViewportContainer/Viewport/GameCamera" method="_on_Deck1_button_up"]
 [connection signal="button_up" from="Interface/Decks/Deck1" to="Interface/Shopping" method="_on_Deck1_button_up"]
