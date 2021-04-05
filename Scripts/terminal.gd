@@ -1,27 +1,25 @@
 extends Control
 
 
-enum modes {PLAY, LOAD = -1}
-var mode: int = modes.PLAY
 var time: int = 0
 var frac: float = 0.0
 var updatePeriodForEconomy: float = 60.0
 
-const PARTSIZE: float = 64.0
-const EXTENDED: bool = false
-const CANCROSS: bool = true
+const PARTSIZE: float = 64.0 # width of each partition
+const EXTENDED: bool = false # if the grid is 3D, or 2D
+const CANCROSS: bool = true # if moving crosswise is possible
 var viewport: Viewport = null
 var camera: Camera = null
-var walls: Dictionary = {}
-var units: Dictionary = {}
-var items: Dictionary = {Vector3(0, 0, 0): ["example"]}
-var live: Dictionary = {}
-var data: Dictionary = {"example": {"preset": "example", "xform": Transform.IDENTITY}}
-var map: Dictionary = {}
-var image: Image = Image.new()
-var picked: Dictionary = {}
-var colors: Dictionary = {"0234": {"res": "res://SceneNodes/Islands/Island_Small.tscn", "origin": Vector3(0, 0, 0)}}
-var presets: Dictionary = { # constants are not copied over the instance
+var walls: Dictionary = {} # arrays of partitions, filled with static stuff
+var units: Dictionary = {} # arrays of partitions, filled with dynamic stuff which are intelligent (self-driving)
+var items: Dictionary = {Vector3(0, 0, 0): ["example"]} # arrays of partitions, filled with dynamic stuff which are dumb (can be picked up and dropped)
+var live: Dictionary = {} # partitions that are live/spawned already
+var data: Dictionary = {"example": {"preset": "example", "xform": Transform.IDENTITY}} # names and properties of every single scene in the world
+
+var image: Image = Image.new() # what we use for maintaining multi-partition stuff, like islands
+var picked: Dictionary = {} # like live, but for the multi-partition stuff
+var colors: Dictionary = {"0234": {"res": "res://SceneNodes/Islands/Island_Small.tscn", "origin": Vector3(0, 0, 0)}} # like data, but for the multi-partition stuff
+var presets: Dictionary = { # constants are not copied over the instance, this is where we summon stuff from, and also check some constant variables from
 	"example": {"TYPE": "item", "RES": "res://exampleItem.tscn", "MAXHP": 100, "health": 100}
 }
 
@@ -31,7 +29,7 @@ func _ready():
 	viewport = get_node("ViewportContainer/Viewport")
 	camera = viewport.get_node("Camera")
 	image.load("res://icon.png")
-	Utility.matrix = image
+	Utility.matrix = image # here we set the grid for pathfinding in utility, it'll just use this image, unless we change it for performance reasons
 
 
 # Called every physics frame. 'delta' is the elapsed time since the previous frame.
@@ -53,22 +51,22 @@ func _physics_process(delta):
 				shopping.updateList()
 		time = newTime
 	# loading world
-	var current: Vector3 = Utility.partitionID(camera.global_transform.origin, PARTSIZE, EXTENDED)
-	var adjacent: Array = Utility.findAdjacent(current, CANCROSS, EXTENDED)
-	adjacent.append(current)
+	var current: Vector3 = Utility.partitionID(camera.global_transform.origin, PARTSIZE, EXTENDED) # current partition
+	var adjacent: Array = Utility.findAdjacent(current, CANCROSS, EXTENDED) # adjacent partitions
+	adjacent.append(current) # plus the current partition
 	var copy: Dictionary = live.duplicate()
-	for part in adjacent:
+	for part in adjacent: # here we check and load any "not live yet" adjacent partitions
 		if !live.has(part):
 			insertPart(part)
 			live[part] = null
 			copy.erase(part)
-	for part in copy.keys():
+	for part in copy.keys(): # here we check and unload any "live yet needs to die" partitions, partitions that are far away
 		if Utility.chebyshevDistance(current, part) > 2:
 			removePart(part)
 			live.erase(part)
 			copy.erase(part)
 	# loading image
-	if image != null:
+	if image != null: # here we do the same loading/unloading thing for multi-partition stuff, like items, it uses the image
 		image.lock()
 		var codes: Dictionary = {}
 		for part in live.keys():
@@ -88,34 +86,39 @@ func _physics_process(delta):
 				picked[code].queue_free()
 				picked.erase(code)
 	# running behavior
-	for part in units.keys():
+	for part in units.keys(): # for all partitions that include at least one unit inside
+		# getting the array of the units in proximity, that is units in this and adjacent partitions
 		adjacent = Utility.findAdjacent(part, CANCROSS, EXTENDED)
 		adjacent.append(part)
-		# can find list of all possibly detected units and items later in here
-		for unit in part:
-			var holo = null
-			var info: Dictionary = data[unit]
-			var preset: Dictionary = presets[info["preset"]]
-			if live.has(part):
+		var inProx: Array = []
+		for partition in adjacent:
+			if units.has(partition):
+				inProx += units[partition]
+		# iterating units
+		for unit in part: # for each unit in this part, note that, the inProx array above will be same for all units in this part, so can be used by any
+			var holo = null # holo stands for physical representations of units, that is actual scenes in the world, loaded
+			var info: Dictionary = data[unit] # info stands for variables of this unit, like health and transform (xform)
+			var preset: Dictionary = presets[info["preset"]] # preset has constants of this unit, like max health and resource path
+			if live.has(part): # if part of this unit is live, we can find its holo
 				holo = viewport.get_node_or_null(unit)
-			pass # run specific behavior
-			# maintaining consistency
-			info["xform"] = info["xform"] # update transform
-			var newPart = Utility.partitionID(info["xform"].origin, PARTSIZE, EXTENDED)
-			if newPart != part:
+			pass # run specific behavior, you could add any sort of AI here
+			# maintaining consistency, we update all necessary data after the behavior, so things don't fall apart
+			info["xform"] = info["xform"] # update transform, is a must
+			var newPart = Utility.partitionID(info["xform"].origin, PARTSIZE, EXTENDED) # new partition of this unit
+			if newPart != part: # if partition has changed, we update and load/unload if necessary
 				part.erase(unit)
 				if part.empty():
 					units.erase(part)
 				if !units.has(newPart):
 					units[newPart] = []
 				units[newPart].append(unit)
-			if live.has(newPart):
+			if live.has(newPart): # if new partition is live but unit is not spawned, we spawn it
 				if holo == null:
 					holo = load(preset["RES"]).instance()
 					viewport.add_child(holo)
 					holo.name = unit
 					holo.global_transform = info["xform"]
-			elif holo != null:
+			elif holo != null: # if new partition is not live, we kill holo, but it keeps living in the database
 				holo.queue_free()
 
 
@@ -166,7 +169,7 @@ func removePart(part):
 				holo.queue_free()
 
 
-# Spawns node from data, or creates new from preset.
+# Spawns node from data, or creates new from preset. Everytime you create/spawn something that should persist as data, use this.
 func spawn(key: String, at: Vector3):
 	var target: Vector3 = Utility.partitionID(at, PARTSIZE, EXTENDED)
 	var info = data.get(key)
@@ -226,7 +229,7 @@ func spawn(key: String, at: Vector3):
 				holo.global_transform.origin = at
 
 
-# Finds unique name to be used in data for a given preset name.
+# Finds unique name to be used in data for a given preset name. Simply checks database and tries to make up a unique name for a new entity.
 func findName(key: String):
 	var number: int = 1
 	var suggestion: String = key
