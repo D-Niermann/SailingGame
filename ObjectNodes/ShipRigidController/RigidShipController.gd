@@ -108,8 +108,6 @@ func calcWindForce():
 	var deg = abs(rad2deg(angle_to_wind))/180
 	return sails*speed_mod*(pow(deg,2) - 0.8*pow(deg,3))-(reverse_speed_factor*speed_mod*sails)
 		
-func _on_Deck0_button_up():
-	toggleDeckVisible(0)
 
 func toggleDeckVisible(deckNumber : int):
 	var a = model.get_children()
@@ -119,10 +117,12 @@ func toggleDeckVisible(deckNumber : int):
 		else:
 			a[i].visible = true
 
+func _on_Deck0_button_up():
+	toggleDeckVisible(0)
 
 func _on_Deck1_button_up():
 	toggleDeckVisible(1)
 
 
-func _on_DeckAll_button_up():
+func _on_AllDeck_button_up():
 	toggleDeckVisible(-1)

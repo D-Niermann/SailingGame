@@ -1,4 +1,4 @@
-extends Spatial
+extends "res://ObjectNodes/Items/BaseItem.gd"
 
 
 # Declare member variables here. Examples:

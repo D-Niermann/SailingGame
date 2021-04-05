@@ -10,7 +10,7 @@ var malls: Dictionary = {
 		"capacity": Vector2(0, 100),
 		"consumption": 0,
 		"grows": {"banana": 2.0},
-		"goods": {"banana": 10, "apple": INF},
+		"goods": {"banana": 10, "apple": INF, "cannon" : 10},
 		"white": ["food", "gear"],
 		"black": ["drug"],
 		"money": 1000
@@ -27,7 +27,8 @@ var malls: Dictionary = {
 }
 var goods: Dictionary = {
 	"banana": {"type": "food", "price": 10, "weight": 1.0, "res": "res://exampleItem.tscn", "icon": "res://icon.png"},
-	"apple": {"type": "food", "price": 10, "weight": 1.0, "res": "res://exampleItem.tscn", "icon": "res://icon.png"}
+	"apple": {"type": "food", "price": 10, "weight": 1.0, "res": "res://exampleItem.tscn", "icon": "res://icon.png"},
+	"cannon": {"type": "food", "price": 10, "weight": 1.0, "res": "res://ObjectNodes/Items/Cannon/CannonItem.tscn", "icon": "res://icon.png"}
 }
 var types: Dictionary = {
 	"food": ["banana", "apple"],

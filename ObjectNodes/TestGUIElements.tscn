@@ -5,7 +5,6 @@
 [ext_resource path="res://Sprites/wheel.png" type="Texture" id=3]
 [ext_resource path="res://icon.png" type="Texture" id=4]
 
-
 [node name="ui" type="Control"]
 margin_left = 7.0
 margin_top = 8.0
@@ -33,10 +32,10 @@ anchor_left = 0.0991942
 anchor_top = 0.146
 anchor_right = 1.87119
 anchor_bottom = 3.249
-margin_left = -18.4332
-margin_top = 174.726
-margin_right = -241.557
-margin_bottom = -34.5177
+margin_left = -24.0964
+margin_top = 765.591
+margin_right = -247.22
+margin_bottom = 556.348
 rect_pivot_offset = Vector2( 125, 125 )
 texture = ExtResource( 3 )
 expand = true

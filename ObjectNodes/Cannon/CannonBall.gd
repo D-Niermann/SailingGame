@@ -99,9 +99,9 @@ func _process(delta):
 			# print(angle)
 			if angle>ricochet_thresh and velocity>vel_penetrate_thresh:
 				## redirect ball
-				dir += (coll.normal.normalized()) ## reflext direction at normal
+				dir = dir.bounce(coll.normal.normalized())
 				## lose velocity based on angle
-				velocity *= (angle/90)*0.5 ## 0.75 => energy loss through heat and stuff
+				velocity *= (angle/90)*0.5 ## 0.5 => energy loss through heat and stuff
 			else:
 				## if inside body:
 				coll_obj = instance_from_id(coll.collider_id)
