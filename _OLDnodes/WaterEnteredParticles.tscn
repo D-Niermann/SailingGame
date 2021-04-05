@@ -32,7 +32,7 @@ curve = SubResource( 4 )
 
 [sub_resource type="Curve" id=6]
 max_value = 2.0
-_data = [ Vector2( 0, 0.459091 ), 0.0, 0.0, 0, 0, Vector2( 1, 2 ), 0.0, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 0.186251 ), 0.0, 0.0, 0, 0, Vector2( 1, 1.82267 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=7]
 curve = SubResource( 6 )
@@ -40,10 +40,10 @@ curve = SubResource( 6 )
 [sub_resource type="ParticlesMaterial" id=8]
 lifetime_randomness = 0.39
 direction = Vector3( 0, 1, 0 )
-spread = 2.16
-gravity = Vector3( 0, -4, 1 )
+spread = 1.0
+gravity = Vector3( 0, -1, -1 )
 initial_velocity = 8.31
-initial_velocity_random = 1.0
+initial_velocity_random = 0.48
 angular_velocity = 3.0
 damping_random = 0.12
 damping_curve = SubResource( 5 )
@@ -59,9 +59,9 @@ size = Vector2( 5, 5 )
 [node name="Particles" type="Particles"]
 material_override = SubResource( 1 )
 cast_shadow = 2
-amount = 20
+amount = 15
 lifetime = 5.0
-explosiveness = 1.0
+explosiveness = 0.98
 randomness = 0.71
 visibility_aabb = AABB( -181.604, -196.936, -272.78, 362.306, 395.6, 547.224 )
 local_coords = false

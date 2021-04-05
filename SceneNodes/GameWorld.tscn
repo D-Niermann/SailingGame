@@ -51,7 +51,7 @@ __meta__ = {
 }
 
 [node name="Camera" type="Camera" parent="ViewportContainer/Viewport"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.76, 39.67, 0 )
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.477772, 39.8137, -0.192314 )
 current = true
 fov = 47.5
 size = 63.36
@@ -79,7 +79,7 @@ isPlayer = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1194, -0.0626755, 39.5965 )
 
 [node name="Island" parent="ViewportContainer/Viewport" instance=ExtResource( 3 )]
-transform = Transform( -0.548814, -0.350442, -1.53183e-08, 0, -4.89131e-08, 1.119, -0.350442, 0.548814, 2.39894e-08, -2.98232, 0.660044, -30.5378 )
+transform = Transform( -0.548814, -0.350442, -1.53183e-08, 0, -4.89131e-08, 1.119, -0.350442, 0.548814, 2.39894e-08, -2.98232, 3.9151, -30.5378 )
 
 [node name="Sky" parent="ViewportContainer/Viewport" instance=ExtResource( 11 )]
 
