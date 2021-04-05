@@ -1,9 +1,8 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://SceneNodes/OceanEnv/OceanEnvironment.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ObjectNodes/ShipRigidController/ShipRigidController.tscn" type="PackedScene" id=2]
 [ext_resource path="res://SceneNodes/Islands/Island_Small.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Scripts/terminal.gd" type="Script" id=4]
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=5]
 [ext_resource path="res://ObjectNodes/TestGUIElements.tscn" type="PackedScene" id=6]
 [ext_resource path="res://ObjectNodes/Clouds/Clouds.tscn" type="PackedScene" id=7]
@@ -24,7 +23,6 @@ font_data = SubResource( 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": true,
 "_editor_description_": ""
@@ -52,28 +50,24 @@ __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="Camera" type="Camera" parent="ViewportContainer/Viewport" groups=[
-"Camera",
-]]
+[node name="Camera" type="Camera" parent="ViewportContainer/Viewport"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.76, 39.67, 0 )
+current = true
 fov = 47.5
 size = 63.36
 far = 500.0
 script = ExtResource( 5 )
+gameCam = false
+disabledScript = false
 
 [node name="GameCamera" type="Camera" parent="ViewportContainer/Viewport"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 50, 0 )
-current = true
 fov = 35.0
 far = 1549.5
 script = ExtResource( 8 )
-maxHeight = 150
 
 [node name="Clouds" parent="ViewportContainer/Viewport" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35.99, 10.3436, 23.68 )
-
-[node name="OceanEnvironment" parent="ViewportContainer/Viewport" instance=ExtResource( 1 )]
-wind_strength = 0.4
 
 [node name="PlayerShipRigid" parent="ViewportContainer/Viewport" groups=[
 "PlayerShip",
@@ -93,6 +87,9 @@ transform = Transform( -0.548814, -0.350442, -1.53183e-08, 0, -4.89131e-08, 1.11
 ambient_wind = 0.0
 lod_scale = 2.0
 map_scale = Vector3( 1, 1, 1 )
+
+[node name="OceanEnvironment" parent="ViewportContainer/Viewport" instance=ExtResource( 1 )]
+wind_strength = 0.4
 
 [node name="Interface" type="Control" parent="."]
 anchor_right = 1.0

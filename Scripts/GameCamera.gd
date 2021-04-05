@@ -57,7 +57,7 @@ func _update_mouselook():
 	if rotate:
 		_mouse_position *= 0.25
 		target_yar -= _mouse_position.x * rotationSensitivity
-		_mouse_position = Vector2(0, 0)
+		# _mouse_position = Vector2(0, 0)
 
 
 func getAngleDist_deg(from, to):
