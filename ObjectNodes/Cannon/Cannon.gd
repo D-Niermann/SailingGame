@@ -78,21 +78,12 @@ func _process(delta):
 	forward = global_transform.basis.x.normalized()
 	
 	if aimCannons:
-		# var mousePosition = get_tree().get_root().get_viewport().get_mouse_position()
-		# var from = camera.project_ray_origin(mousePosition)
-		# var to = from + camera.project_ray_normal(mousePosition) * 2000
-		position3D = to_local(ocean.getMousePosition())
-		# var dropPlane  = Plane(Vector3(0, 1, 0), 0) #todo dont use this plane here, et position from ocean?
-		# var from = camera.project_ray_origin(get_tree().get_root().get_viewport().get_mouse_position())
-		# var to = from + camera.project_ray_normal(get_tree().get_root().get_viewport().get_mouse_position()) * 2000
-		# position3D = to_local(dropPlane.intersects_ray( from, to ))
-		# print(position3D)
+		position3D = to_local(ocean.waterMousePos)
 		## if mouse position in front of cannon (x>0)
 		if position3D.x >= 2: 
 			predictTrajectory()
 			var dist = (position3D).x
 			var diff = dist - (trajectoryPoints[lineSize-1]).x
-			print(diff)
 			if diff>upDownMargin: 
 				rotateUpDown(diff-upDownMargin, "up")
 			elif diff<-upDownMargin:

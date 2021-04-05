@@ -43,7 +43,7 @@ var viewport
 var space_state
 var from : Vector3 = Vector3(0,0,0)
 var to : Vector3 = Vector3(0,0,0)
-
+var waterMousePos : Vector3 = Vector3(0,0,0)
 func _ready():
 	## load the image
 	## Warning: the shader and the get_pixel() functions have different origin definitions (top-left vs bottom left) the this image needs to be flipped!
@@ -144,7 +144,7 @@ func _physics_process(delta):
 	# print(wind_modified)
 	
 	update_water(wind_modified)
-
+	waterMousePos = getMousePosition()
 	sunLight.rotate(Vector3(1,0,0), time*0.00001) 
 
 func getMousePosition() -> Vector3:
