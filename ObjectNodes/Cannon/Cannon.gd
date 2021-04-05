@@ -14,8 +14,8 @@ var drag = 0.05 # for trajectory prediction: drag of ball
 var rand_max_delay = 0.4 # max delay in seconds
 var ship # parent ship container
 ### vars for line rendering (but the gitHub LineRenderer lags so hard that i canceled it for now)
-var line
-const lineSize = 30 # length of trjactory prediction line (number of points) / needs some rework
+# var line
+var lineSize  # length of trjactory prediction line (number of points) / needs some rework
 const rotateSpeed = 0.005 # max rotation speed of cannons (up/down rotation is scaled down )
 const unprecision = 3 # in units, how max unprecise a connon is (random)
 onready var rotateMargin = rand_range(-unprecision,unprecision) # error in rotation that is accepted (mouse position) left right
@@ -35,9 +35,12 @@ var waterHitMarker
 var myShip
 var fakeBullet
 export var isPlayerControlable = false
-
+var marker 
+var trajectoryPoints : Array
 # Called when the node enters the BallScene tree for the first time.
 func _ready():
+	marker = $TrajectoryMarkerGroup.get_children()
+	lineSize = marker.size()
 	fakeBullet = $FakeBullet
 	camera = get_viewport().get_camera()
 	org_rotation = transform.basis.get_euler()*180/PI
@@ -50,15 +53,17 @@ func _ready():
 	fireSounds.push_back(get_node("Audio1"))
 	fireSounds.push_back(get_node("Audio2"))
 	fireSounds.push_back(get_node("Audio3"))
+	fireSounds.push_back(get_node("Audio4"))
+	fireSounds.push_back(get_node("Audio5"))
 	
 	waterHitMarker = $WaterHitMarker
 	particles = $Particles
 	particles_flash = $ParticlesFlash
 
-	line = $LineRenderer
-	line.points = []
+	# line = $LineRenderer
+	trajectoryPoints = []
 	for _i in range(lineSize):
-		line.points.append(Vector3(0,0,0))
+		trajectoryPoints.append(Vector3(0,0,0))
 	# ship = get_parent().get_parent().get_parent()
 	set_process_input(true) 
 	clearTrajectory()
@@ -73,7 +78,7 @@ func _process(delta):
 	forward = global_transform.basis.x.normalized()
 	
 	if aimCannons:
-		var dropPlane  = Plane(Vector3(0, 1, 0), 0)
+		var dropPlane  = Plane(Vector3(0, 1, 0), 0) #todo dont use this plane here, et position from ocean?
 		var from = camera.project_ray_origin(get_viewport().get_mouse_position())
 		var to = from + camera.project_ray_normal(get_viewport().get_mouse_position()) * 2000
 		position3D = to_local(dropPlane.intersects_ray( from, to ))
@@ -82,7 +87,7 @@ func _process(delta):
 		if position3D.x >= 2: 
 			predictTrajectory()
 			var dist = (position3D).x
-			var diff = dist - (line.points[lineSize-1]).x
+			var diff = dist - (trajectoryPoints[lineSize-1]).x
 			if diff>upDownMargin: 
 				rotateUpDown(diff-upDownMargin, "up")
 			elif diff<-upDownMargin:
@@ -130,18 +135,21 @@ func predictTrajectory():
 	var last_i = 0
 	for i in range(lineSize):
 		point = fakeBullet.transform.origin
-		line.points[i] = point
+		trajectoryPoints[i] = point
 		if ocean!=null:
 			waterHeight = ocean.getWaterHeight(to_global(point))
 		if to_global(point).y>waterHeight:
-			fakeBullet.transform.origin += Vector3(1,0,0)*force*3.2
-			fakeBullet.global_transform.origin += Vector3(0,-1,0)*0.03*i ## TODO: does the vector (0,-1,0) always point down globally (gravity)? -> if so why does (1,0,0) always point forwards loccally
+			marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*0.2
+			if i>1:
+				marker[i].visible = true
+			fakeBullet.transform.origin += Vector3(1,0,0)*force*2.2
+			fakeBullet.global_transform.origin += Vector3(0,-1,0)*0.01*i ## TODO: does the vector (0,-1,0) always point down globally (gravity)? -> if so why does (1,0,0) always point forwards loccally
 		else:
 			last_i = i
 			break
 	if last_i != 0: # if line ever crossed the water line (went under water)
-		var aboveWater : Vector3 = (line.points[last_i-1]) #
-		var underWater : Vector3 = (line.points[last_i])  # last point position in array (threw error once)
+		var aboveWater : Vector3 = (trajectoryPoints[last_i-1]) #
+		var underWater : Vector3 = (trajectoryPoints[last_i])  # last point position in array (threw error once)
 		var halfPoint
 		for _i in range(8): # number of bisections (1/2 -> 1/4 -> 1/8 -> 1/16 -> ...)
 			halfPoint = underWater + ((aboveWater - underWater)/2) #
@@ -154,18 +162,24 @@ func predictTrajectory():
 		## now take either the underwater or above water point
 		var preciseWaterPoint = aboveWater
 		for i in range(last_i, lineSize):
-			line.points[i] = preciseWaterPoint
+			trajectoryPoints[i] = preciseWaterPoint
+			marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*0.1
+			marker[i].visible = true
+
 
 	waterHitMarker.visible = true
-	waterHitMarker.translation += (line.points[lineSize-1] - waterHitMarker.translation)*0.1
+	waterHitMarker.translation += (trajectoryPoints[lineSize-1] - waterHitMarker.translation)*0.1
 
 			
 func clearTrajectory():
 	var point = Vector3(0,0,0)
 	waterHitMarker.translation = point
 	waterHitMarker.visible = false
+
 	for i in range(lineSize):
-		line.points[i] = point
+		marker[i].visible = false
+		marker[i].translation = point
+		trajectoryPoints[i] = point
 
 func fireBall():
 	yield(get_tree().create_timer(fire_delay_sec),"timeout")
@@ -222,5 +236,6 @@ func doParticles():
 	# yield(get_tree().create_timer(1),"timeout")
 
 func playAudio():
-	fireSounds[int(rand_range(0,2.4))].set_pitch_scale(rand_range(0.8,1.2))
-	fireSounds[int(rand_range(0,2.4))].play()
+	var sound = fireSounds[int(rand_range(0,fireSounds.size()))]
+	sound.set_pitch_scale(sound.pitch_scale+rand_range(-0.2,0.2))
+	sound.play()

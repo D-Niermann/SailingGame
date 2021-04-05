@@ -12,13 +12,13 @@ var gravity_dir = Vector3(0,-1,0)
 var water_gravity = default_gravity/4 # gravity force when underwater
 # var start_impulse = 10
 var default_drag_factor = 0.99 # [0,1] higher number = less drag!
-var water_drag = 0.95 # [0,1] higher number = less drag!
+var water_drag = 0.9 # [0,1] higher number = less drag!
 var drag_factor = default_drag_factor
 var entered
 var time
 var bullet_resistance = 0
 var vel_penetrate_thresh = 0.0 # the velocity needs to be bigger than this to even consider penetration
-var ricochet_thresh = 50 # TODO: make this also dependend on coll object # in degree. lower number means more ricochet, thus less penetration TODO: could be assigned from other object
+var ricochet_thresh = 60 # TODO: make this also dependend on coll object # in degree. lower number means more ricochet, thus less penetration TODO: could be assigned from other object
 var angle
 var isInsideBody = false
 var last_pos = translation
@@ -44,7 +44,7 @@ func _ready():
 
 func checkAndDestroy():
 	if !isMarkedasDestruct:
-		if global_transform.origin.y<-1000 or time>timeout_s or abs(velocity)<0.0001:
+		if global_transform.origin.y<-1000 or time>timeout_s or (!waterEntered and abs(velocity)<0.0001):
 			isMarkedasDestruct = true
 			yield(get_tree().create_timer(1),"timeout")
 			self.queue_free()
@@ -60,13 +60,14 @@ func _process(delta):
 	if ocean!= null:
 		waterHeight = ocean.getWaterHeight(global_transform.origin)
 	if  waterHeight > transform.origin.y:
-		drag_factor = 0.6
+		drag_factor = 0.1
 		if not waterEntered:
 			default_drag_factor = water_drag
 			# default_gravity = water_gravity ## TODO: lets bullets shoot a bit up when hitting water, why?
 			waterEntered = true
 			$Trail.emitting = false
 			$WaterSplash.emitting = true
+			$WaterSplash2.emitting = true
 	## check collisions and move the object 
 	var coll = move_and_collide(dir*velocity, false,false,true)
 	# var coll2 = move_and_collide(gravity_dir*gravity*delta, false,false,true)
@@ -79,7 +80,7 @@ func _process(delta):
 		move_and_slide(dir*velocity)
 	if not isInsideBody:
 		## gravity move
-		move_and_slide(gravity_dir*gravity*grav_time*pow(drag_factor,4))
+		move_and_slide(gravity_dir*gravity*grav_time*pow(drag_factor,1)) # todo why power here?
 	if velocity<0.1:
 		$Trail.emitting = false
 		# if coll2!=null:
@@ -111,6 +112,7 @@ func _process(delta):
 				if coll_obj.has_method("giveDmg"):
 					coll_obj.giveDmg((translation-last_pos).length()) ##give damage to object
 				gravity = 0
+				playAudio()
 				isInsideBody = true
 	else:
 		## if no collision with object
@@ -124,3 +126,7 @@ func _process(delta):
 	last_pos = translation
 
 	
+func playAudio():
+	var sound = $Audio
+	sound.set_pitch_scale(sound.pitch_scale+rand_range(-0.2,0.2))
+	sound.play()

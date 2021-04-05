@@ -87,19 +87,18 @@ func _physics_process(delta):
 			highlight = null
 			placeOrDestroyHologram()
 		return
-	var layer = 0b10000000000000000000
-
-	# if hologram != null: 
-	if selected_deck == 0:
-		layer = 0b10000000000000000000
-	elif selected_deck == 1:
-		layer = 0b01000000000000000000
-	elif selected_deck == 2:
-		layer = 0b00100000000000000000
-	elif selected_deck == 3:
-		layer = 0b00010000000000000000
-	elif selected_deck == 4:
-		layer = 0b00001000000000000000
+	var layer = 0b1
+	if hologram != null: 
+		if selected_deck == 0:
+			layer = 0b10000000000000000000
+		elif selected_deck == 1:
+			layer = 0b01000000000000000000
+		elif selected_deck == 2:
+			layer = 0b00100000000000000000
+		elif selected_deck == 3:
+			layer = 0b00010000000000000000
+		elif selected_deck == 4:
+			layer = 0b00001000000000000000
 	var camera: Camera = viewport.get_camera()
 	var spaceState: PhysicsDirectSpaceState = camera.get_world().direct_space_state
 	var viewportContainer: ViewportContainer = viewport.get_parent()
@@ -178,7 +177,7 @@ func _physics_process(delta):
 					var itemName = Utility.resName(hologram.name)
 					var itemPrice = Economy.getPrice(itemName, open)
 					if itemPrice <= mall["money"] && !mall["black"].has(itemName) && mall["white"].has(Economy.goods[itemName]["type"]):
-						seller.text = itemPrice + CURRENCY
+						seller.text = str(itemPrice) + CURRENCY
 						seller.disabled = false
 					else:
 						seller.disabled = true
@@ -191,13 +190,15 @@ func _physics_process(delta):
 					newHighlight = hit.collider
 	if highlight != null:
 		var sprite = highlight.get_node("Sprite3D")
-		sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		if sprite!=null:
+			sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		highlight = null
 	if newHighlight != null:
 		highlight = newHighlight
 	if highlight != null:
 		var sprite = highlight.get_node("Sprite3D")
-		sprite.modulate = Color(1.0, 1.0, 0.0, 1.0)
+		if sprite!=null:
+			sprite.modulate = Color(1.0, 1.0, 0.0, 1.0)
 	if selected_deck==-1:
 		closeShop()
 	leftClick = false

@@ -26,8 +26,11 @@ script = ExtResource( 3 )
 gameCam = false
 
 [node name="Wall" type="KinematicBody" parent="."]
-transform = Transform( 0.64581, 3.09196, 0.120163, 0.0555897, -0.134326, 3.15763, 3.0938, -0.643009, -0.0818201, 0.37657, 1.96951, -1.50085 )
+transform = Transform( 2.67162, 1.68516, 0.120163, -0.0579169, -0.133338, 3.15763, 1.68845, -2.67099, -0.0818193, 0.37657, 1.96951, -1.50085 )
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="MeshInstance" type="MeshInstance" parent="Wall"]
 mesh = SubResource( 1 )
@@ -39,6 +42,9 @@ shape = SubResource( 2 )
 [node name="Wall3" type="KinematicBody" parent="."]
 transform = Transform( 2.50438, 1.92831, 0.037941, 0.0555897, -0.134326, 3.15763, 1.92788, -2.50106, -0.140336, -12.0571, 1.96951, 0.166111 )
 script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="MeshInstance" type="MeshInstance" parent="Wall3"]
 mesh = SubResource( 1 )
@@ -59,7 +65,8 @@ material/0 = null
 shape = SubResource( 2 )
 
 [node name="Cannon" parent="." instance=ExtResource( 4 )]
-transform = Transform( -0.82894, 0, -0.559337, 0, 1, 0, 0.559338, 0, -0.82894, 50.7485, 9.21703, 27.3034 )
+transform = Transform( -0.935259, 0, 0.353965, 0, 1, 0, -0.353964, 0, -0.935258, 33.4418, 9.21703, 13.789 )
+force = 1.77
 isPlayerControlable = true
 
 [node name="Spatial" type="Spatial" parent="."]

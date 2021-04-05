@@ -86,14 +86,18 @@ func _input(event):
 			sails -= 0.01
 		
 func applyPosBuoyancy(obj : Spatial, delta, factor :float = 1.0):
-	# apply the boyance (up force) for the given (local) position
+	"""
+	apply the boyance (up force) for the given (local) position.
+	Also emit particles when boyance force is very high
+	"""
 	var p = transform.basis.xform(obj.translation) ## impulse postions always need to be transformed like this
 	var waterH = 0
 	if ocean!=null:
 		waterH = ocean.getWaterHeight(obj.global_transform.origin)
 	var diff = obj.global_transform.origin.y - waterH # if diff <0 = underwater
 	if diff<0:
-		apply_impulse(p,Vector3(0,1,0)*factor*pow(abs(diff),1.5)*impulse_factor*delta)
+		var impulse = Vector3(0,1,0)*factor*pow(abs(diff),1.5)*impulse_factor*delta
+		apply_impulse(p, impulse)
 
 func calcWindForce():
 	"""

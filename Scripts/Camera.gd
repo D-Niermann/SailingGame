@@ -4,6 +4,7 @@ export(float, 0.0, 1.0) var sensitivity = 0.25
 export var gameCam = true
 var camLock = false
 var playerShip
+export var disabledScript = true
 # Mouse state
 var _mouse_position = Vector2(0.0, 0.0)
 var _total_pitch = 0.0
@@ -29,53 +30,54 @@ func _ready():
 		playerShip = get_tree().get_nodes_in_group("PlayerShip")[0]
 
 func _input(event):
+	if !disabledScript:
+		if event.is_action_pressed("centerCamera"):
+			camLock = not camLock
 
-	if event.is_action_pressed("centerCamera"):
-		camLock = not camLock
+		# Receives mouse motion
+		if event is InputEventMouseMotion:
+			_mouse_position = event.relative
+		
+		# Receives mouse button input
+		if event is InputEventMouseButton:
+			match event.button_index:
+				BUTTON_RIGHT: # Only allows rotation if right click down
+					Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if event.pressed else Input.MOUSE_MODE_VISIBLE)
+				BUTTON_WHEEL_UP: # Increases max velocity
+					transform.origin.y -= 5
+					_vel_multiplier = clamp(_vel_multiplier / 1.05, 0.2, 100)
+					size -= 5
+				BUTTON_WHEEL_DOWN: # Decereases max velocity
+					transform.origin.y += 5
+					_vel_multiplier = clamp(_vel_multiplier * 1.05, 0.2, 100)
+					size += 5
 
-	# Receives mouse motion
-	if event is InputEventMouseMotion:
-		_mouse_position = event.relative
-	
-	# Receives mouse button input
-	if event is InputEventMouseButton:
-		match event.button_index:
-			BUTTON_RIGHT: # Only allows rotation if right click down
-				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if event.pressed else Input.MOUSE_MODE_VISIBLE)
-			BUTTON_WHEEL_UP: # Increases max velocity
-				transform.origin.y -= 5
-				_vel_multiplier = clamp(_vel_multiplier / 1.05, 0.2, 100)
-				size -= 5
-			BUTTON_WHEEL_DOWN: # Decereases max velocity
-				transform.origin.y += 5
-				_vel_multiplier = clamp(_vel_multiplier * 1.05, 0.2, 100)
-				size += 5
-
-	# Receives key input
-	if event is InputEventKey:
-		match event.scancode:
-			KEY_W:
-				_w = event.pressed
-			KEY_S:
-				_s = event.pressed
-			KEY_A:
-				_a = event.pressed
-			KEY_D:
-				_d = event.pressed
-			# KEY_Q:
-			# 	_q = event.pressed
-			# KEY_E:
-			# 	_e = event.pressed
-				
+		# Receives key input
+		if event is InputEventKey:
+			match event.scancode:
+				KEY_W:
+					_w = event.pressed
+				KEY_S:
+					_s = event.pressed
+				KEY_A:
+					_a = event.pressed
+				KEY_D:
+					_d = event.pressed
+				# KEY_Q:
+				# 	_q = event.pressed
+				# KEY_E:
+				# 	_e = event.pressed
+					
 
 
 # Updates mouselook and movement every frame
 func _process(delta):
-	_update_mouselook()
-	_update_movement(delta)
-	if camLock:
-		transform.origin.x = playerShip.transform.origin.x
-		transform.origin.z = playerShip.transform.origin.z
+	if !disabledScript:
+		_update_mouselook()
+		_update_movement(delta)
+		if camLock:
+			transform.origin.x = playerShip.transform.origin.x
+			transform.origin.z = playerShip.transform.origin.z
 
 # Updates camera movement
 func _update_movement(delta):

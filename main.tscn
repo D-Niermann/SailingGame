@@ -5,7 +5,7 @@
 [ext_resource path="res://TestTool.gd" type="Script" id=3]
 [ext_resource path="res://ObjectNodes/TestGUIElements.tscn" type="PackedScene" id=4]
 [ext_resource path="res://materials/human.tres" type="Material" id=5]
-[ext_resource path="res://sounds/level/ocean/ocean_waves_crisp.wav" type="AudioStream" id=6]
+[ext_resource path="res://SceneNodes/EnvironmentAudio/ocean_waves_crisp.wav" type="AudioStream" id=6]
 [ext_resource path="res://DrawLine.gd" type="Script" id=7]
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=8]
 [ext_resource path="res://materials/Black.tres" type="Material" id=9]
@@ -19,6 +19,7 @@
 [ext_resource path="res://ObjectNodes/Clouds/Cloud.gd" type="Script" id=19]
 [ext_resource path="res://ObjectNodes/ShipRigidController/RigidShipController.gd" type="Script" id=20]
 [ext_resource path="res://Scripts/Boye.gd" type="Script" id=21]
+
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 14 )

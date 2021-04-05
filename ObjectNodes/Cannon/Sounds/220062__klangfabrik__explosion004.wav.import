@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/220062__klangfabrik__explosion004.wav-d83dc5a27bdb1c964548cc4b1f825dc1.sample"
+
+[deps]
+
+source_file="res://ObjectNodes/Cannon/Sounds/220062__klangfabrik__explosion004.wav"
+dest_files=[ "res://.import/220062__klangfabrik__explosion004.wav-d83dc5a27bdb1c964548cc4b1f825dc1.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=false
+edit/loop=false
+compress/mode=0

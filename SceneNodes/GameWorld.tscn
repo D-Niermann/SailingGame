@@ -7,18 +7,18 @@
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=5]
 [ext_resource path="res://ObjectNodes/TestGUIElements.tscn" type="PackedScene" id=6]
 [ext_resource path="res://ObjectNodes/Clouds/Clouds.tscn" type="PackedScene" id=7]
-[ext_resource path="res://sounds/level/ocean/ocean_waves_crisp.wav" type="AudioStream" id=8]
+[ext_resource path="res://Scripts/GameCamera.gd" type="Script" id=8]
 [ext_resource path="res://Shopping.tscn" type="PackedScene" id=9]
 [ext_resource path="res://icon.png" type="Texture" id=10]
 [ext_resource path="res://SceneNodes/OceanEnv/Sky.tscn" type="PackedScene" id=11]
 [ext_resource path="res://ObjectNodes/Terrain/ExampleTerrain.tscn" type="PackedScene" id=12]
 
-[sub_resource type="DynamicFontData" id=7]
+[sub_resource type="DynamicFontData" id=1]
 font_path = "res://Fonts/OpenSans-Bold.ttf"
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=2]
 size = 23
-font_data = SubResource( 7 )
+font_data = SubResource( 1 )
 
 [node name="GameWorld" type="Control"]
 anchor_right = 1.0
@@ -60,11 +60,14 @@ fov = 47.5
 size = 63.36
 far = 500.0
 script = ExtResource( 5 )
-gameCam = false
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="ViewportContainer/Viewport/Camera"]
-stream = ExtResource( 8 )
-autoplay = true
+[node name="GameCamera" type="Camera" parent="ViewportContainer/Viewport"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 50, 0 )
+current = true
+fov = 35.0
+far = 1549.5
+script = ExtResource( 8 )
+maxHeight = 150
 
 [node name="Clouds" parent="ViewportContainer/Viewport" instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35.99, 10.3436, 23.68 )
@@ -77,6 +80,9 @@ wind_strength = 0.4
 ] instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8.42168, 0, 1.07124 )
 isPlayer = true
+
+[node name="otherShip" parent="ViewportContainer/Viewport" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.1194, -0.0626755, 39.5965 )
 
 [node name="Island" parent="ViewportContainer/Viewport" instance=ExtResource( 3 )]
 transform = Transform( -0.548814, -0.350442, -1.53183e-08, 0, -4.89131e-08, 1.119, -0.350442, 0.548814, 2.39894e-08, -2.98232, 0.660044, -30.5378 )
@@ -110,7 +116,7 @@ margin_left = -216.0
 margin_top = 0.149994
 margin_right = -60.0
 margin_bottom = 0.449951
-custom_fonts/normal_font = SubResource( 6 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "Top Deck"
 __meta__ = {
 "_edit_use_anchors_": true
@@ -125,7 +131,7 @@ margin_left = -122.0
 margin_top = 0.149994
 margin_right = -60.0
 margin_bottom = -0.300018
-custom_fonts/normal_font = SubResource( 6 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "All"
 __meta__ = {
 "_edit_use_anchors_": true
@@ -140,7 +146,7 @@ margin_left = -219.653
 margin_top = 0.0666504
 margin_right = -67.6528
 margin_bottom = 25.3166
-custom_fonts/normal_font = SubResource( 6 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "Lower Deck"
 __meta__ = {
 "_edit_use_anchors_": true
@@ -181,7 +187,7 @@ margin_left = 1342.0
 margin_top = 26.0
 margin_right = -25.0
 margin_bottom = -883.0
-custom_fonts/normal_font = SubResource( 6 )
+custom_fonts/normal_font = SubResource( 2 )
 text = "1 grid (tilewidth) = 0.2 units = 1 meter
 1 Unit = 5 meters
 "
@@ -192,5 +198,7 @@ __meta__ = {
 [connection signal="button_up" from="Interface/Decks/AllDeck" to="ViewportContainer/Viewport/PlayerShipRigid" method="_on_DeckAll_button_up"]
 [connection signal="button_up" from="Interface/Decks/Deck0" to="Interface/Shopping" method="_on_Deck0_button_up"]
 [connection signal="button_up" from="Interface/Decks/Deck0" to="ViewportContainer/Viewport/PlayerShipRigid" method="_on_Deck0_button_up"]
+[connection signal="button_up" from="Interface/Decks/Deck0" to="ViewportContainer/Viewport/GameCamera" method="_on_Deck0_button_up"]
 [connection signal="button_up" from="Interface/Decks/Deck1" to="Interface/Shopping" method="_on_Deck1_button_up"]
 [connection signal="button_up" from="Interface/Decks/Deck1" to="ViewportContainer/Viewport/PlayerShipRigid" method="_on_Deck1_button_up"]
+[connection signal="button_up" from="Interface/Decks/Deck1" to="ViewportContainer/Viewport/GameCamera" method="_on_Deck1_button_up"]
