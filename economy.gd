@@ -26,9 +26,9 @@ var malls: Dictionary = {
 	}
 }
 var goods: Dictionary = {
-	"banana": {"type": "food", "price": 10, "weight": 1.0, "res": "res://exampleItem.tscn", "icon": "res://icon.png"},
-	"apple": {"type": "food", "price": 10, "weight": 1.0, "res": "res://exampleItem.tscn", "icon": "res://icon.png"},
-	"cannon": {"type": "food", "price": 10, "weight": 1.0, "res": "res://ObjectNodes/Items/Cannon/CannonItem.tscn", "icon": "res://icon.png"}
+	"banana": {"type": "food", "size": Vector2(2, 1), "autoSize": true, "price": 10, "weight": 1.0, "res": "res://exampleItem.tscn", "icon": "res://icon.png"},
+	"apple": {"type": "food", "size": Vector2(2, 1), "autoSize": true, "price": 10, "weight": 1.0, "res": "res://exampleItem.tscn", "icon": "res://icon.png"}
+	"cannon": {"type": "food", "size": Vector2(2, 1), "autoSize": true, "price": 10, "weight": 1.0, "res": "res://ObjectNodes/Items/Cannon/CannonItem.tscn", "icon": "res://icon.png"}
 }
 var types: Dictionary = {
 	"food": ["banana", "apple"],
@@ -42,6 +42,16 @@ var cases: Dictionary = {
 		"apple": 0.5
 	}
 }
+
+
+# Returns true if the given product is expected to have its collider box shape automatically sized.
+func shouldAutoSize(of: String):
+	return goods[of]["autoSize"]
+
+
+# Returns size for the given product.
+func getSize(of: String):
+	return goods[of]["size"]
 
 
 # Returns icon for the given product.
