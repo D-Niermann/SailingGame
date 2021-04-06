@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://SceneNodes/AITest/ShipMovementAI.gd" type="Script" id=1]
+
+[sub_resource type="CapsuleMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.380392, 0.0666667, 0.0666667, 1 )
+
+[sub_resource type="PrismMesh" id=3]
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.027451, 0.0196078, 0.0196078, 1 )
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.0705882, 0.0313726, 0.0313726, 1 )
+
+[node name="Spatial" type="Spatial"]
+
+[node name="Enemy" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.49105, 0, 1.32244 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="Enemy"]
+transform = Transform( 0.646693, 0, 0, 0, 0.646693, 0, 0, 0, 0.646693, 0, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="MeshInstance4" type="MeshInstance" parent="Enemy"]
+transform = Transform( 0.659414, 0, 0, 0, -2.88239e-08, 0.659414, 0, -0.659414, -2.88239e-08, 0, 0, -1.1364 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 2 )
+
+[node name="Player" type="Spatial" parent="."]
+transform = Transform( 0.731315, 0, -0.681962, 0, 1, 0, 0.681962, 0, 0.731315, -5.5589, -0.0778445, 2.39412 )
+script = ExtResource( 1 )
+targetAngle = -317
+
+[node name="MeshInstance" type="MeshInstance" parent="Player"]
+transform = Transform( 0.646693, 0, 0, 0, 0.646693, 0, 0, 0, 0.646693, 0, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 4 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="Player"]
+transform = Transform( 0.659414, 0, 0, 0, -2.88239e-08, 0.659414, 0, -0.659414, -2.88239e-08, 0, 0, -1.1364 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 5 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 17.281, 0 )

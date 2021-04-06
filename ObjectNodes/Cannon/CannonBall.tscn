@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://ObjectNodes/Cannon/CannonBall.gd" type="Script" id=1]
 [ext_resource path="res://materials/Black.tres" type="Material" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://_OLDnodes/WaterEnteredParticles.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ObjectNodes/Cannon/Sounds/BallHit.wav" type="AudioStream" id=5]
 [ext_resource path="res://addons/kenney_particle_pack/circle_03.png" type="Texture" id=6]
+[ext_resource path="res://ObjectNodes/Cannon/HitParticle.tscn" type="PackedScene" id=7]
 
 [sub_resource type="SphereMesh" id=1]
 radius = 0.05
@@ -96,6 +97,12 @@ __meta__ = {
 }
 
 [node name="Trail" parent="." instance=ExtResource( 3 )]
+
+[node name="HitParticle" parent="." instance=ExtResource( 7 )]
+emitting = false
+lifetime = 2.0
+one_shot = true
+randomness = 0.57
 
 [node name="Audio" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 5 )
