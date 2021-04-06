@@ -83,10 +83,10 @@ func on_placement():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	up = global_transform.basis.y.normalized()
-	right = global_transform.basis.z.normalized()
+	up = transform.basis.y.normalized()
+	right = transform.basis.z.normalized()
 	
-	forward = global_transform.basis.x.normalized()
+	forward = transform.basis.x.normalized()
 	
 	if aimCannons:
 		position3D = to_local(ocean.waterMousePos)
@@ -206,7 +206,7 @@ func fireBall():
 	get_tree().get_root().add_child(ball)
 	ball.set_name("Ball")
 	ball.transform.origin = self.global_transform.origin+forward
-	ball.dir = forward
+	ball.dir = global_transform.basis.x
 	ball.velocity = force
 
 

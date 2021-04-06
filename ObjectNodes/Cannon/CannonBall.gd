@@ -46,7 +46,7 @@ func checkAndDestroy():
 	if !isMarkedasDestruct:
 		if global_transform.origin.y<-1000 or time>timeout_s or (!waterEntered and abs(velocity)<0.0001):
 			isMarkedasDestruct = true
-			yield(get_tree().create_timer(1),"timeout")
+			yield(get_tree().create_timer(5),"timeout")
 			self.queue_free()
 
 
@@ -113,6 +113,8 @@ func _process(delta):
 					coll_obj.giveDmg((translation-last_pos).length()) ##give damage to object
 				gravity = 0
 				playAudio()
+				$HitParticle.emitting = true
+				$HitParticle.get_child(0).emitting = true
 				isInsideBody = true
 	else:
 		## if no collision with object
