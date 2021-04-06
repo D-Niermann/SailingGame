@@ -50,8 +50,9 @@ params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.75
 albedo_texture = ExtResource( 3 )
 
-[sub_resource type="PlaneMesh" id=10]
-size = Vector2( 8.98, 2.36 )
+[sub_resource type="StreamTexture" id=12]
+flags = 23
+load_path = "res://.import/shipDeck.png-795b33a120e4e89b82f0c94bb8f9a6cc.s3tc.stex"
 
 [node name="DefaultModel (DeckOrder important!)" type="Spatial"]
 
@@ -151,19 +152,27 @@ fire_delay_sec = 0.87
 
 [node name="OmniLight5" parent="Deck1" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.742809, 0.552795, 0.0391541 )
+light_energy = 2.74
 omni_range = 1.0
+amp = 0.001
 
 [node name="OmniLight6" parent="Deck1" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.14678, 0.552795, 0.137863 )
+light_energy = 2.74
 omni_range = 1.0
+amp = 0.001
 
 [node name="OmniLight7" parent="Deck1" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.50939, 0.186752, 1.16489 )
+light_energy = 2.74
 omni_range = 1.0
+amp = 0.001
 
 [node name="OmniLight8" parent="Deck1" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.47418, 0.466614, -0.535401 )
+light_energy = 2.74
 omni_range = 1.0
+amp = 0.001
 
 [node name="Blocker" type="KinematicBody" parent="Deck1"]
 transform = Transform( 1.70847, 0, -0.0426491, 0, 1, 0, 0.0426491, 0, 1.70847, -0.100607, 0.0744184, 0.172448 )
@@ -249,16 +258,22 @@ shaded = true
 alpha_cut = 2
 texture = ExtResource( 3 )
 
+[node name="RoofForShadows" type="Sprite3D" parent="Deck2"]
+transform = Transform( 0.318932, 0, 0, 0, 0.754314, 0, 0, 0, 0.318932, -1.33207, -1.50899, 0.0953515 )
+cast_shadow = 3
+pixel_size = 0.02
+axis = 1
+alpha_cut = 2
+texture = SubResource( 12 )
+
 [node name="OmniLight3" parent="Deck2" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.742809, -1.71751, 0.0391541 )
+light_energy = 2.74
 omni_range = 1.0
+amp = 0.001
 
 [node name="OmniLight4" parent="Deck2" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.04644, -1.71751, 0 )
+light_energy = 2.74
 omni_range = 1.0
-
-[node name="RoofOnlyForShadow" type="MeshInstance" parent="Deck2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.63585, -1.43718, 0.0778961 )
-cast_shadow = 3
-mesh = SubResource( 10 )
-material/0 = null
+amp = 0.001
