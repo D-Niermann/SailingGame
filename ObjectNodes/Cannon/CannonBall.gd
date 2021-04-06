@@ -12,7 +12,7 @@ var gravity_dir = Vector3(0,-1,0)
 var water_gravity = default_gravity/4 # gravity force when underwater
 # var start_impulse = 10
 var default_drag_factor = 0.99 # [0,1] higher number = less drag!
-var water_drag = 0.9 # [0,1] higher number = less drag!
+var water_drag = 0.8 # [0,1] higher number = less drag!
 var drag_factor = default_drag_factor
 var entered
 var time

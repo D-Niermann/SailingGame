@@ -78,7 +78,7 @@ func _physics_process(delta):
 	elif resource == null:
 		var itemName: String = selected.get_node("Name").text
 		var good: Dictionary = Economy.goods[itemName]
-		hologramFromResource(good["res"], itemName)
+		hologramFromResource(good["res"])
 	if switch == true && target == null:
 		if highlight != null:
 			var sprite = highlight.get_node("Sprite3D")
@@ -119,7 +119,7 @@ func _physics_process(delta):
 			rotSize = Vector3(rotSize.z, size.y, rotSize.x)
 		var canPlace = false
 		if !hit.empty() && (STACKED || hit.collider == target):
-			print("hit")
+			# print("hit")
 			var offset = Vector3(fmod(rotSize.x, 2), 0, fmod(rotSize.z, 2)) * TILEWIDTH * 0.5 + TILEWIDTH * Vector3.UP * (size.y/2 + extra)
 			var partition: Vector3 = (target.global_transform.xform_inv(hit.position) / TILEWIDTH).floor()
 			hologram.global_transform.origin = target.global_transform.xform(partition * TILEWIDTH + offset)
@@ -150,7 +150,7 @@ func _physics_process(delta):
 			var collision: KinematicCollision = hologram.move_and_collide(Vector3.ZERO, false, false, true)
 			if !collision:
 				canPlace = true
-				print("canPlace")
+				# print("canPlace")
 		if rightClick:
 			if parent != null:
 				placeOrDestroyHologram()
@@ -207,7 +207,7 @@ func _physics_process(delta):
 
 
 # Spawns and sets an external body as the hologram to be placed. May be useful at store/market.
-func hologramFromResource(path: String, itemName : String):
+func hologramFromResource(path: String):
 	seller.text = "SELL"
 	seller.disabled = true
 	if resource != null:
@@ -218,7 +218,7 @@ func hologramFromResource(path: String, itemName : String):
 	parent = null
 	coords = null
 	angle = 0.0
-	# var itemName: String = Utility.resName(hologram.name)
+	var itemName: String = Utility.resName(hologram.name)
 	size = Economy.getSize(itemName)
 	# if size is Vector2:
 	# 	size = Vector3(size.x, 5, size.y)
@@ -227,6 +227,9 @@ func hologramFromResource(path: String, itemName : String):
 	rot = 0.0
 	if Economy.shouldAutoSize(itemName):
 		var shape: BoxShape = hologram.get_node("CollisionShape").shape
+		# var gridMesh :MeshInstance = hologram.get_node("GridShowMesh") # can be used to display an green/red mesh with the size of the collider to show the player better where to place items
+		# gridMesh.visible = true
+		# gridMesh.scale = Vector3(size.x, size.y, size.z)* TILEWIDTH - Vector3.ONE * 0.005 
 		shape.extents = Vector3(size.x, size.y, size.z) * TILEWIDTH/2 - Vector3.ONE * 0.005  ## half the tile width because "extent" goes both directions, subtract small margin for collison check
 
 
@@ -248,6 +251,7 @@ func placeOrDestroyHologram():
 				parent.add_child(duplicate)
 			duplicate.global_transform.origin = coords + parent.global_transform.origin
 			duplicate.global_transform.basis = parent.global_transform.basis.rotated(parent.global_transform.basis.y.normalized(), angle)
+			# duplicate.get_node("GridShowMesh").visible = false
 			parent = null
 			purchase(duplicate)
 		else:

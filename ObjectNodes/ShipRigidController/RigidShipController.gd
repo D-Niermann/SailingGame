@@ -100,8 +100,7 @@ func applyPosBuoyancy(obj : Spatial, delta, factor :float = 1.0):
 		apply_impulse(p, impulse)
 
 func applyImpulse(from : Vector3, direction : Vector3):
-	print(direction)
-	apply_impulse(transform.basis.xform(from), forward)
+	apply_impulse(transform.basis.xform(from), transform.basis.xform(direction))
 
 
 

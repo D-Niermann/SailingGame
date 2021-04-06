@@ -45,7 +45,6 @@ var trajectoryPoints : Array
 export var isTestCannon = false
 
 func _ready():
-	print("WARNING: Cannon Impulse calculation needs redo!")
 	marker = $TrajectoryMarkerGroup.get_children()
 	lineSize = marker.size()
 	fakeBullet = $FakeBullet
@@ -195,14 +194,13 @@ func fireBall():
 	yield(get_tree().create_timer(fire_delay_sec),"timeout")
 	playAudio()
 	doParticles()
-	myShip.apply_impulse(translation, -transform.basis.x.normalized()*recoil_impulse)
+	myShip.applyImpulse(translation, -transform.basis.x.normalized()*recoil_impulse)
 	yield(get_tree().create_timer(rand_range(0,rand_max_delay)),"timeout")
 	var ball = BallScene.instance()
 	get_tree().get_root().add_child(ball)
 	ball.set_name("Ball")
 	ball.transform.origin = self.global_transform.origin+forward
 	ball.dir = forward
-	# ball.apply_impulse(ball.transform.origin,forward*force)
 	ball.velocity = force
 
 

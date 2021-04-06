@@ -197,11 +197,11 @@ text = "1 grid (tilewidth) = 0.2 units = 1 meter
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="button_up" from="Interface/Decks/AllDeck" to="ViewportContainer/Viewport/PlayerShip" method="_on_AllDeck_button_up"]
 [connection signal="button_up" from="Interface/Decks/AllDeck" to="Interface/Shopping" method="_on_DeckAll_button_up"]
-[connection signal="button_up" from="Interface/Decks/Deck0" to="ViewportContainer/Viewport/PlayerShip" method="_on_Deck0_button_up"]
+[connection signal="button_up" from="Interface/Decks/AllDeck" to="ViewportContainer/Viewport/PlayerShip" method="_on_AllDeck_button_up"]
 [connection signal="button_up" from="Interface/Decks/Deck0" to="Interface/Shopping" method="_on_Deck0_button_up"]
+[connection signal="button_up" from="Interface/Decks/Deck0" to="ViewportContainer/Viewport/PlayerShip" method="_on_Deck0_button_up"]
 [connection signal="button_up" from="Interface/Decks/Deck0" to="ViewportContainer/Viewport/GameCamera" method="_on_Deck0_button_up"]
-[connection signal="button_up" from="Interface/Decks/Deck1" to="ViewportContainer/Viewport/PlayerShip" method="_on_Deck1_button_up"]
 [connection signal="button_up" from="Interface/Decks/Deck1" to="Interface/Shopping" method="_on_Deck1_button_up"]
+[connection signal="button_up" from="Interface/Decks/Deck1" to="ViewportContainer/Viewport/PlayerShip" method="_on_Deck1_button_up"]
 [connection signal="button_up" from="Interface/Decks/Deck1" to="ViewportContainer/Viewport/GameCamera" method="_on_Deck1_button_up"]
