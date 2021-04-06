@@ -78,7 +78,7 @@ func _physics_process(delta):
 	elif resource == null:
 		var itemName: String = selected.get_node("Name").text
 		var good: Dictionary = Economy.goods[itemName]
-		hologramFromResource(good["res"])
+		hologramFromResource(good["res"], itemName)
 	if switch == true && target == null:
 		if highlight != null:
 			var sprite = highlight.get_node("Sprite3D")
@@ -120,7 +120,7 @@ func _physics_process(delta):
 		var canPlace = false
 		if !hit.empty() && (STACKED || hit.collider == target):
 			print("hit")
-			var offset = Vector3(fmod(rotSize.x, 2), 0, fmod(rotSize.z, 2)) * TILEWIDTH * 0.5 + TILEWIDTH * Vector3.UP * (size.y + extra)
+			var offset = Vector3(fmod(rotSize.x, 2), 0, fmod(rotSize.z, 2)) * TILEWIDTH * 0.5 + TILEWIDTH * Vector3.UP * (size.y/2)
 			var partition: Vector3 = (target.global_transform.xform_inv(hit.position) / TILEWIDTH).floor()
 			hologram.global_transform.origin = target.global_transform.xform(partition * TILEWIDTH + offset)
 			hologram.global_transform.basis = target.global_transform.basis.rotated(upward, rot)
@@ -207,7 +207,7 @@ func _physics_process(delta):
 
 
 # Spawns and sets an external body as the hologram to be placed. May be useful at store/market.
-func hologramFromResource(path: String):
+func hologramFromResource(path: String, itemName : String):
 	seller.text = "SELL"
 	seller.disabled = true
 	if resource != null:
@@ -218,16 +218,16 @@ func hologramFromResource(path: String):
 	parent = null
 	coords = null
 	angle = 0.0
-	var itemName: String = Utility.resName(hologram.name)
+	# var itemName: String = Utility.resName(hologram.name)
 	size = Economy.getSize(itemName)
-	if size is Vector2:
-		size = Vector3(size.x, 1.0, size.y)
+	# if size is Vector2:
+	# 	size = Vector3(size.x, 5, size.y)
 	hologram.global_transform.basis = target.global_transform.basis
 	rotSize = size
 	rot = 0.0
 	if Economy.shouldAutoSize(itemName):
 		var shape: BoxShape = hologram.get_node("CollisionShape").shape
-		shape.extents = Vector3(size.x, size.y * 0.1, size.z) * TILEWIDTH - Vector3.ONE * 0.01
+		shape.extents = Vector3(size.x, size.y, size.z) * TILEWIDTH/2 - Vector3.ONE * 0.005  ## half the tile width because "extent" goes both directions, subtract small margin for collison check
 
 
 # Destroys any hologram or resource.
