@@ -46,6 +46,7 @@ window/size/height=1050
 window/size/always_on_top=true
 window/size/test_width=1073
 window/size/test_height=500
+window/vsync/use_vsync=false
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 

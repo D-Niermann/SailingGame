@@ -9,6 +9,7 @@ export var speedScale = 0.1 # between 0 (not move) and 1 (instant move)
 export var rotationSensitivity = 0.2
 export var zoomSensitivity = 0.2
 var rotate = false
+var do_center = false
 
 var _mouse_position = Vector2(0.0, 0.0)
 var _total_pitch = 0.0
@@ -21,16 +22,22 @@ func _ready():
 
 func _process(delta):
 	if ship!=null:
-		targetPos.x = ship.global_transform.origin.x
-		targetPos.z = ship.global_transform.origin.z
+		if do_center:
+			targetPos.x = ship.global_transform.origin.x
+			targetPos.z = ship.global_transform.origin.z
 		targetPos.y = clamp(targetPos.y,minHeight,maxHeight)
 		translation += (targetPos - translation)*speedScale
+		if do_center and (Vector2(targetPos.x,targetPos.z)-Vector2(translation.x,translation.z)).length()<0.1:
+			translation.x = ship.global_transform.origin.x
+			translation.z = ship.global_transform.origin.z
 		_update_mouselook()
 		rotate_y(deg2rad(-getAngleDist_deg(target_yar, rad2deg(transform.basis.get_euler().y))*speedScale))
 	
 
 func _unhandled_input(event):
 	# Receives key input
+	if event.is_action_released("centerCamera"):
+		do_center = !do_center
 	if event.is_action_pressed("zoomOut"):
 		targetPos.y *= 1 + zoomSensitivity
 	if event.is_action_pressed("zoomIn"):

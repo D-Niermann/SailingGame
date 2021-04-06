@@ -24,6 +24,8 @@ const unprecision = 4 # in units, how max unprecise a connon is (random)
 onready var rotateMargin = rand_range(-unprecision,unprecision) # error in rotation that is accepted (mouse position) left right
 onready var upDownMargin = rand_range(-unprecision,unprecision) # what difference to mouse pos units to ignore when rotating  up down
 export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
+export(float) var recoil_impulse = 0.1 # when firing to the ship
+
 var camera
 var org_rotation : Vector3
 var position3D
@@ -43,6 +45,7 @@ var trajectoryPoints : Array
 export var isTestCannon = false
 
 func _ready():
+	print("WARNING: Cannon Impulse calculation needs redo!")
 	marker = $TrajectoryMarkerGroup.get_children()
 	lineSize = marker.size()
 	fakeBullet = $FakeBullet
@@ -50,7 +53,7 @@ func _ready():
 	org_rotation = transform.basis.get_euler()*180/PI
 	if get_tree().get_nodes_in_group("Ocean").size()>0:
 		ocean = get_tree().get_nodes_in_group("Ocean")[0]
-	myShip = get_tree().get_nodes_in_group("PlayerShip")[0]# get_parent().get_parent().get_parent()
+	myShip = get_parent().get_parent().get_parent()
 	if myShip!= null and "isPlayer" in myShip:
 		if myShip.isPlayer:
 			isPlayerControlable = true
@@ -192,6 +195,7 @@ func fireBall():
 	yield(get_tree().create_timer(fire_delay_sec),"timeout")
 	playAudio()
 	doParticles()
+	myShip.apply_impulse(translation, -transform.basis.x.normalized()*recoil_impulse)
 	yield(get_tree().create_timer(rand_range(0,rand_max_delay)),"timeout")
 	var ball = BallScene.instance()
 	get_tree().get_root().add_child(ball)
