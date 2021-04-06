@@ -15,7 +15,6 @@ var connected = null
 var indicator = null
 var viewport: Viewport
 
-const TEXTUREWIDTH: float = 64.0 # number of pixels in texture which will be considered as one tile
 const TILEWIDTH: float = 0.2 # width of one tile which all items must be designed accordingly
 const STACKED: bool = false
 var target = null
@@ -219,12 +218,16 @@ func hologramFromResource(path: String):
 	parent = null
 	coords = null
 	angle = 0.0
-	var sprite: Sprite3D = hologram.get_node("Sprite3D")
-	var dimensions: Vector2 = sprite.texture.get_size() / TEXTUREWIDTH
-	size = Vector3(dimensions.x, 1.0, dimensions.y)
+	var itemName: String = Utility.resName(hologram.name)
+	size = Economy.getSize(itemName)
+	if size is Vector2:
+		size = Vector3(size.x, 1.0, size.y)
 	hologram.global_transform.basis = target.global_transform.basis
 	rotSize = size
 	rot = 0.0
+	if Economy.shouldAutoSize(itemName):
+		var shape: BoxShape = hologram.get_node("CollisionShape").shape
+		shape.extents = Vector3(size.x, size.y * 0.1, size.z) * TILEWIDTH - Vector3.ONE * 0.01
 
 
 # Destroys any hologram or resource.
@@ -278,12 +281,16 @@ func placeOrDestroyHologram():
 
 # Sets size and rotated size for the selected item.
 func setSize():
-	var sprite: Sprite3D = hologram.get_node("Sprite3D")
-	var dimensions: Vector2 = sprite.texture.get_size() / TEXTUREWIDTH
-	size = Vector3(dimensions.x, 1.0, dimensions.y)
+	var itemName: String = Utility.resName(hologram.name)
+	size = Economy.getSize(itemName)
+	if size is Vector2:
+		size = Vector3(size.x, 1.0, size.y)
 	var temp = -Utility.signedAngle(parent.global_transform.basis.x.normalized(), hologram.global_transform.basis.x.normalized(), parent.global_transform.basis.y.normalized())
-	dimensions = dimensions.rotated(temp).round().abs()
-	rotSize = Vector3(dimensions.x, 1.0, dimensions.y)
+	var tempToo: Vector2 = Vector2(size.x, size.z).rotated(temp).round().abs()
+	rotSize = Vector3(tempToo.x, 1.0, tempToo.y)
+	if Economy.shouldAutoSize(itemName):
+		var shape: BoxShape = hologram.get_node("CollisionShape").shape
+		shape.extents = Vector3(size.x, size.y * 0.1, size.z) * TILEWIDTH - Vector3.ONE * 0.01
 
 
 # Updates the shopping line for the open shopping screen.
