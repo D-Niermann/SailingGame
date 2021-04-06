@@ -74,5 +74,5 @@ flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="pressed" from="Indicator" to="." method="indicator"]
+[connection signal="pressed" from="Indicator" to="." method="_on_indicator"]
 [connection signal="pressed" from="Shop/Sell" to="." method="sell"]
