@@ -24,11 +24,11 @@ var hologram = null
 var resource = null
 var parent = null
 var coords = null
+var xform = null
 var angle = 0.0
 var rot = 0.0
 var size = Vector3.ONE # in terms of tile size given above, each component must be an integer
 var rotSize = Vector3.ONE
-var extra = -0.0 # height offset for three dimensional sprites and such
 var switch: bool = true
 
 var leftClick: bool = false
@@ -86,6 +86,14 @@ func _physics_process(delta):
 			highlight = null
 			placeOrDestroyHologram()
 		return
+	if open == null:
+		if highlight != null:
+			var sprite = highlight.get_node("Sprite3D")
+			sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
+			highlight = null
+		if resource != null || hologram != null:
+			placeOrDestroyHologram()
+		return
 	var layer = 0b1
 	if hologram != null: 
 		if selected_deck == 0:
@@ -103,50 +111,29 @@ func _physics_process(delta):
 	var viewportContainer: ViewportContainer = viewport.get_parent()
 	var cursor = get_viewport().get_mouse_position() / viewportContainer.stretch_shrink
 	var hit: Dictionary
+	var toIgnore: Array = [hologram]
 	var from = camera.project_ray_origin(cursor)
 	var toward = camera.project_ray_normal(cursor)
 	var upward = target.global_transform.basis.y.normalized()
-	# var intersection = Plane(target.global_transform.origin, target.global_transform.origin + target.global_transform.basis.x, target.global_transform.origin + target.global_transform.basis.z).intersects_ray(from, toward)
-	# if intersection != null:
-	hit = spaceState.intersect_ray(from, from+toward*2000, [hologram], layer)
+	hit = spaceState.intersect_ray(from, from+toward*2000, toIgnore, layer)
+	while hologram == null && !hit.empty() && hit.collider.get_parent() != target:
+		toIgnore.append(hit.collider)
+		hit = spaceState.intersect_ray(from, from+toward*2000, toIgnore, layer)
 	var newHighlight = null
 	if hologram != null:
-		if scrollUp:# Input.is_action_just_released("scrollUp"):
+		if scrollUp:
 			rot += PI * 0.5
 			rotSize = Vector3(rotSize.z, size.y, rotSize.x)
-		elif scrollDown:# Input.is_action_just_released("scrollDown"):
+		elif scrollDown:
 			rot -= PI * 0.5
 			rotSize = Vector3(rotSize.z, size.y, rotSize.x)
 		var canPlace = false
 		if !hit.empty() && (STACKED || hit.collider == target):
 			# print("hit")
-			var offset = Vector3(fmod(rotSize.x, 2), 0, fmod(rotSize.z, 2)) * TILEWIDTH * 0.5 + TILEWIDTH * Vector3.UP * (size.y/2 + extra)
+			var offset = Vector3(fmod(rotSize.x, 2), 0, fmod(rotSize.z, 2)) * TILEWIDTH * 0.5 + TILEWIDTH * Vector3.UP * (size.y/2)
 			var partition: Vector3 = (target.global_transform.xform_inv(hit.position) / TILEWIDTH).floor()
 			hologram.global_transform.origin = target.global_transform.xform(partition * TILEWIDTH + offset)
 			hologram.global_transform.basis = target.global_transform.basis.rotated(upward, rot)
-
-			"""
-			I dont get this part, it can be left out? Better performance
-			"""
-			# var downward = -hologram.global_transform.basis.y.normalized() * (size.y * TILEWIDTH * 0.5 + TILEWIDTH * 0.25 - TILEWIDTH * extra)
-			# var backward = hologram.global_transform.basis.z.normalized() * (size.z * 0.5 * TILEWIDTH - 0.05 * TILEWIDTH)
-			# var leftward = hologram.global_transform.basis.x.normalized() * (size.x * 0.5 * TILEWIDTH - 0.05 * TILEWIDTH)
-			# var originOfRay = hologram.global_transform.origin - leftward
-			# hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], layer)
-			# if !hit.empty() && hit.collider == target:
-			# 	originOfRay = hologram.global_transform.origin - backward
-			# 	hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], layer)
-			# 	if !hit.empty() && hit.collider == target:
-			# 		originOfRay = hologram.global_transform.origin + leftward
-			# 		hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], layer)
-			# 		if !hit.empty() && hit.collider == target:
-			# 			originOfRay = hologram.global_transform.origin + backward
-			# 			hit = spaceState.intersect_ray(originOfRay, originOfRay + downward, [hologram], layer)
-			# 			if !hit.empty() && hit.collider == target:
-			# 				print("almost")
-			"""
-			##########################################
-			"""
 			var collision: KinematicCollision = hologram.move_and_collide(Vector3.ZERO, false, false, true)
 			if !collision:
 				canPlace = true
@@ -160,13 +147,14 @@ func _physics_process(delta):
 			if leftClick:
 				parent = target
 				coords = hologram.global_transform.origin -  parent.global_transform.origin
+				xform = hologram.transform
 				angle = rot
 				placeOrDestroyHologram()
 		else:
 			var sprite = hologram.get_node("Sprite3D")
 			sprite.modulate = Color(1.0, 0.0, 0.0, 0.5)
 	else:
-		if !hit.empty():
+		if !hit.empty() && hit.collider.get_node_or_null("Sprite3D"): # checks if hit is item, else throws errors
 			var temp = hit.collider.get_parent()
 			if temp != null && temp == target:
 				if leftClick:
@@ -182,6 +170,7 @@ func _physics_process(delta):
 						seller.disabled = true
 					parent = temp
 					coords = hologram.global_transform.origin - parent.global_transform.origin
+					xform = hologram.transform
 					angle = -Utility.signedAngle(parent.global_transform.basis.x.normalized(), hologram.global_transform.basis.x.normalized(), parent.global_transform.basis.y.normalized())
 					setSize()
 					rot = angle
@@ -217,20 +206,22 @@ func hologramFromResource(path: String):
 	viewport.add_child(hologram)
 	parent = null
 	coords = null
+	xform = null
 	angle = 0.0
 	var itemName: String = Utility.resName(hologram.name)
 	size = Economy.getSize(itemName)
-	# if size is Vector2:
-	# 	size = Vector3(size.x, 5, size.y)
+	if size is Vector2:
+		size = Vector3(size.x, 1.0, size.y)
 	hologram.global_transform.basis = target.global_transform.basis
 	rotSize = size
 	rot = 0.0
-	if Economy.shouldAutoSize(itemName):
-		var shape: BoxShape = hologram.get_node("CollisionShape").shape
-		# var gridMesh :MeshInstance = hologram.get_node("GridShowMesh") # can be used to display an green/red mesh with the size of the collider to show the player better where to place items
-		# gridMesh.visible = true
-		# gridMesh.scale = Vector3(size.x, size.y, size.z)* TILEWIDTH - Vector3.ONE * 0.005 
-		shape.extents = Vector3(size.x, size.y, size.z) * TILEWIDTH/2 - Vector3.ONE * 0.005  ## half the tile width because "extent" goes both directions, subtract small margin for collison check
+	var shape = hologram.get_node("CollisionShape").shape
+	if shape is BoxShape:
+		shape.extents = Vector3(size.x, size.y, size.z) * TILEWIDTH - Vector3.ONE * 0.01
+	var gridMesh = hologram.get_node_or_null("GridShowMesh")
+	if gridMesh != null:
+		gridMesh.visible = true
+		gridMesh.scale = Vector3(size.x, size.y, size.z) * TILEWIDTH - Vector3.ONE * 0.005
 
 
 # Destroys any hologram or resource.
@@ -251,7 +242,6 @@ func placeOrDestroyHologram():
 				parent.add_child(duplicate)
 			duplicate.global_transform.origin = coords + parent.global_transform.origin
 			duplicate.global_transform.basis = parent.global_transform.basis.rotated(parent.global_transform.basis.y.normalized(), angle)
-			# duplicate.get_node("GridShowMesh").visible = false
 			parent = null
 			purchase(duplicate)
 		else:
@@ -260,6 +250,7 @@ func placeOrDestroyHologram():
 				hologram.queue_free()
 				hologram = null
 			coords = null
+			xform = null
 			angle = null
 			size = null
 			rot = null
@@ -270,6 +261,7 @@ func placeOrDestroyHologram():
 			parent.add_child(hologram)
 		hologram.global_transform.origin = coords + parent.global_transform.origin
 		hologram.global_transform.basis = parent.global_transform.basis.rotated(parent.global_transform.basis.y.normalized(), angle)
+		hologram.transform = xform
 		var sprite = hologram.get_node("Sprite3D")
 		sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
 	elif hologram != null:
@@ -277,6 +269,7 @@ func placeOrDestroyHologram():
 	hologram = null
 	parent = null
 	coords = null
+	xform = null
 	angle = null
 	size = null
 	rot = null
@@ -292,9 +285,13 @@ func setSize():
 	var temp = -Utility.signedAngle(parent.global_transform.basis.x.normalized(), hologram.global_transform.basis.x.normalized(), parent.global_transform.basis.y.normalized())
 	var tempToo: Vector2 = Vector2(size.x, size.z).rotated(temp).round().abs()
 	rotSize = Vector3(tempToo.x, 1.0, tempToo.y)
-	if Economy.shouldAutoSize(itemName):
-		var shape: BoxShape = hologram.get_node("CollisionShape").shape
-		shape.extents = Vector3(size.x, size.y * 0.1, size.z) * TILEWIDTH - Vector3.ONE * 0.01
+	var shape = hologram.get_node("CollisionShape").shape
+	if shape is BoxShape:
+		shape.extents = Vector3(size.x, size.y, size.z) * TILEWIDTH - Vector3.ONE * 0.01
+	var gridMesh = hologram.get_node_or_null("GridShowMesh")
+	if gridMesh != null:
+		gridMesh.visible = true
+		gridMesh.scale = Vector3(size.x, size.y, size.z) * TILEWIDTH - Vector3.ONE * 0.005
 
 
 # Updates the shopping line for the open shopping screen.
@@ -392,7 +389,9 @@ func updateList():
 
 # Opens the given shop.
 func openShop(shop: String):
-	selected_deck = 0
+	if selected_deck == -1:
+		selected_deck = 0
+		target = get_tree().get_nodes_in_group("PlayerDeck")[selected_deck]
 	if open != null:
 		closeShop()
 	var mall: Dictionary = Economy.malls[shop]
@@ -501,7 +500,7 @@ func sell():
 				updateList()
 
 
-func indicator():
+func _on_indicator():
 	openShop(connected)
 
 
