@@ -7,8 +7,9 @@ extends "res://ObjectNodes/Items/BaseItem.gd"
 # var ball
 export var BallScene: PackedScene
 var fireSounds : Array = []
-var forward
-var up
+var forward : Vector3
+var up : Vector3
+var right : Vector3
 export(float) var force = 0.6 # for trajectory prediction: force of ball
 var drag = 0.05 # for trajectory prediction: drag of ball
 var rand_max_delay = 0.4 # max delay in seconds
@@ -43,13 +44,14 @@ var aimDiff # angle difference between mouse position and actual trajectory end
 var a = Vector2(1,0)
 var trajectoryPoints : Array
 export var isTestCannon = false
-
+var org_forward
 func _ready():
 	marker = $TrajectoryMarkerGroup.get_children()
 	lineSize = marker.size()
 	fakeBullet = $FakeBullet
 	camera = get_viewport().get_camera()
 	org_rotation = transform.basis.get_euler()*180/PI
+	org_forward = global_transform.basis.x.normalized() # used for angle calculation
 	if get_tree().get_nodes_in_group("Ocean").size()>0:
 		ocean = get_tree().get_nodes_in_group("Ocean")[0]
 	myShip = get_parent().get_parent().get_parent()
@@ -79,6 +81,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	up = global_transform.basis.y.normalized()
+	right = global_transform.basis.z.normalized()
 	
 	forward = global_transform.basis.x.normalized()
 	
@@ -212,7 +215,7 @@ func rotateLeftRight(multiplicator=1, dir : String = ""):
 	"""
 	multiplicator = clamp(abs(multiplicator),0,1)
 	## left rotation = negative angle distance
-	var angle_dist = getAngleDist_deg(transform.basis.get_euler().y*180/PI,org_rotation.y)
+	var angle_dist = rad2deg(Utility.signedAngle(org_forward,(forward),up)) #getAngleDist_deg(transform.basis.get_euler().y*180/PI,org_rotation.y)
 	if dir == "left" and angle_dist>-maxRotateAngle:
 		rotate(up,rotateSpeed*multiplicator)
 	elif dir == "right" and angle_dist<maxRotateAngle:
@@ -226,7 +229,8 @@ func rotateUpDown(multiplicator=1, dir : String = ""):
 	"""
 	multiplicator = clamp(abs(multiplicator),0,1)
 	## up rotation = positive angle distance
-	var angle_dist = -getAngleDist_deg(transform.basis.get_euler().z*180/PI,org_rotation.z)
+	var angle_dist = -rad2deg(Utility.signedAngle(org_forward,(forward),right)) # -getAngleDist_deg(transform.basis.get_euler().z*180/PI,org_rotation.z)
+	print(angle_dist)
 	if dir == "up" and angle_dist<maxUpAngle:
 		rotate(transform.basis.z.normalized(),rotateSpeed*0.2*multiplicator)
 	elif dir == "down" and angle_dist>minUpAngle:

@@ -9,7 +9,7 @@ extents = Vector3( 0.1, 0.1, 0.3 )
 [sub_resource type="CubeMesh" id=2]
 size = Vector3( 0.125, 0.2, 0.6 )
 
-[node name="Light1" type="KinematicBody"]
+[node name="LightSmall" type="KinematicBody"]
 script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]

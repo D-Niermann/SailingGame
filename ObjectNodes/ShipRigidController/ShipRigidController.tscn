@@ -108,7 +108,7 @@ points = PoolVector3Array( -1.445, 1.455, 0.135, 1.445, 1.455, -0.135, 1.445, 1.
 [node name="ShipRigid" type="RigidBody"]
 collision_layer = 2
 collision_mask = 2
-linear_damp = 5.0
+linear_damp = 3.0
 angular_damp = 2.0
 script = ExtResource( 2 )
 
