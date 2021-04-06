@@ -76,7 +76,10 @@ func _ready():
 	set_process_input(true) 
 	clearTrajectory()
 
-
+func on_placement():
+	.on_placement() # calls the parent function
+	org_rotation = transform.basis.get_euler()*180/PI
+	org_forward = global_transform.basis.x.normalized() # used for angle calculation
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -230,7 +233,6 @@ func rotateUpDown(multiplicator=1, dir : String = ""):
 	multiplicator = clamp(abs(multiplicator),0,1)
 	## up rotation = positive angle distance
 	var angle_dist = -rad2deg(Utility.signedAngle(org_forward,(forward),right)) # -getAngleDist_deg(transform.basis.get_euler().z*180/PI,org_rotation.z)
-	print(angle_dist)
 	if dir == "up" and angle_dist<maxUpAngle:
 		rotate(transform.basis.z.normalized(),rotateSpeed*0.2*multiplicator)
 	elif dir == "down" and angle_dist>minUpAngle:

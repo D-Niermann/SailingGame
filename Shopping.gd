@@ -217,7 +217,7 @@ func hologramFromResource(path: String):
 	rot = 0.0
 	var shape = hologram.get_node("CollisionShape").shape
 	if shape is BoxShape:
-		shape.extents = Vector3(size.x, size.y, size.z) * TILEWIDTH - Vector3.ONE * 0.01
+		shape.extents = Vector3(size.x, size.y, size.z) * TILEWIDTH/2 - Vector3.ONE * 0.01
 	var gridMesh = hologram.get_node_or_null("GridShowMesh")
 	if gridMesh != null:
 		gridMesh.visible = true
@@ -289,7 +289,7 @@ func setSize():
 	rotSize = Vector3(tempToo.x, 1.0, tempToo.y)
 	var shape = hologram.get_node("CollisionShape").shape
 	if shape is BoxShape:
-		shape.extents = Vector3(size.x, size.y, size.z) * TILEWIDTH - Vector3.ONE * 0.01
+		shape.extents = Vector3(size.x, size.y, size.z) * TILEWIDTH/2 - Vector3.ONE * 0.01
 	var gridMesh = hologram.get_node_or_null("GridShowMesh")
 	if gridMesh != null:
 		gridMesh.visible = true

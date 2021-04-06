@@ -29,21 +29,21 @@ params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.85
 albedo_texture = ExtResource( 1 )
 
-[sub_resource type="BoxShape" id=6]
+[sub_resource type="BoxShape" id=5]
 extents = Vector3( 0.846288, 0.533633, 0.643275 )
 
-[sub_resource type="BoxShape" id=8]
+[sub_resource type="BoxShape" id=6]
 extents = Vector3( 5.66497, 1.74461, 1 )
 
-[sub_resource type="BoxShape" id=9]
+[sub_resource type="BoxShape" id=7]
 extents = Vector3( 5.0327, 0.167918, 1.61134 )
 
-[sub_resource type="SpatialMaterial" id=10]
+[sub_resource type="SpatialMaterial" id=8]
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.75
 albedo_texture = ExtResource( 3 )
 
-[sub_resource type="StreamTexture" id=11]
+[sub_resource type="StreamTexture" id=9]
 flags = 23
 load_path = "res://.import/shipDeck.png-795b33a120e4e89b82f0c94bb8f9a6cc.s3tc.stex"
 
@@ -130,6 +130,7 @@ fire_delay_sec = 0.091
 [node name="CannonLarge2" parent="Deck1" instance=ExtResource( 2 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.414814, 4.76837e-07, 1.32962 )
 fire_delay_sec = 0.164
+isTestCannon = true
 
 [node name="CannonLarge3" parent="Deck1" instance=ExtResource( 2 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.78762, 4.76837e-07, 1.32322 )
@@ -193,7 +194,7 @@ __meta__ = {
 
 [node name="BlockerCollider" type="CollisionShape" parent="Deck1/Blocker3"]
 transform = Transform( 0.999367, 0, 0.0355972, 0, 1, 0, -0.0355972, 0, 0.999367, 0, 0, 0 )
-shape = SubResource( 6 )
+shape = SubResource( 5 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -202,13 +203,13 @@ __meta__ = {
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.067378, -2.09658, -4.76837e-07, 1.67882 )
 
 [node name="CollisionShape2" type="CollisionShape" parent="Deck1/FakeWalls"]
-shape = SubResource( 8 )
+shape = SubResource( 6 )
 
 [node name="FakeWalls2" type="KinematicBody" parent="Deck1"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.067378, -2.09658, -4.76837e-07, -1.42844 )
 
 [node name="CollisionShape2" type="CollisionShape" parent="Deck1/FakeWalls2"]
-shape = SubResource( 8 )
+shape = SubResource( 6 )
 
 [node name="Deck2" type="KinematicBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.41253, 0 )
@@ -220,14 +221,14 @@ __meta__ = {
 
 [node name="CollisionShape" type="CollisionShape" parent="Deck2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5233, -2.27342, 0.209432 )
-shape = SubResource( 9 )
+shape = SubResource( 7 )
 __meta__ = {
 "_editor_description_": ""
 }
 
 [node name="Deck" type="Sprite3D" parent="Deck2"]
 transform = Transform( 0.318932, 0, 0, 0, 0.754314, 0, 0, 0, 0.318932, -1.33207, -2.12572, 0.0953515 )
-material_override = SubResource( 10 )
+material_override = SubResource( 8 )
 pixel_size = 0.02
 axis = 1
 shaded = true
@@ -240,7 +241,7 @@ cast_shadow = 3
 pixel_size = 0.02
 axis = 1
 alpha_cut = 2
-texture = SubResource( 11 )
+texture = SubResource( 9 )
 
 [node name="OmniLight3" parent="Deck2" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.742809, -1.71751, 0.0391541 )
