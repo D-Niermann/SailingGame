@@ -109,7 +109,7 @@ points = PoolVector3Array( -1.445, 1.455, 0.135, 1.445, 1.455, -0.135, 1.445, 1.
 collision_layer = 2
 collision_mask = 2
 linear_damp = 5.0
-angular_damp = 4.0
+angular_damp = 2.0
 script = ExtResource( 2 )
 
 [node name="Model" parent="." instance=ExtResource( 1 )]

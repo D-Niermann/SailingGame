@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/topDeck.png" type="Texture" id=1]
 [ext_resource path="res://ObjectNodes/Cannon/Cannon.tscn" type="PackedScene" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/segel.png" type="Texture" id=7]
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/segelVorn.png" type="Texture" id=8]
 [ext_resource path="res://ObjectNodes/Items/Cannon/CannonItem.tscn" type="PackedScene" id=9]
-[ext_resource path="res://ObjectNodes/Cannon/CannonBall.tscn" type="PackedScene" id=10]
 
 [sub_resource type="CylinderMesh" id=1]
 material = ExtResource( 4 )
@@ -26,28 +25,38 @@ height = 13.267
 [sub_resource type="BoxShape" id=3]
 extents = Vector3( 5.01352, 0.180563, 1.50246 )
 
-[sub_resource type="BoxShape" id=4]
-extents = Vector3( 0.0821985, 0.533633, 0.643275 )
+[sub_resource type="SpatialMaterial" id=4]
+params_use_alpha_scissor = true
+params_alpha_scissor_threshold = 0.85
+albedo_texture = ExtResource( 1 )
 
 [sub_resource type="BoxShape" id=5]
-extents = Vector3( 0.846288, 0.533633, 0.643275 )
+extents = Vector3( 0.0821985, 0.533633, 0.643275 )
 
 [sub_resource type="BoxShape" id=6]
-extents = Vector3( 0.183612, 0.533633, 0.168263 )
+extents = Vector3( 0.846288, 0.533633, 0.643275 )
 
 [sub_resource type="BoxShape" id=7]
-extents = Vector3( 5.66497, 1.74461, 1 )
+extents = Vector3( 0.183612, 0.533633, 0.168263 )
 
 [sub_resource type="BoxShape" id=8]
+extents = Vector3( 5.66497, 1.74461, 1 )
+
+[sub_resource type="BoxShape" id=9]
 extents = Vector3( 5.0327, 0.167918, 1.61134 )
 
-[sub_resource type="PlaneMesh" id=9]
-size = Vector2( 8.98, 2.36 )
+[sub_resource type="SpatialMaterial" id=11]
+params_use_alpha_scissor = true
+params_alpha_scissor_threshold = 0.75
+albedo_texture = ExtResource( 3 )
+
+[sub_resource type="StreamTexture" id=12]
+flags = 23
+load_path = "res://.import/shipDeck.png-795b33a120e4e89b82f0c94bb8f9a6cc.s3tc.stex"
 
 [node name="DefaultModel (DeckOrder important!)" type="Spatial"]
 
 [node name="Sails" type="Spatial" parent="."]
-visible = false
 
 [node name="FrontMast" type="Spatial" parent="Sails"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.49962, 0, 0.0707092 )
@@ -118,7 +127,7 @@ texture = ExtResource( 7 )
 collision_layer = 524288
 collision_mask = 524288
 __meta__ = {
-"_editor_description_": ""
+"_editor_description_": "Make the sprite with a spatial material and alpha scissors, so that its not flagged as transparent!"
 }
 
 [node name="CollisionShape" type="CollisionShape" parent="Deck1"]
@@ -130,6 +139,7 @@ __meta__ = {
 
 [node name="Deck" type="Sprite3D" parent="Deck1"]
 transform = Transform( 1.04162, 0, 0, 0, 1, 0, 0, 0, 1.04162, 0, 0, 0 )
+material_override = SubResource( 4 )
 pixel_size = 0.004
 axis = 1
 shaded = true
@@ -140,65 +150,29 @@ texture = ExtResource( 1 )
 transform = Transform( -0.00942471, 0, -0.999956, 0, 1, 0, 0.999956, 0, -0.00942471, -2.95233, 0.0844366, 1.13904 )
 fire_delay_sec = 0.87
 
-[node name="Cannon2" parent="Deck1" instance=ExtResource( 2 )]
-transform = Transform( -0.00942471, 0, -0.999956, 0, 1, 0, 0.999956, 0, -0.00942471, -0.164262, 0.0844366, 1.23433 )
-fire_delay_sec = 0.42
-isTestCannon = true
-
-[node name="Cannon4" parent="Deck1" instance=ExtResource( 2 )]
-transform = Transform( -0.00942471, 0, -0.999956, 0, 1, 0, 0.999956, 0, -0.00942471, -4.08451, 0.0844366, 1.12257 )
-fire_delay_sec = 1.09
-
-[node name="Cannon5" parent="Deck1" instance=ExtResource( 2 )]
-transform = Transform( -0.00942471, 0, -0.999956, 0, 1, 0, 0.999956, 0, -0.00942471, -5.13604, 0.0844366, 0.949803 )
-fire_delay_sec = 1.16
-
-[node name="Cannon6" parent="Deck1" instance=ExtResource( 2 )]
-transform = Transform( -0.00942471, 0, -0.999956, 0, 1, 0, 0.999956, 0, -0.00942471, 1.13978, 0.0844366, 1.07016 )
-fire_delay_sec = 0.21
-
-[node name="Cannon7" parent="Deck1" instance=ExtResource( 2 )]
-transform = Transform( -0.00942471, 0, -0.999956, 0, 1, 0, 0.999956, 0, -0.00942471, 2.91937, 0.0844366, 0.545743 )
-
-[node name="Cannon8" parent="Deck1" instance=ExtResource( 2 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.02906, 0.0844366, -1.03212 )
-fire_delay_sec = 0.87
-
-[node name="Cannon9" parent="Deck1" instance=ExtResource( 2 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.301156, 0.0844366, -1.06719 )
-fire_delay_sec = 0.42
-isTestCannon = true
-
-[node name="Cannon11" parent="Deck1" instance=ExtResource( 2 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.07266, 0.0844366, -0.988426 )
-fire_delay_sec = 1.09
-
-[node name="Cannon12" parent="Deck1" instance=ExtResource( 2 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.96208, 0.0844366, -0.850338 )
-fire_delay_sec = 1.16
-
-[node name="Cannon13" parent="Deck1" instance=ExtResource( 2 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.17627, 0.0841467, -0.951163 )
-fire_delay_sec = 0.21
-
-[node name="Cannon14" parent="Deck1" instance=ExtResource( 2 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.86659, 0.0834448, -0.438258 )
-
 [node name="OmniLight5" parent="Deck1" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.742809, 0.552795, 0.0391541 )
+light_energy = 2.74
 omni_range = 1.0
+amp = 0.001
 
 [node name="OmniLight6" parent="Deck1" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.14678, 0.552795, 0.137863 )
+light_energy = 2.74
 omni_range = 1.0
+amp = 0.001
 
 [node name="OmniLight7" parent="Deck1" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.50939, 0.186752, 1.16489 )
+light_energy = 2.74
 omni_range = 1.0
+amp = 0.001
 
 [node name="OmniLight8" parent="Deck1" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.47418, 0.466614, -0.535401 )
+light_energy = 2.74
 omni_range = 1.0
+amp = 0.001
 
 [node name="Blocker" type="KinematicBody" parent="Deck1"]
 transform = Transform( 1.70847, 0, -0.0426491, 0, 1, 0, 0.0426491, 0, 1.70847, -0.100607, 0.0744184, 0.172448 )
@@ -210,7 +184,7 @@ __meta__ = {
 
 [node name="BlockerCollider" type="CollisionShape" parent="Deck1/Blocker"]
 transform = Transform( 0.999367, 0, 0.0355972, 0, 1, 0, -0.0355972, 0, 0.999367, 0, 0, 0 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -225,7 +199,7 @@ __meta__ = {
 
 [node name="BlockerCollider" type="CollisionShape" parent="Deck1/Blocker3"]
 transform = Transform( 0.999367, 0, 0.0355972, 0, 1, 0, -0.0355972, 0, 0.999367, 0, 0, 0 )
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -240,7 +214,7 @@ __meta__ = {
 
 [node name="BlockerCollider" type="CollisionShape" parent="Deck1/Blocker2"]
 transform = Transform( 0.999367, 0, 0.0355972, 0, 1, 0, -0.0355972, 0, 0.999367, 0, 0, 0 )
-shape = SubResource( 6 )
+shape = SubResource( 7 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -249,75 +223,57 @@ __meta__ = {
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.067378, -2.09658, -4.76837e-07, 1.67882 )
 
 [node name="CollisionShape2" type="CollisionShape" parent="Deck1/FakeWalls"]
-shape = SubResource( 7 )
+shape = SubResource( 8 )
 
 [node name="FakeWalls2" type="KinematicBody" parent="Deck1"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.067378, -2.09658, -4.76837e-07, -1.42844 )
 
 [node name="CollisionShape2" type="CollisionShape" parent="Deck1/FakeWalls2"]
-shape = SubResource( 7 )
+shape = SubResource( 8 )
 
 [node name="CannonItem" parent="Deck1" instance=ExtResource( 9 )]
 transform = Transform( 0.104355, 0, -0.99454, 0, 1, 0, 0.99454, 0, 0.104355, -1.73748, 0.0710487, 1.17608 )
-BallScene = ExtResource( 10 )
 
 [node name="Deck2" type="KinematicBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.41253, 0 )
 collision_layer = 262144
 collision_mask = 262144
+__meta__ = {
+"_editor_description_": "Make the sprite with a spatial material and alpha scissors, so that its not flagged as transparent!"
+}
 
 [node name="CollisionShape" type="CollisionShape" parent="Deck2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5233, -2.27342, 0.209432 )
-shape = SubResource( 8 )
+shape = SubResource( 9 )
 __meta__ = {
 "_editor_description_": ""
 }
 
 [node name="Deck" type="Sprite3D" parent="Deck2"]
 transform = Transform( 0.318932, 0, 0, 0, 0.754314, 0, 0, 0, 0.318932, -1.33207, -2.12572, 0.0953515 )
+material_override = SubResource( 11 )
 pixel_size = 0.02
 axis = 1
 shaded = true
 alpha_cut = 2
 texture = ExtResource( 3 )
 
+[node name="RoofForShadows" type="Sprite3D" parent="Deck2"]
+transform = Transform( 0.318932, 0, 0, 0, 0.754314, 0, 0, 0, 0.318932, -1.33207, -1.50899, 0.0953515 )
+cast_shadow = 3
+pixel_size = 0.02
+axis = 1
+alpha_cut = 2
+texture = SubResource( 12 )
+
 [node name="OmniLight3" parent="Deck2" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.742809, -1.71751, 0.0391541 )
+light_energy = 2.74
 omni_range = 1.0
+amp = 0.001
 
 [node name="OmniLight4" parent="Deck2" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.04644, -1.71751, 0 )
+light_energy = 2.74
 omni_range = 1.0
-
-[node name="Cannon15" parent="Deck2" instance=ExtResource( 2 )]
-transform = Transform( -0.00942471, 0, -0.999956, 0, 1, 0, 0.999956, 0, -0.00942471, -2.95233, -2.1042, 1.13904 )
-fire_delay_sec = 0.87
-
-[node name="Cannon16" parent="Deck2" instance=ExtResource( 2 )]
-transform = Transform( -0.00942471, 0, -0.999956, 0, 1, 0, 0.999956, 0, -0.00942471, -1.60856, -2.1042, 1.26872 )
-fire_delay_sec = 0.65
-
-[node name="Cannon17" parent="Deck2" instance=ExtResource( 2 )]
-transform = Transform( -0.00942471, 0, -0.999956, 0, 1, 0, 0.999956, 0, -0.00942471, -5.13604, -2.1042, 0.949803 )
-fire_delay_sec = 1.16
-
-[node name="Cannon18" parent="Deck2" instance=ExtResource( 2 )]
-transform = Transform( -0.00942471, 0, -0.999956, 0, 1, 0, 0.999956, 0, -0.00942471, 2.91937, -2.1042, 0.545743 )
-
-[node name="Cannon19" parent="Deck2" instance=ExtResource( 2 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.301156, -2.1042, -1.06719 )
-fire_delay_sec = 0.42
-
-[node name="Cannon20" parent="Deck2" instance=ExtResource( 2 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.07266, -2.1042, -0.988426 )
-fire_delay_sec = 1.09
-
-[node name="Cannon21" parent="Deck2" instance=ExtResource( 2 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.17627, -2.10449, -0.951163 )
-fire_delay_sec = 0.21
-
-[node name="RoofOnlyForShadow" type="MeshInstance" parent="Deck2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.63585, -1.43718, 0.0778961 )
-cast_shadow = 3
-mesh = SubResource( 9 )
-material/0 = null
+amp = 0.001

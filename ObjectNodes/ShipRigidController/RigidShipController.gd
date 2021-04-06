@@ -99,6 +99,11 @@ func applyPosBuoyancy(obj : Spatial, delta, factor :float = 1.0):
 		var impulse = Vector3(0,1,0)*factor*pow(abs(diff),1.5)*impulse_factor*delta
 		apply_impulse(p, impulse)
 
+func applyImpulse(from : Vector3, direction : Vector3):
+	apply_impulse(transform.basis.xform(from), transform.basis.xform(direction))
+
+
+
 func calcWindForce():
 	"""
 	Using an accurate formular to get the wind force on sail, based on angle to wind.
