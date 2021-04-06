@@ -19,7 +19,7 @@ var lineSize  # length of trjactory prediction line (number of points) / needs s
 const rotateSpeed = 0.008 # max rotation speed of cannons (up/down rotation is scaled down )
 const maxRotateAngle = 20 # in degree, left right rotation
 var maxUpAngle = 20 # angle distance in degreee from original rotation that is allowed
-var minUpAngle= -5 # angle distance in degreee from original rotation that is allowed
+var minUpAngle= 0 # angle distance in degreee from original rotation that is allowed
 const unprecision = 4 # in units, how max unprecise a connon is (random)
 onready var rotateMargin = rand_range(-unprecision,unprecision) # error in rotation that is accepted (mouse position) left right
 onready var upDownMargin = rand_range(-unprecision,unprecision) # what difference to mouse pos units to ignore when rotating  up down

@@ -10,7 +10,7 @@ var malls: Dictionary = {
 		"capacity": Vector2(0, 100),
 		"consumption": 0,
 		"grows": {"banana": 2.0},
-		"goods": {"banana": 10, "apple": INF, "cannon" : 10, "WallLong" : 100},
+		"goods": {"banana": 10, "apple": INF, "cannon" : 10, "WallLong" : 100, "LightSmall":5},
 		"white": ["food", "gear"],
 		"black": ["drug"],
 		"money": 1000
@@ -29,11 +29,12 @@ var goods: Dictionary = {
 	"banana": {"type": "food", "size": Vector3(2,1, 1), "autoSize": true, "price": 10, "weight": 1.0, "res": "res://exampleItem.tscn", "icon": "res://icon.png"},
 	"apple": {"type": "food", "size": Vector3(2,1, 1), "autoSize": true, "price": 10, "weight": 1.0, "res": "res://exampleItem.tscn", "icon": "res://icon.png"},
 	"cannon": {"type": "gear", "size": Vector3(3,1, 2), "autoSize": true, "price": 10, "weight": 1.0, "res": "res://ObjectNodes/Items/Cannon/CannonItem.tscn", "icon": "res://icon.png"},
-	"WallLong": {"type": "gear", "size": Vector3(1,2, 3), "autoSize": true, "price": 1, "weight": 1.0, "res": "res://ObjectNodes/Items/Walls/WallLong.tscn", "icon": "res://icon.png"}
+	"WallLong": {"type": "gear", "size": Vector3(1,2, 3), "autoSize": true, "price": 1, "weight": 1.0, "res": "res://ObjectNodes/Items/Walls/WallLong.tscn", "icon": "res://icon.png"},
+	"LightSmall": {"type": "gear", "size": Vector3(1,1, 1), "autoSize": true, "price": 1, "weight": 1.0, "res": "res://ObjectNodes/Items/Lights/Light1.tscn", "icon": "res://icon.png"}
 }
 var types: Dictionary = { ## this could be auto generated?
 	"food": ["banana", "apple"],
-	"gear": ["cannon", "WallLong"]
+	"gear": ["cannon", "WallLong", "LightSmall"]
 }
 var cases: Dictionary = {
 	"storm": {

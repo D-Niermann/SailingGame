@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://ObjectNodes/Items/Cannon/CannonItem.gd" type="Script" id=1]
 [ext_resource path="res://ObjectNodes/Cannon/CannonBall.tscn" type="PackedScene" id=2]
@@ -16,15 +16,10 @@
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.109175, 0.128, 0.0932399 )
 
-[sub_resource type="SpatialMaterial" id=2]
-flags_transparent = true
-params_depth_draw_mode = 3
-albedo_texture = ExtResource( 5 )
-
-[sub_resource type="CubeMesh" id=3]
+[sub_resource type="CubeMesh" id=21]
 size = Vector3( 0.2, 0.2, 0.2 )
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=22]
 render_priority = 1
 flags_transparent = true
 flags_unshaded = true
@@ -39,46 +34,46 @@ particles_anim_loop = false
 albedo_color = Color( 1, 1, 1, 0.392157 )
 albedo_texture = ExtResource( 4 )
 
-[sub_resource type="Gradient" id=5]
+[sub_resource type="Gradient" id=23]
 offsets = PoolRealArray( 0, 0.0404313, 0.726087, 1 )
 colors = PoolColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0.0304779, 1, 1, 1, 0 )
 
-[sub_resource type="GradientTexture" id=6]
-gradient = SubResource( 5 )
+[sub_resource type="GradientTexture" id=24]
+gradient = SubResource( 23 )
 
-[sub_resource type="Curve" id=7]
+[sub_resource type="Curve" id=25]
 min_value = 1.0
 max_value = 150.0
 _data = [ Vector2( 0, 117.322 ), 0.0, 0.0, 0, 0, Vector2( 0.209486, 1 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=8]
-curve = SubResource( 7 )
+[sub_resource type="CurveTexture" id=26]
+curve = SubResource( 25 )
 
-[sub_resource type="Curve" id=9]
+[sub_resource type="Curve" id=27]
 _data = [ Vector2( 0, 0.209091 ), 0.0, 0.975758, 0, 0, Vector2( 0.0197628, 0.490909 ), 1.56071, 1.61, 0, 0, Vector2( 0.980237, 0.945454 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=10]
-curve = SubResource( 9 )
+[sub_resource type="CurveTexture" id=28]
+curve = SubResource( 27 )
 
-[sub_resource type="ParticlesMaterial" id=11]
+[sub_resource type="ParticlesMaterial" id=29]
 lifetime_randomness = 0.22
 spread = 2.0
 gravity = Vector3( 0, 1, -0.5 )
 initial_velocity = 30.0
 initial_velocity_random = 0.52
 damping_random = 0.31
-damping_curve = SubResource( 8 )
+damping_curve = SubResource( 26 )
 angle = 456.6
 angle_random = 1.0
 scale = 0.2
 scale_random = 1.0
-scale_curve = SubResource( 10 )
-color_ramp = SubResource( 6 )
+scale_curve = SubResource( 28 )
+color_ramp = SubResource( 24 )
 
-[sub_resource type="QuadMesh" id=12]
+[sub_resource type="QuadMesh" id=30]
 size = Vector2( 5, 5 )
 
-[sub_resource type="SpatialMaterial" id=13]
+[sub_resource type="SpatialMaterial" id=31]
 render_priority = 1
 flags_transparent = true
 flags_unshaded = true
@@ -138,11 +133,9 @@ BallScene = ExtResource( 2 )
 shape = SubResource( 1 )
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform( -2.71611e-08, 0, -0.14903, 0, 0.166714, 0, 0.166714, 0, -2.428e-08, -0.0107411, 0.060603, -0.0031288 )
-material_override = SubResource( 2 )
+transform = Transform( -4.70073e-08, 0, -0.257923, 0, 0.166714, 0, 0.288529, 0, -4.2021e-08, -0.0107411, 0.060603, -0.0031288 )
 axis = 1
 shaded = true
-alpha_cut = 2
 texture = ExtResource( 5 )
 __meta__ = {
 "_editor_description_": "e"
@@ -150,12 +143,12 @@ __meta__ = {
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
 cast_shadow = 3
-mesh = SubResource( 3 )
+mesh = SubResource( 21 )
 material/0 = ExtResource( 13 )
 
 [node name="Particles" type="Particles" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0211141, 0, 0.00772725 )
-material_override = SubResource( 4 )
+material_override = SubResource( 22 )
 cast_shadow = 0
 emitting = false
 amount = 15
@@ -165,15 +158,15 @@ explosiveness = 0.99
 randomness = 0.5
 visibility_aabb = AABB( -181.604, -196.936, -272.78, 362.306, 395.6, 547.224 )
 local_coords = false
-process_material = SubResource( 11 )
-draw_pass_1 = SubResource( 12 )
+process_material = SubResource( 29 )
+draw_pass_1 = SubResource( 30 )
 __meta__ = {
 "_editor_description_": ""
 }
 
 [node name="ParticlesFlash" type="Particles" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.641374, 0, 0.00772725 )
-material_override = SubResource( 13 )
+material_override = SubResource( 31 )
 cast_shadow = 0
 emitting = false
 amount = 10
@@ -184,7 +177,7 @@ randomness = 0.46
 visibility_aabb = AABB( -181.604, -196.936, -272.78, 362.306, 395.6, 547.224 )
 local_coords = false
 process_material = SubResource( 20 )
-draw_pass_1 = SubResource( 12 )
+draw_pass_1 = SubResource( 30 )
 __meta__ = {
 "_editor_description_": ""
 }

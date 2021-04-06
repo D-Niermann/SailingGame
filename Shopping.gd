@@ -28,7 +28,7 @@ var angle = 0.0
 var rot = 0.0
 var size = Vector3.ONE # in terms of tile size given above, each component must be an integer
 var rotSize = Vector3.ONE
-var extra = -0.45 # height offset for three dimensional sprites and such
+var extra = -0.0 # height offset for three dimensional sprites and such
 var switch: bool = true
 
 var leftClick: bool = false
@@ -52,9 +52,9 @@ func _unhandled_input(event):
 		leftClick = true
 	if event.is_action_pressed("rightClick") && !event.is_echo():
 		rightClick = true
-	if event.is_action_released("scrollUp"):
+	if event.is_action_released("rotateItemLeft"):
 		scrollUp = true
-	if event.is_action_released("scrollDown"):
+	if event.is_action_released("rotateItemRight"):
 		scrollDown = true
 
 
@@ -120,7 +120,7 @@ func _physics_process(delta):
 		var canPlace = false
 		if !hit.empty() && (STACKED || hit.collider == target):
 			print("hit")
-			var offset = Vector3(fmod(rotSize.x, 2), 0, fmod(rotSize.z, 2)) * TILEWIDTH * 0.5 + TILEWIDTH * Vector3.UP * (size.y/2)
+			var offset = Vector3(fmod(rotSize.x, 2), 0, fmod(rotSize.z, 2)) * TILEWIDTH * 0.5 + TILEWIDTH * Vector3.UP * (size.y/2 + extra)
 			var partition: Vector3 = (target.global_transform.xform_inv(hit.position) / TILEWIDTH).floor()
 			hologram.global_transform.origin = target.global_transform.xform(partition * TILEWIDTH + offset)
 			hologram.global_transform.basis = target.global_transform.basis.rotated(upward, rot)
