@@ -1,0 +1,203 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://SceneNodes/OceanEnv/OceanEnvironment.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ObjectNodes/ShipRigidController/ShipRigidController.tscn" type="PackedScene" id=2]
+[ext_resource path="res://SceneNodes/Islands/Island_Small.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/Camera.gd" type="Script" id=5]
+[ext_resource path="res://ObjectNodes/TestGUIElements.tscn" type="PackedScene" id=6]
+[ext_resource path="res://ObjectNodes/Clouds/Clouds.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scripts/GameCamera.gd" type="Script" id=8]
+[ext_resource path="res://Shopping.tscn" type="PackedScene" id=9]
+[ext_resource path="res://icon.png" type="Texture" id=10]
+[ext_resource path="res://SceneNodes/OceanEnv/Sky.tscn" type="PackedScene" id=11]
+[ext_resource path="res://ObjectNodes/Terrain/ExampleTerrain.tscn" type="PackedScene" id=12]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://Fonts/OpenSans-Bold.ttf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 23
+font_data = SubResource( 1 )
+
+[node name="GameWorld" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": true,
+"_editor_description_": ""
+}
+
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 1680, 1050 )
+handle_input_locally = false
+msaa = 2
+render_target_update_mode = 3
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
+shadow_atlas_size = 1024
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Camera" type="Camera" parent="ViewportContainer/Viewport"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.477772, 39.8137, -0.192314 )
+fov = 47.5
+size = 63.36
+far = 500.0
+script = ExtResource( 5 )
+gameCam = false
+
+[node name="GameCamera" type="Camera" parent="ViewportContainer/Viewport" groups=[
+"Camera",
+]]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 50, 0 )
+current = true
+fov = 35.0
+far = 1549.5
+script = ExtResource( 8 )
+
+[node name="Clouds" parent="ViewportContainer/Viewport" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35.99, 10.3436, 23.68 )
+
+[node name="Island" parent="ViewportContainer/Viewport" instance=ExtResource( 3 )]
+transform = Transform( -0.548814, -0.350442, -1.53183e-08, 0, -4.89131e-08, 1.119, -0.350442, 0.548814, 2.39894e-08, -2.98232, 3.9151, -30.5378 )
+
+[node name="Sky" parent="ViewportContainer/Viewport" instance=ExtResource( 11 )]
+
+[node name="HTerrain" parent="ViewportContainer/Viewport" instance=ExtResource( 12 )]
+ambient_wind = 0.0
+lod_scale = 2.0
+map_scale = Vector3( 1, 1, 1 )
+
+[node name="OceanEnvironment" parent="ViewportContainer/Viewport" instance=ExtResource( 1 )]
+wind_strength = 0.4
+
+[node name="PlayerShip" parent="ViewportContainer/Viewport" groups=[
+"PlayerShip",
+] instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 15.0261, 7.62939e-06, 10.5944 )
+isPlayer = true
+
+[node name="Interface" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="ui" parent="Interface" instance=ExtResource( 6 )]
+
+[node name="Shopping" parent="Interface" instance=ExtResource( 9 )]
+
+[node name="Label1" type="RichTextLabel" parent="Interface"]
+anchor_left = 0.993549
+anchor_top = 0.482695
+anchor_right = 0.993549
+anchor_bottom = 0.516695
+margin_left = -220.0
+margin_top = 346.15
+margin_right = -64.0
+margin_bottom = 346.45
+custom_fonts/normal_font = SubResource( 2 )
+text = "Top Deck"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label3" type="RichTextLabel" parent="Interface"]
+anchor_left = 1.00112
+anchor_top = 0.411286
+anchor_right = 1.00112
+anchor_bottom = 0.446
+margin_left = -126.0
+margin_top = 346.15
+margin_right = -64.0
+margin_bottom = 345.7
+custom_fonts/normal_font = SubResource( 2 )
+text = "All"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label2" type="RichTextLabel" parent="Interface"]
+anchor_left = 1.00134
+anchor_top = 0.552207
+anchor_right = 1.00134
+anchor_bottom = 0.596207
+margin_left = -223.653
+margin_top = 346.067
+margin_right = -71.6527
+margin_bottom = 371.317
+custom_fonts/normal_font = SubResource( 2 )
+text = "Lower Deck"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Decks" type="VBoxContainer" parent="Interface"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -80.0
+margin_top = 237.0
+margin_right = -4.0
+margin_bottom = 455.0
+grow_horizontal = 0
+grow_vertical = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AllDeck" type="Button" parent="Interface/Decks"]
+margin_right = 76.0
+margin_bottom = 70.0
+icon = ExtResource( 10 )
+
+[node name="Deck0" type="Button" parent="Interface/Decks"]
+margin_top = 74.0
+margin_right = 76.0
+margin_bottom = 144.0
+icon = ExtResource( 10 )
+
+[node name="Deck1" type="Button" parent="Interface/Decks"]
+margin_top = 148.0
+margin_right = 76.0
+margin_bottom = 218.0
+icon = ExtResource( 10 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Interface"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1154.0
+margin_top = 14.0
+margin_right = 59.0
+margin_bottom = -895.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "1 grid (tilewidth) = 0.2 units = 1 meter
+1 Unit = 5 meters
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="button_up" from="Interface/Decks/AllDeck" to="Interface/Shopping" method="_on_DeckAll_button_up"]
+[connection signal="button_up" from="Interface/Decks/AllDeck" to="ViewportContainer/Viewport/PlayerShip" method="_on_AllDeck_button_up"]
+[connection signal="button_up" from="Interface/Decks/Deck0" to="Interface/Shopping" method="_on_Deck0_button_up"]
+[connection signal="button_up" from="Interface/Decks/Deck0" to="ViewportContainer/Viewport/PlayerShip" method="_on_Deck0_button_up"]
+[connection signal="button_up" from="Interface/Decks/Deck0" to="ViewportContainer/Viewport/GameCamera" method="_on_Deck0_button_up"]
+[connection signal="button_up" from="Interface/Decks/Deck1" to="Interface/Shopping" method="_on_Deck1_button_up"]
+[connection signal="button_up" from="Interface/Decks/Deck1" to="ViewportContainer/Viewport/PlayerShip" method="_on_Deck1_button_up"]
+[connection signal="button_up" from="Interface/Decks/Deck1" to="ViewportContainer/Viewport/GameCamera" method="_on_Deck1_button_up"]

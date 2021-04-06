@@ -38,4 +38,8 @@ func _process(delta):
 	# print("-----")
 	pass
 
+func _on_Body_mouse_entered(a):
+	print("Mouse")
 	
+func _on_Body_body_entered(a):
+	print("Entered")

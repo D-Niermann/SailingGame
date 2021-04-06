@@ -1,0 +1,78 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://ObjectNodes/Cannon/CannonBall.tscn" type="PackedScene" id=1]
+[ext_resource path="res://_OLDnodes/CollisionTestWall.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/Camera.gd" type="Script" id=3]
+[ext_resource path="res://ObjectNodes/Cannon/Cannon.tscn" type="PackedScene" id=4]
+
+[sub_resource type="CubeMesh" id=1]
+size = Vector3( 1, 5, 5 )
+
+[sub_resource type="BoxShape" id=2]
+extents = Vector3( 0.48483, 2.62139, 2.53343 )
+
+[sub_resource type="CubeMesh" id=3]
+
+[node name="Spatial" type="Spatial"]
+
+[node name="Ball" parent="." instance=ExtResource( 1 )]
+
+[node name="Camera" type="Camera" parent="." groups=[
+"Camera",
+]]
+transform = Transform( 0.999842, 0.00568086, -0.0168706, 0, 0.947713, 0.319124, 0.0178014, -0.319074, 0.947563, 68.36, 13.54, 2.84 )
+fov = 82.0619
+script = ExtResource( 3 )
+gameCam = false
+
+[node name="Wall" type="KinematicBody" parent="."]
+transform = Transform( 2.67162, 1.68516, 0.120163, -0.0579169, -0.133338, 3.15763, 1.68845, -2.67099, -0.0818193, 0.37657, 1.96951, -1.50085 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Wall"]
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Wall"]
+shape = SubResource( 2 )
+
+[node name="Wall3" type="KinematicBody" parent="."]
+transform = Transform( 2.50438, 1.92831, 0.037941, 0.0555897, -0.134326, 3.15763, 1.92788, -2.50106, -0.140336, -12.0571, 1.96951, 0.166111 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance" type="MeshInstance" parent="Wall3"]
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Wall3"]
+shape = SubResource( 2 )
+
+[node name="Wall2" type="KinematicBody" parent="."]
+transform = Transform( 0.0113694, 0.0830403, -0.996481, 0.991549, 0.127865, 0.0219685, 0.129239, -0.988309, -0.0808847, -4.10109, -1.57996, 0.166111 )
+script = ExtResource( 2 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Wall2"]
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="Wall2"]
+shape = SubResource( 2 )
+
+[node name="Cannon" parent="." instance=ExtResource( 4 )]
+transform = Transform( -0.935259, 0, 0.353965, 0, 1, 0, -0.353964, 0, -0.935258, 33.4418, 9.21703, 13.789 )
+force = 1.77
+isPlayerControlable = true
+
+[node name="Spatial" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 68.3089, 9.21703, -5.61958 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1.3257, 0, -3.93356, 0, 1, 0, 1.60706, 0, 3.24489, 66.9476, 7.65923, -7.01585 )
+mesh = SubResource( 3 )
+material/0 = null

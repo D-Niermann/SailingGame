@@ -1,0 +1,155 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://_OLDnodes/ui.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/mockupGUI.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/wheel.png" type="Texture" id=3]
+[ext_resource path="res://icon.png" type="Texture" id=4]
+
+[node name="ui" type="Control"]
+margin_left = 7.0
+margin_top = 8.0
+margin_right = 274.0
+margin_bottom = 156.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MockupGUI" type="TextureRect" parent="."]
+visible = false
+margin_left = 27.1953
+margin_top = -5.52441
+margin_right = 1838.2
+margin_bottom = 1158.48
+texture = ExtResource( 2 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Wheel" type="TextureRect" parent="."]
+anchor_left = 0.0991942
+anchor_top = 0.146
+anchor_right = 1.87119
+anchor_bottom = 3.249
+margin_left = -24.0964
+margin_top = 765.591
+margin_right = -247.22
+margin_bottom = 556.348
+rect_pivot_offset = Vector2( 125, 125 )
+texture = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Wheel2" type="TextureRect" parent="Wheel"]
+anchor_left = 0.0991942
+anchor_top = 0.146
+anchor_right = 1.87119
+anchor_bottom = 3.249
+margin_left = 87.5397
+margin_top = -15.1527
+margin_right = -332.46
+margin_bottom = -768.903
+rect_pivot_offset = Vector2( 125, 125 )
+texture = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+margin_right = 121.0
+margin_bottom = 22.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "WIND SPEED"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="wind_speed" type="HSlider" parent="."]
+anchor_right = 1.0
+margin_top = 18.7704
+margin_bottom = 34.7704
+min_value = 0.4
+max_value = 1.3
+step = 0.01
+value = 0.7
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="."]
+visible = false
+margin_top = 40.9535
+margin_right = 121.0
+margin_bottom = 62.9535
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "WATER STYLE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="water_style" type="HSlider" parent="."]
+visible = false
+anchor_right = 1.0
+margin_top = 59.7239
+margin_bottom = 75.7239
+max_value = 8.0
+rounded = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="."]
+visible = false
+margin_top = 84.751
+margin_right = 121.0
+margin_bottom = 106.751
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "SUBSURFACE SCATTERING"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="subsurface_scattering" type="HSlider" parent="."]
+visible = false
+anchor_right = 1.0
+margin_top = 103.521
+margin_bottom = 119.521
+max_value = 10.0
+step = 0.01
+value = 5.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="Label" parent="."]
+margin_left = 1.88776
+margin_top = 40.2121
+margin_right = 122.888
+margin_bottom = 62.2121
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Time of Day"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Time" type="HSlider" parent="."]
+anchor_right = 1.0
+margin_left = 1.88776
+margin_top = 58.9821
+margin_right = 1.88776
+margin_bottom = 74.9821
+min_value = -3.0
+max_value = 3.0
+step = 0.1
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="value_changed" from="wind_speed" to="." method="_on_wind_speed_value_changed"]
+[connection signal="value_changed" from="water_style" to="." method="_on_water_style_value_changed"]
+[connection signal="value_changed" from="subsurface_scattering" to="." method="_on_subsurface_scattering_value_changed"]
+[connection signal="value_changed" from="Time" to="." method="_on_sun_glare_value_changed"]
