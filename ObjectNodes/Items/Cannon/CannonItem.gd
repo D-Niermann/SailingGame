@@ -19,8 +19,8 @@ var ship # parent ship container
 var lineSize  # length of trjactory prediction line (number of points) / needs some rework
 const rotateSpeed = 0.008 # max rotation speed of cannons (up/down rotation is scaled down )
 const maxRotateAngle = 20 # in degree, left right rotation
-var maxUpAngle = 20 # angle distance in degreee from original rotation that is allowed
-var minUpAngle= 0 # angle distance in degreee from original rotation that is allowed
+var maxUpAngle = 10 # angle distance in degreee from original rotation that is allowed
+var minUpAngle= -2 # angle distance in degreee from original rotation that is allowed
 const unprecision = 4 # in units, how max unprecise a connon is (random)
 onready var rotateMargin = rand_range(-unprecision,unprecision) # error in rotation that is accepted (mouse position) left right
 onready var upDownMargin = rand_range(-unprecision,unprecision) # what difference to mouse pos units to ignore when rotating  up down
@@ -157,8 +157,8 @@ func predictTrajectory():
 			marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*0.1
 			if i>1:
 				marker[i].visible = true
-			fakeBullet.transform.origin += Vector3(1,0,0)*force*2.2
-			fakeBullet.global_transform.origin += Vector3(0,-1,0)*0.01*i ## TODO: does the vector (0,-1,0) always point down globally (gravity)? -> if so why does (1,0,0) always point forwards loccally
+			fakeBullet.transform.origin += Vector3(1,0,0)*force*5.2/(1+i*0.05)
+			fakeBullet.global_transform.origin += Vector3(0,-1,0)*0.015*i ## TODO: does the vector (0,-1,0) always point down globally (gravity)? -> if so why does (1,0,0) always point forwards loccally
 		else:
 			last_i = i
 			break
@@ -205,7 +205,7 @@ func fireBall():
 	var ball = BallScene.instance()
 	get_tree().get_root().add_child(ball)
 	ball.set_name("Ball")
-	ball.transform.origin = self.global_transform.origin+forward
+	ball.transform.origin = self.global_transform.origin+ self.global_transform.basis.x*1 # + foward to give ball a forward offset to get behind own walls
 	ball.dir = global_transform.basis.x
 	ball.velocity = force
 
@@ -215,6 +215,7 @@ func rotateLeftRight(multiplicator=1, dir : String = ""):
 	"""
 	Rotate the cannons around either left or right. Speed Weighted by multiplicator e[0,1]
 	dir :: either 'left' or 'right'
+	TODO: change dir to -1,1 to increase performance
 	"""
 	multiplicator = clamp(abs(multiplicator),0,1)
 	## left rotation = negative angle distance
@@ -229,6 +230,7 @@ func rotateUpDown(multiplicator=1, dir : String = ""):
 	"""
 	Rotate the cannons around either left or right. Speed Weighted by multiplicator e[0,1]
 	dir :: either 'left' or 'right'
+	TODO: change dir to -1,1 to increase performance
 	"""
 	multiplicator = clamp(abs(multiplicator),0,1)
 	## up rotation = positive angle distance

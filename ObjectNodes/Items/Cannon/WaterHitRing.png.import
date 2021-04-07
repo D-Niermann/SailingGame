@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/WaterHitRing.png-10c256bc30d7d04a5abc0358d51422d1.s3tc.stex"
-path.etc2="res://.import/WaterHitRing.png-10c256bc30d7d04a5abc0358d51422d1.etc2.stex"
+path.s3tc="res://.import/WaterHitRing.png-42bdd91d36c14ccf556e0bebd93c67fd.s3tc.stex"
+path.etc2="res://.import/WaterHitRing.png-42bdd91d36c14ccf556e0bebd93c67fd.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://ObjectNodes/Cannon/WaterHitRing.png"
-dest_files=[ "res://.import/WaterHitRing.png-10c256bc30d7d04a5abc0358d51422d1.s3tc.stex", "res://.import/WaterHitRing.png-10c256bc30d7d04a5abc0358d51422d1.etc2.stex" ]
+source_file="res://ObjectNodes/Items/Cannon/WaterHitRing.png"
+dest_files=[ "res://.import/WaterHitRing.png-42bdd91d36c14ccf556e0bebd93c67fd.s3tc.stex", "res://.import/WaterHitRing.png-42bdd91d36c14ccf556e0bebd93c67fd.etc2.stex" ]
 
 [params]
 

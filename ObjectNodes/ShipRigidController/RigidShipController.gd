@@ -11,9 +11,8 @@ Needs a linear damping of approx 5!
 export(bool) var isPlayer = false
 
 var model # ref to ship model
-
-const impulse_factor = 3 # overall impulse stength, all impulses should be multiplied by this
-var turnSpeed = 0
+export var turnForce : float # current turn force for left right steer
+var sails # current sail state (0,1) 1=full sails
 var ocean # ref to ocean object
 
 # force spatials
@@ -28,13 +27,15 @@ var up
 var forward
 var right
 
-# wind stuff
+
+# parameters 
+const impulse_factor = 3 # overall impulse stength, all impulses should be multiplied by this
+# sailing and wind stuff
 var wind_dir = Vector2(0,1) # TODO: make real wind direction vector in the ocean env
-var sails = 0
 var speed_mod = 5.2 # speed modifier, more = more max speed, could be changed because of higher load mass
 const reverse_speed_factor = -0.2 # factor on how much sailing against the wind will reverse the speed direction (0 for still stand, 0.05 for pretty heavy reverse, negative values for allowing sailing against wind)
-const crossWindForce = 0.01
-const maxTurnSpeed = 0.1
+const crossWindForce = 0.01 # force that attacks the ship up on the sails, tilting it with the wind
+const maxTurnForce = 0.7 # max turn force of the whole ship
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	if get_tree().get_nodes_in_group("Ocean").size()>0:
@@ -45,6 +46,10 @@ func _ready():
 	hLeft = $HLeft
 	mainSailForce = $MainSailForce
 	model = $Model
+
+	turnForce = 0
+	sails = 0
+
 
 	## add Decks to item placeable deck group if ship belongs to player
 	if isPlayer:
@@ -58,7 +63,7 @@ func _ready():
 
 func _physics_process(delta):
 	sails = clamp(sails,-0.01, 1)
-	turnSpeed = clamp(turnSpeed,-maxTurnSpeed,maxTurnSpeed)	
+	turnForce = clamp(turnForce,-maxTurnForce,maxTurnForce)	
 
 	up = transform.basis.y
 	forward = transform.basis.x
@@ -68,7 +73,7 @@ func _physics_process(delta):
 	applyPosBuoyancy(hLeft, delta, 0.1) # less force because the roll is otherwise too strong
 	applyPosBuoyancy(hRight, delta, 0.1) # less force because the roll is otherwise too strong
 	## turn impulse
-	apply_impulse(transform.basis.xform(hBack.translation),right*turnSpeed*impulse_factor*delta)
+	apply_impulse(transform.basis.xform(hBack.translation),right*turnForce*impulse_factor*delta)
 	## sail speed impulse
 	apply_central_impulse(forward*calcWindForce()*delta*impulse_factor)
 	# sail wind attack to tilt the ship a bit if cross wind
@@ -77,9 +82,9 @@ func _physics_process(delta):
 func _input(event):
 	if isPlayer:
 		if Input.is_action_pressed("turnLeft"):
-			turnSpeed += 0.01
+			turnForce += 0.01
 		if Input.is_action_pressed("turnRight"):
-			turnSpeed -= 0.01
+			turnForce -= 0.01
 		if Input.is_action_pressed("sailsUp"):
 			sails += 0.01
 		if Input.is_action_pressed("sailsDown"):

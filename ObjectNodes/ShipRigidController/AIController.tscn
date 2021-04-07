@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://SceneNodes/AITest/ShipMovementAI.gd" type="Script" id=1]
+
+[sub_resource type="CapsuleMesh" id=1]
+radius = 0.2
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.027451, 0.0196078, 0.0196078, 1 )
+
+[sub_resource type="PrismMesh" id=3]
+size = Vector3( 1, 2, 2 )
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.0705882, 0.0313726, 0.0313726, 1 )
+
+[node name="AIController" type="Spatial"]
+transform = Transform( 0.798512, 0, 0.601852, 0, 1, 0, -0.601852, 0, 0.798512, 0, 10, 0 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+parallelWeight = 0.1
+windWeight = 0.2
+broadsideWeight = 1.0
+optimalDistance = 4
+windVec = Vector3( 0, 0, -1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, -0.455703, 0, -0.125626 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 4 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]
+transform = Transform( -4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, 0.680693, 0, -0.125627 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 5 )

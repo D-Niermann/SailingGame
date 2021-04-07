@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://SceneNodes/OceanEnv/OceanEnvironment.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ObjectNodes/ShipRigidController/ShipRigidController.tscn" type="PackedScene" id=2]
 [ext_resource path="res://SceneNodes/Islands/Island_Small.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ObjectNodes/ShipRigidController/AIController.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=5]
 [ext_resource path="res://ObjectNodes/TestGUIElements.tscn" type="PackedScene" id=6]
 [ext_resource path="res://ObjectNodes/Clouds/Clouds.tscn" type="PackedScene" id=7]
@@ -50,22 +51,19 @@ __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="Camera" type="Camera" parent="ViewportContainer/Viewport" groups=[
-"Camera",
-]]
+[node name="Camera" type="Camera" parent="ViewportContainer/Viewport"]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.477772, 39.8137, -0.192314 )
-current = true
 fov = 47.5
 size = 63.36
 far = 300.0
 script = ExtResource( 5 )
 gameCam = false
-disabledScript = false
 
 [node name="GameCamera" type="Camera" parent="ViewportContainer/Viewport" groups=[
 "Camera",
 ]]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 50, 0 )
+current = true
 fov = 35.0
 far = 300.0
 script = ExtResource( 8 )
@@ -94,6 +92,21 @@ isPlayer = true
 
 [node name="OtherShip" parent="ViewportContainer/Viewport" instance=ExtResource( 2 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 16.6369, 0, 32.4926 )
+turnForce = 1494.8
+
+[node name="AIController" parent="ViewportContainer/Viewport/OtherShip" instance=ExtResource( 4 )]
+transform = Transform( 0.990703, 0, -0.135491, 0, 1, 0, 0.135491, 0, 0.990703, 0, 10, 0 )
+parallelWeight = 1.0
+optimalDistance = 30
+
+[node name="OtherShip2" parent="ViewportContainer/Viewport" instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -12.4502, 0, 7.86638 )
+turnForce = 1494.8
+
+[node name="AIController" parent="ViewportContainer/Viewport/OtherShip2" instance=ExtResource( 4 )]
+transform = Transform( 0.757856, 0, -0.652309, 0, 1, 0, 0.652309, 0, 0.757856, 0, 10, 0 )
+parallelWeight = 1.0
+optimalDistance = 30
 
 [node name="Interface" type="Control" parent="."]
 anchor_right = 1.0

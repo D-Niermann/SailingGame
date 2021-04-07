@@ -1,7 +1,7 @@
 extends Spatial
 
 export(float) var wind_strength = 0.5 setget set_wind_strength
-
+# TODO: wind direction vector?
 var time = 0.0
 var wind_modified = 1.0
 
