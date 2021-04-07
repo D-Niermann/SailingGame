@@ -17,7 +17,7 @@ size = Vector3( 1, 2, 2 )
 [node name="Enemy" type="Spatial" parent="." groups=[
 "PlayerShip",
 ]]
-transform = Transform( -0.99639, 0, -0.0848773, 0, 1, 0, 0.0848773, 0, -0.99639, -7.15955, 0, 0.247714 )
+transform = Transform( -0.99639, 0, -0.0848773, 0, 1, 0, 0.0848773, 0, -0.99639, -3.87664, 0, -7.25574 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -35,20 +35,9 @@ material/0 = SubResource( 2 )
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 17.281, 0 )
 
-[node name="AIController2" parent="." instance=ExtResource( 1 )]
-transform = Transform( -0.945712, 0, 0.324772, 0, 1, 0, -0.324772, 0, -0.945712, -2.80967, 10, 1.74153 )
-parallelWeight = 0.0
-windWeight = 0.0
-broadsideWeight = 0.0
-optimalDistance = 0
-
 [node name="ShipRigid" parent="." instance=ExtResource( 2 )]
-transform = Transform( 0.984844, 0, 0.173442, 0, 1, 0, -0.173442, 0, 0.984844, -10.508, 0, -6.16849 )
-turnForce = 3316.5
+transform = Transform( 0.984844, 0, 0.173442, 0, 1, 0, -0.173442, 0, 0.984844, -3.05249, 4.57764e-05, 5.80456 )
+turnForce = -0.650015
 
 [node name="AIController" parent="ShipRigid" instance=ExtResource( 1 )]
-transform = Transform( 0.301866, 0, -0.953269, 0, 1, 0, 0.953269, 0, 0.301866, 0, 10, 0 )
-parallelWeight = 0.0
-windWeight = 0.0
-broadsideWeight = 0.0
-optimalDistance = 0
+transform = Transform( 0.161606, 0, -0.986778, 0, 1, 0, 0.986778, 0, 0.161606, 0, 10, 0 )

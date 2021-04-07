@@ -18,7 +18,7 @@ export var broadsideWeight = 0.2
 export var optimalDistance = 4
 export var windVec = Vector3(1,0,0) # TODO: listen to environment wind dir
 var useTerminal = false
-
+var aimPrecision = 10 # in degree, how much deviation to allow from target to fire (more = more unprecise)
 
 ## vars
 var enemy # ref to current enemy TODO: what about multiple enemies?
@@ -33,6 +33,7 @@ var towardsEnemy = Vector3(1,0,0)
 var broadSideVec
 var distToEnemy
 var targetSails # not yet used
+var angleToEnemy
 var myShip
 
 func _ready():
@@ -46,24 +47,39 @@ func _physics_process(delta):
 
 
 func update(objectsInRange : Array):
-	distToEnemy = (enemy.global_transform.origin - global_transform.origin).length()
-
+	# TODO: performance: maybe dont do this every time, only a few times a second?
 	up = (global_transform.basis.y.normalized())
 	forward = (global_transform.basis.x.normalized())
 	right = (global_transform.basis.z.normalized())
-	# TODO: performance: maybe dont do this every time, only a few times a second?
+
+	distToEnemy = (enemy.global_transform.origin - global_transform.origin).length()
+	angleToEnemy = signedAngle(forward,towardsEnemy,up)
+
+	# if abs(rad2deg(angleToEnemy))<120 and abs(rad2deg(angleToEnemy))>60:
+	aimCannons()
 	calcTargetSails() # calculate the target sail level for the current position
 	calcTargetVector() # calculate the target vector for the current position
 	rotateToAngle() # rotate this spatial to the target vector
-	controlShip() # control the ship so that it follows the direciton of this spatial 
+	turnShip() # control the ship so that it follows the direciton of this spatial 
+
+func aimCannons():
+	var cannon
+	for i in range(myShip.cannons.size()):
+		cannon = get_node(myShip.cannons[i])
+		cannon.aimTo(enemy.global_transform.origin)
+		if abs(cannon.aimDiffAngle)<aimPrecision:
+			cannon.fireBall()
 
 func calcTargetSails():
-	pass
+	if distToEnemy<optimalDistance+10:
+		myShip.sails = 0.8
+	else:
+		myShip.sails = 1
 
 func calcTargetVector():
 	towardsEnemy = ((enemy.global_transform.origin - global_transform.origin)).normalized()
 	towardsWeight = clamp((distToEnemy-optimalDistance)*0.1,-1,1)
-	if signedAngle(forward,towardsEnemy,up)>=0:
+	if angleToEnemy>=0:
 		broadSideVec = towardsEnemy.rotated(up, PI/2)
 	else:
 		broadSideVec = towardsEnemy.rotated(up, -PI/2)
@@ -73,14 +89,11 @@ func calcTargetVector():
 	targetVector += broadSideVec * broadsideWeight # add the target of turn into broadside to enemy
 	
 	
-func controlShip():
+func turnShip():
 	""" this function takes the spatial of this and tries to steer and guide the rigidbody ship towards it."""
 	var diff = signedAngle(myShip.transform.basis.x,forward,up)*rotateSpeed
 	myShip.turnForce = (-diff)*10
-	if distToEnemy<optimalDistance+10:
-		myShip.sails = enemy.sails+0.1
-	else:
-		myShip.sails = 1
+	
 func rotateToAngle():
 	angleDiff = signedAngle(targetVector,forward,up)*rotateSpeed
 	rotate(up, angleDiff)

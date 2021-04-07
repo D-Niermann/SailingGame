@@ -13,7 +13,7 @@ radius = 0.05
 height = 0.1
 
 [sub_resource type="SphereShape" id=2]
-radius = 0.265622
+radius = 0.135053
 
 [sub_resource type="SpatialMaterial" id=3]
 render_priority = 1
@@ -97,6 +97,8 @@ __meta__ = {
 }
 
 [node name="Trail" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00219304, 0, -0.00427228 )
+emitting = false
 
 [node name="HitParticle" parent="." instance=ExtResource( 7 )]
 emitting = false
