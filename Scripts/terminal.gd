@@ -101,9 +101,15 @@ func _physics_process(delta):
 			var preset: Dictionary = presets[info["preset"]] # preset has constants of this unit, like max health and resource path
 			if live.has(part): # if part of this unit is live, we can find its holo
 				holo = viewport.get_node_or_null(unit)
-			pass # run specific behavior, you could add any sort of AI here
+			# run specific behavior, you could add any sort of AI here
+			if holo != null: # runs when unit is live
+				var controller = holo.get_node_or_null("AIController")
+				if controller != null:
+					controller.update(inProx)
+				info["xform"] = holo.global_transform # at the end, update transform
+			else: # runs when unit is offscreen
+				info["xform"] = info["xform"] # at the end, update transform
 			# maintaining consistency, we update all necessary data after the behavior, so things don't fall apart
-			info["xform"] = info["xform"] # update transform, is a must
 			var newPart = Utility.partitionID(info["xform"].origin, PARTSIZE, EXTENDED) # new partition of this unit
 			if newPart != part: # if partition has changed, we update and load/unload if necessary
 				part.erase(unit)
