@@ -108,8 +108,8 @@ points = PoolVector3Array( -1.445, 1.455, 0.135, 1.445, 1.455, -0.135, 1.445, 1.
 [node name="ShipRigid" type="RigidBody"]
 collision_layer = 2
 collision_mask = 2
-linear_damp = 3.0
-angular_damp = 2.0
+linear_damp = 2.0
+angular_damp = 3.0
 script = ExtResource( 2 )
 
 [node name="Model" parent="." instance=ExtResource( 1 )]
@@ -206,12 +206,12 @@ __meta__ = {
 }
 
 [node name="HLeft" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.06725, -9.53674e-07, -1.40938 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.5 )
 script = ExtResource( 5 )
 posParticleThresh = 0.2
 
 [node name="WaterSplashParticles" type="Particles" parent="HLeft"]
-transform = Transform( 0.0420866, -0.00842654, -0.999078, 0.196323, 0.980539, 1.64456e-09, 0.979635, -0.196142, 0.0429219, 0.232592, 1.59139, 0.102409 )
+transform = Transform( 0.0420866, -0.00842654, -0.999078, 0.196323, 0.980539, 1.64456e-09, 0.979635, -0.196142, 0.0429219, 0.233, 1.591, 0.141 )
 material_override = SubResource( 11 )
 cast_shadow = 2
 emitting = false
@@ -227,12 +227,12 @@ __meta__ = {
 }
 
 [node name="HRight" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.12325, 0, 1.17193 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.5 )
 script = ExtResource( 5 )
 posParticleThresh = 0.2
 
 [node name="WaterSplashParticles" type="Particles" parent="HRight"]
-transform = Transform( -4.26307e-08, -9.65964e-09, -1, -0.220987, 0.975277, 7.85103e-16, 0.975277, 0.220987, -4.37114e-08, 0.435654, 1.37803, 0.484581 )
+transform = Transform( -4.26307e-08, -9.65964e-09, -1, -0.220987, 0.975277, 7.85103e-16, 0.975277, 0.220987, -4.37114e-08, 0.436, 1.378, 0 )
 material_override = SubResource( 11 )
 cast_shadow = 2
 emitting = false

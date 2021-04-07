@@ -51,7 +51,7 @@ func _ready():
 	fakeBullet = $FakeBullet
 	camera = get_viewport().get_camera()
 	org_rotation = transform.basis.get_euler()*180/PI
-	org_forward = global_transform.basis.x.normalized() # used for angle calculation
+	org_forward = transform.basis.x.normalized() # used for angle calculation
 	if get_tree().get_nodes_in_group("Ocean").size()>0:
 		ocean = get_tree().get_nodes_in_group("Ocean")[0]
 	myShip = get_parent().get_parent().get_parent()
@@ -79,7 +79,7 @@ func _ready():
 func on_placement():
 	.on_placement() # calls the parent function
 	org_rotation = transform.basis.get_euler()*180/PI
-	org_forward = global_transform.basis.x.normalized() # used for angle calculation
+	org_forward = transform.basis.x.normalized() # used for angle calculation
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

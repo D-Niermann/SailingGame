@@ -3,11 +3,13 @@
 [ext_resource path="res://SceneNodes/AITest/ShipMovementAI.gd" type="Script" id=1]
 
 [sub_resource type="CapsuleMesh" id=1]
+radius = 0.2
 
 [sub_resource type="SpatialMaterial" id=2]
 albedo_color = Color( 0.380392, 0.0666667, 0.0666667, 1 )
 
 [sub_resource type="PrismMesh" id=3]
+size = Vector3( 1, 2, 2 )
 
 [sub_resource type="SpatialMaterial" id=4]
 albedo_color = Color( 0.027451, 0.0196078, 0.0196078, 1 )
@@ -18,30 +20,34 @@ albedo_color = Color( 0.0705882, 0.0313726, 0.0313726, 1 )
 [node name="Spatial" type="Spatial"]
 
 [node name="Enemy" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.49105, 0, 1.32244 )
+transform = Transform( -0.999045, 0, 0.0436721, 0, 1, 0, -0.0436721, 0, -0.999045, 0.75636, 0, -4.32195 )
 
 [node name="MeshInstance3" type="MeshInstance" parent="Enemy"]
-transform = Transform( 0.646693, 0, 0, 0, 0.646693, 0, 0, 0, 0.646693, 0, 0, 0 )
+transform = Transform( 0.00845371, 0, -0.646638, 0, 0.646693, 0, 0.646638, 0, 0.00845371, -0.497879, 0, -0.48372 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
 
 [node name="MeshInstance4" type="MeshInstance" parent="Enemy"]
-transform = Transform( 0.659414, 0, 0, 0, -2.88239e-08, 0.659414, 0, -0.659414, -2.88239e-08, 0, 0, -1.1364 )
+transform = Transform( 0.00861995, 0.659358, 2.88214e-08, 0, -2.88239e-08, 0.659414, 0.659358, -0.00861995, -3.7679e-10, 0.490086, 0, -0.504431 )
 mesh = SubResource( 3 )
 material/0 = SubResource( 2 )
 
 [node name="Player" type="Spatial" parent="."]
-transform = Transform( 0.731315, 0, -0.681962, 0, 1, 0, 0.681962, 0, 0.731315, -5.5589, -0.0778445, 2.39412 )
+transform = Transform( -0.767598, 0, 0.640813, 0, 1, 0, -0.640813, 0, -0.767598, 5.04551, -0.078, -8.04611 )
 script = ExtResource( 1 )
-targetAngle = -317
+windVec = Vector3( 0, 0, -1 )
+parallelWeight = 0.111
+windWeight = 0.2
+broadsideWeight = 0.5
+optimalDistance = 4
 
 [node name="MeshInstance" type="MeshInstance" parent="Player"]
-transform = Transform( 0.646693, 0, 0, 0, 0.646693, 0, 0, 0, 0.646693, 0, 0, 0 )
+transform = Transform( 3.13412e-08, 0, -0.646693, 0, 0.646693, 0, 0.646693, 0, 3.13412e-08, -0.455703, 0, -0.125626 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 4 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="Player"]
-transform = Transform( 0.659414, 0, 0, 0, -2.88239e-08, 0.659414, 0, -0.659414, -2.88239e-08, 0, 0, -1.1364 )
+transform = Transform( -1.39182e-08, 0.659414, 2.88239e-08, 0, -2.88239e-08, 0.659414, 0.659414, 1.39182e-08, 2.36995e-15, 0.680693, 0, -0.125627 )
 mesh = SubResource( 3 )
 material/0 = SubResource( 5 )
 

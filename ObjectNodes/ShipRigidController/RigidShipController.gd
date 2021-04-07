@@ -12,7 +12,7 @@ export(bool) var isPlayer = false
 
 var model # ref to ship model
 
-const impulse_factor = 5 # overall impulse stength, all impulses should be multiplied by this
+const impulse_factor = 3 # overall impulse stength, all impulses should be multiplied by this
 var turnSpeed = 0
 var ocean # ref to ocean object
 
@@ -63,8 +63,8 @@ func _physics_process(delta):
 	up = transform.basis.y
 	forward = transform.basis.x
 	right = transform.basis.z
-	applyPosBuoyancy(hFront, delta)
-	applyPosBuoyancy(hBack, delta)
+	applyPosBuoyancy(hFront, delta, 1)
+	applyPosBuoyancy(hBack, delta, 1)
 	applyPosBuoyancy(hLeft, delta, 0.1) # less force because the roll is otherwise too strong
 	applyPosBuoyancy(hRight, delta, 0.1) # less force because the roll is otherwise too strong
 	## turn impulse
@@ -96,7 +96,7 @@ func applyPosBuoyancy(obj : Spatial, delta, factor :float = 1.0):
 		waterH = ocean.getWaterHeight(obj.global_transform.origin)
 	var diff = obj.global_transform.origin.y - waterH # if diff <0 = underwater
 	if diff<0:
-		var impulse = Vector3(0,1,0)*factor*pow(abs(diff),1.5)*impulse_factor*delta
+		var impulse = Vector3(0,1,0)*factor*pow(abs(diff),1.0)*impulse_factor*delta
 		apply_impulse(p, impulse)
 
 func applyImpulse(from : Vector3, direction : Vector3):
