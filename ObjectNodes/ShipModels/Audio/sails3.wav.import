@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/sails3.wav-cef2b1e937f80274587a3a13e78de681.sample"
+
+[deps]
+
+source_file="res://ObjectNodes/ShipModels/Audio/sails3.wav"
+dest_files=[ "res://.import/sails3.wav-cef2b1e937f80274587a3a13e78de681.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

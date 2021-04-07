@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/squeak1.wav-fe7e8d57faf166d22521bb7c9593668d.sample"
+
+[deps]
+
+source_file="res://ObjectNodes/ShipModels/Audio/squeak1.wav"
+dest_files=[ "res://.import/squeak1.wav-fe7e8d57faf166d22521bb7c9593668d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

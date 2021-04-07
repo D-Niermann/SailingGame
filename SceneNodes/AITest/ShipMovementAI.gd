@@ -17,6 +17,8 @@ var towardsWeight = 1  #this can be negative as well to drive away from enemy, n
 export var broadsideWeight = 0.2
 export var optimalDistance = 4
 export var windVec = Vector3(1,0,0) # TODO: listen to environment wind dir
+var useTerminal = false
+
 
 ## vars
 var enemy # ref to current enemy TODO: what about multiple enemies?
@@ -39,6 +41,11 @@ func _ready():
 	myShip = get_parent()
 
 func _physics_process(delta):
+	if !useTerminal:
+		update([])
+
+
+func update(objectsInRange : Array):
 	distToEnemy = (enemy.global_transform.origin - global_transform.origin).length()
 
 	up = (global_transform.basis.y.normalized())
