@@ -25,7 +25,7 @@ const unprecision = 4 # in units, how max unprecise a connon is (random)
 onready var rotateMargin = rand_range(-unprecision,unprecision) # error in rotation that is accepted (mouse position) left right
 onready var upDownMargin = rand_range(-unprecision,unprecision) # what difference to mouse pos units to ignore when rotating  up down
 export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
-export(float) var recoil_impulse = 0.1 # when firing to the ship
+export(float) var recoil_impulse = 0.3 # when firing to the ship
 
 var camera
 var org_rotation : Vector3
@@ -200,7 +200,7 @@ func fireBall():
 	yield(get_tree().create_timer(fire_delay_sec),"timeout")
 	playAudio()
 	doParticles()
-	myShip.applyImpulse(translation, -transform.basis.x.normalized()*recoil_impulse)
+	myShip.applyCannonImpulse(translation, -transform.basis.x.normalized()*recoil_impulse)
 	yield(get_tree().create_timer(rand_range(0,rand_max_delay)),"timeout")
 	var ball = BallScene.instance()
 	get_tree().get_root().add_child(ball)
