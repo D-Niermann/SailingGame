@@ -5,6 +5,7 @@ const CURRENCY: String = "g"
 const ITEM: PackedScene = preload("res://listItem.tscn")
 const TYPE: PackedScene = preload("res://tabsType.tscn")
 
+var info = null
 var open = null
 var tabs = null
 var list = null
@@ -30,6 +31,7 @@ var rot = 0.0
 var size = Vector3.ONE # in terms of tile size given above, each component must be an integer
 var rotSize = Vector3.ONE
 var switch: bool = true
+var toggled = null
 
 var leftClick: bool = false
 var rightClick: bool = false
@@ -44,6 +46,7 @@ func _ready():
 	indicator = get_node("Indicator")
 	tabs = get_node("Shop/Tabs/Container")
 	list = get_node("Shop/List/Container")
+	info = get_node("Info")
 	viewport = get_tree().get_root().get_node("GameWorld/ViewportContainer/Viewport")
 
 # Catches only the input which has not been handled yet.
@@ -61,7 +64,7 @@ func _unhandled_input(event):
 # Called every physics frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	if selected_deck!=-1:
-		target = get_tree().get_nodes_in_group("PlayerDeck")[selected_deck] 
+		target = get_tree().get_nodes_in_group("PlayerDeck")[selected_deck]
 	if connected != null:
 		if open == null:
 			indicator.visible = true
@@ -93,7 +96,7 @@ func _physics_process(delta):
 			highlight = null
 		if resource != null || hologram != null:
 			placeOrDestroyHologram()
-		return
+#		return
 	var layer = 0b1
 	if hologram != null: 
 		if selected_deck == 0:
@@ -109,6 +112,12 @@ func _physics_process(delta):
 	var camera: Camera = viewport.get_camera()
 	var spaceState: PhysicsDirectSpaceState = camera.get_world().direct_space_state
 	var viewportContainer: ViewportContainer = viewport.get_parent()
+	if toggled == null:
+		if info.visible:
+			toggle(null)
+	else:
+		var pos: Vector2 = camera.unproject_position(toggled.global_transform.origin)
+		info.rect_position = Vector2(clamp(pos.x, 0, viewport.size.x), clamp(pos.y, 0, viewport.size.y)) * viewportContainer.stretch_shrink
 	var cursor = get_viewport().get_mouse_position() / viewportContainer.stretch_shrink
 	var hit: Dictionary
 	var toIgnore: Array = [hologram]
@@ -155,27 +164,33 @@ func _physics_process(delta):
 			sprite.modulate = Color(1.0, 0.0, 0.0, 0.5)
 	else:
 		if !hit.empty() && hit.collider.get_node_or_null("Sprite3D"): # checks if hit is item, else throws errors
-			var temp = hit.collider.get_parent()
-			if temp != null && temp == target:
-				if leftClick:
-					resource = null
-					hologram = hit.collider
-					var mall: Dictionary = Economy.malls[open]
-					var itemName = Utility.resName(hologram.name)
-					var itemPrice = Economy.getPrice(itemName, open)
-					if itemPrice <= mall["money"] && !mall["black"].has(itemName) && mall["white"].has(Economy.goods[itemName]["type"]):
-						seller.text = str(itemPrice) + CURRENCY
-						seller.disabled = false
+			if leftClick:
+				toggle(hit.collider)
+			if open != null:
+				var temp = hit.collider.get_parent()
+				if temp != null && temp == target:
+					if leftClick:
+						resource = null
+						hologram = hit.collider
+						var mall: Dictionary = Economy.malls[open]
+						var itemName = Utility.resName(hologram.name)
+						var itemPrice = Economy.getPrice(itemName, open)
+						if itemPrice <= mall["money"] && !mall["black"].has(itemName) && mall["white"].has(Economy.goods[itemName]["type"]):
+							seller.text = str(itemPrice) + CURRENCY
+							seller.disabled = false
+						else:
+							seller.disabled = true
+						parent = temp
+						coords = hologram.global_transform.origin - parent.global_transform.origin
+						xform = hologram.transform
+						angle = -Utility.signedAngle(parent.global_transform.basis.x.normalized(), hologram.global_transform.basis.x.normalized(), parent.global_transform.basis.y.normalized())
+						setSize()
+						rot = angle
 					else:
-						seller.disabled = true
-					parent = temp
-					coords = hologram.global_transform.origin - parent.global_transform.origin
-					xform = hologram.transform
-					angle = -Utility.signedAngle(parent.global_transform.basis.x.normalized(), hologram.global_transform.basis.x.normalized(), parent.global_transform.basis.y.normalized())
-					setSize()
-					rot = angle
-				else:
-					newHighlight = hit.collider
+						newHighlight = hit.collider
+		else:
+			if leftClick:
+				toggle(null)
 	if highlight != null:
 		var sprite = highlight.get_node("Sprite3D")
 		if sprite!=null:
@@ -217,7 +232,7 @@ func hologramFromResource(path: String):
 	rot = 0.0
 	var shape = hologram.get_node("CollisionShape").shape
 	if shape is BoxShape:
-		shape.extents = Vector3(size.x, size.y, size.z) * TILEWIDTH/2 - Vector3.ONE * 0.01
+		shape.extents = Vector3(size.x, size.y, size.z) * 0.5 * TILEWIDTH - Vector3.ONE * 0.01
 	var gridMesh = hologram.get_node_or_null("GridShowMesh")
 	if gridMesh != null:
 		gridMesh.visible = true
@@ -289,7 +304,7 @@ func setSize():
 	rotSize = Vector3(tempToo.x, 1.0, tempToo.y)
 	var shape = hologram.get_node("CollisionShape").shape
 	if shape is BoxShape:
-		shape.extents = Vector3(size.x, size.y, size.z) * TILEWIDTH/2 - Vector3.ONE * 0.01
+		shape.extents = Vector3(size.x, size.y, size.z) * 0.5 * TILEWIDTH - Vector3.ONE * 0.01
 	var gridMesh = hologram.get_node_or_null("GridShowMesh")
 	if gridMesh != null:
 		gridMesh.visible = true
@@ -488,6 +503,7 @@ func purchase(node: Node):
 	updateList()
 
 
+# Sells selected item to the open shop.
 func sell():
 	if hologram != null:
 		if resource == null:
@@ -500,6 +516,21 @@ func sell():
 				Economy.money += itemPrice
 				destroyHologram()
 				updateList()
+
+
+# Changes toggled item that information will be shown about.
+func toggle(thing):
+	if toggled == null || thing != toggled:
+		info.visible = false
+		for child in info.get_children():
+			child.queue_free()
+	toggled = thing
+	if toggled != null:
+		info.visible = true
+		# fill item's info here, example is given below by adding icon.png
+		var rect: TextureRect = TextureRect.new()
+		rect.texture = load("res://icon.png")
+		info.add_child(rect)
 
 
 func _on_indicator():
