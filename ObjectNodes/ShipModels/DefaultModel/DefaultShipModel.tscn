@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/topDeck.png" type="Texture" id=1]
+[ext_resource path="res://ObjectNodes/Items/Cannon/CannonItem.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/shipDeck.png" type="Texture" id=3]
 [ext_resource path="res://ObjectNodes/ShipModels/WoodMaterial.tres" type="Material" id=4]
 [ext_resource path="res://ObjectNodes/DefaultDeckLight/DefaultDeckLight.tscn" type="PackedScene" id=5]
@@ -188,6 +189,25 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.067378, -2.09658, -4.76837e-07,
 
 [node name="CollisionShape2" type="CollisionShape" parent="Deck1/FakeWalls2"]
 shape = SubResource( 6 )
+
+[node name="CannonLarge" parent="Deck1" instance=ExtResource( 2 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0.489955, 0.183492, 1.27498 )
+
+[node name="CannonLarge2" parent="Deck1" instance=ExtResource( 2 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.414111, 0.183492, 1.45051 )
+fire_delay_sec = 0.2
+
+[node name="CannonLarge3" parent="Deck1" instance=ExtResource( 2 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.84019, 0.183492, 1.5101 )
+fire_delay_sec = 0.3
+
+[node name="CannonLarge4" parent="Deck1" instance=ExtResource( 2 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.84019, 0.183492, 1.5101 )
+fire_delay_sec = 0.4
+
+[node name="CannonLarge5" parent="Deck1" instance=ExtResource( 2 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.15981, 0.183492, 1.35882 )
+fire_delay_sec = 0.5
 
 [node name="Deck2" type="KinematicBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.41253, 0 )

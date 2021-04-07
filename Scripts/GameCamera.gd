@@ -10,6 +10,7 @@ export var rotationSensitivity = 0.2
 export var zoomSensitivity = 0.2
 var rotate = false
 var do_center = false
+var shake_val = 0
 
 var _mouse_position = Vector2(0.0, 0.0)
 var _total_pitch = 0.0
@@ -26,13 +27,14 @@ func _process(delta):
 			targetPos.x = ship.global_transform.origin.x
 			targetPos.z = ship.global_transform.origin.z
 		targetPos.y = clamp(targetPos.y,minHeight,maxHeight)
+		targetPos += Vector3(rand_range(-shake_val,shake_val),0,rand_range(-shake_val,shake_val))
 		translation += (targetPos - translation)*speedScale
-		if do_center and (Vector2(targetPos.x,targetPos.z)-Vector2(translation.x,translation.z)).length()<0.1:
-			translation.x = ship.global_transform.origin.x
-			translation.z = ship.global_transform.origin.z
+		# if do_center and (Vector2(targetPos.x,targetPos.z)-Vector2(translation.x,translation.z)).length()<0.1:
+		# 	translation.x = ship.global_transform.origin.x
+		# 	translation.z = ship.global_transform.origin.z
 		_update_mouselook()
 		rotate_y(deg2rad(-getAngleDist_deg(target_yar, rad2deg(transform.basis.get_euler().y))*speedScale))
-	
+	shake_val*=0.87
 
 func _unhandled_input(event):
 	# Receives key input

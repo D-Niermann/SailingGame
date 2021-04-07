@@ -13,6 +13,7 @@ var right : Vector3
 export(float) var force = 0.6 # for trajectory prediction: force of ball
 var drag = 0.05 # for trajectory prediction: drag of ball
 var rand_max_delay = 0.4 # max delay in seconds
+var cam_shake = 0.2 # the amount of camera shake added to camera when shooting
 var ship # parent ship container
 ### vars for line rendering (but the gitHub LineRenderer lags so hard that i canceled it for now)
 # var line
@@ -200,6 +201,7 @@ func fireBall():
 	yield(get_tree().create_timer(fire_delay_sec),"timeout")
 	playAudio()
 	doParticles()
+	camera.shake_val += cam_shake
 	myShip.applyCannonImpulse(translation, -transform.basis.x.normalized()*recoil_impulse)
 	yield(get_tree().create_timer(rand_range(0,rand_max_delay)),"timeout")
 	var ball = BallScene.instance()
