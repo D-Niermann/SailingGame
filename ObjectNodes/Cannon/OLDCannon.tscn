@@ -6,12 +6,13 @@
 [ext_resource path="res://addons/kenney_particle_pack/smoke_02.png" type="Texture" id=5]
 [ext_resource path="res://materials/Black.tres" type="Material" id=6]
 [ext_resource path="res://ObjectNodes/Cannon/CannonBall.tscn" type="PackedScene" id=7]
-[ext_resource path="res://ObjectNodes/Cannon/WaterHitRing.png" type="Texture" id=8]
+[ext_resource path="res://ObjectNodes/Items/Cannon/WaterHitRing.png" type="Texture" id=8]
 [ext_resource path="res://ObjectNodes/Cannon/Sounds/Cannon6.wav" type="AudioStream" id=10]
 [ext_resource path="res://ObjectNodes/Cannon/Sounds/Cannon5.wav" type="AudioStream" id=11]
 [ext_resource path="res://ObjectNodes/Cannon/Sounds/Cannon4.wav" type="AudioStream" id=12]
-[ext_resource path="res://ObjectNodes/Cannon/trajectoryPoint.png" type="Texture" id=13]
+[ext_resource path="res://ObjectNodes/Items/Cannon/trajectoryPoint.png" type="Texture" id=13]
 [ext_resource path="res://ObjectNodes/Cannon/Sounds/Cannon7.wav" type="AudioStream" id=14]
+
 
 
 

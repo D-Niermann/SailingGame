@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/trajectoryPoint.png-24b3f429a72ef804742a145010fda2a6.s3tc.stex"
-path.etc2="res://.import/trajectoryPoint.png-24b3f429a72ef804742a145010fda2a6.etc2.stex"
+path.s3tc="res://.import/trajectoryPoint.png-809de6df8ab74d748ddcdefa40a64fce.s3tc.stex"
+path.etc2="res://.import/trajectoryPoint.png-809de6df8ab74d748ddcdefa40a64fce.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://ObjectNodes/Cannon/trajectoryPoint.png"
-dest_files=[ "res://.import/trajectoryPoint.png-24b3f429a72ef804742a145010fda2a6.s3tc.stex", "res://.import/trajectoryPoint.png-24b3f429a72ef804742a145010fda2a6.etc2.stex" ]
+source_file="res://ObjectNodes/Items/Cannon/trajectoryPoint.png"
+dest_files=[ "res://.import/trajectoryPoint.png-809de6df8ab74d748ddcdefa40a64fce.s3tc.stex", "res://.import/trajectoryPoint.png-809de6df8ab74d748ddcdefa40a64fce.etc2.stex" ]
 
 [params]
 

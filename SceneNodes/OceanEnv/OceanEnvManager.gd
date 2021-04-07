@@ -1,7 +1,7 @@
 extends Spatial
 
 export(float) var wind_strength = 0.5 setget set_wind_strength
-
+# TODO: wind direction vector?
 var time = 0.0
 var wind_modified = 1.0
 
@@ -145,7 +145,7 @@ func _physics_process(delta):
 	
 	update_water(wind_modified)
 	waterMousePos = getMousePosition()
-	sunLight.rotate(Vector3(1,0,0), time*0.00001) 
+	sunLight.rotate(Vector3(1,0,0), 0.001) 
 
 func getMousePosition() -> Vector3:
 	from = camera.project_ray_origin(viewport.get_mouse_position())

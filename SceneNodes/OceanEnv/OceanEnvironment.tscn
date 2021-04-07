@@ -63,11 +63,11 @@ gameCam = false
 disabledScript = false
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 0.959251, 0.193823, -0.205601, 0.173715, 0.169344, 0.970127, 0.22285, -0.96631, 0.128774, 0, 0, 0 )
+transform = Transform( 0.977379, 0.211495, 1.38074e-07, -1.16661e-07, -1.13725e-07, 1, 0.211495, -0.977379, -8.64794e-08, 914.616, -165.422, -247.33 )
 light_color = Color( 1, 0.929412, 0.741176, 1 )
 light_specular = 1.0
 shadow_enabled = true
-directional_shadow_max_distance = 200.0
+directional_shadow_max_distance = 173.8
 
 [node name="EnvAudioSource" parent="." instance=ExtResource( 4 )]
 

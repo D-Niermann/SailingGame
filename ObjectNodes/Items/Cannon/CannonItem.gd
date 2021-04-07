@@ -13,19 +13,20 @@ var right : Vector3
 export(float) var force = 0.6 # for trajectory prediction: force of ball
 var drag = 0.05 # for trajectory prediction: drag of ball
 var rand_max_delay = 0.4 # max delay in seconds
+var cam_shake = 0.2 # the amount of camera shake added to camera when shooting
 var ship # parent ship container
 ### vars for line rendering (but the gitHub LineRenderer lags so hard that i canceled it for now)
 # var line
 var lineSize  # length of trjactory prediction line (number of points) / needs some rework
 const rotateSpeed = 0.008 # max rotation speed of cannons (up/down rotation is scaled down )
 const maxRotateAngle = 20 # in degree, left right rotation
-var maxUpAngle = 20 # angle distance in degreee from original rotation that is allowed
-var minUpAngle= 0 # angle distance in degreee from original rotation that is allowed
+var maxUpAngle = 10 # angle distance in degreee from original rotation that is allowed
+var minUpAngle= -2 # angle distance in degreee from original rotation that is allowed
 const unprecision = 4 # in units, how max unprecise a connon is (random)
 onready var rotateMargin = rand_range(-unprecision,unprecision) # error in rotation that is accepted (mouse position) left right
 onready var upDownMargin = rand_range(-unprecision,unprecision) # what difference to mouse pos units to ignore when rotating  up down
 export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
-export(float) var recoil_impulse = 0.1 # when firing to the ship
+export(float) var recoil_impulse = 0.3 # when firing to the ship
 
 var camera
 var org_rotation : Vector3
@@ -51,7 +52,7 @@ func _ready():
 	fakeBullet = $FakeBullet
 	camera = get_viewport().get_camera()
 	org_rotation = transform.basis.get_euler()*180/PI
-	org_forward = global_transform.basis.x.normalized() # used for angle calculation
+	org_forward = transform.basis.x.normalized() # used for angle calculation
 	if get_tree().get_nodes_in_group("Ocean").size()>0:
 		ocean = get_tree().get_nodes_in_group("Ocean")[0]
 	myShip = get_parent().get_parent().get_parent()
@@ -79,7 +80,7 @@ func _ready():
 func on_placement():
 	.on_placement() # calls the parent function
 	org_rotation = transform.basis.get_euler()*180/PI
-	org_forward = global_transform.basis.x.normalized() # used for angle calculation
+	org_forward = transform.basis.x.normalized() # used for angle calculation
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -157,8 +158,8 @@ func predictTrajectory():
 			marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*0.1
 			if i>1:
 				marker[i].visible = true
-			fakeBullet.transform.origin += Vector3(1,0,0)*force*2.2
-			fakeBullet.global_transform.origin += Vector3(0,-1,0)*0.01*i ## TODO: does the vector (0,-1,0) always point down globally (gravity)? -> if so why does (1,0,0) always point forwards loccally
+			fakeBullet.transform.origin += Vector3(1,0,0)*force*5.2/(1+i*0.05)
+			fakeBullet.global_transform.origin += Vector3(0,-1,0)*0.015*i ## TODO: does the vector (0,-1,0) always point down globally (gravity)? -> if so why does (1,0,0) always point forwards loccally
 		else:
 			last_i = i
 			break
@@ -200,12 +201,13 @@ func fireBall():
 	yield(get_tree().create_timer(fire_delay_sec),"timeout")
 	playAudio()
 	doParticles()
-	myShip.applyImpulse(translation, -transform.basis.x.normalized()*recoil_impulse)
+	camera.shake_val += cam_shake
+	myShip.applyCannonImpulse(translation, -transform.basis.x.normalized()*recoil_impulse)
 	yield(get_tree().create_timer(rand_range(0,rand_max_delay)),"timeout")
 	var ball = BallScene.instance()
 	get_tree().get_root().add_child(ball)
 	ball.set_name("Ball")
-	ball.transform.origin = self.global_transform.origin+forward
+	ball.transform.origin = self.global_transform.origin+ self.global_transform.basis.x*1 # + foward to give ball a forward offset to get behind own walls
 	ball.dir = global_transform.basis.x
 	ball.velocity = force
 
@@ -215,6 +217,7 @@ func rotateLeftRight(multiplicator=1, dir : String = ""):
 	"""
 	Rotate the cannons around either left or right. Speed Weighted by multiplicator e[0,1]
 	dir :: either 'left' or 'right'
+	TODO: change dir to -1,1 to increase performance
 	"""
 	multiplicator = clamp(abs(multiplicator),0,1)
 	## left rotation = negative angle distance
@@ -229,6 +232,7 @@ func rotateUpDown(multiplicator=1, dir : String = ""):
 	"""
 	Rotate the cannons around either left or right. Speed Weighted by multiplicator e[0,1]
 	dir :: either 'left' or 'right'
+	TODO: change dir to -1,1 to increase performance
 	"""
 	multiplicator = clamp(abs(multiplicator),0,1)
 	## up rotation = positive angle distance
