@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/slash_04.png-e65ab4bfdc32d5937df93e7f81116d39.s3tc.stex"
-path.etc2="res://.import/slash_04.png-e65ab4bfdc32d5937df93e7f81116d39.etc2.stex"
+path.s3tc="res://.import/OuterHullWall3m.png-fba0c8bf0603d220a2102b0ffce3ee8b.s3tc.stex"
+path.etc2="res://.import/OuterHullWall3m.png-fba0c8bf0603d220a2102b0ffce3ee8b.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/kenney_particle_pack/slash_04.png"
-dest_files=[ "res://.import/slash_04.png-e65ab4bfdc32d5937df93e7f81116d39.s3tc.stex", "res://.import/slash_04.png-e65ab4bfdc32d5937df93e7f81116d39.etc2.stex" ]
+source_file="res://ObjectNodes/Items/Walls/OuterHullWall3m.png"
+dest_files=[ "res://.import/OuterHullWall3m.png-fba0c8bf0603d220a2102b0ffce3ee8b.s3tc.stex", "res://.import/OuterHullWall3m.png-fba0c8bf0603d220a2102b0ffce3ee8b.etc2.stex" ]
 
 [params]
 

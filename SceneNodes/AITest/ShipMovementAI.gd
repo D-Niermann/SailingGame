@@ -55,8 +55,8 @@ func update(objectsInRange : Array):
 	distToEnemy = (enemy.global_transform.origin - global_transform.origin).length()
 	angleToEnemy = signedAngle(forward,towardsEnemy,up)
 
-	# if abs(rad2deg(angleToEnemy))<120 and abs(rad2deg(angleToEnemy))>60:
-	aimCannons()
+	if distToEnemy<50:
+		aimCannons()
 	calcTargetSails() # calculate the target sail level for the current position
 	calcTargetVector() # calculate the target vector for the current position
 	rotateToAngle() # rotate this spatial to the target vector

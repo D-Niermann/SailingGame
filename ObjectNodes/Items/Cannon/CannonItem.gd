@@ -13,7 +13,7 @@ var right : Vector3
 export(float) var force = 0.6 # for trajectory prediction: force of ball
 var drag = 0.05 # for trajectory prediction: drag of ball
 var rand_max_delay = 0.4 # max delay in seconds
-var reload_time_sec = 5
+var reload_time_sec = 2
 var cam_shake = 0.2 # the amount of camera shake added to camera when shooting
 var ship # parent ship container
 ### vars for line rendering (but the gitHub LineRenderer lags so hard that i canceled it for now)
@@ -22,7 +22,7 @@ var lineSize  # length of trjactory prediction line (number of points) / needs s
 const rotateSpeed = 0.008 # max rotation speed of cannons (up/down rotation is scaled down )
 const maxRotateAngle = 20 # in degree, left right rotation
 var maxUpAngle = 10 # angle distance in degreee from original rotation that is allowed
-var minUpAngle= -2 # angle distance in degreee from original rotation that is allowed
+var minUpAngle= -5 # angle distance in degreee from original rotation that is allowed
 const unprecision = 4 # in units, how max unprecise a connon is (random)
 onready var rotateMargin = rand_range(-unprecision,unprecision) # error in rotation that is accepted (mouse position) left right
 onready var upDownMargin = rand_range(-unprecision,unprecision) # what difference to mouse pos units to ignore when rotating  up down

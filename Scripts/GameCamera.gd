@@ -20,12 +20,19 @@ func _ready():
 	if get_tree().get_nodes_in_group("PlayerShip").size()>0:
 		ship = get_tree().get_nodes_in_group("PlayerShip")[0]
 
-
+var moveLeftRight = 0.0
+var moveUpDown = 0.0
+var right : Vector3
+var up : Vector3
 func _process(delta):
+	right = transform.basis.x
+	up = transform.basis.y
 	if ship!=null:
 		if do_center:
 			targetPos.x = ship.global_transform.origin.x
 			targetPos.z = ship.global_transform.origin.z
+		
+		targetPos += moveLeftRight*right + moveUpDown * up
 		targetPos.y = clamp(targetPos.y,minHeight,maxHeight)
 		targetPos += Vector3(rand_range(-shake_val,shake_val),0,rand_range(-shake_val,shake_val))
 		translation += (targetPos - translation)*speedScale
@@ -76,3 +83,23 @@ func getAngleDist_deg(from, to):
 	var max_angle = 360
 	var difference = fmod(to - from, max_angle)
 	return fmod(2 * difference, max_angle) - difference
+
+func _on_MouseCameraMoveLeft_mouse_exited():
+	moveLeftRight= 0
+func _on_MouseCameraMoveLeft_mouse_entered():
+	moveLeftRight= -1
+
+func _on_MouseCameraMoveRight_mouse_exited():
+	moveLeftRight= 0
+func _on_MouseCameraMoveRight_mouse_entered():
+	moveLeftRight= +1
+
+func _on_MouseCameraMoveTop_mouse_exited():
+	moveUpDown= 0
+func _on_MouseCameraMoveTop_mouse_entered():
+	moveUpDown= +1
+
+func _on_MouseCameraMoveDown_mouse_exited():
+	moveUpDown= 0
+func _on_MouseCameraMoveDown_mouse_entered():
+	moveUpDown= -1
