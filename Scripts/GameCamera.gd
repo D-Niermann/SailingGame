@@ -46,6 +46,7 @@ func _process(delta):
 		moveUpDown = panSpeed
 	if cursorPos.y>1-mousePanEdge:
 		moveUpDown = -panSpeed
+	print(do_center)
 
 	right = transform.basis.x
 	up = transform.basis.y
