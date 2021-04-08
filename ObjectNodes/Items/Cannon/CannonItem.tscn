@@ -1,16 +1,16 @@
 [gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://ObjectNodes/Items/Cannon/CannonItem.gd" type="Script" id=1]
-[ext_resource path="res://ObjectNodes/Cannon/CannonBall.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ObjectNodes/GeneralCannonAssets/CannonBall.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/kenney_particle_pack/smoke_07.png" type="Texture" id=4]
 [ext_resource path="res://ObjectNodes/Items/Cannon/cannon.png" type="Texture" id=5]
-[ext_resource path="res://ObjectNodes/Cannon/Sounds/Cannon6.wav" type="AudioStream" id=6]
-[ext_resource path="res://ObjectNodes/Cannon/Sounds/Cannon7.wav" type="AudioStream" id=7]
+[ext_resource path="res://ObjectNodes/GeneralCannonAssets/Sounds/Cannon6.wav" type="AudioStream" id=6]
+[ext_resource path="res://ObjectNodes/GeneralCannonAssets/Sounds/Cannon7.wav" type="AudioStream" id=7]
 [ext_resource path="res://addons/kenney_particle_pack/smoke_02.png" type="Texture" id=8]
 [ext_resource path="res://ObjectNodes/Items/Cannon/trajectoryPoint.png" type="Texture" id=9]
 [ext_resource path="res://ObjectNodes/Items/Cannon/WaterHitRing.png" type="Texture" id=10]
-[ext_resource path="res://ObjectNodes/Cannon/Sounds/Cannon4.wav" type="AudioStream" id=11]
-[ext_resource path="res://ObjectNodes/Cannon/Sounds/Cannon5.wav" type="AudioStream" id=12]
+[ext_resource path="res://ObjectNodes/GeneralCannonAssets/Sounds/Cannon4.wav" type="AudioStream" id=11]
+[ext_resource path="res://ObjectNodes/GeneralCannonAssets/Sounds/Cannon5.wav" type="AudioStream" id=12]
 [ext_resource path="res://materials/Black.tres" type="Material" id=13]
 
 [sub_resource type="BoxShape" id=1]
@@ -128,16 +128,16 @@ flags_transparent = true
 flags_no_depth_test = true
 albedo_texture = ExtResource( 10 )
 
-[sub_resource type="SpatialMaterial" id=23]
+[sub_resource type="SpatialMaterial" id=21]
 flags_transparent = true
 flags_no_depth_test = true
 albedo_color = Color( 1, 1, 1, 0.168627 )
 albedo_texture = ExtResource( 9 )
 
-[sub_resource type="CubeMesh" id=21]
+[sub_resource type="CubeMesh" id=22]
 size = Vector3( 1, 1, 1 )
 
-[sub_resource type="SpatialMaterial" id=22]
+[sub_resource type="SpatialMaterial" id=23]
 flags_transparent = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0.188235, 0.976471, 0.164706, 0.0980392 )
@@ -152,7 +152,7 @@ BallScene = ExtResource( 2 )
 shape = SubResource( 1 )
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform( -4.70073e-08, 0, -0.257923, 0, 0.166714, 0, 0.288529, 0, -4.2021e-08, -0.0107411, 0.060603, -0.0031288 )
+transform = Transform( -4.70073e-08, 0, -0.257923, 0, 0.166714, 0, 0.288529, 0, -4.2021e-08, 0.139893, 0.0154406, -0.0031288 )
 axis = 1
 shaded = true
 texture = ExtResource( 5 )
@@ -267,210 +267,210 @@ Number of Sprites automatically sets number of Line sampling points
 
 [node name="Marker" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.00273146, 0, -0.00533216 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker2" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker3" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker4" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker5" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker6" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker7" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker8" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker9" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker10" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker11" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker12" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker13" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker14" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker15" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker16" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker17" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker18" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker19" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker20" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker21" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker22" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker23" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker24" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker25" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker26" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker27" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker28" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker29" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
 
 [node name="Marker30" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
-material_override = SubResource( 23 )
+material_override = SubResource( 21 )
 axis = 1
 shaded = true
 texture = ExtResource( 9 )
@@ -478,5 +478,5 @@ texture = ExtResource( 9 )
 [node name="GridShowMesh" type="MeshInstance" parent="."]
 visible = false
 cast_shadow = 0
-mesh = SubResource( 21 )
-material/0 = SubResource( 22 )
+mesh = SubResource( 22 )
+material/0 = SubResource( 23 )

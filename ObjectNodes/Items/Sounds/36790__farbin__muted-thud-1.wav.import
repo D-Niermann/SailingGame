@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/36790__farbin__muted-thud-1.wav-d6a4cf5da51ec83ca41a585eaf4edf9b.sample"
+
+[deps]
+
+source_file="res://ObjectNodes/Items/Sounds/36790__farbin__muted-thud-1.wav"
+dest_files=[ "res://.import/36790__farbin__muted-thud-1.wav-d6a4cf5da51ec83ca41a585eaf4edf9b.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

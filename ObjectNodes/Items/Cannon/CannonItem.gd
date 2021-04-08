@@ -13,6 +13,7 @@ var right : Vector3
 export(float) var force = 0.6 # for trajectory prediction: force of ball
 var drag = 0.05 # for trajectory prediction: drag of ball
 var rand_max_delay = 0.4 # max delay in seconds
+var reload_time_sec = 2
 var cam_shake = 0.2 # the amount of camera shake added to camera when shooting
 var ship # parent ship container
 ### vars for line rendering (but the gitHub LineRenderer lags so hard that i canceled it for now)
@@ -21,19 +22,21 @@ var lineSize  # length of trjactory prediction line (number of points) / needs s
 const rotateSpeed = 0.008 # max rotation speed of cannons (up/down rotation is scaled down )
 const maxRotateAngle = 20 # in degree, left right rotation
 var maxUpAngle = 10 # angle distance in degreee from original rotation that is allowed
-var minUpAngle= -2 # angle distance in degreee from original rotation that is allowed
+var minUpAngle= -5 # angle distance in degreee from original rotation that is allowed
 const unprecision = 4 # in units, how max unprecise a connon is (random)
 onready var rotateMargin = rand_range(-unprecision,unprecision) # error in rotation that is accepted (mouse position) left right
 onready var upDownMargin = rand_range(-unprecision,unprecision) # what difference to mouse pos units to ignore when rotating  up down
 export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
 export(float) var recoil_impulse = 0.3 # when firing to the ship
 
+var reloaded = true
+
 var camera
 var org_rotation : Vector3
-var position3D
+var aimPosition # the position the cannons will aim to (needs to be local)
 var particles
 var particles_flash
-var aimCannons
+var playerAimCannons # flag thats true if the player uses input to aim
 var ocean
 var waterHitMarker
 var myShip
@@ -41,11 +44,12 @@ var fakeBullet
 export var isPlayerControlable = false
 var marker 
 var canShoot :bool = false
-var aimDiff # angle difference between mouse position and actual trajectory end
-var a = Vector2(1,0)
+var aimDiffAngle # angle between target aim position and forward
+var forward2d = Vector2(1,0)
 var trajectoryPoints : Array
 export var isTestCannon = false
 var org_forward
+var reloadTimer : Timer
 func _ready():
 	marker = $TrajectoryMarkerGroup.get_children()
 	lineSize = marker.size()
@@ -55,10 +59,25 @@ func _ready():
 	org_forward = transform.basis.x.normalized() # used for angle calculation
 	if get_tree().get_nodes_in_group("Ocean").size()>0:
 		ocean = get_tree().get_nodes_in_group("Ocean")[0]
+	
+	reloadTimer = Timer.new()
+	add_child(reloadTimer)
+	reloadTimer.connect("timeout", self, "_on_Timer_timeout")
+	reloadTimer.set_wait_time(reload_time_sec)
+	reloadTimer.set_one_shot(true) # Make sure it loops
+	
+	## TODO: this gets also called when item is picked in shop
 	myShip = get_parent().get_parent().get_parent()
-	if myShip!= null and "isPlayer" in myShip:
-		if myShip.isPlayer:
-			isPlayerControlable = true
+	if myShip != null:
+		## register as cannon on ship parent
+		if myShip.has_method("registerCannon"):
+			myShip.registerCannon(self.get_path())
+		if "isPlayer" in myShip:
+			if myShip.isPlayer:
+				isPlayerControlable = true
+
+
+
 	fireSounds.push_back(get_node("Audio1"))
 	fireSounds.push_back(get_node("Audio2"))
 	fireSounds.push_back(get_node("Audio3"))
@@ -88,30 +107,31 @@ func _process(delta):
 	right = transform.basis.z.normalized()
 	
 	forward = transform.basis.x.normalized()
-	
-	if aimCannons:
-		position3D = to_local(ocean.waterMousePos)
-		## if mouse position in front of cannon (x>0)
-		
-		var b = Vector2(position3D.x ,position3D.z)
-		aimDiff = rad2deg(a.angle_to(b))
-		if abs(aimDiff) <= maxRotateAngle*2: 
-			canShoot = true
-			predictTrajectory()
-			var dist = (position3D).x
-			var diff_x = dist - (trajectoryPoints[lineSize-1]).x
-			if diff_x>upDownMargin: 
-				rotateUpDown(diff_x-upDownMargin, "up")
-			elif diff_x<-upDownMargin:
-				rotateUpDown(diff_x+upDownMargin, "down")
-			if position3D.z<-rotateMargin:
-				rotateLeftRight(position3D.z+rotateMargin, "left")
-			elif position3D.z>rotateMargin:
-				rotateLeftRight(position3D.z-rotateMargin, "right")
-		else:
-			canShoot = false
-			clearTrajectory()
 
+	if playerAimCannons:
+		aimTo(ocean.waterMousePos)
+	
+
+
+func aimTo(global_position : Vector3):
+	aimPosition = to_local(global_position)
+	aimDiffAngle = rad2deg(forward2d.angle_to(Vector2(aimPosition.x ,aimPosition.z)))
+	if abs(aimDiffAngle) <= maxRotateAngle*2: 
+		canShoot = true
+		predictTrajectory()
+		var dist = (aimPosition).x
+		var diff_x = dist - (trajectoryPoints[lineSize-1]).x
+		if diff_x>upDownMargin: 
+			rotateUpDown(diff_x-upDownMargin, "up")
+		elif diff_x<-upDownMargin:
+			rotateUpDown(diff_x+upDownMargin, "down")
+		if aimPosition.z<-rotateMargin:
+			rotateLeftRight(aimPosition.z+rotateMargin, "left")
+		elif aimPosition.z>rotateMargin:
+			rotateLeftRight(aimPosition.z-rotateMargin, "right")
+	else:
+		canShoot = false
+		clearTrajectory()
 
 	
 
@@ -119,13 +139,13 @@ func _unhandled_input(event):
 	# Receives key input
 	if isPlayerControlable:
 		if event.is_action_pressed("FireCannons"):
-			aimCannons = true
+			playerAimCannons = true
 		if event.is_action_released("FireCannons"):
-			aimCannons = false
+			playerAimCannons = false
 			clearTrajectory()
 			if canShoot:
 				fireBall()
-		if aimCannons:
+		if playerAimCannons:
 			if event.is_action_released("testFire") and isTestCannon and canShoot:
 				fireBall()
 		
@@ -198,18 +218,21 @@ func clearTrajectory():
 		trajectoryPoints[i] = point
 
 func fireBall():
-	yield(get_tree().create_timer(fire_delay_sec),"timeout")
-	playAudio()
-	doParticles()
-	camera.shake_val += cam_shake
-	myShip.applyCannonImpulse(translation, -transform.basis.x.normalized()*recoil_impulse)
-	yield(get_tree().create_timer(rand_range(0,rand_max_delay)),"timeout")
-	var ball = BallScene.instance()
-	get_tree().get_root().add_child(ball)
-	ball.set_name("Ball")
-	ball.transform.origin = self.global_transform.origin+ self.global_transform.basis.x*1 # + foward to give ball a forward offset to get behind own walls
-	ball.dir = global_transform.basis.x
-	ball.velocity = force
+	if reloaded:
+		reloaded = false
+		yield(get_tree().create_timer(fire_delay_sec),"timeout")
+		playAudio()
+		doParticles()
+		camera.shake_val += cam_shake/clamp(camera.global_transform.origin.distance_to(global_transform.origin)*0.02,1,99999)
+		myShip.applyCannonImpulse(translation, -transform.basis.x.normalized()*recoil_impulse)
+		yield(get_tree().create_timer(rand_range(0,rand_max_delay)),"timeout")
+		var ball = BallScene.instance()
+		get_tree().get_root().add_child(ball)
+		ball.set_name("Ball")
+		ball.transform.origin = self.global_transform.origin+ self.global_transform.basis.x*1 # + foward to give ball a forward offset to get behind own walls
+		ball.dir = global_transform.basis.x
+		ball.velocity = force
+		reloadTimer.start()
 
 
 ## TODO: change these funtions into 1 or 2 functions
@@ -256,5 +279,8 @@ func doParticles():
 
 func playAudio():
 	var sound = fireSounds[int(rand_range(0,fireSounds.size()))]
-	sound.set_pitch_scale(sound.pitch_scale+rand_range(-0.2,0.2))
+	sound.set_pitch_scale(rand_range(0.6,1.0))
 	sound.play()
+
+func _on_Timer_timeout():
+	reloaded = true

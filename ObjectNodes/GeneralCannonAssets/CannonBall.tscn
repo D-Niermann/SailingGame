@@ -1,0 +1,112 @@
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://ObjectNodes/GeneralCannonAssets/Sounds/BallHit.wav" type="AudioStream" id=1]
+[ext_resource path="res://addons/kenney_particle_pack/circle_03.png" type="Texture" id=2]
+[ext_resource path="res://ObjectNodes/GeneralCannonAssets/CannonBall.gd" type="Script" id=3]
+[ext_resource path="res://ObjectNodes/GeneralCannonAssets/TrailParticle.tscn" type="PackedScene" id=4]
+[ext_resource path="res://_OLDnodes/WaterEnteredParticles.tscn" type="PackedScene" id=5]
+[ext_resource path="res://ObjectNodes/GeneralCannonAssets/HitParticle.tscn" type="PackedScene" id=6]
+[ext_resource path="res://materials/Black.tres" type="Material" id=7]
+
+[sub_resource type="SphereMesh" id=1]
+radius = 0.05
+height = 0.1
+
+[sub_resource type="SphereShape" id=2]
+radius = 0.135053
+
+[sub_resource type="SpatialMaterial" id=3]
+render_priority = 1
+flags_transparent = true
+flags_unshaded = true
+flags_vertex_lighting = true
+vertex_color_use_as_albedo = true
+params_billboard_mode = 1
+params_billboard_keep_scale = true
+albedo_color = Color( 0.866667, 0.968627, 0.972549, 0.215686 )
+albedo_texture = ExtResource( 2 )
+
+[sub_resource type="Gradient" id=4]
+offsets = PoolRealArray( 0, 0.0873016, 0.202381 )
+colors = PoolColorArray( 0, 0, 0, 0, 0.552941, 0.866667, 0.960784, 0.682353, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=5]
+gradient = SubResource( 4 )
+
+[sub_resource type="Curve" id=6]
+max_value = 13.0
+_data = [ Vector2( 0, 0.930681 ), 0.0, 0.0, 0, 0, Vector2( 0.517787, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=7]
+curve = SubResource( 6 )
+
+[sub_resource type="Curve" id=8]
+_data = [ Vector2( 0, 0.143182 ), 0.0, 0.0, 0, 0, Vector2( 0.847273, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=9]
+curve = SubResource( 8 )
+
+[sub_resource type="ParticlesMaterial" id=10]
+lifetime_randomness = 0.22
+direction = Vector3( 0, 0, 0 )
+spread = 7.38
+gravity = Vector3( 0, 0, 0 )
+initial_velocity_random = 0.46
+angular_velocity_random = 1.0
+damping_random = 0.12
+damping_curve = SubResource( 7 )
+angle = 384.3
+angle_random = 0.8
+scale = 1.31
+scale_curve = SubResource( 9 )
+color_ramp = SubResource( 5 )
+
+[sub_resource type="QuadMesh" id=11]
+size = Vector2( 5, 5 )
+
+[node name="Ball" type="KinematicBody"]
+script = ExtResource( 3 )
+
+[node name="Mesh" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+material/0 = ExtResource( 7 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="."]
+transform = Transform( 0.42317, 0, 0, 0, 0.42317, 0, 0, 0, 0.42317, 0, 0, 0 )
+shape = SubResource( 2 )
+
+[node name="WaterSplash" parent="." instance=ExtResource( 5 )]
+emitting = false
+one_shot = true
+
+[node name="WaterSplash2" type="Particles" parent="."]
+material_override = SubResource( 3 )
+cast_shadow = 0
+emitting = false
+amount = 5
+lifetime = 10.0
+one_shot = true
+explosiveness = 0.98
+randomness = 0.73
+visibility_aabb = AABB( -181.604, -196.936, -272.78, 362.306, 395.6, 547.224 )
+local_coords = false
+process_material = SubResource( 10 )
+draw_pass_1 = SubResource( 11 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Trail" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00219304, 0, -0.00427228 )
+emitting = false
+
+[node name="HitParticle" parent="." instance=ExtResource( 6 )]
+emitting = false
+lifetime = 2.0
+one_shot = true
+randomness = 0.57
+
+[node name="Audio" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 1 )
+unit_size = 9.0
+max_db = 4.2

@@ -14,6 +14,7 @@ var model # ref to ship model
 export var turnForce : float # current turn force for left right steer
 var sails # current sail state (0,1) 1=full sails
 var ocean # ref to ocean object
+var cannons = []# ref to all cannons in ships model
 
 # force spatials
 var hLeft # positions where boynacy attacks
@@ -58,8 +59,9 @@ func _ready():
 			# iterate through children, skip 1st because it is Sails
 			a[i].add_to_group("PlayerDeck")
 			
-
-
+func registerCannon(path):
+	cannons.append(path)
+	print("registered "+path)
 
 func _physics_process(delta):
 	sails = clamp(sails,-0.01, 1)
