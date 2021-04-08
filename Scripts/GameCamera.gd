@@ -1,36 +1,59 @@
 extends Camera
 
+### parameters (user changeable)
 
-var ship = null
-var targetPos : Vector3
-export var minHeight = 5
-export var maxHeight = 200
+export var minHeight = 5 # how many units above ground
+export var maxHeight = 200 # how many units above ground
 export var speedScale = 0.1 # between 0 (not move) and 1 (instant move)
 export var rotationSensitivity = 0.2
 export var zoomSensitivity = 0.2
+export var mousePanEdge = 0.02 # how much percent of screen is a edge for panning 
+export var panSpeed = 1
+
+## init of vars, dont change
 var rotate = false
 var do_center = false
 var shake_val = 0
-
+var cursorPos
+var viewport 
 var _mouse_position = Vector2(0.0, 0.0)
 var _total_pitch = 0.0
 var target_yar = 0
-func _ready():
-	targetPos = translation
-	if get_tree().get_nodes_in_group("PlayerShip").size()>0:
-		ship = get_tree().get_nodes_in_group("PlayerShip")[0]
-
 var moveLeftRight = 0.0
 var moveUpDown = 0.0
 var right : Vector3
 var up : Vector3
+var ship = null
+var targetPos : Vector3
+
+
+func _ready():
+	targetPos = translation
+	viewport = get_tree().get_root().get_viewport()
+
+	if get_tree().get_nodes_in_group("PlayerShip").size()>0:
+		ship = get_tree().get_nodes_in_group("PlayerShip")[0]
+
+
 func _process(delta):
+	cursorPos = viewport.get_mouse_position()/viewport.size
+	if cursorPos.x<mousePanEdge:
+		moveLeftRight = -panSpeed
+	if cursorPos.x>1-mousePanEdge:
+		moveLeftRight = +panSpeed
+	if cursorPos.y<mousePanEdge:
+		moveUpDown = panSpeed
+	if cursorPos.y>1-mousePanEdge:
+		moveUpDown = -panSpeed
+
 	right = transform.basis.x
 	up = transform.basis.y
 	if ship!=null:
 		if do_center:
 			targetPos.x = ship.global_transform.origin.x
 			targetPos.z = ship.global_transform.origin.z
+			moveLeftRight*=5 # making the mouse edge pan more, because locket to own ship
+			moveUpDown*= 5 # making the mouse edge pan more, because locket to own ship
 		
 		targetPos += moveLeftRight*right + moveUpDown * up
 		targetPos.y = clamp(targetPos.y,minHeight,maxHeight)
@@ -42,6 +65,10 @@ func _process(delta):
 		_update_mouselook()
 		rotate_y(deg2rad(-getAngleDist_deg(target_yar, rad2deg(transform.basis.get_euler().y))*speedScale))
 	shake_val*=0.87
+	moveUpDown = 0
+	moveLeftRight = 0
+
+
 
 func _unhandled_input(event):
 	# Receives key input
@@ -84,22 +111,22 @@ func getAngleDist_deg(from, to):
 	var difference = fmod(to - from, max_angle)
 	return fmod(2 * difference, max_angle) - difference
 
-func _on_MouseCameraMoveLeft_mouse_exited():
-	moveLeftRight= 0
-func _on_MouseCameraMoveLeft_mouse_entered():
-	moveLeftRight= -1
+# func _on_MouseCameraMoveLeft_mouse_exited():
+# 	moveLeftRight= 0
+# func _on_MouseCameraMoveLeft_mouse_entered():
+# 	moveLeftRight= -1
 
-func _on_MouseCameraMoveRight_mouse_exited():
-	moveLeftRight= 0
-func _on_MouseCameraMoveRight_mouse_entered():
-	moveLeftRight= +1
+# func _on_MouseCameraMoveRight_mouse_exited():
+# 	moveLeftRight= 0
+# func _on_MouseCameraMoveRight_mouse_entered():
+# 	moveLeftRight= +1
 
-func _on_MouseCameraMoveTop_mouse_exited():
-	moveUpDown= 0
-func _on_MouseCameraMoveTop_mouse_entered():
-	moveUpDown= +1
+# func _on_MouseCameraMoveTop_mouse_exited():
+# 	moveUpDown= 0
+# func _on_MouseCameraMoveTop_mouse_entered():
+# 	moveUpDown= +1
 
-func _on_MouseCameraMoveDown_mouse_exited():
-	moveUpDown= 0
-func _on_MouseCameraMoveDown_mouse_entered():
-	moveUpDown= -1
+# func _on_MouseCameraMoveDown_mouse_exited():
+# 	moveUpDown= 0
+# func _on_MouseCameraMoveDown_mouse_entered():
+# 	moveUpDown= -1

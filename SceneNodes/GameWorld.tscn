@@ -14,10 +14,10 @@
 [ext_resource path="res://ObjectNodes/Terrain/ExampleTerrain.tscn" type="PackedScene" id=12]
 
 [sub_resource type="DynamicFontData" id=1]
-font_path = "res://Fonts/OpenSans-Bold.ttf"
+font_path = "res://Fonts/LCALLIG.TTF"
 
 [sub_resource type="DynamicFont" id=2]
-size = 23
+size = 20
 font_data = SubResource( 1 )
 
 [node name="GameWorld" type="Control"]
@@ -73,11 +73,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35.99, 10.3436, 23.68 )
 
 [node name="Sky" parent="ViewportContainer/Viewport" instance=ExtResource( 11 )]
 
-[node name="HTerrain" parent="ViewportContainer/Viewport" instance=ExtResource( 12 )]
-ambient_wind = 0.0
-lod_scale = 2.0
-map_scale = Vector3( 1, 1, 1 )
-
 [node name="OceanEnvironment" parent="ViewportContainer/Viewport" instance=ExtResource( 1 )]
 wind_strength = 0.4
 
@@ -118,55 +113,6 @@ mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
-}
-
-[node name="MouseCameraMoveLeft" type="Panel" parent="Interface"]
-modulate = Color( 1, 1, 1, 0 )
-anchor_bottom = 1.002
-margin_top = 4.0
-margin_right = 130.0
-margin_bottom = -0.100098
-mouse_filter = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="MouseCameraMoveRight" type="Panel" parent="Interface"]
-modulate = Color( 1, 1, 1, 0 )
-anchor_left = 0.998
-anchor_right = 1.0
-anchor_bottom = 1.002
-margin_left = -120.64
-margin_bottom = -4.1001
-mouse_filter = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="MouseCameraMoveTop" type="Panel" parent="Interface"]
-modulate = Color( 1, 1, 1, 0 )
-anchor_top = 0.002
-anchor_right = 0.998
-anchor_bottom = 0.002
-margin_top = -2.1
-margin_right = -0.640015
-margin_bottom = 81.9
-mouse_filter = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="MouseCameraMoveDown" type="Panel" parent="Interface"]
-modulate = Color( 1, 1, 1, 0 )
-anchor_top = 0.002
-anchor_right = 0.998
-anchor_bottom = 0.002
-margin_top = 977.9
-margin_right = -0.640015
-margin_bottom = 1048.9
-mouse_filter = 1
-__meta__ = {
-"_edit_use_anchors_": false
 }
 
 [node name="ui" parent="Interface" instance=ExtResource( 6 )]
@@ -265,19 +211,13 @@ text = "1 grid (tilewidth) = 0.2 units = 1 meter
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="mouse_entered" from="Interface/MouseCameraMoveLeft" to="ViewportContainer/Viewport/GameCamera" method="_on_MouseCameraMoveLeft_mouse_entered"]
-[connection signal="mouse_exited" from="Interface/MouseCameraMoveLeft" to="ViewportContainer/Viewport/GameCamera" method="_on_MouseCameraMoveLeft_mouse_exited"]
-[connection signal="mouse_entered" from="Interface/MouseCameraMoveRight" to="ViewportContainer/Viewport/GameCamera" method="_on_MouseCameraMoveRight_mouse_entered"]
-[connection signal="mouse_exited" from="Interface/MouseCameraMoveRight" to="ViewportContainer/Viewport/GameCamera" method="_on_MouseCameraMoveRight_mouse_exited"]
-[connection signal="mouse_entered" from="Interface/MouseCameraMoveTop" to="ViewportContainer/Viewport/GameCamera" method="_on_MouseCameraMoveTop_mouse_entered"]
-[connection signal="mouse_exited" from="Interface/MouseCameraMoveTop" to="ViewportContainer/Viewport/GameCamera" method="_on_MouseCameraMoveTop_mouse_exited"]
-[connection signal="mouse_entered" from="Interface/MouseCameraMoveDown" to="ViewportContainer/Viewport/GameCamera" method="_on_MouseCameraMoveDown_mouse_entered"]
-[connection signal="mouse_exited" from="Interface/MouseCameraMoveDown" to="ViewportContainer/Viewport/GameCamera" method="_on_MouseCameraMoveDown_mouse_exited"]
-[connection signal="button_up" from="Interface/Decks/AllDeck" to="Interface/Shopping" method="_on_DeckAll_button_up"]
+
+[node name="HTerrain" parent="." instance=ExtResource( 12 )]
 [connection signal="button_up" from="Interface/Decks/AllDeck" to="ViewportContainer/Viewport/PlayerShip" method="_on_AllDeck_button_up"]
-[connection signal="button_up" from="Interface/Decks/Deck0" to="Interface/Shopping" method="_on_Deck0_button_up"]
+[connection signal="button_up" from="Interface/Decks/AllDeck" to="Interface/Shopping" method="_on_DeckAll_button_up"]
 [connection signal="button_up" from="Interface/Decks/Deck0" to="ViewportContainer/Viewport/PlayerShip" method="_on_Deck0_button_up"]
 [connection signal="button_up" from="Interface/Decks/Deck0" to="ViewportContainer/Viewport/GameCamera" method="_on_Deck0_button_up"]
-[connection signal="button_up" from="Interface/Decks/Deck1" to="Interface/Shopping" method="_on_Deck1_button_up"]
+[connection signal="button_up" from="Interface/Decks/Deck0" to="Interface/Shopping" method="_on_Deck0_button_up"]
 [connection signal="button_up" from="Interface/Decks/Deck1" to="ViewportContainer/Viewport/PlayerShip" method="_on_Deck1_button_up"]
 [connection signal="button_up" from="Interface/Decks/Deck1" to="ViewportContainer/Viewport/GameCamera" method="_on_Deck1_button_up"]
+[connection signal="button_up" from="Interface/Decks/Deck1" to="Interface/Shopping" method="_on_Deck1_button_up"]
