@@ -82,6 +82,8 @@ func _physics_process(delta):
 		var itemName: String = selected.get_node("Name").text
 		var good: Dictionary = Economy.goods[itemName]
 		hologramFromResource(good["res"])
+	if open != null && info.visible:
+		toggle(null)
 	if switch == true && target == null:
 		if highlight != null:
 			var sprite = highlight.get_node("Sprite3D")
@@ -163,10 +165,8 @@ func _physics_process(delta):
 			var sprite = hologram.get_node("Sprite3D")
 			sprite.modulate = Color(1.0, 0.0, 0.0, 0.5)
 	else:
-		if !hit.empty() && hit.collider.get_node_or_null("Sprite3D"): # checks if hit is item, else throws errors
-			if leftClick:
-				toggle(hit.collider)
-			if open != null:
+		if !hit.empty() && hit.collider.get("movable") != null: # checks if hit is an item
+			if open != null && hit.collider.get("movable") == true:
 				var temp = hit.collider.get_parent()
 				if temp != null && temp == target:
 					if leftClick:
@@ -188,6 +188,8 @@ func _physics_process(delta):
 						rot = angle
 					else:
 						newHighlight = hit.collider
+			elif open == null && leftClick:
+				toggle(hit.collider)
 		else:
 			if leftClick:
 				toggle(null)
