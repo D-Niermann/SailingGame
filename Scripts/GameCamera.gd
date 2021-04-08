@@ -23,16 +23,17 @@ var moveLeftRight = 0.0
 var moveUpDown = 0.0
 var right : Vector3
 var up : Vector3
-var ship = null
+var playerShip = null
+var shopping = null
 var targetPos : Vector3
-
+var heightToggle = true
 
 func _ready():
 	targetPos = translation
 	viewport = get_tree().get_root().get_viewport()
-
+	shopping = get_tree().get_nodes_in_group("Shopping")[0]
 	if get_tree().get_nodes_in_group("PlayerShip").size()>0:
-		ship = get_tree().get_nodes_in_group("PlayerShip")[0]
+		playerShip = get_tree().get_nodes_in_group("PlayerShip")[0]
 
 
 func _process(delta):
@@ -48,21 +49,22 @@ func _process(delta):
 
 	right = transform.basis.x
 	up = transform.basis.y
-	if ship!=null:
+	if playerShip!=null:
 		if do_center:
-			targetPos.x = ship.global_transform.origin.x
-			targetPos.z = ship.global_transform.origin.z
-			moveLeftRight*=5 # making the mouse edge pan more, because locket to own ship
-			moveUpDown*= 5 # making the mouse edge pan more, because locket to own ship
+			targetPos.x = playerShip.global_transform.origin.x
+			targetPos.z = playerShip.global_transform.origin.z
+			moveLeftRight*=5 # making the mouse edge pan more, because locket to own playerShip
+			moveUpDown*= 5 # making the mouse edge pan more, because locket to own playerShip
 		
 		targetPos += moveLeftRight*right + moveUpDown * up
 		targetPos.y = clamp(targetPos.y,minHeight,maxHeight)
 		targetPos += Vector3(rand_range(-shake_val,shake_val),0,rand_range(-shake_val,shake_val))
 		translation += (targetPos - translation)*speedScale
 		# if do_center and (Vector2(targetPos.x,targetPos.z)-Vector2(translation.x,translation.z)).length()<0.1:
-		# 	translation.x = ship.global_transform.origin.x
-		# 	translation.z = ship.global_transform.origin.z
+		# 	translation.x = playerShip.global_transform.origin.x
+		# 	translation.z = playerShip.global_transform.origin.z
 		_update_mouselook()
+		checkToggleOnHeight(50)
 		rotate_y(deg2rad(-getAngleDist_deg(target_yar, rad2deg(transform.basis.get_euler().y))*speedScale))
 	shake_val*=0.87
 	moveUpDown = 0
@@ -110,6 +112,20 @@ func getAngleDist_deg(from, to):
 	var max_angle = 360
 	var difference = fmod(to - from, max_angle)
 	return fmod(2 * difference, max_angle) - difference
+
+
+func checkToggleOnHeight(heightThresh):
+	"""
+	Checks if the height of height tresh is surpassed and then toggles stuff one.
+	Camera height must then be lower to toggle again.
+	"""
+	if translation.y>heightThresh and heightToggle:
+		playerShip.toggleDeckVisible(-1)
+		shopping.selected_deck = -1
+		heightToggle = false
+	if translation.y<heightThresh:
+		heightToggle = true
+
 
 # func _on_MouseCameraMoveLeft_mouse_exited():
 # 	moveLeftRight= 0

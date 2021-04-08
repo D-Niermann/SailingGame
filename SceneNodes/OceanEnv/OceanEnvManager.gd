@@ -38,7 +38,10 @@ var gerstner_speed2 = baseSpeed2
 
 # time of day
 var sunLight
+var timeOfDay = 0
+var dayDuration_sec = 5*60 # how long a day will take in seconds
 var camera
+var org_basis
 var viewport
 var space_state
 var from : Vector3 = Vector3(0,0,0)
@@ -78,7 +81,8 @@ func _ready():
 	shift_vector = physical_material.get_shader_param("shift_vector")
 	curl_strength = physical_material.get_shader_param("curl_strength")
 
-	sunLight = $DirectionalLight
+	sunLight = $SunLight
+	org_basis = sunLight.global_transform.basis
 
 	
 
@@ -138,6 +142,7 @@ func _physics_process(delta):
 	visual_material.set_shader_param("gerstner_speed", gerstner_speed1) 
 	visual_material.set_shader_param("gerstner_2_speed", gerstner_speed2)
 	time += delta
+	timeOfDay += delta
 	wind_modified += ((wind_strength + sin(time*0.5) * 0.2 * wind_strength) - wind_modified) * delta * 0.5
 	
 	# DEBUG WIND VAR
@@ -145,7 +150,11 @@ func _physics_process(delta):
 	
 	update_water(wind_modified)
 	waterMousePos = getMousePosition()
-	sunLight.rotate(Vector3(1,0,0), 0.001) 
+	setSunLight()
+
+func setSunLight():
+	
+	sunLight.global_transform.basis = org_basis.rotated(sunLight.global_transform.basis.x, deg2rad((fmod((timeOfDay/dayDuration_sec),1)*360)))
 
 func getMousePosition() -> Vector3:
 	from = camera.project_ray_origin(viewport.get_mouse_position())

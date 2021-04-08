@@ -62,8 +62,8 @@ script = ExtResource( 1 )
 gameCam = false
 disabledScript = false
 
-[node name="DirectionalLight" type="DirectionalLight" parent="."]
-transform = Transform( 0.977379, 0.211495, 1.38074e-07, -1.16661e-07, -1.13725e-07, 1, 0.211495, -0.977379, -8.64794e-08, 914.616, -165.422, -247.33 )
+[node name="SunLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 8.64, 0 )
 light_color = Color( 1, 0.929412, 0.741176, 1 )
 light_specular = 1.0
 shadow_enabled = true

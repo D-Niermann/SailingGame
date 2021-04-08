@@ -28,9 +28,9 @@ var malls: Dictionary = {
 var goods: Dictionary = {
 	"banana": {"type": "food", "size": Vector3(2,1, 1), "price": 10, "weight": 1.0, "res": "res://exampleItem.tscn", "icon": "res://icon.png"},
 	"apple": {"type": "food", "size": Vector3(2,1, 1), "price": 10, "weight": 1.0, "res": "res://exampleItem.tscn", "icon": "res://icon.png"},
-	"CannonLarge": {"type": "gear", "size": Vector3(3,1, 2), "price": 10, "weight": 1.0, "res": "res://ObjectNodes/Items/Cannon/CannonItem.tscn", "icon": "res://icon.png"},
-	"WallLong": {"type": "gear", "size": Vector3(1,2, 3), "price": 1, "weight": 1.0, "res": "res://ObjectNodes/Items/Walls/WallLong.tscn", "icon": "res://icon.png"},
-	"LightSmall": {"type": "gear", "size": Vector3(1,1, 1), "price": 1, "weight": 1.0, "res": "res://ObjectNodes/Items/Lights/Light1.tscn", "icon": "res://icon.png"}
+	"CannonLarge": {"type": "gear", "size": Vector3(3,1, 2), "price": 10, "weight": 1.0, "res": "res://ObjectNodes/Items/Cannon/CannonItem.tscn", "icon": "res://ObjectNodes/Items/Cannon/cannon.png"},
+	"WallLong": {"type": "gear", "size": Vector3(1,2, 3), "price": 1, "weight": 1.0, "res": "res://ObjectNodes/Items/Walls/WallLong.tscn", "icon": "res://ObjectNodes/Items/Walls/Wall.png"},
+	"LightSmall": {"type": "gear", "size": Vector3(1,1, 1), "price": 1, "weight": 1.0, "res": "res://ObjectNodes/Items/Lights/Light1.tscn", "icon": "res://ObjectNodes/Items/Walls/Wall.png"}
 }
 var types: Dictionary = { ## this could be auto generated?
 	"food": ["banana", "apple"],

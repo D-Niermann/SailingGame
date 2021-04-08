@@ -16,5 +16,4 @@ func _on_subsurface_scattering_value_changed(value):
 	ocean.set_subsurface_scattering(value)
 
 func _on_sun_glare_value_changed(value):
-	pass
-	#get_tree().get_nodes_in_group("Light")[0].time = value
+	ocean.timeOfDay = value
