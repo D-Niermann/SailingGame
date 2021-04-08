@@ -106,7 +106,7 @@ lifetime = 2.0
 one_shot = true
 randomness = 0.57
 
-[node name="Audio" type="AudioStreamPlayer3D" parent="."]
+[node name="HitSound" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 1 )
 unit_size = 9.0
 max_db = 4.2

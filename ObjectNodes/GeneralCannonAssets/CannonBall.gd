@@ -129,6 +129,6 @@ func _process(delta):
 
 	
 func playAudio():
-	var sound = $Audio
-	sound.set_pitch_scale(sound.pitch_scale+rand_range(-0.2,0.2))
+	var sound = $HitSound
+	sound.set_pitch_scale(sound.pitch_scale+rand_range(-0.3,1.0))
 	sound.play()
