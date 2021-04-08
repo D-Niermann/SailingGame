@@ -94,10 +94,12 @@ func _unhandled_input(event):
 		# 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED if event.pressed else Input.MOUSE_MODE_VISIBLE)
 
 func _on_Deck1_button_up():
-	targetPos.y = 20
+	targetPos.y = 18
+	do_center = true
 
 func _on_Deck0_button_up():
 	targetPos.y = 20
+	do_center = true
 
 func _update_mouselook():
 	# Only rotates mouse if the mouse is captured
