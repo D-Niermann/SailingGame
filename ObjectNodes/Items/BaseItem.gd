@@ -12,14 +12,16 @@ export(float) var penetrationFactor = 2 # penetration factor used for bullets
 export(float) var maxHealth = 100
 
 var gridMesh # green/red mesh that displays the hitbox of items
+var pAudio # audio player thats emitting when item is placed
 var itemPlaceParticle # dynamically loaded particles 
 var currentHealth = maxHealth
-
+var particleRes = load("res://ObjectNodes/Items/ItemPlaceParticle.tscn") # universal placement particles
 
 func _ready():
 	gridMesh = get_node("GridShowMesh")
+	pAudio = $PlaceAudio
+
 	
-	var particleRes = load("res://ObjectNodes/Items/ItemPlaceParticle.tscn")
 	itemPlaceParticle = particleRes.instance()
 	itemPlaceParticle.one_shot = true
 	itemPlaceParticle.emitting = false
@@ -33,3 +35,6 @@ func on_placement():
 		gridMesh.visible = false # make the grid item invisible again
 	itemPlaceParticle.emitting = true
 	
+	if $PlaceAudio!=null:
+		pAudio.set_pitch_scale(pAudio.pitch_scale+rand_range(-0.2,0.2))
+		pAudio.play()

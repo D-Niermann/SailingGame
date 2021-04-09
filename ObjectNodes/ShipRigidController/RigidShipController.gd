@@ -15,6 +15,7 @@ export var turnForce : float # current turn force for left right steer
 var sails # current sail state (0,1) 1=full sails
 var ocean # ref to ocean object
 var cannons = []# ref to all cannons in ships model
+var turnCommandPressed = false
 
 # force spatials
 var hLeft # positions where boynacy attacks
@@ -44,8 +45,8 @@ func _ready():
 	hFront = $HFront
 	hBack = $HBack
 	hRight = $HRight
-	hLeft = $HLeft
-	mainSailForce = $MainSailForce
+	hLeft = $HLeft 
+	mainSailForce = $MainSailForce # TODO: implement point of attack for turning, now its just the back point (could be further in the middle)
 	model = $Model
 
 	turnForce = 0
@@ -81,12 +82,23 @@ func _physics_process(delta):
 	# sail wind attack to tilt the ship a bit if cross wind
 	apply_impulse(mainSailForce.translation, Vector3(0,0,-1)*crossWindForce*sails*delta*impulse_factor)
 
+	if !turnCommandPressed:# reset turn force slowly
+		turnForce *= 0.99
+
 func _input(event):
 	if isPlayer:
 		if Input.is_action_pressed("turnLeft"):
-			turnForce += 0.01
+			turnCommandPressed = true
+			turnForce += 0.005
 		if Input.is_action_pressed("turnRight"):
-			turnForce -= 0.01
+			turnCommandPressed = true
+			turnForce -= 0.005
+		if Input.is_action_just_released("turnLeft"):
+			turnCommandPressed = false
+		if Input.is_action_just_released("turnRight"):
+			turnCommandPressed = false
+
+
 		if Input.is_action_pressed("sailsUp"):
 			sails += 0.01
 		if Input.is_action_pressed("sailsDown"):
