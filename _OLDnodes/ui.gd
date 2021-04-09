@@ -17,3 +17,8 @@ func _on_subsurface_scattering_value_changed(value):
 
 func _on_sun_glare_value_changed(value):
 	ocean.timeOfDay = value
+
+func _on_CheckButton_toggled(state:bool):
+	var NPCships = get_tree().get_nodes_in_group("NPCShip")
+	for i in range(NPCships.size()):
+		NPCships[i].get_node("AIController").isActive = state

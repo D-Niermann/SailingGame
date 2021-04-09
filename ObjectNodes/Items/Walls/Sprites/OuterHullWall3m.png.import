@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/Wall.png-47a1e014383ec3eefa7a259bbe3299cb.s3tc.stex"
-path.etc2="res://.import/Wall.png-47a1e014383ec3eefa7a259bbe3299cb.etc2.stex"
+path.s3tc="res://.import/OuterHullWall3m.png-495ea60112ea80cbe648772c10db0f44.s3tc.stex"
+path.etc2="res://.import/OuterHullWall3m.png-495ea60112ea80cbe648772c10db0f44.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://ObjectNodes/Items/Walls/Wall.png"
-dest_files=[ "res://.import/Wall.png-47a1e014383ec3eefa7a259bbe3299cb.s3tc.stex", "res://.import/Wall.png-47a1e014383ec3eefa7a259bbe3299cb.etc2.stex" ]
+source_file="res://ObjectNodes/Items/Walls/Sprites/OuterHullWall3m.png"
+dest_files=[ "res://.import/OuterHullWall3m.png-495ea60112ea80cbe648772c10db0f44.s3tc.stex", "res://.import/OuterHullWall3m.png-495ea60112ea80cbe648772c10db0f44.etc2.stex" ]
 
 [params]
 

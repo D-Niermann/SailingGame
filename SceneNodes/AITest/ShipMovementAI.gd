@@ -11,13 +11,14 @@ TODO: island navigation (raytrayce in fron tof ship for collisions)
 ## parameters 
 var rotateSpeed = 0.05 # smoothness of rotation of own spatial, (0,1) 1=instant 0=none
 
+export var isActive = false
 export var parallelWeight = 0.2
 export var windWeight  = 0.5
 var towardsWeight = 1  #this can be negative as well to drive away from enemy, now gets set automatically based on optimalDistance
 export var broadsideWeight = 0.2
 export var optimalDistance = 4
 export var windVec = Vector3(1,0,0) # TODO: listen to environment wind dir
-var useTerminal = false
+var useTerminal = false # make it true and the terminal.gd has to call update() otherwise this will call it
 var aimPrecision = 10 # in degree, how much deviation to allow from target to fire (more = more unprecise)
 
 ## vars
@@ -42,7 +43,7 @@ func _ready():
 	myShip = get_parent()
 
 func _physics_process(delta):
-	if !useTerminal:
+	if !useTerminal and isActive:
 		update([])
 
 
