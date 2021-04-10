@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://ObjectNodes/GeneralCannonAssets/CannonBall.tscn" type="PackedScene" id=1]
 [ext_resource path="res://_OLDnodes/CollisionTestWall.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/Camera.gd" type="Script" id=3]
 [ext_resource path="res://ObjectNodes/GeneralCannonAssets/OLDCannon.tscn" type="PackedScene" id=4]
-
-
+[ext_resource path="res://ObjectNodes/Items/Walls/OuterHullWall3m.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 1, 5, 5 )
@@ -22,13 +21,13 @@ extents = Vector3( 0.48483, 2.62139, 2.53343 )
 [node name="Camera" type="Camera" parent="." groups=[
 "Camera",
 ]]
-transform = Transform( 0.999842, 0.00568086, -0.0168706, 0, 0.947713, 0.319124, 0.0178014, -0.319074, 0.947563, 68.36, 13.54, 2.84 )
+transform = Transform( 0.588364, -0.404298, 0.700265, 0, 0.866025, 0.5, -0.808596, -0.294182, 0.509538, 37.429, 20.269, 19.357 )
 fov = 82.0619
 script = ExtResource( 3 )
 gameCam = false
 
 [node name="Wall" type="KinematicBody" parent="."]
-transform = Transform( 2.67162, 1.68516, 0.120163, -0.0579169, -0.133338, 3.15763, 1.68845, -2.67099, -0.0818193, 0.37657, 1.96951, -1.50085 )
+transform = Transform( 3.1585, -0.0347152, 0.120159, -0.121011, -0.0805511, 3.15763, -0.0316164, -3.15975, -0.0818172, -1.05405, 6.74804, 5.92175 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
@@ -78,3 +77,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 68.3089, 9.21703, -5.61958 )
 transform = Transform( 1.3257, 0, -3.93356, 0, 1, 0, 1.60706, 0, 3.24489, 66.9476, 7.65923, -7.01585 )
 mesh = SubResource( 3 )
 material/0 = null
+
+[node name="OuterHullWall3m" parent="." instance=ExtResource( 5 )]
+transform = Transform( 4.58425, 0, 0, 0, 36.3048, 0, 0, 0, 4.58425, 1.09593, 7.50411, 6.36767 )

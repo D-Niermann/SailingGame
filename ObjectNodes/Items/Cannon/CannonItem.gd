@@ -28,6 +28,8 @@ onready var rotateMargin = rand_range(-unprecision,unprecision) # error in rotat
 onready var upDownMargin = rand_range(-unprecision,unprecision) # what difference to mouse pos units to ignore when rotating  up down
 export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
 export(float) var recoil_impulse = 0.3 # when firing to the ship
+var markerMoveSpeed = 0.05 # how fast markes of trajectory move
+
 
 var reloaded = true
 
@@ -39,9 +41,7 @@ var particles_flash
 var playerAimCannons # flag thats true if the player uses input to aim
 var ocean
 var waterHitMarker
-var myShip
 var fakeBullet
-export var isPlayerControlable = false
 var marker 
 var canShoot :bool = false
 var aimDiffAngle # angle between target aim position and forward
@@ -66,15 +66,9 @@ func _ready():
 	reloadTimer.set_wait_time(reload_time_sec)
 	reloadTimer.set_one_shot(true) # Make sure it loops
 	
-	## TODO: this gets also called when item is picked in shop
-	myShip = get_parent().get_parent().get_parent()
-	if myShip != null:
-		## register as cannon on ship parent
-		if myShip.has_method("registerCannon"):
-			myShip.registerCannon(self.get_path())
-		if "isPlayer" in myShip:
-			if myShip.isPlayer:
-				isPlayerControlable = true
+	## register as cannon on ship parent
+	if myShip.has_method("registerCannon"):
+		myShip.registerCannon(self.get_path())
 
 
 
@@ -175,11 +169,11 @@ func predictTrajectory():
 		if ocean!=null:
 			waterHeight = ocean.getWaterHeight(to_global(point))
 		if to_global(point).y>waterHeight:
-			marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*0.1
+			marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*markerMoveSpeed
 			if i>1:
 				marker[i].visible = true
 			fakeBullet.transform.origin += Vector3(1,0,0)*force*5.2/(1+i*0.05)
-			fakeBullet.global_transform.origin += Vector3(0,-1,0)*0.015*i ## TODO: does the vector (0,-1,0) always point down globally (gravity)? -> if so why does (1,0,0) always point forwards loccally
+			fakeBullet.global_transform.origin += Vector3(0,-1,0)*0.015*i 
 		else:
 			last_i = i
 			break
@@ -199,12 +193,12 @@ func predictTrajectory():
 		var preciseWaterPoint = aboveWater
 		for i in range(last_i, lineSize):
 			trajectoryPoints[i] = preciseWaterPoint
-			marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*0.1
+			marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*markerMoveSpeed
 			marker[i].visible = true
 
 
 	waterHitMarker.visible = true
-	waterHitMarker.translation += (trajectoryPoints[lineSize-1] - waterHitMarker.translation)*0.1
+	waterHitMarker.translation += (trajectoryPoints[lineSize-1] - waterHitMarker.translation)*markerMoveSpeed
 
 			
 func clearTrajectory():

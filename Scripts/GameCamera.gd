@@ -45,21 +45,28 @@ func _ready():
 func _process(delta):
 	cursorPos = viewport.get_mouse_position()/viewport.size
 	mouseDistFromMid = (cursorPos - Vector2(0.5,0.5)).length()*2
+	var relMousePos : Vector2 = (cursorPos - Vector2(0.5,0.5))
+	var moveVector : Vector2 = relMousePos
+	# if playerIsAiming:
+	# 	mousePanEdgeSize = aimMousePanEdgeSize # if player is aiming cannons, edge size can get bigger
+	# else:
+	# 	mousePanEdgeSize = defaultMousePanEdgeSize
 
-	if playerIsAiming:
-		mousePanEdgeSize = aimMousePanEdgeSize # if player is aiming cannons, edge size can get bigger
-	else:
-		mousePanEdgeSize = defaultMousePanEdgeSize
+	## detemine if panning with mouse (get screen edges)
+	if !playerIsAiming:
+		if abs(moveVector.x)<0.5-defaultMousePanEdgeSize*0.5:
+			moveVector.x = 0#-panSpeed * (mouseDistFromMid-aimMousePanEdgeSize*0.5) # subtract aimMousePanEdgeSize*0.5 for smooth transition from not move to move
+		if abs(moveVector.y)<0.5-defaultMousePanEdgeSize*0.5:
+			moveVector.y = 0
+	
+	# if cursorPos.x<1-mousePanEdgeSize:
+	# print(relMousePos)
 
-	## detemine if panning with mouse
-	if cursorPos.x<mousePanEdgeSize:
-		moveLeftRight = -panSpeed * (mouseDistFromMid-aimMousePanEdgeSize) # subtract aimMousePanEdgeSize for smooth transition from not move to move
-	if cursorPos.x>1-mousePanEdgeSize:
-		moveLeftRight = +panSpeed * (mouseDistFromMid-aimMousePanEdgeSize)
-	if cursorPos.y<mousePanEdgeSize:
-		moveUpDown = panSpeed * (mouseDistFromMid-aimMousePanEdgeSize)
-	if cursorPos.y>1-mousePanEdgeSize:
-		moveUpDown = -panSpeed * (mouseDistFromMid-aimMousePanEdgeSize)
+	# 	relMousePos.x = 0#+panSpeed * (mouseDistFromMid-aimMousePanEdgeSize*0.5)
+	# if cursorPos.y<mousePanEdgeSize:
+	# 	moveUpDown = panSpeed * (mouseDistFromMid-aimMousePanEdgeSize*0.5)
+	# if cursorPos.y>1-mousePanEdgeSize:
+	# 	moveUpDown = -panSpeed * (mouseDistFromMid-aimMousePanEdgeSize*0.5)
 
 	right = transform.basis.x
 	up = transform.basis.y
@@ -69,7 +76,7 @@ func _process(delta):
 		## if camera is centered around ship
 		if do_center:
 			if shopping.open!=null: # shop is open
-				localShipVec += Vector2(moveLeftRight * 0.1   ,  moveUpDown * 0.1 )
+				localShipVec += Vector2(moveVector.x * 0.1   ,  moveVector.y * 0.1 )
 				target_yar = rad2deg(playerShip.transform.basis.get_euler().y) # TODO: rotation doent work if cam is not in center of ship
 			else: # shop not open
 				localShipVec = Vector2.ZERO
@@ -83,23 +90,21 @@ func _process(delta):
 			targetPos.y = y_save
 
 			
-			moveLeftRight*=5 # making the mouse edge pan more, because locket to own playerShip
-			moveUpDown*= 5 # making the mouse edge pan more, because locket to own playerShip
+			moveVector*= 5 # making the mouse edge pan more, because locket to own playerShip
 
 			if playerIsAiming: # if aiming while centered increase even further
-				moveLeftRight*=5 # making the mouse edge pan less, because aiming with cannons
-				moveUpDown*= 5 # making the mouse edge pan less, because aiming with cannons
+				moveVector*= 5 # making the mouse edge pan less, because aiming with cannons
 		
-		else:
-			if playerIsAiming:
-				moveLeftRight*=0.6 # making the mouse edge pan less, because aiming with cannons
-				moveUpDown*= 0.6 # making the mouse edge pan less, because aiming with cannons
+		# else:
+		# 	if playerIsAiming:
+		# 		moveLeftRight*=1 # making the mouse edge pan less, because aiming with cannons
+		# 		moveUpDown*= 1 # making the mouse edge pan less, because aiming with cannons
 
 			
 	
 		## apply calcualtions to target position
 		if shopping.open==null: # shop is not open
-			targetPos += moveLeftRight*right + moveUpDown * up
+			targetPos += moveVector.x *right - moveVector.y * up
 			
 		targetPos.y = clamp(targetPos.y,minHeight,maxHeight)
 		## camera shake
@@ -110,7 +115,7 @@ func _process(delta):
 		# if do_center and (Vector2(targetPos.x,targetPos.z)-Vector2(translation.x,translation.z)).length()<0.1:
 		# 	translation.x = playerShip.global_transform.origin.x
 		# 	translation.z = playerShip.global_transform.origin.z
-		_update_mouselook()
+		mouseRotate()
 		checkToggleOnHeight(50)
 		rotate_y(deg2rad(-getAngleDist_deg(target_yar, rad2deg(transform.basis.get_euler().y))*speedScale))
 	shake_val*=0.87
@@ -154,7 +159,7 @@ func _on_Deck0_button_up():
 		targetPos.y = 20
 		do_center = true
 
-func _update_mouselook():
+func mouseRotate():
 	# Only rotates mouse if the mouse is captured
 	# if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
 	if rotate:

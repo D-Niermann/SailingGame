@@ -63,7 +63,7 @@ gameCam = false
 disabledScript = false
 
 [node name="SunLight" type="DirectionalLight" parent="."]
-transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 8.64, 0 )
+transform = Transform( 1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 8.64, 0 )
 light_color = Color( 1, 0.929412, 0.741176, 1 )
 light_specular = 1.0
 shadow_enabled = true
