@@ -12,15 +12,25 @@ var viewport: Viewport = null
 var camera: Camera = null
 var walls: Dictionary = {} # arrays of partitions, filled with static stuff
 var units: Dictionary = {} # arrays of partitions, filled with dynamic stuff which are intelligent (self-driving)
-var items: Dictionary = {Vector3(0, 0, 0): ["example"]} # arrays of partitions, filled with dynamic stuff which are dumb (can be picked up and dropped)
+var items: Dictionary = {} # {Vector3(0, 0, 0): ["example"]} # arrays of partitions, filled with dynamic stuff which are dumb (can be picked up and dropped)
 var live: Dictionary = {} # partitions that are live/spawned already
-var data: Dictionary = {"example": {"preset": "example", "xform": Transform.IDENTITY}} # names and properties of every single scene in the world
+var data: Dictionary = {} # {"example": {"preset": "example", "xform": Transform.IDENTITY}} # names and properties of every single scene in the world
 
-var image: Image = Image.new() # what we use for maintaining multi-partition stuff, like islands
+var wars: Dictionary = {
+	"spanish": ["french"],
+	"french": ["spanish"]
+}
+var flags: Dictionary = {
+	Color(1.0, 1.0, 0.0): "spanish",
+	Color(0.0, 0.0, 1.0): "french",
+	Color(0.0, 0.0, 0.0): "pirates"
+}
+var dominions: Image = Image.new() # what we use for defining regions, like what part of the world belongs to whom
+var topograph: Image = Image.new() # what we use for maintaining multi-partition stuff, like islands
 var picked: Dictionary = {} # like live, but for the multi-partition stuff
 var colors: Dictionary = {"0234": {"res": "res://SceneNodes/Islands/Island_Small.tscn", "origin": Vector3(0, 0, 0)}} # like data, but for the multi-partition stuff
 var presets: Dictionary = { # constants are not copied over the instance, this is where we summon stuff from, and also check some constant variables from
-	"example": {"TYPE": "item", "RES": "res://exampleItem.tscn", "MAXHP": 100, "health": 100}
+	"example": {"CON": "units", "RES": "res://exampleItem.tscn", "TYPE": "trade", "SPEED": 1, "MAXHP": 100, "health": 100, "weight": 1, "side": "spanish", "pack": []}
 }
 
 
@@ -28,8 +38,11 @@ var presets: Dictionary = { # constants are not copied over the instance, this i
 func _ready():
 	viewport = get_node("ViewportContainer/Viewport")
 	camera = viewport.get_node("Camera")
-	image.load("res://icon.png")
-	Utility.matrix = image # here we set the grid for pathfinding in utility, it'll just use this image, unless we change it for performance reasons
+	topograph.load("res://topograph.png")
+	dominions.load("res://dominions.png")
+	Utility.topograph = topograph # map for loading islands and also for pathfinding
+	Utility.dominions = dominions # map for goalfinding and pathfinding, shows regions
+	#spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
 
 
 # Called every physics frame. 'delta' is the elapsed time since the previous frame.
@@ -66,11 +79,11 @@ func _physics_process(delta):
 			live.erase(part)
 			copy.erase(part)
 	# loading image
-	if image != null: # here we do the same loading/unloading thing for multi-partition stuff, like items, it uses the image
-		image.lock()
+	if topograph != null: # here we do the same loading/unloading thing for multi-partition stuff, like items, it uses the image
+		topograph.lock()
 		var codes: Dictionary = {}
 		for part in live.keys():
-			var pixel: Color = image.get_pixel(fmod(abs(part.x), image.get_width()), fmod(abs(part.z), image.get_height()))
+			var pixel: Color = topograph.get_pixel(fmod(abs(part.x), topograph.get_width()), fmod(abs(part.z), topograph.get_height()))
 			var code: String = str(stepify(pixel.r, 0.1) * 10) + str(stepify(pixel.g, 0.1) * 10) + str(stepify(pixel.b, 0.1) * 10)
 			if pixel != Color.black && !picked.has(code):
 				if !colors.has(code):
@@ -80,7 +93,7 @@ func _physics_process(delta):
 				island.global_transform.origin = colors[code]["origin"]
 				picked[code] = island
 			codes[code] = null
-		image.unlock()
+		topograph.unlock()
 		for code in picked.keys():
 			if !codes.has(code):
 				picked[code].queue_free()
@@ -90,41 +103,33 @@ func _physics_process(delta):
 		# getting the array of the units in proximity, that is units in this and adjacent partitions
 		adjacent = Utility.findAdjacent(part, CANCROSS, EXTENDED)
 		adjacent.append(part)
-		var inProx: Array = []
+		var inProx: Dictionary = {}
 		for partition in adjacent:
 			if units.has(partition):
-				inProx += units[partition]
+				for unit in units[partition]:
+					inProx[unit] = data[unit]
 		# iterating units
-		for unit in part: # for each unit in this part, note that, the inProx array above will be same for all units in this part, so can be used by any
-			var holo = null # holo stands for physical representations of units, that is actual scenes in the world, loaded
-			var info: Dictionary = data[unit] # info stands for variables of this unit, like health and transform (xform)
-			var preset: Dictionary = presets[info["preset"]] # preset has constants of this unit, like max health and resource path
-			if live.has(part): # if part of this unit is live, we can find its holo
-				holo = viewport.get_node_or_null(unit)
-			# run specific behavior, you could add any sort of AI here
-			if holo != null: # runs when unit is live
-				var controller = holo.get_node_or_null("AIController")
-				if controller != null:
-					controller.update(inProx)
-				info["xform"] = holo.global_transform # at the end, update transform
-			else: # runs when unit is offscreen
-				info["xform"] = info["xform"] # at the end, update transform
+		for unit in units[part]: # for each unit in this part, note that, the inProx array above will be same for all units in this part, so can be used by any
+			var holo = runAI(unit, part, inProx, delta)
 			# maintaining consistency, we update all necessary data after the behavior, so things don't fall apart
+			var info: Dictionary = data[unit]
 			var newPart = Utility.partitionID(info["xform"].origin, PARTSIZE, EXTENDED) # new partition of this unit
 			if newPart != part: # if partition has changed, we update and load/unload if necessary
-				part.erase(unit)
-				if part.empty():
+				units[part].erase(unit)
+				if units[part].empty():
 					units.erase(part)
 				if !units.has(newPart):
 					units[newPart] = []
 				units[newPart].append(unit)
 			if live.has(newPart): # if new partition is live but unit is not spawned, we spawn it
 				if holo == null:
-					holo = load(preset["RES"]).instance()
+					print("spawned")
+					holo = load(presets[info["preset"]]["RES"]).instance()
 					viewport.add_child(holo)
 					holo.name = unit
 					holo.global_transform = info["xform"]
 			elif holo != null: # if new partition is not live, we kill holo, but it keeps living in the database
+				print("destroyed")
 				holo.queue_free()
 
 
@@ -186,8 +191,8 @@ func spawn(key: String, at: Vector3):
 		# if parts are different, switch
 		if target != current:
 			var preset: Dictionary = presets[info["preset"]]
-			var type: String = preset["TYPE"]
-			var list: Dictionary = get(type + "s")
+			var type: String = preset["CON"]
+			var list: Dictionary = get(type)
 			if list.has(current):
 				list[current].erase(key)
 				if list[current].empty():
@@ -217,13 +222,16 @@ func spawn(key: String, at: Vector3):
 			info["preset"] = key
 			for entry in preset.keys():
 				if entry.to_lower()[0] == entry[0]:
-					info[entry] = preset[entry].duplicate(true)
+					if preset[entry] is Array || preset[entry] is Dictionary:
+						info[entry] = preset[entry].duplicate(true)
+					else:
+						info[entry] = preset[entry]
 			info["xform"] = Transform.IDENTITY
 			info["xform"].origin = at
 			data[unique] = info
 			# place in part
-			var type: String = preset["TYPE"]
-			var list: Dictionary = get(type + "s")
+			var type: String = preset["CON"]
+			var list: Dictionary = get(type)
 			if !list.has(target):
 				list[target] = []
 			list[target].append(unique)
@@ -243,3 +251,115 @@ func findName(key: String):
 		number += 1
 		suggestion = key + "@" + str(number)
 	return suggestion
+
+
+# Runs artificial intelligence for the given unit.
+func runAI(unit: String, part: Vector3, inProx: Dictionary, delta: float):
+#	If I was a ship:
+#	- I'd have a class like pirate, trade, military; and a faction like spanish, french, whatnot
+#	- I'd have an end goal depending on my class or faction or current cargo or health
+#	- I'd get list of ships nearby
+#	- I'd categorize them as ally, neutral, enemy
+#	- I'd do some risk management depending on total powers or perhaps powers at directions
+#	- If I could, I'd like to keep pursuing my goal, (follow route if trading, attack enemy if pirate or military)
+#	- If my goal doesn't seem plausible, I'd create a temporary goal to follow till the conditions change (flee or fight, probably trying to flee, but also shooting whenever possible, as you have suggested once)
+	var dest = null
+	var holo = null # holo stands for physical representations of units, that is actual scenes in the world, loaded
+	var info: Dictionary = data[unit] # info stands for variables of this unit, like health and transform (xform)
+	var preset: Dictionary = presets[info["preset"]] # preset has constants of this unit, like max health and resource path
+	var side: String = info["side"]
+	var type: String = preset["TYPE"]
+#	var task: String = info["task"]
+	var pack: Array = info["pack"]
+	if live.has(part): # if part of this unit is live, we can find its holo
+		holo = viewport.get_node_or_null(unit)
+	var wait = info.get("wait")
+	if wait != null: # waits if set to wait
+		print("waiting")
+		wait -= delta
+		if wait <= 0:
+			info.erase("wait")
+	else:
+		var goal = info.get("goal")
+		var follow = info.get("follow")
+		if follow != null:
+			print("following")
+			var followUnit = units.get(follow)
+			if followUnit != null:
+				var followPart = Utility.partitionID(followUnit["xform"].origin, PARTSIZE, false)
+				if followPart != goal:
+					goal = followPart
+		if goal == null: # finds goal if doesn't have one
+			print("goalfinding")
+			if type == "trade":
+				var targetShop = null
+				var targetPart = null
+				dominions.lock()
+				var targetDistance = 999999999
+				var highestProfit: float = -1
+				for mallName in Economy.malls.keys():
+					var profit: float = 0
+					var mall: Dictionary = Economy.malls[mallName]
+					var mallPart: Vector3 = mall["part"]
+					var pixelColor: Color = dominions.get_pixel(mallPart.x, mallPart.z)
+					var mallSide: String = flags[pixelColor]
+					if wars.has(side) && wars[side].has(mallSide):
+						continue
+					for item in pack:
+						profit += Economy.getPrice(item, mallName)
+					var dist = Utility.chebyshevDistance(part, mallPart)
+					if profit > highestProfit || (profit == highestProfit && dist < targetDistance):
+						highestProfit = profit
+						targetDistance = dist
+						targetShop = mallName
+						targetPart = mallPart
+				dominions.unlock()
+				info["goal"] = targetPart
+			elif type == "pirate":
+				pass
+			elif type == "military":
+				pass
+		elif goal != part: # needs path if is not at goal
+			var path = info.get("path")
+			if path == null: # finds path if doesn't have one
+				print("pathfinding")
+				var filter: Array = []
+				if wars.has(side):
+					filter = wars[side].duplicate()
+				info["path"] = Utility.findPath(part, goal, true, false, filter)
+#			elif path[0] != goal: # changes goal if can't reach
+#				pass
+			else: # follows path
+				var dist: int = Utility.chebyshevDistance(part, path[-1])
+				if dist == 0: # if reached, remove waypoint
+					path.pop_back()
+					if path.empty():
+						info.erase("path")
+				elif dist > 1: # if distant, clear path, so can search from scratch
+					info.erase("path")
+				else: # go towards the next waypoint
+					dest = path[-1]
+		else: # works at goal
+			if info.has("path"):
+				info.erase("path")
+			pass
+			
+		
+	if holo != null: # runs when unit is live
+		var results: Dictionary
+		var controller = holo.get_node_or_null("AIController")
+		if controller != null:
+			results = controller.update(Utility.partitionLocation(dest, PARTSIZE, false), inProx)
+		info["xform"] = holo.global_transform # at the end, update transform
+	else: # runs when unit is offscreen
+		# move transform
+		var direction = Vector3.ZERO
+		if dest != null:
+			direction = (dest - part).normalized()
+		# update transform
+		if direction != Vector3.ZERO:
+			info["xform"].origin += direction * delta * preset["SPEED"] / info["weight"]
+			info["xform"] = info["xform"].looking_at(info["xform"].origin + direction, Vector3.UP)
+		#print(info["xform"].origin)
+	
+	return holo
