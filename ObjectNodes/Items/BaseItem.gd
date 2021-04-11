@@ -58,3 +58,16 @@ func giveDmg(damage : float):
 	reports damage taken by bullet to this object.
 	"""
 	currentHealth = clamp(currentHealth - damage*damageMultiplier,0,maxHealth)
+
+func createInfo(placeholder):
+	"""
+	Instances the correponding item info panel and moves it to placeholder.rect_position.
+	The instanced info box connects to this item and communicates user input and item stati.
+	"""
+	pass
+
+func removeInfo():
+	"""
+	removes info panel again
+	"""
+	pass

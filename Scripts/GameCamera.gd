@@ -81,7 +81,7 @@ func _process(delta):
 
 		## apply calcualtions to target position
 		if shopping.open==null: # shop is not open
-			targetPos += (moveVector.x *right - moveVector.y * up)*panSpeed
+			targetPos += (moveVector.x *right - moveVector.y * up)*panSpeed*clamp(translation.y*0.01,0.1,5)
 			
 		targetPos.y = clamp(targetPos.y,minHeight,maxHeight)
 

@@ -5,7 +5,9 @@ extends "res://ObjectNodes/Items/BaseItem.gd"
 # var a = 2
 # var b = "text"
 # var ball
-export var BallScene: PackedScene
+export var BallScene: PackedScene # scene object of ball
+export var InfoPanel: PackedScene # scene object of cannons info ui panel
+var infoPanel = null # ref to instanced info panel
 var fireSounds : Array = []
 var forward : Vector3
 var up : Vector3
@@ -39,6 +41,7 @@ var aimPosition # the position the cannons will aim to (needs to be local)
 var particles
 var particles_flash
 var playerAimCannons # flag thats true if the player uses input to aim
+var isActive = true # flag that tells if this is active or not (deactived cannons dont aim or shoot)
 var ocean
 var waterHitMarker
 var fakeBullet
@@ -62,7 +65,7 @@ func _ready():
 	
 	reloadTimer = Timer.new()
 	add_child(reloadTimer)
-	reloadTimer.connect("timeout", self, "_on_Timer_timeout")
+	reloadTimer.connect("timeout", self, "_on_reloadTimer_timeout")
 	reloadTimer.set_wait_time(reload_time_sec)
 	reloadTimer.set_one_shot(true) # Make sure it loops
 	
@@ -102,9 +105,11 @@ func _process(delta):
 	
 	forward = transform.basis.x.normalized()
 
-	if playerAimCannons:
+	if playerAimCannons and isActive:
 		aimTo(ocean.waterMousePos)
 	
+	if infoPanel!=null:
+		isActive = infoPanel.isActive
 
 
 func aimTo(global_position : Vector3):
@@ -116,9 +121,9 @@ func aimTo(global_position : Vector3):
 		var dist = (aimPosition).x
 		var diff_x = dist - (trajectoryPoints[lineSize-1]).x
 		if diff_x>upDownMargin: 
-			rotateUpDown((diff_x-upDownMargin)*0.5, "up")
+			rotateUpDown((diff_x+upDownMargin)*0.5, "up")
 		elif diff_x<-upDownMargin:
-			rotateUpDown((diff_x+upDownMargin)*0.5, "down")
+			rotateUpDown((diff_x-upDownMargin)*0.5, "down")
 		if aimPosition.z<-rotateMargin:
 			rotateLeftRight((aimPosition.z-rotateMargin)*0.5, "left")
 		elif aimPosition.z>rotateMargin:
@@ -127,7 +132,10 @@ func aimTo(global_position : Vector3):
 		canShoot = false
 		clearTrajectory()
 
-	
+func giveDmg(damage):
+	.giveDmg(damage)
+	if infoPanel!=null:
+		infoPanel.updateHealth(currentHealth)
 
 func _unhandled_input(event):
 	# Receives key input
@@ -223,7 +231,7 @@ func clearTrajectory():
 		trajectoryPoints[i] = point
 
 func fireBall():
-	if reloaded:
+	if reloaded and isActive:
 		reloaded = false
 		yield(get_tree().create_timer(fire_delay_sec),"timeout")
 		playAudio()
@@ -249,7 +257,7 @@ func rotateLeftRight(multiplicator=1, dir : String = ""):
 	"""
 	multiplicator = clamp(abs(multiplicator),0,1)
 	## left rotation = negative angle distance
-	var angle_dist = rad2deg(Utility.signedAngle(org_forward,(forward),up)) #getAngleDist_deg(transform.basis.get_euler().y*180/PI,org_rotation.y)
+	var angle_dist = rad2deg(Utility.signedAngle(org_forward,(forward),up))
 	if dir == "left" and angle_dist>-maxRotateAngle:
 		rotate(up,rotateSpeed*multiplicator)
 	elif dir == "right" and angle_dist<maxRotateAngle:
@@ -264,16 +272,12 @@ func rotateUpDown(multiplicator=1, dir : String = ""):
 	"""
 	multiplicator = clamp(abs(multiplicator),0,1)
 	## up rotation = positive angle distance
-	var angle_dist = -rad2deg(Utility.signedAngle(org_forward,(forward),right)) # -getAngleDist_deg(transform.basis.get_euler().z*180/PI,org_rotation.z)
+	var angle_dist = -rad2deg(Utility.signedAngle(org_forward,(forward),right)) 
 	if dir == "up" and angle_dist<maxUpAngle:
 		rotate(transform.basis.z.normalized(),rotateSpeed*0.2*multiplicator)
 	elif dir == "down" and angle_dist>minUpAngle:
 		rotate(transform.basis.z.normalized(),-rotateSpeed*0.2*multiplicator)
 		
-func getAngleDist_deg(from, to):
-	var max_angle = 360
-	var difference = fmod(to - from, max_angle)
-	return fmod(2 * difference, max_angle) - difference
 
 func doParticles():
 	particles.restart()
@@ -287,5 +291,25 @@ func playAudio():
 	sound.set_pitch_scale(rand_range(0.6,1.0))
 	sound.play()
 
-func _on_Timer_timeout():
+func _on_reloadTimer_timeout():
 	reloaded = true
+
+
+func createInfo(placeholder):
+	if InfoPanel!=null:
+		## instance panel
+		infoPanel = InfoPanel.instance()
+		infoPanel.visible = false
+		infoPanel.placeholder = placeholder
+		self.add_child(infoPanel)
+		infoPanel.rect_position = placeholder.rect_position
+
+		## give info to panel
+		infoPanel.updateContent(currentHealth)
+
+		## make panel visible
+		infoPanel.visible = true
+
+func removeInfo():
+	if infoPanel!=null:
+		infoPanel.queue_free()
