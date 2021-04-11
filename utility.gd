@@ -146,12 +146,12 @@ func partitionID(location: Vector3, length: float, extended: bool):
 
 
 # Returns location of the given partition.
-func partitionLocation(partition: Vector3, length: float):
+func partitionLocation(partition: Vector3, length: float, extended: bool):
 	var halfLength = length * 0.5
-	if partition.y == 0:
-		return partition * length + Vector3(halfLength, 0, halfLength)
-	else:
+	if extended:
 		return partition * length + Vector3(halfLength, halfLength, halfLength)
+	else:
+		return partition * length + Vector3(halfLength, 0, halfLength)
 
 
 # Returns chebyshev distance between two three dimensional vectors.
