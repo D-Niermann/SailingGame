@@ -1,9 +1,11 @@
 extends Node
 
-var matrix: Image = Image.new()
+var topograph: Image = Image.new()
+var dominions: Image = Image.new()
 
 # Finds path between the given parts.
-func findPath(from: Vector3, to: Vector3, canCross: bool, extended: bool):
+func findPath(from: Vector3, to: Vector3, canCross: bool, extended: bool, filter: Array):
+	var temp = null
 	var paths: Dictionary = {from: {"path": [from], "dist": 0}}
 	var open: Dictionary = {from: null}
 	var close: Dictionary = {}
@@ -22,21 +24,29 @@ func findPath(from: Vector3, to: Vector3, canCross: bool, extended: bool):
 		for part in adjacent:
 			if open.has(part) || close.has(part) || !canPass(lowest, part, canCross, extended):
 				continue
+			if isFiltered(part, filter):
+				continue
 			var path: Array = paths[lowest]["path"].duplicate(true)
 			path.append(part)
-			paths[part] = {"path": [path], "dist": paths[lowest]["dist"] + 1}
+			paths[part] = {"path": path, "dist": paths[lowest]["dist"] + 1}
 			open[part] = null
 			if part == to:
-				return path
+				temp = path
+				limit = 0
+				break
 		limit -= 1
-	var lowest: Vector3
-	var value: int = -1
-	for part in close.keys():
-		var score: int = paths[part]["dist"] + chebyshevDistance(part, to)
-		if value < 0 || score < value:
-			value = score
-			lowest = part
-	return paths[lowest]["path"]
+	if temp == null:
+		return null
+		var lowest: Vector3
+		var value: int = -1
+		for part in close.keys():
+			var score: int = paths[part]["dist"] + chebyshevDistance(part, to)
+			if value < 0 || score < value:
+				value = score
+				lowest = part
+		temp = paths[lowest]["path"]
+	temp.invert()
+	return temp
 
 
 # Checks if transition between the given parts is possible.
@@ -61,20 +71,34 @@ func canPass(from: Vector3, to: Vector3, canCross: bool, extended: bool):
 		comp = Vector3(0, 0, difference.z)
 		if comp != Vector3.ZERO && isOccupied(from + comp):
 			return false
-	else:
-		if isOccupied(to):
-			return false
+	if isOccupied(to):
+		return false
+	#print("canPassTo: " + str(to) + " from: " + str(from))
 	return true
 
 
 # Checks if the given part is occupied.
 func isOccupied(partition: Vector3):
-	matrix.lock()
-	var pixel: Color = matrix.get_pixel(fmod(abs(partition.x), matrix.get_width()), fmod(abs(partition.z), matrix.get_height()))
-	matrix.unlock()
+	if partition.y != 0 || partition.x < 0 || partition.z < 0 || partition.x > topograph.get_width() - 1 || partition.z > topograph.get_height() - 1:
+		return true
+	topograph.lock()
+	var pixel: Color = topograph.get_pixel(partition.x, partition.z)
+	topograph.unlock()
 	if pixel != Color.black:
-		return false
-	return true
+		return true
+	return false
+
+
+# Checks if the given part is included in the given filter.
+func isFiltered(partition: Vector3, filter: Array):
+	if partition.y != 0 || partition.x < 0 || partition.z < 0 || partition.x > topograph.get_width() - 1 || partition.z > topograph.get_height() - 1:
+		return true
+	dominions.lock()
+	var pixel: Color = dominions.get_pixel(partition.x, partition.z)
+	dominions.unlock()
+	if filter.has(pixel):
+		return true
+	return false
 
 
 # Returns adjacent parts for the given part.
@@ -122,12 +146,12 @@ func partitionID(location: Vector3, length: float, extended: bool):
 
 
 # Returns location of the given partition.
-func partitionLocation(partition: Vector3, length: float, extended: bool):
+func partitionLocation(partition: Vector3, length: float):
 	var halfLength = length * 0.5
-	if extended:
-		return partition * length + Vector3(halfLength, halfLength, halfLength)
-	else:
+	if partition.y == 0:
 		return partition * length + Vector3(halfLength, 0, halfLength)
+	else:
+		return partition * length + Vector3(halfLength, halfLength, halfLength)
 
 
 # Returns chebyshev distance between two three dimensional vectors.
