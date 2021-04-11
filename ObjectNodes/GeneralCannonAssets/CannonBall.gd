@@ -18,7 +18,7 @@ var entered
 var time
 var bullet_resistance = 0
 var vel_penetrate_thresh = 0.0 # the velocity needs to be bigger than this to even consider penetration
-var ricochet_thresh = 60 # TODO: make this also dependend on coll object # in degree. lower number means more ricochet, thus less penetration TODO: could be assigned from other object
+var ricochet_thresh = 80 # TODO: make this also dependend on coll object # in degree. lower number means less ricochet, thus less penetration TODO: could be assigned from other object
 var angle
 var isInsideBody = false
 var last_pos = translation
@@ -29,6 +29,8 @@ var isMarkedasDestruct : bool = false
 ## old ball stuff
 var timeout_s = 10
 var water
+var stopMove = false  # true if movement should stop (stuck inside some body)
+var coll # the colliding object
 var waterEntered = false
 var ocean
 # Called when the node enters the scene tree for the first time.
@@ -68,23 +70,29 @@ func _process(delta):
 			$Trail.emitting = false
 			$WaterSplash.emitting = true
 			$WaterSplash2.emitting = true
-	## check collisions and move the object 
-	var coll = move_and_collide(dir*velocity, false,false,true)
-	# var coll2 = move_and_collide(gravity_dir*gravity*delta, false,false,true)
-	# print(coll)
+	
+	if !stopMove:
+		## check collisions and move the object 
+		coll = move_and_collide(dir*velocity, false,false,true)
+		# var coll2 = move_and_collide(gravity_dir*gravity*delta, false,false,true)
+		# print(coll)
 
-	## vertical move
-	if velocity>vel_penetrate_thresh:
-		translate(dir*velocity)
-	else:
-		move_and_slide(dir*velocity)
-	if not isInsideBody:
-		## gravity move
-		move_and_slide(gravity_dir*gravity*grav_time*pow(drag_factor,1)) # todo why power here?
+		## vertical move
+		if velocity>vel_penetrate_thresh:
+			translate(dir*velocity)
+		else:
+			move_and_slide(dir*velocity)
+		if not isInsideBody:
+			## gravity move
+			move_and_slide(gravity_dir*gravity*grav_time*drag_factor) 
+
+
 	if velocity<0.1:
 		$Trail.emitting = false
-		# if coll2!=null:
-		# 	time = 0
+		if coll_obj != null and !stopMove: # permanently stuck inside some body, add as child to obj to keep moving with it 
+			get_parent().remove_child(self)
+			coll_obj.add_child(self)
+			stopMove = true
 	
 	### calcualte direction after translation
 	# dir = (translation - last_pos).normalized()

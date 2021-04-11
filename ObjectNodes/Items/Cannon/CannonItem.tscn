@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://ObjectNodes/Items/Cannon/CannonItem.gd" type="Script" id=1]
 [ext_resource path="res://ObjectNodes/GeneralCannonAssets/CannonBall.tscn" type="PackedScene" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://ObjectNodes/GeneralCannonAssets/Sounds/Cannon4.wav" type="AudioStream" id=11]
 [ext_resource path="res://ObjectNodes/GeneralCannonAssets/Sounds/Cannon5.wav" type="AudioStream" id=12]
 [ext_resource path="res://materials/Black.tres" type="Material" id=13]
+[ext_resource path="res://ObjectNodes/Items/Cannon/CannonInfoBox.tscn" type="PackedScene" id=14]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 0.109175, 0.128, 0.0932399 )
@@ -148,6 +149,7 @@ collision_layer = 16385
 collision_mask = 16385
 script = ExtResource( 1 )
 BallScene = ExtResource( 2 )
+InfoPanel = ExtResource( 14 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )
@@ -484,4 +486,4 @@ material/0 = SubResource( 23 )
 
 [node name="PlaceAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
-volume_db = 7.214
+volume_db = -9.28

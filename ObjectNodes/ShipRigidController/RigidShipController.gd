@@ -9,13 +9,15 @@ Needs a linear damping of approx 5!
 """
 
 export(bool) var isPlayer = false
+export(bool) var isUnsinkable = false
 
 var model # ref to ship model
-export var turnForce : float # current turn force for left right steer
+var turnForce : float # current turn force for left right steer
 var sails # current sail state (0,1) 1=full sails
 var ocean # ref to ocean object
 var cannons = []# ref to all cannons in ships model
 var turnCommandPressed = false
+var waterLevel = 1 # 1 = default how much water the ship has taken, used in boyance calculation, if near impulse_factor, its start to sink
 
 # force spatials
 var hLeft # positions where boynacy attacks
@@ -78,7 +80,7 @@ func _physics_process(delta):
 	## turn impulse
 	apply_impulse(transform.basis.xform(hBack.translation),right*turnForce*impulse_factor*delta)
 	## sail speed impulse
-	apply_central_impulse(forward*calcWindForce()*delta*impulse_factor)
+	apply_central_impulse(forward*calcWindForce()*delta*impulse_factor/waterLevel)
 	# sail wind attack to tilt the ship a bit if cross wind
 	apply_impulse(mainSailForce.translation, Vector3(0,0,-1)*crossWindForce*sails*delta*impulse_factor)
 
@@ -115,7 +117,7 @@ func applyPosBuoyancy(obj : Spatial, delta, factor :float = 1.0):
 		waterH = ocean.getWaterHeight(obj.global_transform.origin)
 	var diff = obj.global_transform.origin.y - waterH # if diff <0 = underwater
 	if diff<0:
-		var impulse = Vector3(0,1,0)*factor*pow(abs(diff),1.0)*impulse_factor*delta
+		var impulse = Vector3(0,1,0)*factor*pow(abs(diff),1.0)*impulse_factor/waterLevel*delta
 		apply_impulse(p, impulse)
 
 func applyCannonImpulse(from : Vector3, direction : Vector3):
@@ -137,6 +139,12 @@ func calcWindForce():
 	var deg = abs(rad2deg(angle_to_wind))/180
 	return sails*speed_mod*(pow(deg,2) - 0.8*pow(deg,3))-(reverse_speed_factor*speed_mod*sails)
 		
+func fillWater(amount):
+	"""
+	Fills up the ship with water
+	"""
+	if !isUnsinkable:
+		waterLevel += amount
 
 func toggleDeckVisible(deckNumber : int):
 	var a = model.get_children()

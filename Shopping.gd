@@ -523,16 +523,21 @@ func sell():
 # Changes toggled item that information will be shown about.
 func toggle(thing):
 	if toggled == null || thing != toggled:
-		info.visible = false
-		for child in info.get_children():
+		# info.visible = false
+		for child in info.get_children(): # TODO: is this necessary now if we dont do the add_child(rect) below?
 			child.queue_free()
+	if toggled!=null:
+		toggled.removeInfo()	
 	toggled = thing
 	if toggled != null:
+		## set position of info so that the info panel is not spawned at old position
+		var camera: Camera = viewport.get_camera()
+		var viewportContainer: ViewportContainer = viewport.get_parent()
+		var pos: Vector2 = camera.unproject_position(toggled.global_transform.origin)
+		info.rect_position = Vector2(clamp(pos.x, 0, viewport.size.x), clamp(pos.y, 0, viewport.size.y)) * viewportContainer.stretch_shrink
 		info.visible = true
-		# fill item's info here, example is given below by adding icon.png
-		var rect: TextureRect = TextureRect.new()
-		rect.texture = load("res://icon.png")
-		info.add_child(rect)
+		# then create info box
+		thing.createInfo(info)
 
 
 func _on_indicator():

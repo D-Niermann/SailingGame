@@ -24,6 +24,8 @@ var _d = false
 var _q = false
 var _e = false
 
+var shake_val = 0
+
 
 func _ready():
 	if get_tree().get_nodes_in_group("PlayerShip").size()>0:

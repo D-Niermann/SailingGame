@@ -5,7 +5,9 @@ extends "res://ObjectNodes/Items/BaseItem.gd"
 # var a = 2
 # var b = "text"
 # var ball
-export var BallScene: PackedScene
+export var BallScene: PackedScene # scene object of ball
+export var InfoPanel: PackedScene # scene object of cannons info ui panel
+var infoPanel = null # ref to instanced info panel
 var fireSounds : Array = []
 var forward : Vector3
 var up : Vector3
@@ -13,13 +15,13 @@ var right : Vector3
 export(float) var force = 0.6 # for trajectory prediction: force of ball
 var drag = 0.05 # for trajectory prediction: drag of ball
 var rand_max_delay = 0.4 # max delay in seconds
-var reload_time_sec = 2
-var cam_shake = 0.2 # the amount of camera shake added to camera when shooting
+var reload_time_sec = 4
+var cam_shake = 0.1 # the amount of camera shake added to camera when shooting
 var ship # parent ship container
 ### vars for line rendering (but the gitHub LineRenderer lags so hard that i canceled it for now)
 # var line
 var lineSize  # length of trjactory prediction line (number of points) / needs some rework
-const rotateSpeed = 0.008 # max rotation speed of cannons (up/down rotation is scaled down )
+const rotateSpeed = 0.004 # max rotation speed of cannons (up/down rotation is scaled down )
 const maxRotateAngle = 20 # in degree, left right rotation
 var maxUpAngle = 10 # angle distance in degreee from original rotation that is allowed
 var minUpAngle= -5 # angle distance in degreee from original rotation that is allowed
@@ -28,6 +30,8 @@ onready var rotateMargin = rand_range(-unprecision,unprecision) # error in rotat
 onready var upDownMargin = rand_range(-unprecision,unprecision) # what difference to mouse pos units to ignore when rotating  up down
 export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
 export(float) var recoil_impulse = 0.3 # when firing to the ship
+var markerMoveSpeed = 0.05 # how fast markes of trajectory move
+
 
 var reloaded = true
 
@@ -37,11 +41,10 @@ var aimPosition # the position the cannons will aim to (needs to be local)
 var particles
 var particles_flash
 var playerAimCannons # flag thats true if the player uses input to aim
+var isActive = true # flag that tells if this is active or not (deactived cannons dont aim or shoot)
 var ocean
 var waterHitMarker
-var myShip
 var fakeBullet
-export var isPlayerControlable = false
 var marker 
 var canShoot :bool = false
 var aimDiffAngle # angle between target aim position and forward
@@ -62,19 +65,13 @@ func _ready():
 	
 	reloadTimer = Timer.new()
 	add_child(reloadTimer)
-	reloadTimer.connect("timeout", self, "_on_Timer_timeout")
+	reloadTimer.connect("timeout", self, "_on_reloadTimer_timeout")
 	reloadTimer.set_wait_time(reload_time_sec)
 	reloadTimer.set_one_shot(true) # Make sure it loops
 	
-	## TODO: this gets also called when item is picked in shop
-	myShip = get_parent().get_parent().get_parent()
-	if myShip != null:
-		## register as cannon on ship parent
-		if myShip.has_method("registerCannon"):
-			myShip.registerCannon(self.get_path())
-		if "isPlayer" in myShip:
-			if myShip.isPlayer:
-				isPlayerControlable = true
+	## register as cannon on ship parent
+	if myShip.has_method("registerCannon"):
+		myShip.registerCannon(self.get_path())
 
 
 
@@ -108,9 +105,11 @@ func _process(delta):
 	
 	forward = transform.basis.x.normalized()
 
-	if playerAimCannons:
+	if playerAimCannons and isActive:
 		aimTo(ocean.waterMousePos)
 	
+	if infoPanel!=null:
+		isActive = infoPanel.isActive
 
 
 func aimTo(global_position : Vector3):
@@ -122,18 +121,21 @@ func aimTo(global_position : Vector3):
 		var dist = (aimPosition).x
 		var diff_x = dist - (trajectoryPoints[lineSize-1]).x
 		if diff_x>upDownMargin: 
-			rotateUpDown(diff_x-upDownMargin, "up")
+			rotateUpDown((diff_x+upDownMargin)*0.5, "up")
 		elif diff_x<-upDownMargin:
-			rotateUpDown(diff_x+upDownMargin, "down")
+			rotateUpDown((diff_x-upDownMargin)*0.5, "down")
 		if aimPosition.z<-rotateMargin:
-			rotateLeftRight(aimPosition.z+rotateMargin, "left")
+			rotateLeftRight((aimPosition.z-rotateMargin)*0.5, "left")
 		elif aimPosition.z>rotateMargin:
-			rotateLeftRight(aimPosition.z-rotateMargin, "right")
+			rotateLeftRight((aimPosition.z+rotateMargin)*0.5, "right")
 	else:
 		canShoot = false
 		clearTrajectory()
 
-	
+func giveDmg(damage):
+	.giveDmg(damage)
+	if infoPanel!=null:
+		infoPanel.updateHealth(currentHealth)
 
 func _unhandled_input(event):
 	# Receives key input
@@ -175,11 +177,16 @@ func predictTrajectory():
 		if ocean!=null:
 			waterHeight = ocean.getWaterHeight(to_global(point))
 		if to_global(point).y>waterHeight:
-			marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*0.1
-			if i>1:
-				marker[i].visible = true
+			if myShip.isPlayer:
+				marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*markerMoveSpeed
+				if i>1:
+					if reloaded:
+						marker[i].material_override.albedo_color = Color(1,1,1,0.5)
+					else:
+						marker[i].material_override.albedo_color = Color(0.6,0.2,0.2,0.5)
+					marker[i].visible = true
 			fakeBullet.transform.origin += Vector3(1,0,0)*force*5.2/(1+i*0.05)
-			fakeBullet.global_transform.origin += Vector3(0,-1,0)*0.015*i ## TODO: does the vector (0,-1,0) always point down globally (gravity)? -> if so why does (1,0,0) always point forwards loccally
+			fakeBullet.global_transform.origin += Vector3(0,-1,0)*0.015*i 
 		else:
 			last_i = i
 			break
@@ -197,14 +204,20 @@ func predictTrajectory():
 				underWater = halfPoint
 		## now take either the underwater or above water point
 		var preciseWaterPoint = aboveWater
-		for i in range(last_i, lineSize):
-			trajectoryPoints[i] = preciseWaterPoint
-			marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*0.1
-			marker[i].visible = true
+		if myShip.isPlayer:
+			for i in range(last_i, lineSize):
+				trajectoryPoints[i] = preciseWaterPoint
+				marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*markerMoveSpeed
+				marker[i].visible = true
 
 
-	waterHitMarker.visible = true
-	waterHitMarker.translation += (trajectoryPoints[lineSize-1] - waterHitMarker.translation)*0.1
+	if myShip.isPlayer:
+		if reloaded:
+			waterHitMarker.material_override.albedo_color = Color(1,1,1,0.5)
+		else:
+			waterHitMarker.material_override.albedo_color = Color(0.6,0.2,0.2,0.5)
+		waterHitMarker.visible = true
+		waterHitMarker.translation += (trajectoryPoints[lineSize-1] - waterHitMarker.translation)*markerMoveSpeed
 
 			
 func clearTrajectory():
@@ -218,7 +231,7 @@ func clearTrajectory():
 		trajectoryPoints[i] = point
 
 func fireBall():
-	if reloaded:
+	if reloaded and isActive:
 		reloaded = false
 		yield(get_tree().create_timer(fire_delay_sec),"timeout")
 		playAudio()
@@ -244,7 +257,7 @@ func rotateLeftRight(multiplicator=1, dir : String = ""):
 	"""
 	multiplicator = clamp(abs(multiplicator),0,1)
 	## left rotation = negative angle distance
-	var angle_dist = rad2deg(Utility.signedAngle(org_forward,(forward),up)) #getAngleDist_deg(transform.basis.get_euler().y*180/PI,org_rotation.y)
+	var angle_dist = rad2deg(Utility.signedAngle(org_forward,(forward),up))
 	if dir == "left" and angle_dist>-maxRotateAngle:
 		rotate(up,rotateSpeed*multiplicator)
 	elif dir == "right" and angle_dist<maxRotateAngle:
@@ -259,16 +272,12 @@ func rotateUpDown(multiplicator=1, dir : String = ""):
 	"""
 	multiplicator = clamp(abs(multiplicator),0,1)
 	## up rotation = positive angle distance
-	var angle_dist = -rad2deg(Utility.signedAngle(org_forward,(forward),right)) # -getAngleDist_deg(transform.basis.get_euler().z*180/PI,org_rotation.z)
+	var angle_dist = -rad2deg(Utility.signedAngle(org_forward,(forward),right)) 
 	if dir == "up" and angle_dist<maxUpAngle:
 		rotate(transform.basis.z.normalized(),rotateSpeed*0.2*multiplicator)
 	elif dir == "down" and angle_dist>minUpAngle:
 		rotate(transform.basis.z.normalized(),-rotateSpeed*0.2*multiplicator)
 		
-func getAngleDist_deg(from, to):
-	var max_angle = 360
-	var difference = fmod(to - from, max_angle)
-	return fmod(2 * difference, max_angle) - difference
 
 func doParticles():
 	particles.restart()
@@ -282,5 +291,25 @@ func playAudio():
 	sound.set_pitch_scale(rand_range(0.6,1.0))
 	sound.play()
 
-func _on_Timer_timeout():
+func _on_reloadTimer_timeout():
 	reloaded = true
+
+
+func createInfo(placeholder):
+	if InfoPanel!=null:
+		## instance panel
+		infoPanel = InfoPanel.instance()
+		infoPanel.visible = false
+		infoPanel.placeholder = placeholder
+		self.add_child(infoPanel)
+		infoPanel.rect_position = placeholder.rect_position
+
+		## give info to panel
+		infoPanel.updateContent(currentHealth)
+
+		## make panel visible
+		infoPanel.visible = true
+
+func removeInfo():
+	if infoPanel!=null:
+		infoPanel.queue_free()

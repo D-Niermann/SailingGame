@@ -1,0 +1,146 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://GUINodes/ExampleTheme.tres" type="Theme" id=1]
+[ext_resource path="res://ObjectNodes/Items/Cannon/CannonInfoBox.gd" type="Script" id=2]
+
+[node name="CannonInfo" type="TextureRect"]
+anchor_right = 0.196
+anchor_bottom = 0.162
+margin_right = -163.28
+margin_bottom = -0.100006
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 209.0
+margin_bottom = 170.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="RichTextLabel" parent="Panel"]
+margin_left = 33.7092
+margin_right = 175.709
+margin_bottom = 33.0
+text = "Large Cannon"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text1" type="RichTextLabel" parent="Panel"]
+margin_top = 66.0373
+margin_right = 83.0
+margin_bottom = 99.0373
+text = "Health"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="isActive" type="RichTextLabel" parent="Panel"]
+margin_left = 42.1766
+margin_top = 32.6663
+margin_right = 125.176
+margin_bottom = 65.6663
+text = "Active"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ActiveToggle" type="CheckButton" parent="Panel"]
+margin_left = 123.114
+margin_top = 33.0
+margin_right = 173.114
+margin_bottom = 64.0
+pressed = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthLabel" type="RichTextLabel" parent="Panel"]
+margin_left = 149.959
+margin_top = 66.0373
+margin_right = 208.959
+margin_bottom = 99.0373
+text = "100"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Health2" type="RichTextLabel" parent="Panel"]
+margin_left = 149.959
+margin_top = 99.0373
+margin_right = 208.959
+margin_bottom = 132.037
+text = "0.2 s"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text2" type="RichTextLabel" parent="Panel"]
+margin_top = 98.6663
+margin_right = 71.0
+margin_bottom = 131.666
+text = "Delay"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MaxUsers" type="RichTextLabel" parent="Panel"]
+margin_top = 131.666
+margin_right = 71.0
+margin_bottom = 164.666
+text = "Crew"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSlider" type="HSlider" parent="Panel"]
+margin_left = 77.25
+margin_top = 107.152
+margin_right = 141.25
+margin_bottom = 123.152
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckBox" type="CheckBox" parent="Panel"]
+margin_left = 119.083
+margin_top = 131.666
+margin_right = 143.083
+margin_bottom = 162.666
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckBox2" type="CheckBox" parent="Panel"]
+margin_left = 71.0
+margin_top = 131.666
+margin_right = 95.0
+margin_bottom = 162.666
+pressed = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckBox3" type="CheckBox" parent="Panel"]
+margin_left = 103.173
+margin_top = 131.666
+margin_right = 127.173
+margin_bottom = 162.666
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckBox4" type="CheckBox" parent="Panel"]
+margin_left = 87.2218
+margin_top = 131.666
+margin_right = 111.222
+margin_bottom = 162.666
+pressed = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="toggled" from="Panel/ActiveToggle" to="." method="_on_ActiveToggle_toggled"]
