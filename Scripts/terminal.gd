@@ -349,7 +349,7 @@ func runAI(unit: String, part: Vector3, inProx: Dictionary, delta: float):
 		var results: Dictionary
 		var controller = holo.get_node_or_null("AIController")
 		if controller != null:
-			results = controller.update(Utility.partitionLocation(dest, PARTSIZE, false), inProx)
+			results = controller.update(Utility.partitionLocation(Vector2(dest.x, dest.z), PARTSIZE, false), inProx)
 		info["xform"] = holo.global_transform # at the end, update transform
 	else: # runs when unit is offscreen
 		# move transform
