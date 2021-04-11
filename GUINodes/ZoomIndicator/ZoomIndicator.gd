@@ -16,8 +16,10 @@ func _process(delta):
 
 
 func _on_VSlider_mouse_entered():
+	# BUG TODO: When panning and mouse goes over the slider, rounding erros cause the camera to zoom in (make this also dependend on a real mouse click)
 	playerEntered = true
 
 
 func _on_VSlider_mouse_exited():
+	# BUG TODO: When panning and mouse goes over the slider, rounding erros cause the camera to zoom in (make this also dependend on a real mouse click)
 	playerEntered = false

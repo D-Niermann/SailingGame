@@ -13,13 +13,13 @@ var right : Vector3
 export(float) var force = 0.6 # for trajectory prediction: force of ball
 var drag = 0.05 # for trajectory prediction: drag of ball
 var rand_max_delay = 0.4 # max delay in seconds
-var reload_time_sec = 2
-var cam_shake = 0.2 # the amount of camera shake added to camera when shooting
+var reload_time_sec = 4
+var cam_shake = 0.1 # the amount of camera shake added to camera when shooting
 var ship # parent ship container
 ### vars for line rendering (but the gitHub LineRenderer lags so hard that i canceled it for now)
 # var line
 var lineSize  # length of trjactory prediction line (number of points) / needs some rework
-const rotateSpeed = 0.008 # max rotation speed of cannons (up/down rotation is scaled down )
+const rotateSpeed = 0.004 # max rotation speed of cannons (up/down rotation is scaled down )
 const maxRotateAngle = 20 # in degree, left right rotation
 var maxUpAngle = 10 # angle distance in degreee from original rotation that is allowed
 var minUpAngle= -5 # angle distance in degreee from original rotation that is allowed
@@ -116,13 +116,13 @@ func aimTo(global_position : Vector3):
 		var dist = (aimPosition).x
 		var diff_x = dist - (trajectoryPoints[lineSize-1]).x
 		if diff_x>upDownMargin: 
-			rotateUpDown(diff_x-upDownMargin, "up")
+			rotateUpDown((diff_x-upDownMargin)*0.5, "up")
 		elif diff_x<-upDownMargin:
-			rotateUpDown(diff_x+upDownMargin, "down")
+			rotateUpDown((diff_x+upDownMargin)*0.5, "down")
 		if aimPosition.z<-rotateMargin:
-			rotateLeftRight(aimPosition.z+rotateMargin, "left")
+			rotateLeftRight((aimPosition.z-rotateMargin)*0.5, "left")
 		elif aimPosition.z>rotateMargin:
-			rotateLeftRight(aimPosition.z-rotateMargin, "right")
+			rotateLeftRight((aimPosition.z+rotateMargin)*0.5, "right")
 	else:
 		canShoot = false
 		clearTrajectory()
@@ -169,9 +169,14 @@ func predictTrajectory():
 		if ocean!=null:
 			waterHeight = ocean.getWaterHeight(to_global(point))
 		if to_global(point).y>waterHeight:
-			marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*markerMoveSpeed
-			if i>1:
-				marker[i].visible = true
+			if myShip.isPlayer:
+				marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*markerMoveSpeed
+				if i>1:
+					if reloaded:
+						marker[i].material_override.albedo_color = Color(1,1,1,0.5)
+					else:
+						marker[i].material_override.albedo_color = Color(0.6,0.2,0.2,0.5)
+					marker[i].visible = true
 			fakeBullet.transform.origin += Vector3(1,0,0)*force*5.2/(1+i*0.05)
 			fakeBullet.global_transform.origin += Vector3(0,-1,0)*0.015*i 
 		else:
@@ -191,14 +196,20 @@ func predictTrajectory():
 				underWater = halfPoint
 		## now take either the underwater or above water point
 		var preciseWaterPoint = aboveWater
-		for i in range(last_i, lineSize):
-			trajectoryPoints[i] = preciseWaterPoint
-			marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*markerMoveSpeed
-			marker[i].visible = true
+		if myShip.isPlayer:
+			for i in range(last_i, lineSize):
+				trajectoryPoints[i] = preciseWaterPoint
+				marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*markerMoveSpeed
+				marker[i].visible = true
 
 
-	waterHitMarker.visible = true
-	waterHitMarker.translation += (trajectoryPoints[lineSize-1] - waterHitMarker.translation)*markerMoveSpeed
+	if myShip.isPlayer:
+		if reloaded:
+			waterHitMarker.material_override.albedo_color = Color(1,1,1,0.5)
+		else:
+			waterHitMarker.material_override.albedo_color = Color(0.6,0.2,0.2,0.5)
+		waterHitMarker.visible = true
+		waterHitMarker.translation += (trajectoryPoints[lineSize-1] - waterHitMarker.translation)*markerMoveSpeed
 
 			
 func clearTrajectory():

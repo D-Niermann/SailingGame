@@ -58,4 +58,3 @@ func giveDmg(damage : float):
 	reports damage taken by bullet to this object.
 	"""
 	currentHealth = clamp(currentHealth - damage*damageMultiplier,0,maxHealth)
-	print("ouch: ",currentHealth)
