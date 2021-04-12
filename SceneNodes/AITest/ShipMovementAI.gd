@@ -47,7 +47,7 @@ func _physics_process(delta):
 		update([])
 
 
-func update(objectsInRange : Array):
+func update(destination: Vector2, objectsInRange : Dictionary):
 	# TODO: performance: maybe dont do this every time, only a few times a second?
 	up = (global_transform.basis.y.normalized())
 	forward = (global_transform.basis.x.normalized())

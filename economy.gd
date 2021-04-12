@@ -13,7 +13,8 @@ var malls: Dictionary = {
 		"goods": {"banana": 10, "apple": INF, "CannonLarge" : 10, "WallLong" : 100, "LightSmall":5},
 		"white": ["food", "gear"],
 		"black": ["drug"],
-		"money": 1000
+		"money": 1000,
+		"part": Vector3(0, 0, 9)
 	},
 	"appleCity": {
 		"capacity": Vector2(0, 100),
@@ -22,7 +23,8 @@ var malls: Dictionary = {
 		"goods": {},
 		"white": ["food"],
 		"black": [],
-		"money": 1000
+		"money": 1000,
+		"part": Vector3(4, 0, 4)
 	}
 }
 var goods: Dictionary = {
