@@ -1,42 +1,39 @@
 extends "res://ObjectNodes/Items/BaseItem.gd"
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-# var ball
+
+### Paramters
 export var BallScene: PackedScene # scene object of ball
 export var InfoPanel: PackedScene # scene object of cannons info ui panel
-var infoPanel = null # ref to instanced info panel
-var fireSounds : Array = []
+
+export(float) var force          = 0.6 # for trajectory prediction: force of ball
+export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
+export(float) var recoil_impulse = 0.3 # when firing to the ship
+export var isTestCannon          = false # if cannon is fired when aiming and left clicking, (to test trajectory, without firing the whole broadside), can be set as a gameplay elemetn in th info panel
+var    drag                      = 0.05 # for trajectory prediction: drag of ball
+var    rand_max_delay            = 0.4 # max delay in seconds
+var    reload_time_sec           = 4 # reload time in seconds
+var    cam_shake                 = 0.1 # the amount of camera shake added to camera when shooting
+const  rotateSpeed               = 0.004 # max rotation speed of cannons (up/down rotation is scaled down )
+const  maxRotateAngle            = 20 # in degree,                                           left right rotation
+var    maxUpAngle                = 10 # angle distance in degreee from original rotation that is allowed
+var    minUpAngle                = -5 # angle distance in degreee from original rotation that is allowed
+const  unprecision               = 4 # in units,                                             how max unprecise a connon is (random)
+var    markerMoveSpeed           = 0.05 # how fast markes of trajectory move
+
+
+### 
 var forward : Vector3
 var up : Vector3
 var right : Vector3
-export(float) var force = 0.6 # for trajectory prediction: force of ball
-var drag = 0.05 # for trajectory prediction: drag of ball
-var rand_max_delay = 0.4 # max delay in seconds
-var reload_time_sec = 4
-var cam_shake = 0.1 # the amount of camera shake added to camera when shooting
-var ship # parent ship container
-### vars for line rendering (but the gitHub LineRenderer lags so hard that i canceled it for now)
-# var line
-var lineSize  # length of trjactory prediction line (number of points) / needs some rework
-const rotateSpeed = 0.004 # max rotation speed of cannons (up/down rotation is scaled down )
-const maxRotateAngle = 20 # in degree, left right rotation
-var maxUpAngle = 10 # angle distance in degreee from original rotation that is allowed
-var minUpAngle= -5 # angle distance in degreee from original rotation that is allowed
-const unprecision = 4 # in units, how max unprecise a connon is (random)
 onready var rotateMargin = rand_range(-unprecision,unprecision) # error in rotation that is accepted (mouse position) left right
 onready var upDownMargin = rand_range(-unprecision,unprecision) # what difference to mouse pos units to ignore when rotating  up down
-export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
-export(float) var recoil_impulse = 0.3 # when firing to the ship
-var markerMoveSpeed = 0.05 # how fast markes of trajectory move
-
-
-var reloaded = true
-
-var camera
-var org_rotation : Vector3
+var fireSounds : Array = [] # refs to aduio players (randomly chooses one of them when fired)
+var infoPanel = null # ref to instanced info panel
+var lineSize  # length of trjactory prediction line , gets fetched automatically based on amount of sprites in the TrajectoryMarkerGroup
+var reloaded = true # if cannon is ready to fire or not
+var camera # ref to camera (for shake)
+var org_rotation : Vector3 # starting rotation
 var aimPosition # the position the cannons will aim to (needs to be local)
 var particles
 var particles_flash
@@ -44,15 +41,17 @@ var playerAimCannons # flag thats true if the player uses input to aim
 var isActive = true # flag that tells if this is active or not (deactived cannons dont aim or shoot)
 var ocean
 var waterHitMarker
-var fakeBullet
+var fakeBullet # spatial used for trajectory planning
 var marker 
-var canShoot :bool = false
+var canShoot :bool = false # if is in angle range and range and stuff (if cannon can shoot)
 var aimDiffAngle # angle between target aim position and forward
-var forward2d = Vector2(1,0)
+var forward2d = Vector2(1,0) 
 var trajectoryPoints : Array
-export var isTestCannon = false
 var org_forward
 var reloadTimer : Timer
+
+
+
 func _ready():
 	marker = $TrajectoryMarkerGroup.get_children()
 	lineSize = marker.size()
@@ -260,8 +259,10 @@ func rotateLeftRight(multiplicator=1, dir : String = ""):
 	var angle_dist = rad2deg(Utility.signedAngle(org_forward,(forward),up))
 	if dir == "left" and angle_dist>-maxRotateAngle:
 		rotate(up,rotateSpeed*multiplicator)
+		$CollisionShape.rotate(up,-rotateSpeed*multiplicator) # counter rotate the collider so it stays on grid
 	elif dir == "right" and angle_dist<maxRotateAngle:
 		rotate(up,-rotateSpeed*multiplicator)
+		$CollisionShape.rotate(up,rotateSpeed*multiplicator) # counter rotate the collider so it stays on grid
 
 
 func rotateUpDown(multiplicator=1, dir : String = ""):
