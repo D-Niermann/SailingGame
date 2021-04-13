@@ -544,13 +544,6 @@ func _on_indicator():
 	openShop(connected)
 
 
-func _on_Deck1_button_up():
-	selected_deck = 1
-
-
-func _on_Deck0_button_up():
-	selected_deck = 0
-
-
-func _on_DeckAll_button_up():
-	selected_deck = -1
+# Changes chosen deck.
+func selectDeck(deckNumber):
+	selected_deck = deckNumber

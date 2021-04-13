@@ -146,6 +146,7 @@ func fillWater(amount):
 	if !isUnsinkable:
 		waterLevel += amount
 
+# Changes visibility according to the chosen deck.
 func toggleDeckVisible(deckNumber : int):
 	var a = model.get_children()
 	for i in range(a.size()):
@@ -154,12 +155,30 @@ func toggleDeckVisible(deckNumber : int):
 		else:
 			a[i].visible = true
 
-func _on_Deck0_button_up():
-	toggleDeckVisible(0)
 
-func _on_Deck1_button_up():
-	toggleDeckVisible(1)
+# Changes visibility according to the chosen deck on each button press.
+func selectDeck(deckNumber: int):
+	var decks = get_tree().get_root().get_node("GameWorld/Interface/Decks")
+	for child in decks.get_children():
+		if child.name != str(deckNumber):
+			child.get_node("TextureButton").pressed = false
+		else:
+			child.get_node("TextureButton").pressed = true
+	toggleDeckVisible(deckNumber)
+	get_tree().get_root().get_node("GameWorld/Interface/Shopping").selectDeck(deckNumber)
+	get_tree().get_root().get_node("GameWorld/ViewportContainer/Viewport/GameCamera").selectDeck(deckNumber)
 
 
-func _on_AllDeck_button_up():
-	toggleDeckVisible(-1)
+# Recreates and binds buttons for decks.
+func reloadDecks(numberOfDecks: int):
+	var template = load("res://deckButton.tscn")
+	var decks = get_tree().get_root().get_node("GameWorld/Interface/Decks")
+	for child in decks.get_children():
+		child.name += "qd"
+		child.queue_free()
+	for i in range(numberOfDecks):
+		var newDeckButton = template.instance()
+		decks.add_child(newDeckButton)
+		newDeckButton.name = str(i)
+		newDeckButton.get_node("Label").text = "Deck " + str(i)
+		newDeckButton.get_node("TextureButton").connect("pressed", self, "selectDeck", [i])
