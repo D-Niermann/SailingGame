@@ -1,27 +1,32 @@
 extends TextureRect
 
-var placeholder # ref to the placeholder in the UI, used for position
+var positionRef # ref to the positioner in the UI, used for position
 var currentHealth
 var healthLabel 
-var isActive
+var isActive = true
+var activeButton
+var myItem
 
+func link(itemRef):
+	"""
+	Links this info box to the clicked item. Sets this states to the items vars.
+	"""
+	myItem = itemRef
+	activeButton.pressed = myItem.isActive
 
-func updateContent(currentHealth):
-	updateHealth(currentHealth)
-
-func updateHealth(currentHealth):
-	self.currentHealth = currentHealth
-	healthLabel.text = ""
-	healthLabel.text = str(round(self.currentHealth))
 
 func _ready():
+	## fetch buttons and labels and other UI stuff
 	healthLabel = $Panel/HealthLabel
+	activeButton = $Panel/ActiveToggle
+
 
 func _process(delta):
-	print("why am i alive?")
-	if placeholder!=null:
-		self.rect_position =  placeholder.rect_position
+	healthLabel.text = str(round(myItem.currentHealth))
+	if positionRef!=null:
+		self.rect_position =  positionRef.rect_position
 
 
 func _on_ActiveToggle_toggled(button_pressed):
 	isActive = button_pressed
+	myItem.isActive = isActive

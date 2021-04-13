@@ -12,6 +12,9 @@ size = Vector3( 0.125, 0.5, 3 )
 
 [node name="OuterHullWall3m" type="KinematicBody"]
 script = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": "maybe split every ship model hull walls into bigger part (like 3 per side) but still keep the original rounded walls as sprites. then if health is low on one wall get random changes on ball hit to spawn a leakage object"
+}
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )

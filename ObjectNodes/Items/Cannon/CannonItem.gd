@@ -300,12 +300,12 @@ func createInfo(placeholder):
 		## instance panel
 		infoPanel = InfoPanel.instance()
 		infoPanel.visible = false
-		infoPanel.placeholder = placeholder
+		infoPanel.positionRef = placeholder
 		self.add_child(infoPanel)
 		infoPanel.rect_position = placeholder.rect_position
 
-		## give info to panel
-		infoPanel.updateContent(currentHealth)
+		## link self to panel, enables info access
+		infoPanel.link(self)
 
 		## make panel visible
 		infoPanel.visible = true
