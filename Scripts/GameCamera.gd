@@ -126,15 +126,13 @@ func _unhandled_input(event):
 		rotate = false
 	
 
-func _on_Deck1_button_up():
-	if targetPos.y > 18:
-		targetPos.y = 18
+# Changes camera position according to the chosen deck.
+func selectDeck(deckNumber):
+	var difference = deckNumber * 2
+	if targetPos.y > 20 - difference:
+		targetPos.y = 20 - difference
 		do_center = true
 
-func _on_Deck0_button_up():
-	if targetPos.y > 20:
-		targetPos.y = 20
-		do_center = true
 
 func mouseRotate():
 	if rotate:
