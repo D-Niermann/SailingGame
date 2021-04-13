@@ -145,7 +145,7 @@ func _physics_process(delta):
 			var partition: Vector3 = (target.global_transform.xform_inv(hit.position) / TILEWIDTH).floor()
 			hologram.global_transform.origin = target.global_transform.xform(partition * TILEWIDTH + offset)
 			hologram.global_transform.basis = target.global_transform.basis.rotated(upward, rot)
-			var collision: KinematicCollision = hologram.move_and_collide(Vector3.ZERO, false, false, true)
+			var collision: KinematicCollision = hologram.move_and_collide(Vector3(0,0.01,0), false, false, true)
 			if !collision:
 				canPlace = true
 				# print("canPlace")

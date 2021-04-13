@@ -44,8 +44,7 @@ func _ready():
 
 func _physics_process(delta):
 	if !useTerminal and isActive:
-		update(Vector2.ZERO, {})
-
+		update(Vector2(0,0),{})
 
 func update(destination: Vector2, objectsInRange : Dictionary):
 	# TODO: performance: maybe dont do this every time, only a few times a second?
