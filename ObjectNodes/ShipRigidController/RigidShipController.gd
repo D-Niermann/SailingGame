@@ -119,7 +119,7 @@ func applyPosBuoyancy(obj : Spatial, delta, factor :float = 1.0):
 		waterH = ocean.getWaterHeight(obj.global_transform.origin)
 	var diff = obj.global_transform.origin.y - waterH # if diff <0 = underwater
 	if diff<0:
-		var impulse = Vector3(0,1,0)*factor*pow(abs(diff),1.0)*impulse_factor/waterLevel*delta
+		var impulse = Vector3(0,1,0)*factor*pow(abs(diff),1.1)*impulse_factor/waterLevel*delta
 		apply_impulse(p, impulse)
 
 func applyCannonImpulse(from : Vector3, direction : Vector3):
