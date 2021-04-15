@@ -154,6 +154,9 @@ func checkToggleOnHeight(heightThresh):
 	if translation.y>heightThresh and heightToggle:
 		playerShip.toggleDeckVisible(-1)
 		shopping.selected_deck = -1
+		var decks = get_tree().get_root().get_node("GameWorld/Interface/Decks")
+		for child in decks.get_children():
+			child.get_node("TextureButton").pressed = false
 		heightToggle = false
 	if translation.y<heightThresh:
 		heightToggle = true

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/402656__inspectorj__orchestral-strings-warm-a.wav-015fb324fd564ed1250267957923c0c1.sample"
+
+[deps]
+
+source_file="res://SceneNodes/MusicAudio/402656__inspectorj__orchestral-strings-warm-a.wav"
+dest_files=[ "res://.import/402656__inspectorj__orchestral-strings-warm-a.wav-015fb324fd564ed1250267957923c0c1.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

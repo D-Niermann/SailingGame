@@ -44,6 +44,7 @@ const maxTurnForce = 0.7 # max turn force of the whole ship
 func _ready():
 	if get_tree().get_nodes_in_group("Ocean").size()>0:
 		ocean = get_tree().get_nodes_in_group("Ocean")[0]
+
 	hFront = $HFront
 	hBack = $HBack
 	hRight = $HRight
@@ -61,6 +62,7 @@ func _ready():
 		for i in range(1, a.size()):
 			# iterate through children, skip 1st because it is Sails
 			a[i].add_to_group("PlayerDeck")
+		reloadDecks(2)
 			
 func registerCannon(path):
 	cannons.append(path)
@@ -117,7 +119,7 @@ func applyPosBuoyancy(obj : Spatial, delta, factor :float = 1.0):
 		waterH = ocean.getWaterHeight(obj.global_transform.origin)
 	var diff = obj.global_transform.origin.y - waterH # if diff <0 = underwater
 	if diff<0:
-		var impulse = Vector3(0,1,0)*factor*pow(abs(diff),1.0)*impulse_factor/waterLevel*delta
+		var impulse = Vector3(0,1,0)*factor*pow(abs(diff),1.1)*impulse_factor/waterLevel*delta
 		apply_impulse(p, impulse)
 
 func applyCannonImpulse(from : Vector3, direction : Vector3):
@@ -158,15 +160,18 @@ func toggleDeckVisible(deckNumber : int):
 
 # Changes visibility according to the chosen deck on each button press.
 func selectDeck(deckNumber: int):
-	var decks = get_tree().get_root().get_node("GameWorld/Interface/Decks")
-	for child in decks.get_children():
-		if child.name != str(deckNumber):
-			child.get_node("TextureButton").pressed = false
-		else:
-			child.get_node("TextureButton").pressed = true
-	toggleDeckVisible(deckNumber)
-	get_tree().get_root().get_node("GameWorld/Interface/Shopping").selectDeck(deckNumber)
-	get_tree().get_root().get_node("GameWorld/ViewportContainer/Viewport/GameCamera").selectDeck(deckNumber)
+    var decks = get_tree().get_root().get_node("GameWorld/Interface/Decks")
+    for child in decks.get_children():
+        if child.name != str(deckNumber):
+            child.get_node("TextureButton").pressed = false
+        else:
+            var theButton = child.get_node("TextureButton")
+            if theButton.pressed:
+                toggleDeckVisible(deckNumber)
+            else:
+                toggleDeckVisible(-1)
+    get_tree().get_root().get_node("GameWorld/Interface/Shopping").selectDeck(deckNumber)
+    get_tree().get_root().get_node("GameWorld/ViewportContainer/Viewport/GameCamera").selectDeck(deckNumber)
 
 
 # Recreates and binds buttons for decks.
@@ -180,5 +185,5 @@ func reloadDecks(numberOfDecks: int):
 		var newDeckButton = template.instance()
 		decks.add_child(newDeckButton)
 		newDeckButton.name = str(i)
-		newDeckButton.get_node("Label").text = "Deck " + str(i)
+		newDeckButton.get_node("Label").text = "Deck " + str(i+1)
 		newDeckButton.get_node("TextureButton").connect("pressed", self, "selectDeck", [i])
