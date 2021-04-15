@@ -28,11 +28,14 @@ var flags: Dictionary = {
 var dominions: Image = Image.new() # what we use for defining regions, like what part of the world belongs to whom
 var topograph: Image = Image.new() # what we use for maintaining multi-partition stuff, like islands
 var picked: Dictionary = {} # like live, but for the multi-partition stuff
-var colors: Dictionary = {"0234": {"res": "res://SceneNodes/Islands/Island_Small.tscn", "origin": Vector3(0, 0, 0)}} # like data, but for the multi-partition stuff
+var colors: Dictionary = { # like data, but for the multi-partition stuff
+	"010": {"res": "res://SceneNodes/Islands/dummyIslandOne.tscn", "origin": Vector3(1, 0, 1)},
+	"020": {"res": "res://SceneNodes/Islands/dummyIslandTwo.tscn", "origin": Vector3(1, 0, 6)},
+	"030": {"res": "res://SceneNodes/Islands/dummyIslandThree.tscn", "origin": Vector3(5, 0, 1)}
+}
 var presets: Dictionary = { # constants are not copied over the instance, this is where we summon stuff from, and also check some constant variables from
 	"example": {"CON": "units", "RES": "res://exampleItem.tscn", "TYPE": "trade", "SPEED": 1, "MAXHP": 100, "health": 100, "weight": 1, "side": "spanish", "pack": []}
 }
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
