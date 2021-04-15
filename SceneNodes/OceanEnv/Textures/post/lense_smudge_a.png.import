@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/flowmap_source_02.png-c8058035567166579c3230d2ca235bdc.stex"
+path="res://.import/lense_smudge_a.png-c56d38876a09b2578fe14719069dcd81.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/default/flowmap_source_02.png"
-dest_files=[ "res://.import/flowmap_source_02.png-c8058035567166579c3230d2ca235bdc.stex" ]
+source_file="res://SceneNodes/OceanEnv/Textures/post/lense_smudge_a.png"
+dest_files=[ "res://.import/lense_smudge_a.png-c56d38876a09b2578fe14719069dcd81.stex" ]
 
 [params]
 
