@@ -82,7 +82,6 @@ func _physics_process(delta):
 	if topograph != null: # here we do the same loading/unloading thing for multi-partition stuff, like items, it uses the image
 		var codes: Dictionary = {}
 		topograph.lock()
-		print("loop")
 		for part in live.keys():
 			if part.x < 0 || part.z < 0 || part.x > topograph.get_width() - 1 || part.z > topograph.get_height() - 1:
 				continue
