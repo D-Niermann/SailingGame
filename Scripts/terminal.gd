@@ -80,24 +80,28 @@ func _physics_process(delta):
 			copy.erase(part)
 	# loading image
 	if topograph != null: # here we do the same loading/unloading thing for multi-partition stuff, like items, it uses the image
-		topograph.lock()
 		var codes: Dictionary = {}
+		topograph.lock()
 		for part in live.keys():
-			var pixel: Color = topograph.get_pixel(fmod(abs(part.x), topograph.get_width()), fmod(abs(part.z), topograph.get_height()))
+			if part.x < 0 || part.z < 0 || part.x > topograph.get_width() - 1 || part.z > topograph.get_height() - 1:
+				continue
+			var pixel: Color = topograph.get_pixel(part.x, part.z)
 			var code: String = str(stepify(pixel.r, 0.1) * 10) + str(stepify(pixel.g, 0.1) * 10) + str(stepify(pixel.b, 0.1) * 10)
 			if pixel != Color.black && !picked.has(code):
 				if !colors.has(code):
 					continue
 				var island = load(colors[code]["res"]).instance()
 				viewport.add_child(island)
-				island.global_transform.origin = colors[code]["origin"]
+				island.global_transform.origin = Utility.partitionLocation(colors[code]["origin"], PARTSIZE, false)
 				picked[code] = island
+				#print("loaded: " + str(code))
 			codes[code] = null
 		topograph.unlock()
 		for code in picked.keys():
 			if !codes.has(code):
 				picked[code].queue_free()
 				picked.erase(code)
+				#print("unloaded: " + str(code))
 	# running behavior
 	for part in units.keys(): # for all partitions that include at least one unit inside
 		# getting the array of the units in proximity, that is units in this and adjacent partitions
