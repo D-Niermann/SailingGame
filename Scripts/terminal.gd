@@ -3,7 +3,7 @@ extends Control
 
 var time: int = 0
 var frac: float = 0.0
-var updatePeriodForEconomy: float = 60.0
+var updatePeriodForEconomy: float = 64.0
 
 const PARTSIZE: float = 64.0 # width of each partition
 const EXTENDED: bool = false # if the grid is 3D, or 2D
@@ -37,10 +37,11 @@ var presets: Dictionary = { # constants are not copied over the instance, this i
 	"example": {"CON": "units", "RES": "res://exampleItem.tscn", "TYPE": "trade", "SPEED": 1, "MAXHP": 100, "health": 100, "weight": 1, "side": "spanish", "pack": []}
 }
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	viewport = get_node("ViewportContainer/Viewport")
-	camera = viewport.get_node("Camera")
+	camera = viewport.get_node("GameCamera")
 	topograph.load("res://topograph.png")
 	dominions.load("res://dominions.png")
 	Utility.topograph = topograph # map for loading islands and also for pathfinding
@@ -68,6 +69,7 @@ func _physics_process(delta):
 		time = newTime
 	# loading world
 	var current: Vector3 = Utility.partitionID(camera.global_transform.origin, PARTSIZE, EXTENDED) # current partition
+	#print("current partition: " + str(current))
 	var adjacent: Array = Utility.findAdjacent(current, CANCROSS, EXTENDED) # adjacent partitions
 	adjacent.append(current) # plus the current partition
 	var copy: Dictionary = live.duplicate()
