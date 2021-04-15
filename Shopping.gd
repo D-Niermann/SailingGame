@@ -65,15 +65,15 @@ func _unhandled_input(event):
 func _physics_process(delta):
 	if selected_deck!=-1:
 		target = get_tree().get_nodes_in_group("PlayerDeck")[selected_deck]
-	if connected != null:
-		if open == null:
-			indicator.visible = true
-		else:
-			indicator.visible = false
-	else:
-		indicator.visible = false
-		if open != null:
-			closeShop()
+	# if connected != null:
+	# 	if open == null:
+	# 		indicator.visible = true
+	# 	else:
+	# 		indicator.visible = false
+	# else:
+	# 	indicator.visible = false
+	# 	if open != null:
+	# 		closeShop()
 	if selected != null && (rightClick || switch == false):
 		selected = null
 	if open == null || selected == null:
@@ -450,6 +450,7 @@ func openShop(shop: String):
 		else:
 			item.disabled = false
 	get_node("Shop").visible = true
+	get_tree().get_root().get_node("GameWorld/ViewportContainer/Viewport/GameCamera").selectDeck(selected_deck)
 	open = shop
 
 
@@ -541,7 +542,10 @@ func toggle(thing):
 
 
 func _on_indicator():
-	openShop(connected)
+	if open==null: #if shop is closed
+		openShop(connected) # connects=name of shop, defined in _ready() for now.
+	else:
+		closeShop()
 
 
 # Changes chosen deck.
