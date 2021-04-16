@@ -160,23 +160,23 @@ func toggleDeckVisible(deckNumber : int):
 
 # Changes visibility according to the chosen deck on each button press.
 func selectDeck(deckNumber: int):
-    var decks = get_tree().get_root().get_node("GameWorld/Interface/Decks")
-    for child in decks.get_children():
-        if child.name != str(deckNumber):
-            child.get_node("TextureButton").pressed = false
-        else:
-            var theButton = child.get_node("TextureButton")
-            if theButton.pressed:
-                toggleDeckVisible(deckNumber)
-            else:
-                toggleDeckVisible(-1)
-    get_tree().get_root().get_node("GameWorld/Interface/Shopping").selectDeck(deckNumber)
-    get_tree().get_root().get_node("GameWorld/ViewportContainer/Viewport/GameCamera").selectDeck(deckNumber)
+	var decks = get_tree().get_root().get_node("GameWorld/Interface/Decks")
+	for child in decks.get_children():
+		if child.name != str(deckNumber):
+			child.get_node("TextureButton").pressed = false
+		else:
+			var theButton = child.get_node("TextureButton")
+			if theButton.pressed:
+				toggleDeckVisible(deckNumber)
+			else:
+				toggleDeckVisible(-1)
+	get_tree().get_root().get_node("GameWorld/Interface/Shopping").selectDeck(deckNumber)
+	get_tree().get_root().get_node("GameWorld/ViewportContainer/Viewport/GameCamera").selectDeck(deckNumber)
 
 
 # Recreates and binds buttons for decks.
 func reloadDecks(numberOfDecks: int):
-	var template = load("res://deckButton.tscn")
+	var template = load("res://GUINodes/deckButton.tscn")
 	var decks = get_tree().get_root().get_node("GameWorld/Interface/Decks")
 	for child in decks.get_children():
 		child.name += "qd"
