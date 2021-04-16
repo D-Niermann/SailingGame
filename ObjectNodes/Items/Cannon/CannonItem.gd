@@ -32,14 +32,13 @@ var fireSounds : Array = [] # refs to aduio players (randomly chooses one of the
 var infoPanel = null # ref to instanced info panel
 var lineSize  # length of trjactory prediction line , gets fetched automatically based on amount of sprites in the TrajectoryMarkerGroup
 var reloaded = true # if cannon is ready to fire or not
-var camera # ref to camera (for shake)
+# var camera # ref to camera (for shake)
 var org_rotation : Vector3 # starting rotation
 var aimPosition # the position the cannons will aim to (needs to be local)
 var particles
 var particles_flash
 var playerAimCannons # flag thats true if the player uses input to aim
 var isActive = true # flag that tells if this is active or not (deactived cannons dont aim or shoot)
-var ocean
 var waterHitMarker
 var fakeBullet # spatial used for trajectory planning
 var marker 
@@ -56,11 +55,10 @@ func _ready():
 	marker = $TrajectoryMarkerGroup.get_children()
 	lineSize = marker.size()
 	fakeBullet = $FakeBullet
-	camera = get_viewport().get_camera()
+	# camera = get_viewport().get_camera()
 	org_rotation = transform.basis.get_euler()*180/PI
 	org_forward = transform.basis.x.normalized() # used for angle calculation
-	if get_tree().get_nodes_in_group("Ocean").size()>0:
-		ocean = get_tree().get_nodes_in_group("Ocean")[0]
+	
 	
 	reloadTimer = Timer.new()
 	add_child(reloadTimer)
@@ -105,7 +103,7 @@ func _process(delta):
 	forward = transform.basis.x.normalized()
 
 	if playerAimCannons and isActive:
-		aimTo(ocean.waterMousePos)
+		aimTo(GlobalObjectReferencer.ocean.waterMousePos)
 	
 	if infoPanel!=null:
 		isActive = infoPanel.isActive
@@ -173,8 +171,8 @@ func predictTrajectory():
 	for i in range(lineSize):
 		point = fakeBullet.transform.origin
 		trajectoryPoints[i] = point
-		if ocean!=null:
-			waterHeight = ocean.getWaterHeight(to_global(point))
+		if GlobalObjectReferencer.ocean!=null:
+			waterHeight = GlobalObjectReferencer.ocean.getWaterHeight(to_global(point))
 		if to_global(point).y>waterHeight:
 			if myShip.isPlayer:
 				marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*markerMoveSpeed
@@ -195,7 +193,7 @@ func predictTrajectory():
 		var halfPoint
 		for _i in range(8): # number of bisections (1/2 -> 1/4 -> 1/8 -> 1/16 -> ...)
 			halfPoint = underWater + ((aboveWater - underWater)/2) #
-			if ocean.getWaterHeight(to_global(halfPoint))<to_global(halfPoint).y:
+			if GlobalObjectReferencer.ocean.getWaterHeight(to_global(halfPoint))<to_global(halfPoint).y:
 				# half point is over water
 				aboveWater = halfPoint
 			else:
@@ -235,7 +233,7 @@ func fireBall():
 		yield(get_tree().create_timer(fire_delay_sec),"timeout")
 		playAudio()
 		doParticles()
-		camera.shake_val += cam_shake/clamp(camera.global_transform.origin.distance_to(global_transform.origin)*0.02,1,99999)
+		GlobalObjectReferencer.camera.shake_val += cam_shake/clamp(GlobalObjectReferencer.camera.global_transform.origin.distance_to(global_transform.origin)*0.02,1,99999)
 		myShip.applyCannonImpulse(translation, -transform.basis.x.normalized()*recoil_impulse)
 		yield(get_tree().create_timer(rand_range(0,rand_max_delay)),"timeout")
 		var ball = BallScene.instance()

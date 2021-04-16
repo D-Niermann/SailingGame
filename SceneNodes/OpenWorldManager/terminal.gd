@@ -9,7 +9,7 @@ const PARTSIZE: float = 64.0 # width of each partition
 const EXTENDED: bool = false # if the grid is 3D, or 2D
 const CANCROSS: bool = true # if moving crosswise is possible
 var viewport: Viewport = null
-var camera: Camera = null
+# var camera: Camera = null
 var walls: Dictionary = {} # arrays of partitions, filled with static stuff
 var units: Dictionary = {} # arrays of partitions, filled with dynamic stuff which are intelligent (self-driving)
 var items: Dictionary = {} # {Vector3(0, 0, 0): ["example"]} # arrays of partitions, filled with dynamic stuff which are dumb (can be picked up and dropped)
@@ -41,9 +41,11 @@ var presets: Dictionary = { # constants are not copied over the instance, this i
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	viewport = get_node("ViewportContainer/Viewport")
-	camera = viewport.get_node("GameCamera")
+	# camera = viewport.get_node("GameCamera")
 	topograph.load("res://SceneNodes/OpenWorldManager/topograph.png")
 	dominions.load("res://SceneNodes/OpenWorldManager/dominions.png")
+
+	GlobalObjectReferencer.viewport = get_tree().get_root().get_viewport() # set the viewport in global refs (viewport has no script attached so it needs to be set here)
 	Utility.topograph = topograph # map for loading islands and also for pathfinding
 	Utility.dominions = dominions # map for goalfinding and pathfinding, shows regions
 	#spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
@@ -68,7 +70,7 @@ func _physics_process(delta):
 				shopping.updateList()
 		time = newTime
 	# loading world
-	var current: Vector3 = Utility.partitionID(camera.global_transform.origin, PARTSIZE, EXTENDED) # current partition
+	var current: Vector3 = Utility.partitionID(GlobalObjectReferencer.camera.global_transform.origin, PARTSIZE, EXTENDED) # current partition
 	#print("current partition: " + str(current))
 	var adjacent: Array = Utility.findAdjacent(current, CANCROSS, EXTENDED) # adjacent partitions
 	adjacent.append(current) # plus the current partition

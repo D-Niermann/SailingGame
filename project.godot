@@ -38,6 +38,7 @@ default_bus_layout=""
 
 Utility="*res://utility.gd"
 Economy="*res://GUINodes/BuildAndShop/economy.gd"
+GlobalObjectReferencer="*res://SceneNodes/GlobalObjectReferencer.gd"
 
 [debug]
 

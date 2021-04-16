@@ -4,6 +4,12 @@ This document keeps track of all Assets that we use in our game and their corres
 
 ### SFX
 
+qubodup
+
+eardeer
+
+alfrodou
+
 ### Music
 
 

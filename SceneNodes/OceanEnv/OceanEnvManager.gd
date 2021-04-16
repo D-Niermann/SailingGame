@@ -48,6 +48,7 @@ var from : Vector3 = Vector3(0,0,0)
 var to : Vector3 = Vector3(0,0,0)
 var waterMousePos : Vector3 = Vector3(0,0,0)
 func _ready():
+	GlobalObjectReferencer.ocean = self # register at reference manager
 	## load the image
 	## Warning: the shader and the get_pixel() functions have different origin definitions (top-left vs bottom left) the this image needs to be flipped!
 	image = load("res://SceneNodes/OceanEnv/Textures/gerstner_height_get_height.jpg")

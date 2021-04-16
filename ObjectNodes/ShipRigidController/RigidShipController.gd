@@ -42,8 +42,6 @@ const crossWindForce = 0.01 # force that attacks the ship up on the sails, tilti
 const maxTurnForce = 0.7 # max turn force of the whole ship
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if get_tree().get_nodes_in_group("Ocean").size()>0:
-		ocean = get_tree().get_nodes_in_group("Ocean")[0]
 
 	hFront = $HFront
 	hBack = $HBack
@@ -58,6 +56,7 @@ func _ready():
 
 	## add Decks to item placeable deck group if ship belongs to player
 	if isPlayer:
+		GlobalObjectReferencer.playerShip = self # register player ship
 		var a = model.get_children()
 		for i in range(1, a.size()):
 			# iterate through children, skip 1st because it is Sails
@@ -115,8 +114,8 @@ func applyPosBuoyancy(obj : Spatial, delta, factor :float = 1.0):
 	"""
 	var p = transform.basis.xform(obj.translation) ## impulse postions always need to be transformed like this
 	var waterH = 0
-	if ocean!=null:
-		waterH = ocean.getWaterHeight(obj.global_transform.origin)
+	if GlobalObjectReferencer.ocean!=null:
+		waterH = GlobalObjectReferencer.ocean.getWaterHeight(obj.global_transform.origin)
 	var diff = obj.global_transform.origin.y - waterH # if diff <0 = underwater
 	if diff<0:
 		var impulse = Vector3(0,1,0)*factor*pow(abs(diff),1.1)*impulse_factor/waterLevel*delta
