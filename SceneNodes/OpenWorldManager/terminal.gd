@@ -49,6 +49,14 @@ func _ready():
 	Utility.topograph = topograph # map for loading islands and also for pathfinding
 	Utility.dominions = dominions # map for goalfinding and pathfinding, shows regions
 	#spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
+	if Utility.lastSlot != null:
+		loadGame(Utility.lastSlot)
+	else:
+		var suggestion: int = 0
+		var file: File = File.new()
+		while file.file_exists("user://" + str(suggestion) + ".png"):
+			suggestion += 1
+		Utility.lastSlot = suggestion
 
 
 # Called every physics frame. 'delta' is the elapsed time since the previous frame.
@@ -375,3 +383,84 @@ func runAI(unit: String, part: Vector3, inProx: Dictionary, delta: float):
 		#print(info["xform"].origin)
 	
 	return holo
+
+
+# Loads the saved game with the given name.
+func loadGame(slot: String):
+	var opt = null
+	var big = 0
+	var file = File.new()
+	if file.file_exists("user://" + slot + ".one"):
+		var last = null
+		file.open("user://" + slot + ".one", File.READ)
+		while file.get_position() < file.get_len():
+			last = file.get_line()
+		file.close()
+		if last != null:
+			last = int(last)
+			if last > big:
+				opt = "one"
+				big = last
+	if file.file_exists("user://" + slot + ".two"):
+		var last = null
+		file.open("user://" + slot + ".two", File.READ)
+		while file.get_position() < file.get_len():
+			last = file.get_line()
+		file.close()
+		if last != null:
+			last = int(last)
+			if last > big:
+				opt = "two"
+				big = last
+	if opt != null:
+		file.open("user://" + slot + "." + opt, File.READ)
+		var content: Dictionary = {}
+		while file.get_position() < file.get_len():
+			var json: JSONParseResult = JSON.parse(file.get_line())
+			if json.error == OK:
+				content = json.result
+			break
+		file.close()
+		for key in content.keys():
+			if get(key) != null:
+				set(key, content[key])
+			elif Economy.get(key) != null:
+				Economy.set(key, content[key])
+
+
+# Overwrites the data for the saved game with the given name. If can't find the corresponding files, then creates one.
+func saveGame(slot: String):
+	var opt = "one"
+	var big = 0
+	var file = File.new()
+	if file.file_exists("user://" + slot + ".one"):
+		var last = null
+		file.open("user://" + slot + ".one", File.READ)
+		while file.get_position() < file.get_len():
+			last = file.get_line()
+		file.close()
+		if last != null:
+			last = int(last)
+			if last > big:
+				opt = "two"
+				big = last
+	if file.file_exists("user://" + slot + ".two"):
+		var last = null
+		file.open("user://" + slot + ".two", File.READ)
+		while file.get_position() < file.get_len():
+			last = file.get_line()
+		file.close()
+		if last != null:
+			last = int(last)
+			if last > big:
+				opt = "one"
+				big = last
+	var content: Dictionary = {"time": time, "frac": frac, "data": data, "walls": walls, "units": units, "wars": wars, "malls": Economy.malls}
+	file.open("user://" + slot + "." + opt, File.WRITE)
+	file.store_line(JSON.print(content))
+	file.store_line(str(OS.get_unix_time()))
+	file.close()
+	var image: Image = get_node("ViewportContainer/Viewport").get_texture().get_data()
+	image.flip_y()
+	image.resize(image.get_width() * 0.125, image.get_height() * 0.125)
+	image.save_png("user://" + slot + ".png")

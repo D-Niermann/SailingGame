@@ -1,0 +1,210 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Fonts/LCALLIG.TTF" type="DynamicFontData" id=1]
+[ext_resource path="res://GUINodes/Menu/MainMenu.gd" type="Script" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 40
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 20
+font_data = ExtResource( 1 )
+
+[node name="MainMenu" type="Control"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": true,
+"_editor_description_": ""
+}
+
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+stretch = true
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 1680, 1050 )
+handle_input_locally = false
+msaa = 2
+render_target_update_mode = 3
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
+shadow_atlas_size = 1024
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Interface" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.002
+margin_bottom = -2.1001
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="Menu" type="ColorRect" parent="Interface"]
+anchor_left = 0.8
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.258824 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Control" parent="Interface/Menu"]
+anchor_right = 1.0
+anchor_bottom = 0.4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="List" type="VBoxContainer" parent="Interface/Menu"]
+anchor_top = 0.4
+anchor_right = 1.0
+anchor_bottom = 0.8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Continue" type="TextureButton" parent="Interface/Menu/List"]
+margin_right = 336.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 0, 60 )
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Interface/Menu/List/Continue"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 1 )
+text = "Continue"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NewGame" type="TextureButton" parent="Interface/Menu/List"]
+margin_top = 64.0
+margin_right = 336.0
+margin_bottom = 124.0
+rect_min_size = Vector2( 0, 60 )
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Interface/Menu/List/NewGame"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 1 )
+text = "New Game"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Options" type="TextureButton" parent="Interface/Menu/List"]
+margin_top = 128.0
+margin_right = 336.0
+margin_bottom = 188.0
+rect_min_size = Vector2( 0, 60 )
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Interface/Menu/List/Options"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 1 )
+text = "Options"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Credits" type="TextureButton" parent="Interface/Menu/List"]
+margin_top = 192.0
+margin_right = 336.0
+margin_bottom = 252.0
+rect_min_size = Vector2( 0, 60 )
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Interface/Menu/List/Credits"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 1 )
+text = "Credits"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="QuitGame" type="TextureButton" parent="Interface/Menu/List"]
+margin_top = 256.0
+margin_right = 336.0
+margin_bottom = 376.0
+rect_min_size = Vector2( 0, 120 )
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Interface/Menu/List/QuitGame"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 1 )
+text = "Quit Game"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Version" type="Label" parent="Interface/Menu"]
+anchor_top = 0.95
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 2 )
+text = "VersionX_"
+align = 2
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Continue" type="ColorRect" parent="Interface"]
+anchor_right = 0.8
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 0.258824 )
+
+[node name="Container" type="GridContainer" parent="Interface/Continue"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 0
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Interface/Menu/List/Continue" to="." method="_on_Continue_pressed"]
+[connection signal="pressed" from="Interface/Menu/List/NewGame" to="." method="_on_NewGame_pressed"]
+[connection signal="pressed" from="Interface/Menu/List/Options" to="." method="_on_Options_pressed"]
+[connection signal="pressed" from="Interface/Menu/List/Credits" to="." method="_on_Credits_pressed"]
+[connection signal="pressed" from="Interface/Menu/List/QuitGame" to="." method="_on_QuitGame_pressed"]
