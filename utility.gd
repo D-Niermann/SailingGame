@@ -1,5 +1,8 @@
 extends Node
 
+
+var lastSlot = "NA" # slot which was loaded last
+
 var topograph: Image = Image.new()
 var dominions: Image = Image.new()
 
@@ -289,3 +292,33 @@ func printScreen():
 	while Directory.new().file_exists("pics/" + str(no) + ".png") && no < 999:
 		no += 1
 	image.save_png("pics/" + str(no) + ".png")
+
+
+# Returns list of names of saved games and the unix time which they are saved at.
+func getSlots():
+	var path: String = "user://"
+	var slots: Dictionary = {}
+	var directory = Directory.new()
+	directory.open(path)
+	directory.list_dir_begin()
+	var file: File = File.new()
+	while true:
+		var slot = directory.get_next()
+		if slot == "":
+			break
+		elif !slot.begins_with(".") && (slot.ends_with(".one") || slot.ends_with(".two")):
+			file.open("user://" + slot, File.READ)
+			var last = null
+			while file.get_position() < file.get_len():
+				last = file.get_line()
+			file.close()
+			if last != null:
+				last = int(last)
+				if last != 0:
+					slot = slot.split(".")[0]
+					if !slots.has(slot):
+						slots[slot] = {"unix": last}
+					elif slots[slot]["unix"] < last:
+						slots[slot]["unix"] = last
+	directory.list_dir_end()
+	return slots
