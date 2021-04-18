@@ -32,7 +32,7 @@ func _on_Exit_pressed():
 	get_tree().paused = false
 	var menu: ColorRect = get_node("Menu")
 	menu.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	get_tree().change_scene("res://GUINodes/Menu/MainMenu.tscn")
+	get_tree().change_scene("res://ControlNodes/Menu/MainMenu.tscn")
 
 
 func _on_MenuButton_pressed():

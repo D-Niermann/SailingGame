@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/buttonDeck.png-1ac6f223c7edd23d3a5d157a3da08547.stex"
+path="res://.import/buildButtonPressed.png-fd44a806ba3ab81b0f30b8c1b6ebab95.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://GUINodes/Images/buttonDeck.png"
-dest_files=[ "res://.import/buttonDeck.png-1ac6f223c7edd23d3a5d157a3da08547.stex" ]
+source_file="res://ControlNodes/Images/buildButtonPressed.png"
+dest_files=[ "res://.import/buildButtonPressed.png-fd44a806ba3ab81b0f30b8c1b6ebab95.stex" ]
 
 [params]
 

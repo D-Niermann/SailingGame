@@ -2,8 +2,8 @@ extends Control
 
 
 const CURRENCY: String = "g"
-const ITEM: PackedScene = preload("res://GUINodes/BuildAndShop/listItem.tscn")
-const TYPE: PackedScene = preload("res://GUINodes/BuildAndShop/tabsType.tscn")
+const ITEM: PackedScene = preload("res://ControlNodes/BuildAndShop/listItem.tscn")
+const TYPE: PackedScene = preload("res://ControlNodes/BuildAndShop/tabsType.tscn")
 
 var info = null
 var open = null

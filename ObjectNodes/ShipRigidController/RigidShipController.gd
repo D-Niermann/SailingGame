@@ -192,7 +192,7 @@ func selectDeck(deckNumber: int):
 
 # Recreates and binds buttons for decks.
 func reloadDecks(numberOfDecks: int):
-	var template = load("res://GUINodes/deckButton.tscn")
+	var template = load("res://ControlNodes/deckButton.tscn")
 	var decks = get_tree().get_root().get_node("GameWorld/Interface/Decks")
 	for child in decks.get_children():
 		child.name += "qd"

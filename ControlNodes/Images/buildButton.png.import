@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/buildButton.png-298389d5e79f2f28b720c1015717a62d.stex"
+path="res://.import/buildButton.png-87f02ed29d0dfe4db1db26b48a0f9416.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://GUINodes/Images/buildButton.png"
-dest_files=[ "res://.import/buildButton.png-298389d5e79f2f28b720c1015717a62d.stex" ]
+source_file="res://ControlNodes/Images/buildButton.png"
+dest_files=[ "res://.import/buildButton.png-87f02ed29d0dfe4db1db26b48a0f9416.stex" ]
 
 [params]
 

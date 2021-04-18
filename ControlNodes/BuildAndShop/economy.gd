@@ -29,8 +29,8 @@ var malls: Dictionary = {
 }
 # when adding new parameters/keys, also add them into BaseItem.fetchDictParams()
 var goods: Dictionary = {
-	"banana"     : {"type": "food", "size": Vector3(2,1, 1), "penetrationFactor": 0.9, "maxHealth": 1, "isCannon" : false, "price": 10, "weight": 1.0, "res": "res://GUINodes/BuildAndShop/exampleItem.tscn", "icon": "res://icon.png"},
-	"apple"      : {"type": "food", "size": Vector3(2,1, 1), "penetrationFactor": 0.9, "maxHealth": 1, "isCannon" : false, "price": 10, "weight": 1.0, "res": "res://GUINodes/BuildAndShop/exampleItem.tscn", "icon": "res://icon.png"},
+	"banana"     : {"type": "food", "size": Vector3(2,1, 1), "penetrationFactor": 0.9, "maxHealth": 1, "isCannon" : false, "price": 10, "weight": 1.0, "res": "res://ControlNodes/BuildAndShop/exampleItem.tscn", "icon": "res://icon.png"},
+	"apple"      : {"type": "food", "size": Vector3(2,1, 1), "penetrationFactor": 0.9, "maxHealth": 1, "isCannon" : false, "price": 10, "weight": 1.0, "res": "res://ControlNodes/BuildAndShop/exampleItem.tscn", "icon": "res://icon.png"},
 	"CannonLarge": {"type": "gear", "size": Vector3(3,1, 2), "penetrationFactor": 0.3, "maxHealth": 60, "isCannon" : true, "price": 10, "weight": 10.0, "res": "res://ObjectNodes/Items/Cannon/CannonItem.tscn", "icon": "res://ObjectNodes/Items/Cannon/cannon.png"},
 	"WallLong"   : {"type": "gear", "size": Vector3(1,2, 3), "penetrationFactor": 0.6, "maxHealth": 50, "isCannon" : false, "price": 1, "weight": 1.0, "res": "res://ObjectNodes/Items/Walls/WallLong.tscn", "icon": "res://ObjectNodes/Items/Walls/Sprites/Wall.png"},
 	"LightSmall" : {"type": "gear", "size": Vector3(1,1, 1), "penetrationFactor": 0.9, "maxHealth": 3, "isCannon" : false, "price": 1, "weight": 1.0, "res": "res://ObjectNodes/Items/Lights/Light1.tscn", "icon": "res://ObjectNodes/Items/Walls/Sprites/Wall.png"}
