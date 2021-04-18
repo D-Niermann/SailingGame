@@ -26,6 +26,7 @@ var itemPlaceParticle # dynamically loaded particles
 var currentHealth = maxHealth
 var particleRes = load("res://ObjectNodes/Items/ItemPlaceParticle.tscn") # universal placement particles
 var isPlayerControlable = false # if player can control this item (also maybe click on it)
+var assignedMen = [] # refs to all men assigned to this item
 
 func _ready():
 	## TODO: this gets also called when item is picked in shop
@@ -116,4 +117,17 @@ func removeInfo():
 	Overwrites in inherited item classes.
 	removes info panel again
 	"""
+	pass
+
+
+func assignMan(manRef):
+	""" assign a human to this item """
+	assignedMen.append(manRef)
+	
+func unassignMan(manRef):
+	for i in range(len(assignedMen)):
+		if assignedMen[i].name == manRef.name:
+			assignedMen.remove(i)
+			print("test if i really is the right index")
+			break
 	pass

@@ -1,9 +1,11 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://materials/human.tres" type="Material" id=1]
+[ext_resource path="res://ObjectNodes/Human/humanMaterial.tres" type="Material" id=1]
 [ext_resource path="res://Sprites/island.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/island_blur.png" type="Texture" id=3]
 [ext_resource path="res://Sprites/tree.png" type="Texture" id=4]
+
+
 
 [sub_resource type="CapsuleMesh" id=1]
 

@@ -2,9 +2,11 @@
 
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/DefaultShipModel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ObjectNodes/ShipRigidController/RigidShipController.gd" type="Script" id=2]
-[ext_resource path="res://materials/human.tres" type="Material" id=3]
+[ext_resource path="res://ObjectNodes/Human/humanMaterial.tres" type="Material" id=3]
 [ext_resource path="res://addons/kenney_particle_pack/fire_01.png" type="Texture" id=4]
 [ext_resource path="res://ObjectNodes/ShipRigidController/BoyantForce.gd" type="Script" id=5]
+
+
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 2.89, 2.91, 0.27 )
