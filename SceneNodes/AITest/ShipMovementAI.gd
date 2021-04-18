@@ -65,7 +65,7 @@ func update(destination: Vector2, objectsInRange : Dictionary):
 func aimCannons():
 	var cannon
 	for i in range(len(myShip.itemNodes)): # needs to iterate all the time because cannons can be destroyed
-		if myShip.itemNodes[i].type=="cannon":
+		if myShip.itemNodes[i].isCannon:
 			cannon = myShip.itemNodes[i]
 			cannon.aimTo(enemy.global_transform.origin)
 			if abs(cannon.aimDiffAngle)<aimPrecision:

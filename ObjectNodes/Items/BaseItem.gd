@@ -100,6 +100,7 @@ func fetchDictParams(name : String):
 	isCannon = Economy.goods[name].isCannon
 	penetrationFactor = Economy.goods[name].penetrationFactor
 	maxHealth = Economy.goods[name].maxHealth
+	currentHealth = maxHealth
 
 
 func createInfo(placeholder):
