@@ -20,10 +20,18 @@ const HUMAN: PackedScene = preload("res://ObjectNodes/Human/Human.tscn")
 func _ready():
 	myShip = get_parent()
 	repopulate()
+	reconnectJobs()
 
 func _physics_process(delta):
 	checkAndUpdate()
 	matchJobsToCrew()
+
+func reconnectJobs():
+	"""
+	Reconnects item references with the help of refName in their data.
+	"""
+	#???
+	pass
 
 func repopulate():
 	"""
