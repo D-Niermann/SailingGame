@@ -64,11 +64,12 @@ func update(destination: Vector2, objectsInRange : Dictionary):
 
 func aimCannons():
 	var cannon
-	for i in range(myShip.cannons.size()):
-		cannon = get_node(myShip.cannons[i])
-		cannon.aimTo(enemy.global_transform.origin)
-		if abs(cannon.aimDiffAngle)<aimPrecision:
-			cannon.fireBall()
+	for i in range(len(myShip.itemNodes)): # needs to iterate all the time because cannons can be destroyed
+		if myShip.itemNodes[i].type=="cannon":
+			cannon = myShip.itemNodes[i]
+			cannon.aimTo(enemy.global_transform.origin)
+			if abs(cannon.aimDiffAngle)<aimPrecision:
+				cannon.fireBall()
 
 func calcTargetSails():
 	if distToEnemy<optimalDistance+10:

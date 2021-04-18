@@ -59,17 +59,15 @@ func _ready():
 	org_rotation = transform.basis.get_euler()*180/PI
 	org_forward = transform.basis.x.normalized() # used for angle calculation
 	
+	## overwrite parent vars
+	type = "cannon" # used to classify and order items register on ship
+
 	
 	reloadTimer = Timer.new()
 	add_child(reloadTimer)
 	reloadTimer.connect("timeout", self, "_on_reloadTimer_timeout")
 	reloadTimer.set_wait_time(reload_time_sec)
 	reloadTimer.set_one_shot(true) # Make sure it loops
-	
-	## register as cannon on ship parent
-	if myShip.has_method("registerCannon"):
-		myShip.registerCannon(self.get_path())
-
 
 
 	fireSounds.push_back(get_node("Audio1"))
@@ -90,8 +88,8 @@ func _ready():
 	set_process_input(true) 
 	clearTrajectory()
 
-func on_placement():
-	.on_placement() # calls the parent function
+func onPlacement():
+	.onPlacement() # calls the parent function
 	org_rotation = transform.basis.get_euler()*180/PI
 	org_forward = transform.basis.x.normalized() # used for angle calculation
 

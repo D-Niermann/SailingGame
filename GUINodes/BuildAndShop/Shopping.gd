@@ -261,7 +261,6 @@ func placeOrDestroyHologram():
 			duplicate.global_transform.basis = parent.global_transform.basis.rotated(parent.global_transform.basis.y.normalized(), angle)
 			parent = null
 			purchase(duplicate)
-			duplicate.on_placement()
 		else:
 			resource = null
 			if hologram != null:
@@ -282,7 +281,7 @@ func placeOrDestroyHologram():
 		hologram.transform = xform
 		var sprite = hologram.get_node("Sprite3D")
 		sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
-		hologram.on_placement()
+		hologram.onPlacement()
 	elif hologram != null:
 		hologram.queue_free()
 	hologram = null

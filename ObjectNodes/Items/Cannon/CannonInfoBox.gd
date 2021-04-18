@@ -7,12 +7,6 @@ var isActive = true
 var activeButton
 var myItem
 
-func link(itemRef):
-	"""
-	Links this info box to the clicked item. Sets this states to the items vars.
-	"""
-	myItem = itemRef
-	activeButton.pressed = myItem.isActive
 
 
 func _ready():
@@ -20,7 +14,13 @@ func _ready():
 	healthLabel = $Panel/HealthLabel
 	activeButton = $Panel/ActiveToggle
 
-
+func link(itemRef):
+	"""
+	Links this info box to the clicked item. Sets this states to the items vars.
+	"""
+	myItem = itemRef
+	activeButton.pressed = myItem.isActive
+	
 func _process(delta):
 	healthLabel.text = str(round(myItem.currentHealth))
 	if positionRef!=null:

@@ -41,9 +41,6 @@ func _physics_process(delta):
 	
 	cursorPos = GlobalObjectReferencer.viewport.get_mouse_position()/GlobalObjectReferencer.viewport.size
 	mouseDistFromMid = (cursorPos - Vector2(0.5,0.5)).length()*2
-	print(cursorPos)
-	print(mouseDistFromMid)
-	print("--------")
 	var relMousePos : Vector2 = (cursorPos - Vector2(0.5,0.5))
 	var moveVector : Vector2 = relMousePos 
 	if playerIsAiming:
