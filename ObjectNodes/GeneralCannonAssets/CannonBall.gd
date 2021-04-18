@@ -113,8 +113,8 @@ func _process(delta):
 			else:
 				## if inside body:
 				coll_obj = instance_from_id(coll.collider_id)
-				if not coll_obj.get("drag") == null:
-					drag_factor = coll_obj.drag
+				if not coll_obj.get("penetrationFactor") == null:
+					drag_factor = coll_obj.penetrationFactor
 				else:
 					drag_factor = 0.5
 				if coll_obj.has_method("giveDmg"):

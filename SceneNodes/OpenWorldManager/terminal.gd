@@ -366,10 +366,10 @@ func runAI(unit: String, part: Vector3, inProx: Dictionary, delta: float):
 		
 	if holo != null: # runs when unit is live
 		var results: Dictionary
-		var controller = holo.get_node_or_null("AIController")
-		if controller != null:
+		var AIController = holo.get_node_or_null("AIController")
+		if AIController != null:
 			var temp: Vector3 = Utility.partitionLocation(dest, PARTSIZE, false)
-			results = controller.update(Vector2(temp.x, temp.z), inProx)
+			results = AIController.update(Vector2(temp.x, temp.z), inProx) # TODO: dont do this every frame, can be done less often to save CPU
 		info["xform"] = holo.global_transform # at the end, update transform
 	else: # runs when unit is offscreen
 		# move transform

@@ -14,10 +14,9 @@ export(bool) var isUnsinkable = false
 var model # ref to ship model
 var turnForce : float # current turn force for left right steer
 var sails # current sail state (0,1) 1=full sails
-var ocean # ref to ocean object
-var cannons = []# ref to all cannons in ships model
+var itemNodes = [] # ref to all items in ships model (used for center of mass)
 var turnCommandPressed = false
-var waterLevel = 1 # 1 = default how much water the ship has taken, used in boyance calculation, if near impulse_factor, its start to sink
+var waterLevel = 1 # 1 = default, how much water the ship has taken, used in boyance calculation, if near impulse_factor, its start to sink
 
 # force spatials
 var hLeft # positions where boynacy attacks
@@ -25,6 +24,8 @@ var hRight # positions where boynacy attacks
 var hFront # positions where boynacy attacks
 var hBack # positions where boynacy attacks
 var mainSailForce # Spatial - where the force of main sail wind is applied
+var centerOfMass = Vector3.ZERO # Vector3 that keepts track of center of mass 
+
 
 # directional vectors (updated every frame)
 var up 
@@ -50,6 +51,7 @@ func _ready():
 	mainSailForce = $MainSailForce # TODO: implement point of attack for turning, now its just the back point (could be further in the middle)
 	model = $Model
 
+
 	turnForce = 0
 	sails = 0
 
@@ -63,9 +65,24 @@ func _ready():
 			a[i].add_to_group("PlayerDeck")
 		reloadDecks(2)
 			
-func registerCannon(path):
-	cannons.append(path)
-	print("registered "+path)
+func registerItem(node):
+	"""
+	Adds Item to array containing all items that are on ship.
+	Handles other stuff that needs to be handled when new item is placed
+	"""
+	itemNodes.append(node)
+	if isPlayer:
+		calcCenterOfMass()
+	print("registered "+node.name)
+
+func unregisterItem(node):
+	"""
+	un-register item node from itemNodes array
+	"""
+	for i in range(len(itemNodes)):
+		if itemNodes[i].name==node.name:
+			itemNodes.remove(i)
+			break
 
 func _physics_process(delta):
 	sails = clamp(sails,-0.01, 1)
@@ -175,7 +192,7 @@ func selectDeck(deckNumber: int):
 
 # Recreates and binds buttons for decks.
 func reloadDecks(numberOfDecks: int):
-	var template = load("res://GUINodes/deckButton.tscn")
+	var template = load("res://ControlNodes/deckButton.tscn")
 	var decks = get_tree().get_root().get_node("GameWorld/Interface/Decks")
 	for child in decks.get_children():
 		child.name += "qd"
@@ -186,3 +203,18 @@ func reloadDecks(numberOfDecks: int):
 		newDeckButton.name = str(i)
 		newDeckButton.get_node("Label").text = "Deck " + str(i+1)
 		newDeckButton.get_node("TextureButton").connect("pressed", self, "selectDeck", [i])
+
+func calcCenterOfMass():
+	"""
+	Calculate CoM based on all registered items positions 
+	postion::local position of placed item on decks
+	weight::weight of placed item
+	"""
+	var avPos = Vector3.ZERO
+	var weightFactor = 20  # the bigger this number the less the avPos is affected by items placed (basically the ships default weight)
+	for i in range(len(itemNodes)):
+		avPos += (to_local(itemNodes[i].global_transform.origin))* itemNodes[i].weight/weightFactor
+	avPos*=1.0/len(itemNodes)
+	centerOfMass = avPos
+	print("CoM: ",centerOfMass)
+	print("NumItems: ",len(itemNodes))

@@ -2,9 +2,11 @@
 
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/DefaultShipModel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ObjectNodes/ShipRigidController/RigidShipController.gd" type="Script" id=2]
-[ext_resource path="res://materials/human.tres" type="Material" id=3]
+[ext_resource path="res://ObjectNodes/Human/humanMaterial.tres" type="Material" id=3]
 [ext_resource path="res://addons/kenney_particle_pack/fire_01.png" type="Texture" id=4]
 [ext_resource path="res://ObjectNodes/ShipRigidController/BoyantForce.gd" type="Script" id=5]
+
+
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 2.89, 2.91, 0.27 )
@@ -78,9 +80,6 @@ metallic_specular = 0.45
 [sub_resource type="QuadMesh" id=12]
 size = Vector2( 5, 5 )
 
-[sub_resource type="ConvexPolygonShape" id=13]
-points = PoolVector3Array( -1.445, 1.455, 0.135, 1.445, 1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, -1.445, -1.455, 0.135, 1.445, -1.455, -0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, 1.445, 1.455, -0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, -1.455, -0.135, -1.445, -1.455, 0.135, 1.445, 1.455, 0.135, -1.445, -1.455, 0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, 1.445, 1.455, -0.135, -1.445, -1.455, -0.135, -1.445, 1.455, -0.135, 1.445, -1.455, -0.135 )
-
 [sub_resource type="ConvexPolygonShape" id=14]
 points = PoolVector3Array( -1.445, 1.455, 0.135, 1.445, 1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, -1.445, -1.455, 0.135, 1.445, -1.455, -0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, 1.445, 1.455, -0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, -1.455, -0.135, -1.445, -1.455, 0.135, 1.445, 1.455, 0.135, -1.445, -1.455, 0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, 1.445, 1.455, -0.135, -1.445, -1.455, -0.135, -1.445, 1.455, -0.135, 1.445, -1.455, -0.135 )
 
@@ -105,15 +104,15 @@ points = PoolVector3Array( -1.445, 1.455, 0.135, 1.445, 1.455, -0.135, 1.445, 1.
 [sub_resource type="ConvexPolygonShape" id=21]
 points = PoolVector3Array( -1.445, 1.455, 0.135, 1.445, 1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, -1.445, -1.455, 0.135, 1.445, -1.455, -0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, 1.445, 1.455, -0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, -1.455, -0.135, -1.445, -1.455, 0.135, 1.445, 1.455, 0.135, -1.445, -1.455, 0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, 1.445, 1.455, -0.135, -1.445, -1.455, -0.135, -1.445, 1.455, -0.135, 1.445, -1.455, -0.135 )
 
+[sub_resource type="ConvexPolygonShape" id=22]
+points = PoolVector3Array( -1.445, 1.455, 0.135, 1.445, 1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, -1.445, -1.455, 0.135, 1.445, -1.455, -0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, 1.445, 1.455, -0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, -1.455, -0.135, -1.445, -1.455, 0.135, 1.445, 1.455, 0.135, -1.445, -1.455, 0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, 1.445, 1.455, -0.135, -1.445, -1.455, -0.135, -1.445, 1.455, -0.135, 1.445, -1.455, -0.135 )
+
 [node name="ShipRigid" type="RigidBody"]
 collision_layer = 2
 collision_mask = 2
 linear_damp = 2.0
 angular_damp = 3.0
 script = ExtResource( 2 )
-
-[node name="Model" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.45825, 2.82754, 0.00588534 )
 
 [node name="Body" type="Spatial" parent="."]
 transform = Transform( 0.985556, 0, 0.16935, 0, 1, 0, -0.16935, 0, 0.985556, -3.14652, 1.47845, -0.859704 )
@@ -268,41 +267,46 @@ __meta__ = {
 "_editor_description_": ""
 }
 
+[node name="CenterofMass" type="Spatial" parent="."]
+
 [node name="MainSailForce" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0711889, 4.23114, -0.0664575 )
 
+[node name="Model" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.45825, 2.82754, 0.00588534 )
+
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1.04567, 0, 0.16935, 0, 1, 0, -0.179679, 0, 0.985556, -3.09354, 1.47845, -0.868807 )
-shape = SubResource( 13 )
+shape = SubResource( 14 )
 
 [node name="CollisionShape2" type="CollisionShape" parent="."]
 transform = Transform( 0.9996, 0, 0.0282706, 0, 1, 0, -0.0282706, 0, 0.9996, -0.266508, 1.47845, -1.1692 )
-shape = SubResource( 14 )
+shape = SubResource( 15 )
 
 [node name="CollisionShape3" type="CollisionShape" parent="."]
 transform = Transform( 0.763217, 0, -0.15471, 0, 1, 0, 0.119517, 0, 0.98796, 2.28682, 1.47845, -1.04024 )
-shape = SubResource( 15 )
+shape = SubResource( 16 )
 
 [node name="CollisionShape4" type="CollisionShape" parent="."]
 transform = Transform( 0.654765, 0, -0.473473, 0, 1, 0, 0.351965, 0, 0.880809, 4.22974, 1.47845, -0.395463 )
-shape = SubResource( 16 )
+shape = SubResource( 17 )
 
 [node name="CollisionShape5" type="CollisionShape" parent="."]
 transform = Transform( 1.03202, 0, -0.232087, 0, 1, 0, 0.246244, 0, 0.972695, -3.13365, 1.47845, 1.11666 )
-shape = SubResource( 17 )
+shape = SubResource( 18 )
 
 [node name="CollisionShape6" type="CollisionShape" parent="."]
 transform = Transform( 0.9996, 0, 0.0282706, 0, 1, 0, -0.0282706, 0, 0.9996, -0.261261, 1.47845, 1.47018 )
-shape = SubResource( 18 )
+shape = SubResource( 19 )
 
 [node name="CollisionShape7" type="CollisionShape" parent="."]
 transform = Transform( 0.760992, 0, 0.172101, 0, 1, 0, -0.132951, 0, 0.98508, 2.20308, 1.47845, 1.24707 )
-shape = SubResource( 19 )
+shape = SubResource( 20 )
 
 [node name="CollisionShape8" type="CollisionShape" parent="."]
 transform = Transform( 0.673391, 0, 0.423568, 0, 1, 0, -0.314867, 0, 0.905865, 4.16958, 1.47845, 0.617323 )
-shape = SubResource( 20 )
+shape = SubResource( 21 )
 
 [node name="CollisionShape9" type="CollisionShape" parent="."]
 transform = Transform( -7.41928e-05, 0, -1, 0, 1, 0, 0.425357, 0, -0.000174386, -5.06695, 1.48083, 0.0759686 )
-shape = SubResource( 21 )
+shape = SubResource( 22 )
