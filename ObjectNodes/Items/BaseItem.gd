@@ -8,14 +8,17 @@ EG dont use $Mesh1 in some script but define mesh var here and access this var.
 Item names need to have the same name as in economy.goods dictionary
 """
 
-## settings
-export(bool) var movable = true
-export(float) var penetrationFactor = 2 # penetration factor used for bullets
-var maxHealth = 100
-var damageMultiplier = 10 # multiple base damage by this value, just so that the maxHealth values can be bigger integers
-var type = "baseItem"
+export(bool) var movable = true # set false in godot editor for pre placed items 
 
-var weight = 2.0 # fetched from economy class
+## item specifc settings (fetched from dictionary)
+var penetrationFactor = 0 # penetration factor used for bullets, 0-1, 1 = like air, 0 = inpenetrable
+var dataBaseName = "baseName" # set this in the inherited items
+var maxHealth = 1
+var damageMultiplier = 10 # multiple base damage by this value, just so that the maxHealth values can be bigger integers
+var isCannon = false # used for AI
+var weight = 2.0 
+
+## 
 var myShip # obj ship that this is on
 var gridMesh # green/red mesh that displays the hitbox of items
 var pAudio # audio player thats emitting when item is placed
@@ -25,6 +28,7 @@ var particleRes = load("res://ObjectNodes/Items/ItemPlaceParticle.tscn") # unive
 var isPlayerControlable = false # if player can control this item (also maybe click on it)
 
 func _ready():
+	## TODO: this gets also called when item is picked in shop
 	print("BaseItem ready()")
 	gridMesh = get_node("GridShowMesh")
 	pAudio = $PlaceAudio
@@ -38,29 +42,32 @@ func _ready():
 	onPlacement()
 
 
+
 func fetchMyShip():
-	## TODO: this gets also called when item is picked in shop
 	myShip = get_parent().get_parent().get_parent()
 	if myShip != null:
 		if "isPlayer" in myShip:
 			if myShip.isPlayer:
 				isPlayerControlable = true
+		else:
+			myShip = null # reset this var to null because it is not a rigid body ship node
 
 
 func onPlacement():
 	"""
-	Gets called every time the item is placed onto the ship (shopping, replacing).
+	Gets called every time the item is placed onto the ship (shopping, replacing, loading).
 	"""
 	print("BaseItem onPlacement()")
-	if gridMesh!=null:
-		gridMesh.visible = false # make the grid item invisible again
-	itemPlaceParticle.emitting = true
-	
-	if pAudio!=null:
-		pAudio.set_pitch_scale(pAudio.pitch_scale+rand_range(-0.2,0.2))
-		pAudio.play()
 	fetchMyShip()
-	registerToShip()
+	if myShip!=null: #if actually on ship
+		registerToShip()
+		if gridMesh!=null:
+			gridMesh.visible = false # make the grid item invisible again
+		itemPlaceParticle.emitting = true
+		
+		if pAudio!=null:
+			pAudio.set_pitch_scale(pAudio.pitch_scale+rand_range(-0.2,0.2))
+			pAudio.play()
 
 func onHover():
 	"""
@@ -83,6 +90,17 @@ func giveDmg(damage : float):
 	reports damage taken by bullet to this object.
 	"""
 	currentHealth = clamp(currentHealth - damage*damageMultiplier,0,maxHealth)
+
+
+func fetchDictParams(name : String):
+	"""
+	gets all parameters for this item defined in a item dictionary
+	"""
+	weight = Economy.goods[name].weight
+	isCannon = Economy.goods[name].isCannon
+	penetrationFactor = Economy.goods[name].penetrationFactor
+	maxHealth = Economy.goods[name].maxHealth
+
 
 func createInfo(placeholder):
 	"""

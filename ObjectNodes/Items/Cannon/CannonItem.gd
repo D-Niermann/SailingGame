@@ -33,7 +33,6 @@ var infoPanel = null # ref to instanced info panel
 var lineSize  # length of trjactory prediction line , gets fetched automatically based on amount of sprites in the TrajectoryMarkerGroup
 var reloaded = true # if cannon is ready to fire or not
 # var camera # ref to camera (for shake)
-var org_rotation : Vector3 # starting rotation
 var aimPosition # the position the cannons will aim to (needs to be local)
 var particles
 var particles_flash
@@ -52,15 +51,13 @@ var reloadTimer : Timer
 
 
 func _ready():
+	fetchDictParams("CannonLarge")
+
 	marker = $TrajectoryMarkerGroup.get_children()
-	lineSize = marker.size()
 	fakeBullet = $FakeBullet
-	# camera = get_viewport().get_camera()
-	org_rotation = transform.basis.get_euler()*180/PI
+	lineSize = marker.size()
 	org_forward = transform.basis.x.normalized() # used for angle calculation
 	
-	## overwrite parent vars
-	type = "cannon" # used to classify and order items register on ship
 
 	
 	reloadTimer = Timer.new()
@@ -90,7 +87,6 @@ func _ready():
 
 func onPlacement():
 	.onPlacement() # calls the parent function
-	org_rotation = transform.basis.get_euler()*180/PI
 	org_forward = transform.basis.x.normalized() # used for angle calculation
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
