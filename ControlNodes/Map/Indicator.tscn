@@ -1,0 +1,5 @@
+[gd_scene format=2]
+
+[node name="Indicator" type="Polygon2D"]
+scale = Vector2( 5, 5 )
+polygon = PoolVector2Array( -1, 1, -1, -1, 1, -1, 1, 1 )

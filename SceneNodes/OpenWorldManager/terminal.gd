@@ -34,7 +34,7 @@ var colors: Dictionary = { # like data, but for the multi-partition stuff
 	"030": {"res": "res://SceneNodes/Islands/dummyIslandThree.tscn", "origin": Vector3(5, 0, 1)}
 }
 var presets: Dictionary = { # constants are not copied over the instance, this is where we summon stuff from, and also check some constant variables from
-	"example": {"CON": "units", "RES": "res://exampleItem.tscn", "TYPE": "trade", "SPEED": 1, "MAXHP": 100, "health": 100, "weight": 1, "side": "spanish", "pack": []}
+	"example": {"CON": "units", "RES": "res://ObjectNodes/ShipRigidController/ShipRigidController.tscn", "SPEED": 1, "weight": 1, "side": "spanish", "type": "trade", "pack": []}
 }
 
 
@@ -48,7 +48,7 @@ func _ready():
 	GlobalObjectReferencer.viewport = get_tree().get_root().get_viewport() # set the viewport in global refs (viewport has no script attached so it needs to be set here)
 	Utility.topograph = topograph # map for loading islands and also for pathfinding
 	Utility.dominions = dominions # map for goalfinding and pathfinding, shows regions
-	#spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
+	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
 	if Utility.lastSlot != null:
 		loadGame(Utility.lastSlot)
 	else:
@@ -61,9 +61,6 @@ func _ready():
 
 # Called every physics frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	# pause, a menu may be added later on
-	if Input.is_action_just_pressed("ui_cancel"):
-		get_tree().paused = !get_tree().paused
 	# advancing time
 	if !get_tree().paused:
 		frac += delta
@@ -282,12 +279,13 @@ func runAI(unit: String, part: Vector3, inProx: Dictionary, delta: float):
 #	- I'd do some risk management depending on total powers or perhaps powers at directions
 #	- If I could, I'd like to keep pursuing my goal, (follow route if trading, attack enemy if pirate or military)
 #	- If my goal doesn't seem plausible, I'd create a temporary goal to follow till the conditions change (flee or fight, probably trying to flee, but also shooting whenever possible, as you have suggested once)
+	var boost = 10 # speed boost for debugging purposes
 	var dest = null
 	var holo = null # holo stands for physical representations of units, that is actual scenes in the world, loaded
 	var info: Dictionary = data[unit] # info stands for variables of this unit, like health and transform (xform)
 	var preset: Dictionary = presets[info["preset"]] # preset has constants of this unit, like max health and resource path
 	var side: String = info["side"]
-	var type: String = preset["TYPE"]
+	var type: String = info["type"]
 #	var task: String = info["task"]
 	var pack: Array = info["pack"]
 	if live.has(part): # if part of this unit is live, we can find its holo
@@ -366,10 +364,10 @@ func runAI(unit: String, part: Vector3, inProx: Dictionary, delta: float):
 		
 	if holo != null: # runs when unit is live
 		var results: Dictionary
-		var AIController = holo.get_node_or_null("AIController")
-		if AIController != null:
+		var controller = holo.get_node_or_null("AIController")
+		if controller != null:
 			var temp: Vector3 = Utility.partitionLocation(dest, PARTSIZE, false)
-			results = AIController.update(Vector2(temp.x, temp.z), inProx) # TODO: dont do this every frame, can be done less often to save CPU
+			results = controller.update(Vector2(temp.x, temp.z), inProx)
 		info["xform"] = holo.global_transform # at the end, update transform
 	else: # runs when unit is offscreen
 		# move transform
@@ -378,8 +376,8 @@ func runAI(unit: String, part: Vector3, inProx: Dictionary, delta: float):
 			direction = (dest - part).normalized()
 		# update transform
 		if direction != Vector3.ZERO:
-			info["xform"].origin += direction * delta * preset["SPEED"] / info["weight"]
-			info["xform"] = info["xform"].looking_at(info["xform"].origin + direction, Vector3.UP)
+			info["xform"].origin += direction * delta * boost * preset["SPEED"] / info["weight"]
+			info["xform"] = info["xform"].looking_at(info["xform"].origin + direction * 1000, Vector3.UP)
 		#print(info["xform"].origin)
 	
 	return holo
