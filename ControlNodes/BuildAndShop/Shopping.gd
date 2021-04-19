@@ -172,6 +172,7 @@ func _physics_process(delta):
 					if leftClick:
 						resource = null
 						hologram = hit.collider
+						hologram.onRemove()
 						var mall: Dictionary = Economy.malls[open]
 						var itemName = Utility.resName(hologram.name)
 						var itemPrice = Economy.getPrice(itemName, open)
