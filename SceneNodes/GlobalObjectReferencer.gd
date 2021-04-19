@@ -11,4 +11,6 @@ var ocean      = null # reference to ocean, the object itself will set this vari
 var playerShip = null # reference to playerShip, the object itself will set this variable when ready
 var camera     = null # reference to camera, the object itself will set this variable when ready
 var viewport   = null # ref to viewport, set in terminal.gd
+var crewManager= null # ref to CrewMaanager, (ssumes it will be a singleton so dont copy on NPC ships)
+
 ## .. add more stuff here

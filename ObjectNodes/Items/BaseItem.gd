@@ -18,6 +18,10 @@ var damageMultiplier = 10 # multiple base damage by this value, just so that the
 var isCannon = false # used for AI
 var weight = 2.0 
 
+## crew and task stuff
+var maxCrew = 0 # TODO :could also be defined in some dictionary
+var assignedMen = [] # refs to all men assigned to this item
+
 ## 
 var myShip # obj ship that this is on
 var gridMesh # green/red mesh that displays the hitbox of items
@@ -26,7 +30,6 @@ var itemPlaceParticle # dynamically loaded particles
 var currentHealth = maxHealth
 var particleRes = load("res://ObjectNodes/Items/ItemPlaceParticle.tscn") # universal placement particles
 var isPlayerControlable = false # if player can control this item (also maybe click on it)
-var assignedMen = [] # refs to all men assigned to this item
 
 func _ready():
 	## TODO: this gets also called when item is picked in shop
@@ -65,7 +68,7 @@ func onPlacement():
 		if gridMesh!=null:
 			gridMesh.visible = false # make the grid item invisible again
 		itemPlaceParticle.emitting = true
-		
+		# play Audio
 		if pAudio!=null:
 			pAudio.set_pitch_scale(pAudio.pitch_scale+rand_range(-0.2,0.2))
 			pAudio.play()
@@ -97,11 +100,13 @@ func fetchDictParams(name : String):
 	"""
 	gets all parameters for this item defined in a item dictionary
 	"""
+	# TODO: if values in dictionary are constant, dont save them in this item, just use the dictionary entries (saves Ram)
 	weight = Economy.goods[name].weight
 	isCannon = Economy.goods[name].isCannon
 	penetrationFactor = Economy.goods[name].penetrationFactor
 	maxHealth = Economy.goods[name].maxHealth
-	currentHealth = maxHealth
+	# the only important one
+	currentHealth = Economy.goods[name].maxHealth
 
 
 func createInfo(placeholder):

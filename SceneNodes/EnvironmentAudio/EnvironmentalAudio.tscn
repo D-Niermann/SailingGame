@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://SceneNodes/EnvironmentAudio/ocean_waves_crisp.wav" type="AudioStream" id=1]
 [ext_resource path="res://SceneNodes/EnvironmentAudio/AmbientAudio.gd" type="Script" id=2]
 [ext_resource path="res://SceneNodes/EnvironmentAudio/windSound.wav" type="AudioStream" id=3]
+[ext_resource path="res://SceneNodes/MusicAudio/Sailing01.ogg" type="AudioStream" id=4]
 
 [node name="AudioSource" type="Spatial"]
 script = ExtResource( 2 )
@@ -22,3 +23,8 @@ unit_size = 16.2
 pitch_scale = 0.81
 autoplay = true
 max_distance = 400.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -25.0
+autoplay = true

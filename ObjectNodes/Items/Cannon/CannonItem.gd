@@ -11,8 +11,8 @@ export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
 export(float) var recoil_impulse = 0.3 # when firing to the ship
 export var isTestCannon          = false # if cannon is fired when aiming and left clicking, (to test trajectory, without firing the whole broadside), can be set as a gameplay elemetn in th info panel
 var    drag                      = 0.05 # for trajectory prediction: drag of ball
-var    rand_max_delay            = 0.4 # max delay in seconds
-var    reload_time_sec           = 4 # reload time in seconds
+var    rand_max_delay            = 0.4 # max delay in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
+var    reload_time_sec           = 4 # reload time in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
 var    cam_shake                 = 0.1 # the amount of camera shake added to camera when shooting
 const  rotateSpeed               = 0.004 # max rotation speed of cannons (up/down rotation is scaled down )
 const  maxRotateAngle            = 20 # in degree,                                           left right rotation
@@ -51,6 +51,8 @@ var reloadTimer : Timer
 
 
 func _ready():
+	## overwrite parent vars
+	maxCrew = 4
 	fetchDictParams("CannonLarge")
 
 	marker = $TrajectoryMarkerGroup.get_children()
