@@ -47,12 +47,13 @@ var forward2d = Vector2(1,0)
 var trajectoryPoints : Array
 var org_forward
 var reloadTimer : Timer
-
+var requested = false
 
 
 func _ready():
 	## overwrite parent vars
 	maxCrew = 4
+	targetCrewSize = maxCrew
 	fetchDictParams("CannonLarge")
 
 	marker = $TrajectoryMarkerGroup.get_children()
@@ -91,6 +92,7 @@ func onPlacement():
 	.onPlacement() # calls the parent function
 	org_forward = transform.basis.x.normalized() # used for angle calculation
 
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	up = transform.basis.y.normalized()
@@ -104,6 +106,11 @@ func _process(delta):
 	if infoPanel!=null:
 		isActive = infoPanel.isActive
 
+	if GlobalObjectReferencer.crewManager!=null and not requested:
+		GlobalObjectReferencer.crewManager.requestCrew(self,1,GlobalObjectReferencer.crewManager.TG_WEAPONS,global_transform.origin,0) # request 1 man with prio 0
+		GlobalObjectReferencer.crewManager.requestCrew(self,1,GlobalObjectReferencer.crewManager.TG_WEAPONS,global_transform.origin,1) # request 1 man with prio 1
+		requested = true
+		
 
 func aimTo(global_position : Vector3):
 	aimPosition = to_local(global_position)

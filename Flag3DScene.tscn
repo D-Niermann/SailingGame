@@ -58,7 +58,7 @@ noise = SubResource( 2 )
 
 [sub_resource type="ShaderMaterial" id=4]
 shader = SubResource( 1 )
-shader_param/wave_size = 2.0
+shader_param/wave_size = 1.0
 shader_param/wave_speed = 3.0
 shader_param/noise_strength = 4.0
 shader_param/uv_offset_scale = Vector2( -0.2, -0.1 )
@@ -160,5 +160,6 @@ material/0 = null
 
 [node name="Pole" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
+visible = false
 mesh = SubResource( 12 )
 material/0 = null

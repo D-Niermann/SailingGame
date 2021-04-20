@@ -20,6 +20,7 @@ var weight = 2.0
 
 ## crew and task stuff
 var maxCrew = 0 # TODO :could also be defined in some dictionary
+var targetCrewSize = 0 # for maybe if  player makes restictions to this item 
 var assignedMen = [] # refs to all men assigned to this item
 
 ## 
@@ -64,7 +65,8 @@ func onPlacement():
 	print("BaseItem onPlacement()")
 	fetchMyShip()
 	if myShip!=null: #if actually on ship
-		registerToShip()
+		if myShip.has_method("registerItem"):
+			myShip.registerItem(self)
 		if gridMesh!=null:
 			gridMesh.visible = false # make the grid item invisible again
 		itemPlaceParticle.emitting = true
@@ -83,11 +85,14 @@ func onRemove():
 	"""
 	When item is removed from deck (picked up by player, maybe later also destroyed)
 	"""
-	pass
+	print("item remove")
+	for i in range(len(assignedMen)):
+		print("making man idle :item")
+		GlobalObjectReferencer.crewManager.makeManIdle(assignedMen[i])
+	if myShip.has_method("unregisterItem"):
+		myShip.unregisterItem(self)
 	
-func registerToShip():
-	if myShip.has_method("registerItem"):
-		myShip.registerItem(self)
+	
 
 func giveDmg(damage : float):
 	"""
