@@ -34,7 +34,7 @@ var colors: Dictionary = { # like data, but for the multi-partition stuff
 	"030": {"res": "res://SceneNodes/Islands/dummyIslandThree.tscn", "origin": Vector3(5, 0, 1)}
 }
 var presets: Dictionary = { # constants are not copied over the instance, this is where we summon stuff from, and also check some constant variables from
-	"example": {"CON": "units", "RES": "res://ObjectNodes/ShipRigidController/ShipRigidController.tscn", "SPEED": 1, "weight": 1, "side": "spanish", "type": "trade", "pack": []}
+	"example": {"CON": "units", "RES": "res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn", "SPEED": 1, "weight": 1, "side": "spanish", "type": "trade", "pack": []}
 }
 
 
@@ -365,9 +365,9 @@ func runAI(unit: String, part: Vector3, inProx: Dictionary, delta: float):
 	if holo != null: # runs when unit is live
 		var results: Dictionary
 		var controller = holo.get_node_or_null("AIController")
-		if controller != null:
-			var temp: Vector3 = Utility.partitionLocation(dest, PARTSIZE, false)
-			results = controller.update(Vector2(temp.x, temp.z), inProx)
+		# if controller != null:
+		# 	var temp: Vector3 = Utility.partitionLocation(dest, PARTSIZE, false)
+		# 	results = controller.update(Vector2(temp.x, temp.z), inProx)
 		info["xform"] = holo.global_transform # at the end, update transform
 	else: # runs when unit is offscreen
 		# move transform

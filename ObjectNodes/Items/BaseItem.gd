@@ -10,7 +10,7 @@ Item names need to have the same name as in economy.goods dictionary
 
 export(bool) var movable = true # set false in godot editor for pre placed items 
 
-## item specifc settings (fetched from dictionary)
+## item specifc settings (TODO: should be fetched from dictionary)
 var penetrationFactor = 0 # penetration factor used for bullets, 0-1, 1 = like air, 0 = inpenetrable
 var dataBaseName = "baseName" # set this in the inherited items
 var maxHealth = 1
@@ -110,6 +110,7 @@ func giveDmg(damage : float):
 
 func fetchDictParams(name : String):
 	"""
+	TODO : Actually call this fucntion somewhere!
 	gets all parameters for this item defined in a item dictionary
 	"""
 	# TODO: if values in dictionary are constant, dont save them in this item, just use the dictionary entries (saves Ram)

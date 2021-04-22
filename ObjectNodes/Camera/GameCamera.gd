@@ -66,7 +66,7 @@ func _physics_process(delta):
 		# if do_center:
 		if shopping.open!=null: # shop is open
 			localShipVec = Vector2(moveVector.x * 0.1   ,  -moveVector.y * 0.1 )
-			target_yar = rad2deg(GlobalObjectReferencer.playerShip.transform.basis.get_euler().y) # TODO: rotation doent work if cam is not in center of ship
+			target_yar = rad2deg(GlobalObjectReferencer.playerShip.transform.basis.get_euler().y+PI/2) # TODO: rotation doent work if cam is not in center of ship
 		else: # shop not open
 			localShipVec = Vector2.ZERO
 

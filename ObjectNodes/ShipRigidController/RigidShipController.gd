@@ -4,7 +4,7 @@ extends RigidBody
 Default ship rigidbody.
 Parent of the whole ship
 
-Needs a linear damping of approx 5!
+RigidBody Needs a linear damping of approx 5!
 
 """
 
@@ -89,8 +89,8 @@ func _physics_process(delta):
 	turnForce = clamp(turnForce,-maxTurnForce,maxTurnForce)	
 
 	up = transform.basis.y
-	forward = transform.basis.x
-	right = transform.basis.z
+	forward = -transform.basis.z
+	right = -transform.basis.x
 	applyPosBuoyancy(hFront, delta, 1)
 	applyPosBuoyancy(hBack, delta, 1)
 	applyPosBuoyancy(hLeft, delta, 0.1) # less force because the roll is otherwise too strong
@@ -109,10 +109,10 @@ func _input(event):
 	if isPlayer:
 		if Input.is_action_pressed("turnLeft"):
 			turnCommandPressed = true
-			turnForce += 0.005
+			turnForce -= 0.005
 		if Input.is_action_pressed("turnRight"):
 			turnCommandPressed = true
-			turnForce -= 0.005
+			turnForce += 0.005
 		if Input.is_action_just_released("turnLeft"):
 			turnCommandPressed = false
 		if Input.is_action_just_released("turnRight"):
@@ -135,7 +135,7 @@ func applyPosBuoyancy(obj : Spatial, delta, factor :float = 1.0):
 		waterH = GlobalObjectReferencer.ocean.getWaterHeight(obj.global_transform.origin)
 	var diff = obj.global_transform.origin.y - waterH # if diff <0 = underwater
 	if diff<0:
-		var impulse = Vector3(0,1,0)*factor*pow(abs(diff),1.1)*impulse_factor/waterLevel*delta
+		var impulse = Vector3(0,1,0)*factor*abs(diff)*impulse_factor/waterLevel*delta
 		apply_impulse(p, impulse)
 
 func applyCannonImpulse(from : Vector3, direction : Vector3):
@@ -193,13 +193,13 @@ func selectDeck(deckNumber: int):
 # Recreates and binds buttons for decks.
 func reloadDecks(numberOfDecks: int):
 	var template = load("res://ControlNodes/deckButton.tscn")
-	var decks = get_tree().get_root().get_node("GameWorld/Interface/Decks")
-	for child in decks.get_children():
+	var deckButtons = get_tree().get_root().get_node("GameWorld/Interface/Decks")
+	for child in deckButtons.get_children():
 		child.name += "qd"
 		child.queue_free()
 	for i in range(numberOfDecks):
 		var newDeckButton = template.instance()
-		decks.add_child(newDeckButton)
+		deckButtons.add_child(newDeckButton)
 		newDeckButton.name = str(i)
 		newDeckButton.get_node("Label").text = "Deck " + str(i+1)
 		newDeckButton.get_node("TextureButton").connect("pressed", self, "selectDeck", [i])
