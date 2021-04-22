@@ -124,10 +124,12 @@ texture = ExtResource( 7 )
 [node name="Flag3DScene" parent="Sails/Main" instance=ExtResource( 2 )]
 transform = Transform( -0.234354, 0, 0.274044, 0, 0.360585, 0, -0.274044, 0, -0.234354, 0.00421143, 2.04787, -0.00418377 )
 
-[node name="Deck1" type="KinematicBody" parent="."]
+[node name="Deck1" type="KinematicBody" parent="." groups=[
+"PlayerDeck",
+]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0687942, 0 )
-collision_layer = 524288
-collision_mask = 524288
+collision_layer = 524289
+collision_mask = 524289
 __meta__ = {
 "_editor_description_": "Using the sprite with a spatial material and alpha scissors, so that its not flagged as transparent!"
 }
@@ -187,7 +189,9 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Deck2" type="KinematicBody" parent="."]
+[node name="Deck2" type="KinematicBody" parent="." groups=[
+"PlayerDeck",
+]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0 )
 collision_layer = 262145
 collision_mask = 262145

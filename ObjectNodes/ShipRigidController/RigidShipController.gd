@@ -73,7 +73,7 @@ func registerItem(node):
 	itemNodes.append(node)
 	if isPlayer:
 		calcCenterOfMass()
-	print("registered "+node.name)
+	# print("registered "+node.name)
 
 func unregisterItem(node):
 	"""
@@ -216,5 +216,5 @@ func calcCenterOfMass():
 		avPos += (to_local(itemNodes[i].global_transform.origin))* itemNodes[i].weight/weightFactor
 	avPos*=1.0/len(itemNodes)
 	centerOfMass = avPos
-	print("CoM: ",centerOfMass)
-	print("NumItems: ",len(itemNodes))
+	# print("CoM: ",centerOfMass)
+	# print("NumItems: ",len(itemNodes))

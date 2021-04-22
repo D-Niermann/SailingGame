@@ -19,6 +19,7 @@ func link(itemRef):
 	Links this info box to the clicked item. Sets this states to the items vars.
 	"""
 	myItem = itemRef
+	$Panel/Title.text = myItem.name
 	activeButton.pressed = myItem.isActive
 	
 func _process(delta):

@@ -13,7 +13,8 @@ const TG_UTILITY = "tgUtility"
 const TG_RELAX = "tgRelax"
 
 var myShip # parent ship of this manager
-var humanNodes # list of all humans on ship (refs) needed? -> check currentAssignments
+var decks # ref list of all decks on player ship
+# var humanNodes # list of all humans on ship (refs) needed? -> check currentAssignments
 
 # task dict (maybe change this to specific crewRequestsDict)
 # structure: tasks = {"0":[task1, task2, ...], "1" : [task1, task2, ..], "2": } these numbers can also be names 
@@ -34,9 +35,11 @@ const HUMAN: PackedScene = preload("res://ObjectNodes/Human/Human.tscn")
 
 func _ready():
 	myShip = get_parent()
-	humanNodes = get_children()
+	decks = get_tree().get_nodes_in_group("PlayerDeck")
+	var humanNodes = get_children()
 	for i in range(len(humanNodes)):
 		currentAssignments[TG_WEAPONS]["idle"].append(humanNodes[i])
+		humanNodes[i].assignDeck(decks[0])
 	print(currentAssignments)
 	GlobalObjectReferencer.crewManager = self
 	
@@ -54,19 +57,23 @@ func _physics_process(delta):
 	
 func checkTasks():
 	"""
-	Go through all open tasks and assign men if possible
+	Go through all open tasks and assign men if possible.
+	For now doesnt remove men when a tasks with higher prio than the currently done tasks is open (this is ok when humans are not loaded while building new things or human activity fluctuates quickly)
 	"""
 	# var bestMan = findBestMan(itemRef.translation, taskGroup)
 	## first priority
 	var t
-	for i in range(len(tasks["0"])):
-		t = tasks["0"][i]
-		var manRef = findBestMen(t.position, t.taskGroup)
-		if manRef!=null:
-			## do something with the found man
-			manRef.giveTarget(t.itemRef, t.position, t.taskGroup)
-			tasks["0"].remove(i)
-			break
+	for p in tasks.keys():
+		for i in range(len(tasks[p])):
+			t = tasks[p][i]
+			var manRef = findBestMen(t.position, t.taskGroup)
+			if manRef!=null:
+				## do something with the found man
+				manRef.giveTarget(t.itemRef, t.position, t.taskGroup)
+				tasks[p].remove(i)
+				print(currentAssignments)
+				## break here to save CPU (only one task per frame gets assigned this way)
+				break
 
 	
 func checkMen():
@@ -142,7 +149,8 @@ func makeManIdle(manRef):
 	for i in range(len(a)):
 		if a[i].name == manRef.name:
 			currentAssignments[manRef.currentTaskGroup]["idle"].append(manRef)
-			currentAssignments[manRef.currentTaskGroup]["busy"].remove(i)
+			manRef.removeTarget()
+			a.remove(i)
 			print("making man idle")
 			break
 

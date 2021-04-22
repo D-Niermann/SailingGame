@@ -5,7 +5,7 @@ const CURRENCY: String = "g"
 const ITEM: PackedScene = preload("res://ControlNodes/BuildAndShop/listItem.tscn")
 const TYPE: PackedScene = preload("res://ControlNodes/BuildAndShop/tabsType.tscn")
 
-var info = null
+var infoBoxPlaceholder = null
 var open = null
 var tabs = null
 var list = null
@@ -46,7 +46,7 @@ func _ready():
 	indicator = get_node("Indicator")
 	tabs = get_node("Shop/Tabs/Container")
 	list = get_node("Shop/List/Container")
-	info = get_node("Info")
+	infoBoxPlaceholder = get_node("Info")
 	viewport = get_tree().get_root().get_node("GameWorld/ViewportContainer/Viewport")
 
 # Catches only the input which has not been handled yet.
@@ -82,7 +82,7 @@ func _physics_process(delta):
 		var itemName: String = selected.get_node("Name").text
 		var good: Dictionary = Economy.goods[itemName]
 		hologramFromResource(good["res"])
-	if open != null && info.visible:
+	if open != null && infoBoxPlaceholder.visible:
 		toggle(null)
 	if switch == true && target == null:
 		if highlight != null:
@@ -115,11 +115,11 @@ func _physics_process(delta):
 	var spaceState: PhysicsDirectSpaceState = camera.get_world().direct_space_state
 	var viewportContainer: ViewportContainer = viewport.get_parent()
 	if toggled == null:
-		if info.visible:
+		if infoBoxPlaceholder.visible:
 			toggle(null)
 	else:
 		var pos: Vector2 = camera.unproject_position(toggled.global_transform.origin)
-		info.rect_position = Vector2(clamp(pos.x, 0, viewport.size.x), clamp(pos.y, 0, viewport.size.y)) * viewportContainer.stretch_shrink
+		infoBoxPlaceholder.rect_position = Vector2(clamp(pos.x, 0, viewport.size.x), clamp(pos.y, 0, viewport.size.y)) * viewportContainer.stretch_shrink
 	var cursor = get_viewport().get_mouse_position() / viewportContainer.stretch_shrink
 	var hit: Dictionary
 	var toIgnore: Array = [hologram]
@@ -165,7 +165,10 @@ func _physics_process(delta):
 			var sprite = hologram.get_node("Sprite3D")
 			sprite.modulate = Color(1.0, 0.0, 0.0, 0.5)
 	else:
-		if !hit.empty() && hit.collider.get("movable") != null: # checks if hit is an item
+		if !hit.empty() && hit.collider.get("isHuman") != null: #check if hit is human
+			if hit.collider.get("isHuman")==true && leftClick && open == null:
+				toggle(hit.collider)
+		elif !hit.empty() && hit.collider.get("movable") != null: # checks if hit is an item
 			if open != null && hit.collider.get("movable") == true:
 				var temp = hit.collider.get_parent()
 				if temp != null && temp == target:
@@ -261,6 +264,7 @@ func placeOrDestroyHologram():
 			duplicate.global_transform.origin = coords + parent.global_transform.origin
 			duplicate.global_transform.basis = parent.global_transform.basis.rotated(parent.global_transform.basis.y.normalized(), angle)
 			parent = null
+			duplicate.onPlacement()
 			purchase(duplicate)
 		else:
 			resource = null
@@ -524,21 +528,21 @@ func sell():
 # Changes toggled item that information will be shown about.
 func toggle(thing):
 	if toggled == null || thing != toggled:
-		# info.visible = false
-		for child in info.get_children(): # TODO: is this necessary now if we dont do the add_child(rect) below?
+		# infoBoxPlaceholder.visible = false
+		for child in infoBoxPlaceholder.get_children(): # TODO: is this necessary now if we dont do the add_child(rect) below?
 			child.queue_free()
 	if toggled!=null:
 		toggled.removeInfo()	
 	toggled = thing
 	if toggled != null:
-		## set position of info so that the info panel is not spawned at old position
+		## set position of infoBoxPlaceholder so that the infoBoxPlaceholder panel is not spawned at old position
 		var camera: Camera = viewport.get_camera()
 		var viewportContainer: ViewportContainer = viewport.get_parent()
 		var pos: Vector2 = camera.unproject_position(toggled.global_transform.origin)
-		info.rect_position = Vector2(clamp(pos.x, 0, viewport.size.x), clamp(pos.y, 0, viewport.size.y)) * viewportContainer.stretch_shrink
-		info.visible = true
-		# then create info box
-		thing.createInfo(info)
+		infoBoxPlaceholder.rect_position = Vector2(clamp(pos.x, 0, viewport.size.x), clamp(pos.y, 0, viewport.size.y)) * viewportContainer.stretch_shrink
+		infoBoxPlaceholder.visible = true
+		# then create infoBoxPlaceholder box
+		thing.createInfo(infoBoxPlaceholder)
 
 
 func _on_indicator():

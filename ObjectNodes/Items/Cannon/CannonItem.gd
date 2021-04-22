@@ -47,7 +47,6 @@ var forward2d = Vector2(1,0)
 var trajectoryPoints : Array
 var org_forward
 var reloadTimer : Timer
-var requested = false
 
 
 func _ready():
@@ -106,7 +105,7 @@ func _process(delta):
 	if infoPanel!=null:
 		isActive = infoPanel.isActive
 
-	if GlobalObjectReferencer.crewManager!=null and not requested:
+	if GlobalObjectReferencer.crewManager!=null and not requested && isPlaced:
 		GlobalObjectReferencer.crewManager.requestCrew(self,1,GlobalObjectReferencer.crewManager.TG_WEAPONS,global_transform.origin,0) # request 1 man with prio 0
 		GlobalObjectReferencer.crewManager.requestCrew(self,1,GlobalObjectReferencer.crewManager.TG_WEAPONS,global_transform.origin,1) # request 1 man with prio 1
 		requested = true

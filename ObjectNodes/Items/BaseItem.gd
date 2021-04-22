@@ -31,10 +31,12 @@ var itemPlaceParticle # dynamically loaded particles
 var currentHealth = maxHealth
 var particleRes = load("res://ObjectNodes/Items/ItemPlaceParticle.tscn") # universal placement particles
 var isPlayerControlable = false # if player can control this item (also maybe click on it)
+var isPlaced = false
+var requested = false
 
 func _ready():
 	## TODO: this gets also called when item is picked in shop
-	print("BaseItem ready()")
+	# print("BaseItem ready()")
 	gridMesh = get_node("GridShowMesh")
 	pAudio = $PlaceAudio
 	# weight = Economy.goods[Utility.resName(self.name)]["weight"]
@@ -44,7 +46,7 @@ func _ready():
 	itemPlaceParticle.one_shot = true
 	itemPlaceParticle.emitting = false
 	add_child(itemPlaceParticle)
-	onPlacement()
+	# onPlacement()
 
 
 
@@ -75,9 +77,12 @@ func onPlacement():
 			pAudio.set_pitch_scale(pAudio.pitch_scale+rand_range(-0.2,0.2))
 			pAudio.play()
 
+		isPlaced = true
+
 func onHover():
 	"""
-	Gets called when while shopping or building the mouse is hovering over item
+	Gets called when while shopping or building the mouse is hovering over item.
+	Not yet implemented!
 	"""
 	pass
 
@@ -88,9 +93,11 @@ func onRemove():
 	print("item remove")
 	for i in range(len(assignedMen)):
 		print("making man idle :item")
-		GlobalObjectReferencer.crewManager.makeManIdle(assignedMen[i])
+		unassignMan(assignedMen[i])
 	if myShip.has_method("unregisterItem"):
 		myShip.unregisterItem(self)
+	isPlaced = false
+	requested = false
 	
 	
 
@@ -137,6 +144,7 @@ func assignMan(manRef):
 func unassignMan(manRef):
 	for i in range(len(assignedMen)):
 		if assignedMen[i].name == manRef.name:
+			GlobalObjectReferencer.crewManager.makeManIdle(assignedMen[i])
 			assignedMen.remove(i)
 			print("test if i really is the right index")
 			break
