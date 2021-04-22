@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/topDeck.png" type="Texture" id=1]
 [ext_resource path="res://Flag3DScene.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/segel-schatten.png" type="Texture" id=6]
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/segel.png" type="Texture" id=7]
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/segelVorn.png" type="Texture" id=8]
+[ext_resource path="res://ObjectNodes/NPCShips/NPCGear/Cannon/NPCCannon.tscn" type="PackedScene" id=9]
 [ext_resource path="res://ObjectNodes/NPCShips/NPCGear/HullWalls/NPCOuterHullWall3m.tscn" type="PackedScene" id=12]
 [ext_resource path="res://ObjectNodes/NPCShips/NPCGear/HullWalls/NPCOuterHullWall.tscn" type="PackedScene" id=13]
 
@@ -183,6 +184,42 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="CannonLarge" parent="Deck1" instance=ExtResource( 9 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.958654, 0.0746313, -1.08726 )
+
+[node name="CannonLarge3" parent="Deck1" instance=ExtResource( 9 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.833601, 0.0746313, -0.92724 )
+
+[node name="CannonLarge2" parent="Deck1" instance=ExtResource( 9 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.31431, 0.0746313, -0.920043 )
+
+[node name="CannonLarge4" parent="Deck1" instance=ExtResource( 9 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.80089, 0.0746313, -0.764678 )
+
+[node name="CannonLarge5" parent="Deck1" instance=ExtResource( 9 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.74893, 0.0746313, -0.373661 )
+
+[node name="CannonLarge6" parent="Deck1" instance=ExtResource( 9 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.75234, 0.0746313, -1.04105 )
+
+[node name="CannonLarge7" parent="Deck1" instance=ExtResource( 9 )]
+transform = Transform( 7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, -0.958654, 0.0746313, 1.2823 )
+
+[node name="CannonLarge8" parent="Deck1" instance=ExtResource( 9 )]
+transform = Transform( 7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, 0.833601, 0.0746313, 1.24137 )
+
+[node name="CannonLarge9" parent="Deck1" instance=ExtResource( 9 )]
+transform = Transform( 7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, -3.31431, 0.0746313, 1.24857 )
+
+[node name="CannonLarge10" parent="Deck1" instance=ExtResource( 9 )]
+transform = Transform( 7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, -4.80089, 0.0746313, 1.05473 )
+
+[node name="CannonLarge11" parent="Deck1" instance=ExtResource( 9 )]
+transform = Transform( 7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, 2.74893, 0.0746313, 0.567941 )
+
+[node name="CannonLarge12" parent="Deck1" instance=ExtResource( 9 )]
+transform = Transform( 7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, -1.75234, 0.0746313, 1.33163 )
+
 [node name="Deck2" type="KinematicBody" parent="."]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.5, 0 )
 collision_mask = 2147483649
@@ -317,3 +354,51 @@ transform = Transform( 0.108173, 0, -0.994132, 0, 1, 0, 0.994132, 0, 0.108173, -
 
 [node name="NPCOuterHullWall22" parent="Deck2" instance=ExtResource( 13 )]
 transform = Transform( 0.239567, 0, -0.97088, 0, 1, 0, 0.97088, 0, 0.239567, -6.00526, -0.235989, -0.865725 )
+
+[node name="CannonLarge" parent="Deck2" instance=ExtResource( 9 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.958654, 0.145059, -1.08726 )
+fire_delay_sec = 0.2
+
+[node name="CannonLarge3" parent="Deck2" instance=ExtResource( 9 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.833601, 0.145059, -0.92724 )
+fire_delay_sec = 0.2
+
+[node name="CannonLarge2" parent="Deck2" instance=ExtResource( 9 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.31431, 0.145059, -0.920043 )
+fire_delay_sec = 0.2
+
+[node name="CannonLarge4" parent="Deck2" instance=ExtResource( 9 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.80089, 0.145059, -0.764678 )
+fire_delay_sec = 0.2
+
+[node name="CannonLarge5" parent="Deck2" instance=ExtResource( 9 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.74893, 0.145059, -0.373661 )
+fire_delay_sec = 0.2
+
+[node name="CannonLarge6" parent="Deck2" instance=ExtResource( 9 )]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.75234, 0.145059, -1.04105 )
+fire_delay_sec = 0.2
+
+[node name="CannonLarge7" parent="Deck2" instance=ExtResource( 9 )]
+transform = Transform( 7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, -0.958654, 0.145059, 1.2823 )
+fire_delay_sec = 0.2
+
+[node name="CannonLarge8" parent="Deck2" instance=ExtResource( 9 )]
+transform = Transform( 7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, 0.833601, 0.145059, 1.24137 )
+fire_delay_sec = 0.2
+
+[node name="CannonLarge9" parent="Deck2" instance=ExtResource( 9 )]
+transform = Transform( 7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, -3.31431, 0.145059, 1.24857 )
+fire_delay_sec = 0.2
+
+[node name="CannonLarge10" parent="Deck2" instance=ExtResource( 9 )]
+transform = Transform( 7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, -4.80089, 0.145059, 1.05473 )
+fire_delay_sec = 0.2
+
+[node name="CannonLarge11" parent="Deck2" instance=ExtResource( 9 )]
+transform = Transform( 7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, 2.74893, 0.145059, 0.567941 )
+fire_delay_sec = 0.2
+
+[node name="CannonLarge12" parent="Deck2" instance=ExtResource( 9 )]
+transform = Transform( 7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, -1.75234, 0.145059, 1.33163 )
+fire_delay_sec = 0.2

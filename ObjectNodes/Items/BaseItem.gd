@@ -1,18 +1,18 @@
 extends KinematicBody
 
 """
-All Items shall inherit from this script.
+All Gear shall inherit from this script.
 Here also all children instances can be stored, so that other script can acces the correct stuff from here. 
 EG dont use $Mesh1 in some script but define mesh var here and access this var.
 
 Item names need to have the same name as in economy.goods dictionary
 """
 
-export(bool) var movable = true # set false in godot editor for pre placed items 
+export(bool) var movable = true # set false in godot editor for pre placed gear 
 
 ## item specifc settings (TODO: should be fetched from dictionary)
 var penetrationFactor = 0 # penetration factor used for bullets, 0-1, 1 = like air, 0 = inpenetrable
-var dataBaseName = "baseName" # set this in the inherited items
+var dataBaseName = "baseName" # set this in the inherited gear
 var maxHealth = 1
 var damageMultiplier = 10 # multiple base damage by this value, just so that the maxHealth values can be bigger integers
 var isCannon = false # used for AI
@@ -25,7 +25,7 @@ var assignedMen = [] # refs to all men assigned to this item
 
 ## 
 var myShip # obj ship that this is on
-var gridMesh # green/red mesh that displays the hitbox of items
+var gridMesh # green/red mesh that displays the hitbox of gear
 var pAudio # audio player thats emitting when item is placed
 var itemPlaceParticle # dynamically loaded particles 
 var currentHealth = maxHealth
@@ -67,8 +67,7 @@ func onPlacement():
 	print("BaseItem onPlacement()")
 	fetchMyShip()
 	if myShip!=null: #if actually on ship
-		if myShip.has_method("registerItem"):
-			myShip.registerItem(self)
+		myShip.registerItem(self)
 		if gridMesh!=null:
 			gridMesh.visible = false # make the grid item invisible again
 		itemPlaceParticle.emitting = true
@@ -110,8 +109,8 @@ func giveDmg(damage : float):
 
 func fetchDictParams(name : String):
 	"""
-	TODO : Actually call this fucntion somewhere!
 	gets all parameters for this item defined in a item dictionary
+	Called in the corresponding item
 	"""
 	# TODO: if values in dictionary are constant, dont save them in this item, just use the dictionary entries (saves Ram)
 	weight = Economy.goods[name].weight

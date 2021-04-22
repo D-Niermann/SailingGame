@@ -6,6 +6,7 @@ extends "res://ObjectNodes/Items/BaseItem.gd"
 export var BallScene: PackedScene # scene object of ball
 export var InfoPanel: PackedScene # scene object of cannons info ui panel
 
+var gearLookUpName = "CannonLarge" # the name in the economy gear list
 export(float) var force          = 0.6 # for trajectory prediction: force of ball
 export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
 export(float) var recoil_impulse = 0.3 # when firing to the ship
@@ -53,7 +54,7 @@ func _ready():
 	## overwrite parent vars
 	maxCrew = 4
 	targetCrewSize = maxCrew
-	fetchDictParams("CannonLarge")
+	fetchDictParams(gearLookUpName)
 
 	marker = $TrajectoryMarkerGroup.get_children()
 	fakeBullet = $FakeBullet

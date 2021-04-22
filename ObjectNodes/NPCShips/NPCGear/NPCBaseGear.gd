@@ -47,6 +47,8 @@ func _ready():
 	# itemPlaceParticle.emitting = false
 	# add_child(itemPlaceParticle)
 	fetchMyShip()
+	if myShip!=null: #if actually on ship
+		myShip.registerItem(self)
 	
 
 
@@ -67,9 +69,7 @@ func fetchMyShip():
 # 	"""
 # 	print("BaseItem onPlacement()")
 # 	fetchMyShip()
-# 	if myShip!=null: #if actually on ship
-# 		if myShip.has_method("registerItem"):
-# 			myShip.registerItem(self)
+# 	
 # 		if gridMesh!=null:
 # 			gridMesh.visible = false # make the grid item invisible again
 # 		itemPlaceParticle.emitting = true
@@ -111,8 +111,8 @@ func giveDmg(damage : float):
 
 func fetchDictParams(name : String):
 	"""
-	TODO: Should NPC Items also have these dict entries? seems like it!
-	gets all parameters for this item defined in a item dictionary
+	gets all parameters for this item defined in a item dictionary.
+	Called in the NPC base gear
 	"""
 	# TODO: if values in dictionary are constant, dont save them in this item, just use the dictionary entries (saves Ram)
 	weight = Economy.goods[name].weight

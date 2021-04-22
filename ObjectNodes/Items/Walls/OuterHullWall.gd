@@ -9,6 +9,9 @@ var infoPanel
 func _ready():
 	maxHealth = 10
 	currentHealth = maxHealth
+	## outer hull walls are always already placed on ship model, so they can register in the ready() call
+	fetchMyShip()
+	myShip.registerItem(self)
 
 
 func _physics_process(delta):

@@ -84,7 +84,7 @@ func calcTargetVector():
 		broadSideVec = towardsEnemy.rotated(up, PI/2)
 	else:
 		broadSideVec = towardsEnemy.rotated(up, -PI/2)
-	targetVector = enemy.transform.basis.x * parallelWeight  # add the target of going parallel to enemy
+	targetVector = -enemy.forward * parallelWeight  # add the target of going parallel to enemy
 	targetVector += windVec.normalized() * windWeight  # add the target of going with the wind
 	targetVector += towardsEnemy * towardsWeight  # add the target of going towards or away from enemy
 	targetVector += broadSideVec * broadsideWeight # add the target of turn into broadside to enemy
@@ -92,8 +92,8 @@ func calcTargetVector():
 	
 func turnShip():
 	""" this function takes the spatial of this and tries to steer and guide the rigidbody ship towards it."""
-	var diff = signedAngle(myShip.transform.basis.x,forward,up)*rotateSpeed
-	myShip.turnForce = (-diff)*10
+	var diff = signedAngle(myShip.forward,forward,up)*rotateSpeed
+	myShip.turnForce = (diff)*10
 	
 func rotateToAngle():
 	angleDiff = signedAngle(targetVector,forward,up)*rotateSpeed
