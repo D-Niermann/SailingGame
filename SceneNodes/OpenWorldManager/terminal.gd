@@ -339,7 +339,7 @@ func runAI(unit: String, part: Vector3, inProx: Dictionary, delta: float):
 		elif goal != part: # needs path if is not at goal
 			var path = info.get("path")
 			if path == null: # finds path if doesn't have one
-				print("pathfinding")
+				# print("pathfinding")
 				var filter: Array = []
 				if wars.has(side):
 					filter = wars[side].duplicate()

@@ -32,7 +32,6 @@ var currentHealth = maxHealth
 var particleRes = load("res://ObjectNodes/Items/ItemPlaceParticle.tscn") # universal placement particles
 var isPlayerControlable = false # if player can control this item (also maybe click on it)
 var isPlaced = false
-var requested = false
 
 func _ready():
 	## TODO: this gets also called when item is picked in shop
@@ -96,7 +95,6 @@ func onRemove():
 	if myShip.has_method("unregisterItem"):
 		myShip.unregisterItem(self)
 	isPlaced = false
-	requested = false
 	
 	
 

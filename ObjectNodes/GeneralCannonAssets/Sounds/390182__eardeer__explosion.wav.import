@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/390182__eardeer__explosion.wav-17427bd398138c489bf5f4626951a1ca.sample"
+
+[deps]
+
+source_file="res://ObjectNodes/GeneralCannonAssets/Sounds/390182__eardeer__explosion.wav"
+dest_files=[ "res://.import/390182__eardeer__explosion.wav-17427bd398138c489bf5f4626951a1ca.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

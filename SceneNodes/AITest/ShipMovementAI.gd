@@ -19,7 +19,7 @@ export var broadsideWeight = 0.2
 export var optimalDistance = 4
 export var windVec = Vector3(1,0,0) # TODO: listen to environment wind dir
 var useTerminal = false # make it true and the terminal.gd has to call update() otherwise this will call it
-var aimPrecision = 10 # in degree, how much deviation to allow from target to fire (more = more unprecise)
+var aimPrecision = 3 # in degree, how much deviation to allow from target to fire (more = more unprecise)
 
 ## vars
 var enemy # ref to current enemy TODO: what about multiple enemies?

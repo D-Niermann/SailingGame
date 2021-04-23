@@ -13,7 +13,7 @@ flags = 4
 viewport_path = NodePath("render_targets/vector_map_buffer")
 
 [sub_resource type="BoxShape" id=2]
-extents = Vector3( 83.2448, 1, 76.3896 )
+extents = Vector3( 133.261, 1, 160.073 )
 
 [sub_resource type="CapsuleMesh" id=3]
 

@@ -1,4 +1,4 @@
-extends Spatial
+extends Node
 
 """
 Assuming this will stay only on player ship and will be a singleton, (its referenced in the GLobalObjectReferencr)

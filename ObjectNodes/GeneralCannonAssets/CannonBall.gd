@@ -61,7 +61,7 @@ func _process(delta):
 	checkAndDestroy()
 	if ocean!= null:
 		waterHeight = ocean.getWaterHeight(global_transform.origin)
-	if  waterHeight > transform.origin.y:
+	if  waterHeight > global_transform.origin.y:
 		drag_factor = 0.1
 		if not waterEntered:
 			default_drag_factor = water_drag
@@ -90,8 +90,10 @@ func _process(delta):
 	if velocity<0.1:
 		$Trail.emitting = false
 		if coll_obj != null and !stopMove: # permanently stuck inside some body, add as child to obj to keep moving with it 
+			var globalPos = global_transform.origin
 			get_parent().remove_child(self)
 			coll_obj.add_child(self)
+			global_transform.origin = globalPos
 			stopMove = true
 	
 	### calcualte direction after translation
