@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Assets/sailimg.png" type="Texture" id=1]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform sampler2D noise;
+uniform float noise_strength = 1.;
+uniform float wind_strength = .1;
+
+void vertex(){
+	vec2 base_uv_offset = UV + TIME * vec2(.2,0.);
+	VERTEX.y -= wind_strength;
+	VERTEX.y *= noise_strength * (1. - UV.y) * texture(noise,base_uv_offset).r;
+}"
+
+[sub_resource type="OpenSimplexNoise" id=2]
+
+[sub_resource type="NoiseTexture" id=3]
+seamless = true
+noise = SubResource( 2 )
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 1 )
+shader_param/noise_strength = 1.0
+shader_param/wind_strength = 0.1
+shader_param/noise = SubResource( 3 )
+
+[node name="Sail2DScene" type="Node2D"]
+
+[node name="Sail" type="Sprite" parent="."]
+material = SubResource( 4 )
+position = Vector2( 459.553, 283.266 )
+texture = ExtResource( 1 )
