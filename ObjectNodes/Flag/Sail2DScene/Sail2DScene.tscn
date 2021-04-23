@@ -31,5 +31,5 @@ shader_param/noise = SubResource( 3 )
 
 [node name="Sail" type="Sprite" parent="."]
 material = SubResource( 4 )
-position = Vector2( 459.553, 281.264 )
+position = Vector2( 459.553, 283.266 )
 texture = ExtResource( 1 )
