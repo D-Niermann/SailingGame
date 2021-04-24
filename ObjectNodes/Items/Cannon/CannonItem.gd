@@ -96,7 +96,7 @@ func _process(delta):
 	
 	forward = transform.basis.x.normalized()
 
-	if playerAimCannons and isActive:
+	if playerAimCannons and isActive and GlobalObjectReferencer.crewManager.items[id].crewScore>0:
 		aimTo(GlobalObjectReferencer.ocean.waterMousePos)
 	
 	# if infoPanel!=null:
@@ -132,17 +132,16 @@ func giveDmg(damage):
 
 func _unhandled_input(event):
 	# Receives key input
-	if isPlayerControlable:
-		if event.is_action_pressed("FireCannons"):
-			playerAimCannons = true
-		if event.is_action_released("FireCannons"):
-			playerAimCannons = false
-			clearTrajectory()
-			if canShoot:
-				fireBall()
-		if playerAimCannons:
-			if event.is_action_released("testFire") and isTestCannon and canShoot:
-				fireBall()
+	if event.is_action_pressed("FireCannons"):
+		playerAimCannons = true
+	if event.is_action_released("FireCannons"):
+		playerAimCannons = false
+		clearTrajectory()
+		if canShoot:
+			fireBall()
+	if playerAimCannons:
+		if event.is_action_released("testFire") and isTestCannon and canShoot:
+			fireBall()
 		
 	# if event.is_action_released("RotateCannonLeft"):
 	# 	rotateLeft()
@@ -236,6 +235,7 @@ func fireBall():
 		ball.transform.origin = self.global_transform.origin+ self.global_transform.basis.x*1 # + foward to give ball a forward offset to get behind own walls
 		ball.dir = global_transform.basis.x
 		ball.velocity = force
+		reloadTimer.set_wait_time(reload_time_sec/GlobalObjectReferencer.crewManager.items[id].crewScore) # if score is 0 cannot even shoot so it should never divide by 0
 		reloadTimer.start()
 
 

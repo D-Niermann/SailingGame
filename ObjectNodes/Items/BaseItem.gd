@@ -29,7 +29,6 @@ var pAudio # audio player thats emitting when item is placed
 var itemPlaceParticle # dynamically loaded particles 
 var currentHealth = maxHealth
 var particleRes = load("res://ObjectNodes/Items/ItemPlaceParticle.tscn") # universal placement particles
-var isPlayerControlable = false # if player can control this item (also maybe click on it)
 var isPlaced = false
 var id # id of this item
 

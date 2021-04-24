@@ -120,6 +120,7 @@ func checkMen():
 						# man.targetItem.assignManToItem(manID, {"taskGroup": tg, "priority": prio}) # give item and infoDict so that later the item can also tell CrewManager where to find id
 						## set the man of the item to "is ready"
 						items[man.itemID].jobs[man.jobID].isReady = true
+						items[man.itemID].crewScore = getCrewScore(man.itemID)
 
 
 func requestCrew(itemID, jobID, taskGroup, targetPosition : Vector3, priority : int):
@@ -176,6 +177,7 @@ func _unassignManFromItem(manRef):
 		if items[manRef.itemID].jobs[jobID].manID == manRef.id:
 			items[manRef.itemID].jobs[jobID].manID = null
 			items[manRef.itemID].jobs[jobID].isReady = false
+			items[manRef.itemID].crewScore = getCrewScore(manRef.itemID)
 	manRef.removeTarget()
 	
 	
@@ -184,7 +186,7 @@ func fromIdleToBusy(manRef, task):
 	put human into the correct busy assignment and also register him to an item
 	"""
 	## put human into busy list and remove from idle list
-	currentAssignments[task.taskGroup]["busy"][Economy.goods[items[task.itemID].databaseName]["jobs"][task.jobID].priority][manRef.id] = manRef
+	currentAssignments[task.taskGroup]["busy"][Economy.getJobs(items[task.itemID].databaseName)[task.jobID].priority][manRef.id] = manRef
 	currentAssignments[task.taskGroup]["idle"].erase(manRef.id)
 	## assign man the new item target
 	_assignManToItem(manRef, task)
@@ -196,16 +198,16 @@ func fromBusyToBusy(manRef, task, oldTask):
 	Also the new prio is more important than the old one.
 	"""
 	## put man in new group and del from old group
-	currentAssignments[task.taskGroup]["busy"][Economy.goods[items[task.itemID].databaseName]["jobs"][task.jobID].priority][manRef.id] = manRef
+	currentAssignments[task.taskGroup]["busy"][Economy.getJobs(items[task.itemID].databaseName)[task.jobID].priority][manRef.id] = manRef
 	# and unassign from item that he was on,
 	_unassignManFromItem(manRef)
 	# while also allowing the item to directly search for new man for the task that the man was on
 	requestCrew(
 		oldTask.itemID, # id of item
 		oldTask.jobID, # id of the item specific job
-		Economy.goods[items[oldTask.itemID].databaseName]["jobs"][oldTask.jobID].tg,  # taskgroup
-		Economy.goods[items[oldTask.itemID].databaseName]["jobs"][oldTask.jobID].posOffset + items[oldTask.itemID].itemRef.transform.origin,  # position
-		Economy.goods[items[oldTask.itemID].databaseName]["jobs"][oldTask.jobID].priority)
+		Economy.getJobs(items[oldTask.itemID].databaseName)[oldTask.jobID].tg,  # taskgroup
+		Economy.getJobs(items[oldTask.itemID].databaseName)[oldTask.jobID].posOffset + items[oldTask.itemID].itemRef.transform.origin,  # position
+		Economy.getJobs(items[oldTask.itemID].databaseName)[oldTask.jobID].priority)
 
 	currentAssignments[task.taskGroup]["busy"][oldTask.priority].erase(manRef.id)
 	_assignManToItem(manRef, task)
@@ -269,21 +271,20 @@ func registerItem(itemRef):
 	only adds item to item dict and requests the crew (adds taks)"""
 	if not items.has(itemRef.id): # could be because of loaded items dictionary
 		if Economy.goods.has(itemRef.databaseName):
-			print("CM: registered item")
 			
-			items[itemRef.id] = {"itemRef" : itemRef, "databaseName" : itemRef.databaseName, "jobs": {}} 
+			items[itemRef.id] = {"crewScore": 0, "itemRef" : itemRef, "databaseName" : itemRef.databaseName, "jobs": {}} 
 			
 			# add job data
-			for jobID in Economy.goods[itemRef.databaseName]["jobs"]:
+			for jobID in Economy.getJobs(itemRef.databaseName):
 				items[itemRef.id].jobs[jobID] = {"manID" : null, "isReady" : false}
 				
 				# make crew request for each job
 				requestCrew(
 					itemRef.id, # id of item
 					jobID, # id of the item specific job
-					Economy.goods[itemRef.databaseName]["jobs"][jobID].tg,  # taskgroup
-					Economy.goods[itemRef.databaseName]["jobs"][jobID].posOffset + itemRef.transform.origin,  # position
-					Economy.goods[itemRef.databaseName]["jobs"][jobID].priority) # prio
+					Economy.getJobs(itemRef.databaseName)[jobID].tg,  # taskgroup
+					Economy.getJobs(itemRef.databaseName)[jobID].posOffset + itemRef.transform.origin,  # position
+					Economy.getJobs(itemRef.databaseName)[jobID].priority) # prio
 		else:
 			print("warning: name not found in economy: ",itemRef.databaseName)
 
@@ -294,13 +295,28 @@ func unregisterItem(itemRef):
 	## iterate all jobs of that item, and remove assigned man from items list
 	for jobID in items[itemRef.id].jobs:
 		if items[itemRef.id].jobs[jobID].manID != null: 
-			var taskGroup = Economy.goods[itemRef.databaseName]["jobs"][jobID].tg
-			var priority = Economy.goods[itemRef.databaseName]["jobs"][jobID].priority
+			var taskGroup = Economy.getJobs(itemRef.databaseName)[jobID].tg
+			var priority = Economy.getJobs(itemRef.databaseName)[jobID].priority
 			makeManIdle(items[itemRef.id].jobs[jobID].manID, taskGroup, priority)
 		items[itemRef.id].jobs[jobID] = {"manID" : null, "isReady" : false}
 	# remove item from items list
 	items.erase(itemRef.id)
 
+
+func getCrewScore(itemID) -> float:
+	"""
+	called by item to get to know how much crew is assigned and ready on that item
+	maybe later modify it by crews experience
+	Returns a score between 0 and 1 - 0 = no crew on item
+	"""
+	var score = 0.0
+	## go through all jobs and see in man are there and ready
+	for jobID in items[itemID].jobs:
+		if items[itemID].jobs[jobID].isReady: 
+			score += 1
+	score = score / len(items[itemID].jobs)
+	print(score)
+	return score
 
 
 

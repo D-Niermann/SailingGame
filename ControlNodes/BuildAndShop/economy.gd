@@ -78,6 +78,9 @@ func getType(of: String):
 func getWeight(of: String):
 	return goods[of]["weight"]
 
+func getJobs(of: String):
+	return goods[of]["jobs"]
+
 
 # Returns price for the given product at the given place.
 func getPrice(of: String, at: String):
