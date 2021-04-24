@@ -326,13 +326,16 @@ func updateLine(item: Button):
 	var itemName = item.get_node("Name").text
 	if !goods.has(itemName):
 		item.queue_free()
+		selected = null
 		return
 	if filter != null && Economy.getType(itemName) != filter:
 		item.queue_free()
+		selected = null
 		return
 	var amount = Economy.getAmount(itemName, open)
 	if amount <= 0:
 		item.queue_free()
+		selected = null
 		return
 	elif amount == INF:
 		amount = "INF"
@@ -361,13 +364,16 @@ func updateList():
 		items[itemName] = null
 		if !goods.has(itemName):
 			item.queue_free()
+			selected = null
 			continue
 		if filter != null && Economy.getType(itemName) != filter:
 			item.queue_free()
+			selected = null
 			continue
 		var amount = Economy.getAmount(itemName, open)
 		if amount <= 0:
 			item.queue_free()
+			selected = null
 			continue
 		elif amount == INF:
 			amount = "INF"
@@ -463,6 +469,7 @@ func closeShop():
 	get_node("Shop").visible = false
 	for item in list.get_children():
 		item.queue_free()
+		selected = null
 	for type in tabs.get_children():
 		type.queue_free()
 	open = null
