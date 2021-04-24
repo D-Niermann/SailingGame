@@ -103,7 +103,31 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="CrewLabel1" type="Label" parent="."]
+margin_left = 0.667419
+margin_top = 91.6773
+margin_right = 121.667
+margin_bottom = 113.677
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "CrewWeapons"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CrewSlider1" type="HSlider" parent="."]
+anchor_right = 1.0
+margin_left = 2.55518
+margin_top = 109.706
+margin_right = 2.55518
+margin_bottom = 125.706
+max_value = 20.0
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="LabelAI" type="Label" parent="."]
+visible = false
 margin_left = 2.55518
 margin_top = 86.9872
 margin_right = 123.555
@@ -157,8 +181,10 @@ value = 5.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="value_changed" from="wind_speed" to="." method="_on_wind_speed_value_changed"]
 [connection signal="value_changed" from="Time" to="." method="_on_sun_glare_value_changed"]
+[connection signal="value_changed" from="CrewSlider1" to="." method="_on_CrewSlider1_value_changed"]
 [connection signal="toggled" from="LabelAI/CheckButton" to="." method="_on_CheckButton_toggled"]
 [connection signal="value_changed" from="water_style" to="." method="_on_water_style_value_changed"]
 [connection signal="value_changed" from="subsurface_scattering" to="." method="_on_subsurface_scattering_value_changed"]
