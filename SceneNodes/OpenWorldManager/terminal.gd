@@ -35,7 +35,7 @@ var colors: Dictionary = { # like data, but for the multi-partition stuff
 	"030": {"res": "res://SceneNodes/Islands/dummyIslandThree.tscn", "origin": Vector3(5, 0, 1)}
 }
 var presets: Dictionary = { # constants are not copied over the instance, this is where we summon stuff from, and also check some constant variables from
-	"example": {"CON": "units", "PRE": "NPC01", "RES": "res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn", "SPEED": 1, "weight": 1, "side": "spanish", "type": "trade", "pack": [], "gold": INF, "mode": "sell"}
+	"example": {"CON": "units", "PRE": "NPC01", "RES": "res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn", "SPEED": 1, "weight": 1, "side": "spanish", "type": "trade", "pack": [], "gold": 100, "mode": "sell"}
 }
 var NPC01: PackedScene = preload("res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn")
 
@@ -43,16 +43,23 @@ var NPC01: PackedScene = preload("res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn"
 func _ready():
 	viewport = get_node("ViewportContainer/Viewport")
 	# camera = viewport.get_node("GameCamera")
-	topograph.load("res://SceneNodes/OpenWorldManager/topograph.png")
-	dominions.load("res://SceneNodes/OpenWorldManager/dominions.png")
+	var topographTexture: Texture = load("res://SceneNodes/OpenWorldManager/topograph.png")
+	var dominionsTexture: Texture = load("res://SceneNodes/OpenWorldManager/dominions.png")
+	topograph = topographTexture.get_data()
+	dominions = dominionsTexture.get_data()
 	GlobalObjectReferencer.viewport = get_tree().get_root().get_viewport() # set the viewport in global refs (viewport has no script attached so it needs to be set here)
 	Utility.topograph = topograph # map for loading islands and also for pathfinding
 	Utility.dominions = dominions # map for goalfinding and pathfinding, shows regions
 	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(1, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(2, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(3, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(4, 0, 0), PARTSIZE, false))
+#	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
+#	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
+#	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
+#	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
+#	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
+#	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
+#	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
+#	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
+#	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
 	if Utility.lastSlot != null:
 		loadGame(Utility.lastSlot)
 	else:
@@ -128,16 +135,14 @@ func _physics_process(delta):
 		var sides: Dictionary = {}
 		var inProx: Dictionary = {}
 		for partition in adjacent:
-			if !Utility.isOccupied(partition):
-				sides[partition] = {}
+			sides[partition] = {}
 			if units.has(partition):
 				for unit in units[partition]:
 					inProx[unit] = data[unit]
 					var side = data[unit]["side"]
-					if sides.has(partition):
-						if !sides[partition].has(side):
-							sides[partition][side] = 0
-						sides[partition][side] += 1 # TODO : this "1" can be replaced with scoring of power of that ship
+					if !sides[partition].has(side):
+						sides[partition][side] = 0
+					sides[partition][side] += 1 # this "1" can be replaced with scoring of power of that ship
 		var sidesSpread: Dictionary = sides.duplicate(true)
 		for partition in sides.keys():
 			for partitionTwo in sides.keys():
@@ -146,6 +151,9 @@ func _physics_process(delta):
 						if !sidesSpread[partitionTwo].has(side):
 							sidesSpread[partitionTwo][side] = 0
 						sidesSpread[partitionTwo][side] += sides[partition][side] * 0.5
+		for partition in sidesSpread.keys():
+			if Utility.isOccupied(partition):
+				sidesSpread.erase(partition)
 		var sidesOrganized: Dictionary = {}
 		for flag in flags.keys():
 			var side = flags[flag]
@@ -358,7 +366,7 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 #	- If I could, I'd like to keep pursuing my goal, (follow route if trading, attack enemy if pirate or military)
 #	- If my goal doesn't seem plausible, I'd create a temporary goal to follow till the conditions change (flee or fight, probably trying to flee, but also shooting whenever possible, as you have suggested once)
 	# loading information about this unit
-	var boost = 10 # speed boost for debugging purposes
+	var boost = 100 # speed boost for debugging purposes
 	var dest = null
 	var holo = null # holo stands for physical representations of units, that is actual scenes in the world, loaded
 	var info: Dictionary = data[unit] # info stands for variables of this unit, like health and transform (xform)
@@ -372,193 +380,199 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 		if refs.has(unit):
 			holo = refs[unit]["holo"]
 		
-#	var follow = info.get("follow")
-#	# override behavior, includes fight or flee
-#	if follow == null:
-#		var weakestEnemyPart = null
-#		var weakestEnemyValue = 999999999
-#		var leastDangerousPart = null
-#		var leastDangerousValue = 999999999
-#		var total: Vector2 = Vector2.ZERO
-#		for partition in sides[side].keys():
-#			var value = sides[side][partition]
-#			total += value
-#			if value.y < leastDangerousValue:
-#				leastDangerousValue = value.y
-#				leastDangerousPart = partition
-#			if value.y > 0 && value.y < weakestEnemyValue:
-#				weakestEnemyPart = partition
-#		if type == "trade": # if enemy is stronger than allies, flee
-#			if total.y > total.x:
-#				dest = leastDangerousPart
-#		elif type == "pirate": # if enemy is weaker than allies, fight
-#			if total.y != 0:
-#				if total.x / total.y > 1.1:
-#					dest = weakestEnemyPart
-#				else:
-#					dest = leastDangerousPart
-#		elif type == "military": # if enemy is weaker than allies, fight
-#			if total.y != 0:
-#				if total.x / total.y > 0.9:
-#					dest = weakestEnemyPart
-#				else:
-#					dest = leastDangerousPart
-#	# standard behavior, includes goalfinding and pathfinding
-#	if dest == null:
-#		var wait = info.get("wait")
-#		if wait != null: # waits if set to wait
-#			print("waiting")
-#			wait -= delta
-#			if wait <= 0:
-#				info.erase("wait")
-#		else:
-#			var goal = info.get("goal")
-#			if follow != null:
-#				print("following")
-#				var followUnit = units.get(follow)
-#				if followUnit != null:
-#					var followPart = Utility.partitionID(followUnit["xform"].origin, PARTSIZE, false)
-#					if followPart != goal:
-#						goal = followPart
-#			if goal == null: # finds goal if doesn't have one
-#				print("goalfinding")
-#				dominions.lock()
-#				if type == "trade": # go to the closest shop with the highest profit for the current cargo hold
-#					var targetShop = null
-#					var targetPart = null
-#					var targetDistance = 999999999
-#					var highestProfit: float = -1
-#					for mallName in Economy.malls.keys():
-#						var profit: float = 0
-#						var mall: Dictionary = Economy.malls[mallName]
-#						var mallPart: Vector3 = mall["part"]
-#						var pixelColor: Color = dominions.get_pixel(mallPart.x, mallPart.z)
-#						var mallSide: String = flags[pixelColor]
-#						if wars.has(side) && wars[side].has(mallSide):
-#							continue
-#						for item in pack:
-#							profit += Economy.getPrice(item, mallName)
-#						var dist = Utility.chebyshevDistance(part, mallPart)
-#						if profit > highestProfit || (profit == highestProfit && dist < targetDistance):
-#							highestProfit = profit
-#							targetDistance = dist
-#							targetShop = mallName
-#							targetPart = mallPart
-#					info["goal"] = targetPart
-#					info["shop"] = targetShop
-#				elif type == "pirate": # patrol to hunt trade ships, for this go to a random trading route partition
-#					var malls: Array = Economy.malls.keys()
-#					malls.shuffle()
-#					var mallTwoPart = null
-#					var mallOne = malls[0]
-#					var mallOnePart: Vector3 = mallOne["part"]
-#					var pixelColor: Color = dominions.get_pixel(mallOnePart.x, mallOnePart.z)
-#					var mallOneSide: String = flags[pixelColor]
-#					if !wars.has(mallOneSide):
-#						var mallTwo = malls[1]
-#						mallTwoPart = mallTwo["part"]
-#					else:
-#						for mallIndex in range(1, malls.size()):
-#							var mallTemp = malls[mallIndex]
-#							var mallTempPart: Vector3 = mallTemp["part"]
-#							pixelColor = dominions.get_pixel(mallTempPart.x, mallTempPart.z)
-#							var mallTempSide: String = flags[pixelColor]
-#							if wars[mallOneSide].has(mallTempSide):
-#								continue
-#							else:
-#								mallTwoPart = mallTempPart
-#								break
-#					var path = Utility.findPath(mallOnePart, mallTwoPart, true, false, [])
-#					if path != null:
-#						info["goal"] = path[floor((path.size() - 1) * 0.5)]
-#				elif type == "military": # patrol to hunt enemy and pirate ships, for this go to a random trading spot partition
-#					var malls: Array = Economy.malls.keys()
-#					malls.shuffle()
-#					for mallName in malls:
-#						var mall = malls[0]
-#						var mallPart: Vector3 = mall["part"]
-#						var pixelColor: Color = dominions.get_pixel(mallPart.x, mallPart.z)
-#						var mallSide: String = flags[pixelColor]
-#						if mallSide != side && (!wars.has(side) || !wars[side].has(mallSide)):
-#							continue
-#						else:
-#							info["goal"] = mallPart
-#							break
-#				dominions.unlock()
-#			elif goal != part: # needs path if is not at goal
-#				var path = info.get("path")
-#				if path == null: # finds path if doesn't have one
-#					print("pathfinding")
-#					var filter: Array = []
-#					if wars.has(side):
-#						filter = wars[side].duplicate()
-#					info["path"] = Utility.findPath(part, goal, true, false, filter)
-##				elif path[0] != goal: # changes goal if can't reach
-##					pass
-#				else: # follows path
-#					var dist: int = Utility.chebyshevDistance(part, path[-1])
-#					if dist == 0: # if reached, remove waypoint
-#						path.pop_back()
-#						if path.empty():
-#							info.erase("path")
-#					elif dist > 1: # if distant, clear path, so can search from scratch
-#						info.erase("path")
-#					else: # go towards the next waypoint
-#						dest = path[-1]
-#			else: # works at goal
-#				if info.has("path"):
-#					info.erase("path")
-#				if type == "trade":
-#					# sell goods which profit more than some percentage compared to the base price
-#					if info["mode"] == "sell":
-#						for item in info["pack"].keys():
-#							if !Economy.canSell(item, info["shop"]):
-#								continue
-#							var basePrice = Economy.goods[item]["price"]
-#							var shopPrice = Economy.getPrice(item, info["shop"])
-#							if shopPrice / basePrice >= 1.1 && shopPrice <= Economy.malls[info["shop"]]["money"]:
-#								var stock: Dictionary = Economy.malls[info["shop"]]["goods"]
-#								if !stock.has(item):
-#									stock[item] = 0
-#								stock[item] += 1
-#								Economy.malls[info["shop"]]["money"] -= shopPrice
-#								info["gold"] += shopPrice
-#								return
-#						info["mode"] = "buy"
-#					# buy goods that are cheaper than some percentage compared to the base price
-#					var cheapest = null
-#					var price = 999999999
-#					for item in Economy.malls[info["shop"]]["goods"].keys():
-#						if !Economy.canBuy(item, info["shop"]):
-#							continue
-#						var basePrice = Economy.goods[item]["price"]
-#						var shopPrice = Economy.getPrice(item, info["shop"])
-#						if shopPrice / basePrice <= 0.9 && shopPrice <= info["gold"]:
-#							if shopPrice < price:
-#								price = shopPrice
-#								cheapest = item
-#					if cheapest != null:
-#						var stock: Dictionary = Economy.malls[info["shop"]]["goods"]
-#						stock[cheapest] -= 1
-#						if stock[cheapest] == 0:
-#							stock.erase(cheapest)
-#						var shopPrice = Economy.getPrice(cheapest, info["shop"])
-#						Economy.malls[info["shop"]]["money"] += shopPrice
-#						info["gold"] -= shopPrice
-#						return
-#					info["mode"] = "sell"
-#					# wait for short time
-#					info["wait"] = 180
-#				elif type == "pirate":
-#					# wait for long time
-#					info["wait"] = 600
-#				elif type == "military":
-#					# repair (if ally port)
-#					# wait for some time
-#					info["wait"] = 180
-#				info["goal"] = null
-#
-#
+	var follow = info.get("follow")
+	# override behavior, includes fight or flee
+	if follow == null:
+		var weakestEnemyPart = null
+		var weakestEnemyValue = 999999999
+		var leastDangerousPart = null
+		var leastDangerousValue = 999999999
+		var total: Vector2 = Vector2.ZERO
+		for partition in sides[side].keys():
+			var value = sides[side][partition]
+			total += value
+			if value.y < leastDangerousValue:
+				leastDangerousValue = value.y
+				leastDangerousPart = partition
+			if value.y > 0 && value.y < weakestEnemyValue:
+				weakestEnemyPart = partition
+		if type == "trade": # if enemy is stronger than allies, flee
+			if total.y > total.x:
+				dest = leastDangerousPart
+		elif type == "pirate": # if enemy is weaker than allies, fight
+			if total.y != 0:
+				if total.x / total.y > 1.1:
+					dest = weakestEnemyPart
+				else:
+					dest = leastDangerousPart
+		elif type == "military": # if enemy is weaker than allies, fight
+			if total.y != 0:
+				if total.x / total.y > 0.9:
+					dest = weakestEnemyPart
+				else:
+					dest = leastDangerousPart
+	# standard behavior, includes goalfinding and pathfinding
+	if dest == null:
+		var wait = info.get("wait")
+		if wait != null: # waits if set to wait
+			print("waiting: " + str(wait))
+			wait -= delta
+			info["wait"] = wait
+			if wait <= 0:
+				info.erase("wait")
+		else:
+			var goal = info.get("goal")
+			if follow != null:
+				print("following")
+				var followUnit = units.get(follow)
+				if followUnit != null:
+					var followPart = Utility.partitionID(followUnit["xform"].origin, PARTSIZE, false)
+					if followPart != goal:
+						goal = followPart
+			if goal == null: # finds goal if doesn't have one
+				print("goalfinding")
+				dominions.lock()
+				if type == "trade": # go to the closest shop with the highest profit for the current cargo hold
+					var targetShop = null
+					var targetPart = null
+					var targetDistance = 999999999
+					var highestProfit: float = -1
+					for mallName in Economy.malls.keys():
+						var profit: float = 0
+						var mall: Dictionary = Economy.malls[mallName]
+						var mallPart: Vector3 = mall["part"]
+						var pixelColor: Color = dominions.get_pixel(mallPart.x, mallPart.z)
+						var mallSide: String = flags[pixelColor]
+						if wars.has(side) && wars[side].has(mallSide):
+							continue
+						for item in pack:
+							profit += Economy.getPrice(item, mallName)
+						var dist = Utility.chebyshevDistance(part, mallPart)
+						if profit > highestProfit || (profit == highestProfit && dist < targetDistance):
+							highestProfit = profit
+							targetDistance = dist
+							targetShop = mallName
+							targetPart = mallPart
+					info["goal"] = targetPart
+					info["shop"] = targetShop
+				elif type == "pirate": # patrol to hunt trade ships, for this go to a random trading route partition
+					var malls: Array = Economy.malls.keys()
+					malls.shuffle()
+					var mallTwoPart = null
+					var mallOne = malls[0]
+					var mallOnePart: Vector3 = mallOne["part"]
+					var pixelColor: Color = dominions.get_pixel(mallOnePart.x, mallOnePart.z)
+					var mallOneSide: String = flags[pixelColor]
+					if !wars.has(mallOneSide):
+						var mallTwo = malls[1]
+						mallTwoPart = mallTwo["part"]
+					else:
+						for mallIndex in range(1, malls.size()):
+							var mallTemp = malls[mallIndex]
+							var mallTempPart: Vector3 = mallTemp["part"]
+							pixelColor = dominions.get_pixel(mallTempPart.x, mallTempPart.z)
+							var mallTempSide: String = flags[pixelColor]
+							if wars[mallOneSide].has(mallTempSide):
+								continue
+							else:
+								mallTwoPart = mallTempPart
+								break
+					var path = Utility.findPath(mallOnePart, mallTwoPart, true, false, [])
+					if path != null:
+						info["goal"] = path[floor((path.size() - 1) * 0.5)]
+				elif type == "military": # patrol to hunt enemy and pirate ships, for this go to a random trading spot partition
+					var malls: Array = Economy.malls.keys()
+					malls.shuffle()
+					for mallName in malls:
+						var mall = malls[0]
+						var mallPart: Vector3 = mall["part"]
+						var pixelColor: Color = dominions.get_pixel(mallPart.x, mallPart.z)
+						var mallSide: String = flags[pixelColor]
+						if mallSide != side && (!wars.has(side) || !wars[side].has(mallSide)):
+							continue
+						else:
+							info["goal"] = mallPart
+							break
+				dominions.unlock()
+			elif goal != part: # needs path if is not at goal
+				var path = info.get("path")
+				if path == null: # finds path if doesn't have one
+					print("pathfinding")
+					var filter: Array = []
+					if wars.has(side):
+						filter = wars[side].duplicate()
+					info["path"] = Utility.findPath(part, goal, true, false, filter)
+#				elif path[0] != goal: # changes goal if can't reach
+#					pass
+				else: # follows path
+					var dist: int = Utility.chebyshevDistance(part, path[-1])
+					if dist == 0: # if reached, remove waypoint
+						path.pop_back()
+						if path.empty():
+							info.erase("path")
+					elif dist > 1: # if distant, clear path, so can search from scratch
+						info.erase("path")
+					else: # go towards the next waypoint
+						dest = path[-1]
+			else: # works at goal
+				if info.has("path"):
+					info.erase("path")
+				if type == "trade":
+					# sell goods which profit more than some percentage compared to the base price
+					if info["mode"] == "sell":
+						for index in range(info["pack"].size() - 1, -1, -1):
+							var item = info["pack"][index]
+							if !Economy.canSell(item, info["shop"]):
+								continue
+							var basePrice = Economy.goods[item]["price"]
+							var shopPrice = Economy.getPrice(item, info["shop"])
+							if shopPrice / basePrice >= 1.1 && shopPrice <= Economy.malls[info["shop"]]["money"]:
+								var stock: Dictionary = Economy.malls[info["shop"]]["goods"]
+								if !stock.has(item):
+									stock[item] = 0
+								stock[item] += 1
+								Economy.malls[info["shop"]]["money"] -= shopPrice
+								info["gold"] += shopPrice
+								print("sold " + str(item))
+								info["pack"].remove(index)
+								return
+						info["mode"] = "buy"
+					# buy goods that are cheaper than some percentage compared to the base price
+					var cheapest = null
+					var price = 999999999
+					for item in Economy.malls[info["shop"]]["goods"].keys():
+						if !Economy.canBuy(item, info["shop"]):
+							continue
+						var basePrice = Economy.goods[item]["price"]
+						var shopPrice = Economy.getPrice(item, info["shop"])
+						if shopPrice / basePrice <= 0.9 && shopPrice <= info["gold"]:
+							if shopPrice < price:
+								price = shopPrice
+								cheapest = item
+					if cheapest != null:
+						var stock: Dictionary = Economy.malls[info["shop"]]["goods"]
+						stock[cheapest] -= 1
+						if stock[cheapest] == 0:
+							stock.erase(cheapest)
+						var shopPrice = Economy.getPrice(cheapest, info["shop"])
+						Economy.malls[info["shop"]]["money"] += shopPrice
+						info["gold"] -= shopPrice
+						info["pack"].append(cheapest)
+						print("purchased " + str(cheapest))
+						return
+					info["mode"] = "sell"
+					# wait for short time
+					info["wait"] = 1
+				elif type == "pirate":
+					# wait for long time
+					info["wait"] = 600
+				elif type == "military":
+					# repair (if ally port)
+					# wait for some time
+					info["wait"] = 180
+				info["goal"] = null
+			
+		
 	if holo != null: # runs when unit is live
 		var results: Dictionary
 		var controller = holo.get_node_or_null("AIController")
@@ -612,9 +626,12 @@ func loadGame(slot: String):
 		file.open("user://" + slot + "." + opt, File.READ)
 		var content: Dictionary = {}
 		while file.get_position() < file.get_len():
-			var json: JSONParseResult = JSON.parse(file.get_line())
+			var line: String = file.get_line()
+			var json: JSONParseResult = JSON.parse(line)
 			if json.error == OK:
+				print(json.error)
 				content = json.result
+				print(content)
 			break
 		file.close()
 		for key in content.keys():
