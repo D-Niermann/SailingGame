@@ -79,14 +79,9 @@ func checkTasks():
 			task = tasks[p][i]
 			if items.has(task.itemID): # check if item still exists, could be deleted in the main time, task stays in task array when item unregisterd
 				## if task is found, find a suitable man
-				var manRef = findAndAssignBestMen(task.position, task.taskGroup, p)
-				if manRef!=null:
-					## do something with the found man
-					## give man the new item target
-					manRef.giveTarget(task.position, task.itemID, task.jobID) #todo: wrap this into one function "assignMantoitem"
-					items[task.itemID].jobs[task.jobID].manID = manRef.id
-					
-					## remove task
+				var hasFound =  findAndAssignBestMen(task, p)
+				if hasFound==true:
+					## remove task if man was found
 					tasks[p].remove(i)
 					## break here to save CPU (only one task per frame gets assigned this way)
 					break
@@ -136,11 +131,11 @@ func requestCrew(itemID, jobID, taskGroup, targetPosition : Vector3, priority : 
 	taskGroup: from which task group
 	"""
 	# add the request to tasks array already in the correct order (prio)
-	tasks[priority].append({"id": IDGenerator.getID(), "itemID": itemID, "jobID": jobID, "position": targetPosition, "taskGroup": taskGroup})
+	tasks[priority].append({"id": IDGenerator.getID(), "itemID": itemID, "jobID": jobID, "position": targetPosition, "taskGroup": taskGroup, "priority": priority})
 
 
 
-func findAndAssignBestMen(itemPos : Vector3, taskGroup, priority : int):
+func findAndAssignBestMen(task, priority : int):
 	"""
 	Searches for the best fitting crew member to do the task and assigns him to item
 	searches first men that are completly idle, if none are found searches for man that do less prioritzed work 
@@ -150,29 +145,84 @@ func findAndAssignBestMen(itemPos : Vector3, taskGroup, priority : int):
 	var foundID
 
 	## first check idle men in task group
-	for id in currentAssignments[taskGroup]["idle"]:
+	for id in currentAssignments[task.taskGroup]["idle"]:
 		if true: # TODO: put real check here
-			foundMen = currentAssignments[taskGroup]["idle"][id]
+			foundMen = currentAssignments[task.taskGroup]["idle"][id]
 			foundID = id
-			## put human into busy list and remove from idle list
-			currentAssignments[taskGroup]["busy"][priority][id] = foundMen
-			currentAssignments[taskGroup]["idle"].erase(id)
-			print("Found man for task with prio", priority)
-			return foundMen
+			fromIdleToBusy(foundMen, task)
+			return true
 	## if non are idle or suitable, check busy men from lower priorites, but check the lowest prio first
-	for prio in range(numberOfPriorities-1,priority,-1): # doest go to priority, stops at priority+1
-		for id in currentAssignments[taskGroup]["busy"][prio]:
+	for oldPrio in range(numberOfPriorities-1,priority,-1): # doest go to priority, stops at priority+1
+		for id in currentAssignments[task.taskGroup]["busy"][oldPrio]:
 			if true: # TODO: put actual condition here
-				foundMen = currentAssignments[taskGroup]["busy"][prio][id]
+				foundMen = currentAssignments[task.taskGroup]["busy"][oldPrio][id]
 				foundID = id
-				## put man in new group and del from old group
-				currentAssignments[taskGroup]["busy"][priority][id] = foundMen
-				# and unassign from item that he was on, while also allowing the item to directly search for new man
-				# foundMen.targetItem.unassignManfromItem(id)
-				currentAssignments[taskGroup]["busy"][prio].erase(id)
-				print("Found man for task with prio", priority)
-				return foundMen
+				fromBusyToBusy(foundMen, task, foundMen.currentTask)
+				return true
 
+	# if non is found return false
+	return false
+
+func _assignManToItem(manRef, task):
+	""" simple wrapper function for only assigning a man to an item """
+	manRef.giveGoToTask(task) 
+	items[task.itemID].jobs[task.jobID].manID = manRef.id
+
+func _unassignManFromItem(manRef):
+	""" simple wrapper function for only unassigning a man to an item """
+	## search item on what job the man was, TODO: maybe its smarter to give the task dictionary to the manRef?
+	for jobID in items[manRef.itemID].jobs:
+		# set the item to not having a man on it on that job
+		if items[manRef.itemID].jobs[jobID].manID == manRef.id:
+			items[manRef.itemID].jobs[jobID].manID = null
+			items[manRef.itemID].jobs[jobID].isReady = false
+	manRef.removeTarget()
+	
+	
+func fromIdleToBusy(manRef, task):
+	"""
+	put human into the correct busy assignment and also register him to an item
+	"""
+	## put human into busy list and remove from idle list
+	currentAssignments[task.taskGroup]["busy"][Economy.goods[items[task.itemID].databaseName]["jobs"][task.jobID].priority][manRef.id] = manRef
+	currentAssignments[task.taskGroup]["idle"].erase(manRef.id)
+	## assign man the new item target
+	_assignManToItem(manRef, task)
+
+
+func fromBusyToBusy(manRef, task, oldTask):
+	"""
+	Move man from priority 'oldPrio' into new priority, that makes him stay in busy assignment but his item switches. 
+	Also the new prio is more important than the old one.
+	"""
+	## put man in new group and del from old group
+	currentAssignments[task.taskGroup]["busy"][Economy.goods[items[task.itemID].databaseName]["jobs"][task.jobID].priority][manRef.id] = manRef
+	# and unassign from item that he was on,
+	_unassignManFromItem(manRef)
+	# while also allowing the item to directly search for new man for the task that the man was on
+	requestCrew(
+		oldTask.itemID, # id of item
+		oldTask.jobID, # id of the item specific job
+		Economy.goods[items[oldTask.itemID].databaseName]["jobs"][oldTask.jobID].tg,  # taskgroup
+		Economy.goods[items[oldTask.itemID].databaseName]["jobs"][oldTask.jobID].posOffset + items[oldTask.itemID].itemRef.transform.origin,  # position
+		Economy.goods[items[oldTask.itemID].databaseName]["jobs"][oldTask.jobID].priority)
+
+	currentAssignments[task.taskGroup]["busy"][oldTask.priority].erase(manRef.id)
+	_assignManToItem(manRef, task)
+
+
+# func unassignManFromItem(manID : int, tg, priority):
+# 	"""
+# 	move man into the idle group , remove targets on man,
+# 	when man was busy, he was connected to an item, so disconnect him from that
+# 	also when men gets disconnected from item, item needs to request new one
+# 	"""
+# 	var manRef = currentAssignments[tg]["busy"][priority][manID]
+# 	manRef.removeTarget()
+# 	# add to idle
+# 	currentAssignments[tg]["idle"][manID] = manRef
+# 	## remove from busy
+# 	currentAssignments[tg]["busy"][priority].erase(manID)
 
 func requestItems(items : Dictionary, priority):
 	"""
@@ -221,7 +271,7 @@ func registerItem(itemRef):
 		if Economy.goods.has(itemRef.databaseName):
 			print("CM: registered item")
 			
-			items[itemRef.id] = {"databaseName" : itemRef.databaseName, "jobs": {}} 
+			items[itemRef.id] = {"itemRef" : itemRef, "databaseName" : itemRef.databaseName, "jobs": {}} 
 			
 			# add job data
 			for jobID in Economy.goods[itemRef.databaseName]["jobs"]:
@@ -250,6 +300,10 @@ func unregisterItem(itemRef):
 		items[itemRef.id].jobs[jobID] = {"manID" : null, "isReady" : false}
 	# remove item from items list
 	items.erase(itemRef.id)
+
+
+
+
 ### mayonnace stuff
 	# func reconnectJobs():
 	# 	"""

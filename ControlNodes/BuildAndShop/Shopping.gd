@@ -197,7 +197,7 @@ func _physics_process(delta):
 		else:
 			if leftClick:
 				toggle(null)
-	if highlight != null:
+	if is_instance_valid(highlight):
 		var sprite = highlight.get_node("Sprite3D")
 		if sprite!=null:
 			sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)

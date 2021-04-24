@@ -25,6 +25,8 @@ var isHuman = true # flag for shopping script to see if this kin body is human
 var infoPanel
 # var isAssigned = false
 var id
+var currentTask
+
 
 func _ready():
 	targetPos.x += rand_range(-0.3,0.3)
@@ -35,18 +37,20 @@ func assignDeck(deckRef):
 	get_parent().remove_child(self)
 	deckRef.add_child(self)
 
-func giveTarget(target_position : Vector3, itemID : int, jobID : String):
+func giveGoToTask(task):
 	"""
-	gives a target item to walk to
+	gives a task
 	"""
-	targetPos = (target_position)
-	self.itemID = itemID
-	self.jobID = jobID
+	currentTask = task
+	targetPos = task.position
+	self.itemID = task.itemID
+	self.jobID = task.jobID
 	# currentTaskGroup = TG
 
 func removeTarget():
 	# targetPos = (target_position)
 	self.itemID = null
+	currentTask = null
 	self.jobID = null
 	targetPos = Vector3.ZERO
 	targetPos.x += rand_range(-0.3,0.3)
