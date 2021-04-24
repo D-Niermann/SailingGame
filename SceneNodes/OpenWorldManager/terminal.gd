@@ -562,7 +562,7 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 						return
 					info["mode"] = "sell"
 					# wait for short time
-					info["wait"] = 1
+					info["wait"] = 180
 				elif type == "pirate":
 					# wait for long time
 					info["wait"] = 600
