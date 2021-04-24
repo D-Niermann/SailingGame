@@ -16,5 +16,13 @@ func _on_subsurface_scattering_value_changed(value):
 	ocean.set_subsurface_scattering(value)
 
 func _on_sun_glare_value_changed(value):
+	ocean.timeOfDay = value
+
+func _on_CheckButton_toggled(state:bool):
+	# var NPCships = get_tree().get_nodes_in_group("NPCShip")
+	# for i in range(NPCships.size()):
+	# 	NPCships[i].get_node("AIController").isActive = state
 	pass
-	#get_tree().get_nodes_in_group("Light")[0].time = value
+
+func _on_CrewSlider1_value_changed(val):
+	GlobalObjectReferencer.crewManager.targetCrewCount[GlobalObjectReferencer.crewManager.TG_WEAPONS] = val

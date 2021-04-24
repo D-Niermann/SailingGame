@@ -8,50 +8,47 @@ flags_transparent = true
 flags_vertex_lighting = true
 vertex_color_use_as_albedo = true
 params_billboard_mode = 3
+params_billboard_keep_scale = true
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
-albedo_color = Color( 0.921569, 0.980392, 0.984314, 0.0862745 )
+albedo_color = Color( 0.866667, 0.968627, 0.972549, 0.215686 )
 albedo_texture = ExtResource( 1 )
 metallic_specular = 0.45
 
 [sub_resource type="Gradient" id=2]
 offsets = PoolRealArray( 0, 0.162602, 0.548781 )
-colors = PoolColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0 )
+colors = PoolColorArray( 0, 0, 0, 0, 0.551788, 0.865043, 0.960938, 1, 1, 1, 1, 0 )
 
 [sub_resource type="GradientTexture" id=3]
 gradient = SubResource( 2 )
 
 [sub_resource type="Curve" id=4]
 max_value = 13.0
-_data = [ Vector2( 0, 5.51023 ), 0.0, 0.0, 0, 0, Vector2( 0.221344, 3.50114 ), 0.0, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 5.51023 ), 0.0, 0.0, 0, 0, Vector2( 0.517787, 0 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=5]
 curve = SubResource( 4 )
 
 [sub_resource type="Curve" id=6]
-_data = [ Vector2( 0, 0.535838 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+max_value = 2.0
+_data = [ Vector2( 0, 0.186251 ), 0.0, 0.0, 0, 0, Vector2( 1, 1.82267 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=7]
 curve = SubResource( 6 )
 
 [sub_resource type="ParticlesMaterial" id=8]
-lifetime_randomness = 1.0
-emission_shape = 2
-emission_box_extents = Vector3( 0.1, 0.1, 0.1 )
+lifetime_randomness = 0.39
 direction = Vector3( 0, 1, 0 )
-spread = 2.16
-gravity = Vector3( 0, -4, 2 )
+spread = 1.0
+gravity = Vector3( 0, -1, -1 )
 initial_velocity = 8.31
-initial_velocity_random = 1.0
-angular_velocity = 56.55
-angular_velocity_random = 1.0
-damping = 1.0
+initial_velocity_random = 0.48
+angular_velocity = 3.0
 damping_random = 0.12
 damping_curve = SubResource( 5 )
-angle = 263.7
-angle_random = 1.0
-scale = 0.5
+angle = 384.3
+angle_random = 0.8
 scale_random = 1.0
 scale_curve = SubResource( 7 )
 color_ramp = SubResource( 3 )
@@ -62,11 +59,9 @@ size = Vector2( 5, 5 )
 [node name="Particles" type="Particles"]
 material_override = SubResource( 1 )
 cast_shadow = 2
-emitting = false
-amount = 57
-lifetime = 3.0
-one_shot = true
-explosiveness = 1.0
+amount = 15
+lifetime = 5.0
+explosiveness = 0.98
 randomness = 0.71
 visibility_aabb = AABB( -181.604, -196.936, -272.78, 362.306, 395.6, 547.224 )
 local_coords = false

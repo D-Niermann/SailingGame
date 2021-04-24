@@ -1,6 +1,109 @@
 extends Node
 
 
+var lastSlot = "NA" # slot which was loaded last
+
+var topograph: Image = Image.new()
+var dominions: Image = Image.new()
+
+# Finds path between the given parts.
+func findPath(from: Vector3, to: Vector3, canCross: bool, extended: bool, filter: Array):
+	var temp = null
+	var paths: Dictionary = {from: {"path": [from], "dist": 0}}
+	var open: Dictionary = {from: null}
+	var close: Dictionary = {}
+	var limit: int = 100
+	while limit > 0 && !open.empty():
+		var lowest: Vector3
+		var value: int = -1
+		for part in open.keys():
+			var score: int = paths[part]["dist"] + chebyshevDistance(part, to)
+			if value < 0 || score < value:
+				value = score
+				lowest = part
+		close[lowest] = null
+		open.erase(lowest)
+		var adjacent: Array = findAdjacent(lowest, canCross, extended)
+		for part in adjacent:
+			if open.has(part) || close.has(part) || !canPass(lowest, part, canCross, extended):
+				continue
+			if isFiltered(part, filter):
+				continue
+			var path: Array = paths[lowest]["path"].duplicate(true)
+			path.append(part)
+			paths[part] = {"path": path, "dist": paths[lowest]["dist"] + 1}
+			open[part] = null
+			if part == to:
+				temp = path
+				limit = 0
+				break
+		limit -= 1
+	if temp == null:
+		return null
+		var lowest: Vector3
+		var value: int = -1
+		for part in close.keys():
+			var score: int = paths[part]["dist"] + chebyshevDistance(part, to)
+			if value < 0 || score < value:
+				value = score
+				lowest = part
+		temp = paths[lowest]["path"]
+	temp.invert()
+	return temp
+
+
+# Checks if transition between the given parts is possible.
+func canPass(from: Vector3, to: Vector3, canCross: bool, extended: bool):
+	var difference: Vector3 = to - from
+	var distance: int = chebyshevDistance(from, to)
+	if distance > 1:
+		return false
+	if difference == Vector3.UP || difference == Vector3.DOWN:
+		if !extended:
+			return false
+	if difference.length_squared() > 1:
+		if !canCross:
+			return false
+		var comp: Vector3
+		comp = Vector3(difference.x, 0, 0)
+		if comp != Vector3.ZERO && isOccupied(from + comp):
+			return false
+		comp = Vector3(0, difference.y, 0)
+		if comp != Vector3.ZERO && isOccupied(from + comp):
+			return false
+		comp = Vector3(0, 0, difference.z)
+		if comp != Vector3.ZERO && isOccupied(from + comp):
+			return false
+	if isOccupied(to):
+		return false
+	#print("canPassTo: " + str(to) + " from: " + str(from))
+	return true
+
+
+# Checks if the given part is occupied.
+func isOccupied(partition: Vector3):
+	if partition.y != 0 || partition.x < 0 || partition.z < 0 || partition.x > topograph.get_width() - 1 || partition.z > topograph.get_height() - 1:
+		return true
+	topograph.lock()
+	var pixel: Color = topograph.get_pixel(partition.x, partition.z)
+	topograph.unlock()
+	if pixel != Color.black:
+		return true
+	return false
+
+
+# Checks if the given part is included in the given filter.
+func isFiltered(partition: Vector3, filter: Array):
+	if partition.y != 0 || partition.x < 0 || partition.z < 0 || partition.x > topograph.get_width() - 1 || partition.z > topograph.get_height() - 1:
+		return true
+	dominions.lock()
+	var pixel: Color = dominions.get_pixel(partition.x, partition.z)
+	dominions.unlock()
+	if filter.has(pixel):
+		return true
+	return false
+
+
 # Returns adjacent parts for the given part.
 func findAdjacent(partition: Vector3, canCross: bool, extended: bool):
 	var keys = []
@@ -189,3 +292,33 @@ func printScreen():
 	while Directory.new().file_exists("pics/" + str(no) + ".png") && no < 999:
 		no += 1
 	image.save_png("pics/" + str(no) + ".png")
+
+
+# Returns list of names of saved games and the unix time which they are saved at.
+func getSlots():
+	var path: String = "user://"
+	var slots: Dictionary = {}
+	var directory = Directory.new()
+	directory.open(path)
+	directory.list_dir_begin()
+	var file: File = File.new()
+	while true:
+		var slot = directory.get_next()
+		if slot == "":
+			break
+		elif !slot.begins_with(".") && (slot.ends_with(".one") || slot.ends_with(".two")):
+			file.open("user://" + slot, File.READ)
+			var last = null
+			while file.get_position() < file.get_len():
+				last = file.get_line()
+			file.close()
+			if last != null:
+				last = int(last)
+				if last != 0:
+					slot = slot.split(".")[0]
+					if !slots.has(slot):
+						slots[slot] = {"unix": last}
+					elif slots[slot]["unix"] < last:
+						slots[slot]["unix"] = last
+	directory.list_dir_end()
+	return slots

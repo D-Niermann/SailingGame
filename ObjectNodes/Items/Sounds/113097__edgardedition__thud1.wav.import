@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/113097__edgardedition__thud1.wav-ef8051f2f53a65cb97860b02d08a3ac5.sample"
+
+[deps]
+
+source_file="res://ObjectNodes/Items/Sounds/113097__edgardedition__thud1.wav"
+dest_files=[ "res://.import/113097__edgardedition__thud1.wav-ef8051f2f53a65cb97860b02d08a3ac5.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

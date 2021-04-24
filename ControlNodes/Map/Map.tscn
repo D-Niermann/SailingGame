@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://SceneNodes/OpenWorldManager/dominions.png" type="Texture" id=1]
+[ext_resource path="res://ControlNodes/Map/Map.gd" type="Script" id=2]
+[ext_resource path="res://SceneNodes/OpenWorldManager/topograph.png" type="Texture" id=3]
+
+[node name="Map" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Topograph" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Dominions" type="TextureRect" parent="."]
+self_modulate = Color( 1, 1, 1, 0.129412 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Container" type="ReferenceRect" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+editor_only = false
+__meta__ = {
+"_edit_use_anchors_": false
+}

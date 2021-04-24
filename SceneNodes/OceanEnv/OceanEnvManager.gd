@@ -1,7 +1,7 @@
 extends Spatial
 
 export(float) var wind_strength = 0.5 setget set_wind_strength
-
+# TODO: wind direction vector?
 var time = 0.0
 var wind_modified = 1.0
 
@@ -30,21 +30,34 @@ var imgToWorld = 4 # if gerstner tiling = 1, the height map has size 4x4 units i
 var gerstner_tiling1
 var gerstner_tiling2
 var imSize = 1024.0 # size in px of the height map
-var gerstner_speed1 = Vector2(0.02, 0.02)
-var gerstner_speed2 = Vector2(0.007,0.01) 
+var baseSpeed1 = Vector2(0.01, 0.015)
+var baseSpeed2 = Vector2(0.005,0.007) 
+var gerstner_speed1 = baseSpeed1
+var gerstner_speed2 = baseSpeed2
 
 
 # time of day
 var sunLight
-var sky
-
-
+var timeOfDay = 0
+var dayDuration_sec = 5*60 # how long a day will take in seconds
+var camera
+var org_basis
+var viewport
+var space_state
+var from : Vector3 = Vector3(0,0,0)
+var to : Vector3 = Vector3(0,0,0)
+var waterMousePos : Vector3 = Vector3(0,0,0)
 func _ready():
+	GlobalObjectReferencer.ocean = self # register at reference manager
 	## load the image
 	## Warning: the shader and the get_pixel() functions have different origin definitions (top-left vs bottom left) the this image needs to be flipped!
 	image = load("res://SceneNodes/OceanEnv/Textures/gerstner_height_get_height.jpg")
 	data = image.get_data()
 	data.lock()
+
+	viewport = get_tree().get_root().get_viewport()
+	camera = get_tree().get_nodes_in_group("Camera")[0]
+	space_state = get_world().get_direct_space_state()
 
 	visual_material = $waterplane.material_override
 	physical_material = $render_targets/vector_map_buffer/image.material
@@ -69,8 +82,9 @@ func _ready():
 	shift_vector = physical_material.get_shader_param("shift_vector")
 	curl_strength = physical_material.get_shader_param("curl_strength")
 
-	sunLight = $DirectionalLight
-	sky = $Sky
+	sunLight = $SunLight
+	org_basis = sunLight.global_transform.basis
+
 	
 
 
@@ -122,25 +136,39 @@ func set_subsurface_scattering(value):
 	visual_material.set_shader_param("sss_strength", value);
 
 func _physics_process(delta):
-	
+	gerstner_speed1 = baseSpeed1*(1+wind_modified*0.01)
+	gerstner_speed2 = baseSpeed2*(1+wind_modified*0.01)
 	## ocean movement
 	visual_material.set_shader_param("time", time)
 	visual_material.set_shader_param("gerstner_speed", gerstner_speed1) 
 	visual_material.set_shader_param("gerstner_2_speed", gerstner_speed2)
 	time += delta
+	timeOfDay += delta
 	wind_modified += ((wind_strength + sin(time*0.5) * 0.2 * wind_strength) - wind_modified) * delta * 0.5
 	
 	# DEBUG WIND VAR
 	# print(wind_modified)
 	
 	update_water(wind_modified)
+	waterMousePos = getMousePosition()
+	setSunLight()
 
-	sunLight.rotate(Vector3(1,0,0), time*0.00001) 
+func setSunLight():
+	
+	sunLight.global_transform.basis = org_basis.rotated(sunLight.global_transform.basis.x, deg2rad((fmod((timeOfDay/dayDuration_sec),1)*360)))
 
+func getMousePosition() -> Vector3:
+	from = camera.project_ray_origin(viewport.get_mouse_position())
+	to = from + camera.project_ray_normal(viewport.get_mouse_position()) *2000
+	var hit = space_state.intersect_ray( from, to )
+	if hit.size()>0:
+		return hit.position
+	else:
+		return Vector3(0,0,0)
 
-func getWaterHeight(position : Vector3):
+func getWaterHeight(position : Vector3) -> float:
 	"""
-	Get the height of the water mesh on the global position.
+	Get the height of the water mesh on the global position. (y value)
 	"""
 	var pos2d : Vector2 = Vector2(position.x, position.z)
 	var pxPos1 : Vector2 = imSize * pos2d/imgToWorld*gerstner_tiling1 # pixel postion on the height map (ony use x and z!)

@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ControlNodes/ExampleTheme.tres" type="Theme" id=1]
+[ext_resource path="res://ObjectNodes/Items/Walls/WallInfoBox.gd" type="Script" id=2]
+
+
+[node name="CannonInfo" type="TextureRect"]
+anchor_right = 0.196
+anchor_bottom = 0.162
+margin_right = -163.28
+margin_bottom = -0.100006
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 197.0
+margin_bottom = 99.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="RichTextLabel" parent="Panel"]
+margin_left = 37.9518
+margin_top = 1.41422
+margin_right = 179.952
+margin_bottom = 34.4142
+text = "Wall"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text1" type="RichTextLabel" parent="Panel"]
+margin_left = 1.41422
+margin_top = 43.0563
+margin_right = 84.4142
+margin_bottom = 76.0563
+text = "Health"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthLabel" type="RichTextLabel" parent="Panel"]
+margin_left = 137.585
+margin_top = 42.3492
+margin_right = 196.585
+margin_bottom = 75.3492
+text = "100"
+__meta__ = {
+"_edit_use_anchors_": false
+}

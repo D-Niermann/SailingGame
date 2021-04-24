@@ -12,7 +12,7 @@
 [ext_resource path="res://SceneNodes/OceanEnv/Textures/plankton_albedo.png" type="Texture" id=10]
 [ext_resource path="res://SceneNodes/OceanEnv/Textures/underwater_overlay.png" type="Texture" id=11]
 [ext_resource path="res://SceneNodes/OceanEnv/Textures/gradients/water_gradient_b.tres" type="Gradient" id=12]
-[ext_resource path="res://textures/post/lense_glare_a.png" type="Texture" id=13]
+[ext_resource path="res://SceneNodes/OceanEnv/Textures/post/lense_glare_a.png" type="Texture" id=13]
 
 [sub_resource type="ViewportTexture" id=1]
 flags = 4
@@ -57,7 +57,7 @@ shader_param/underwater_tex_border = 4.0
 shader_param/underwater_texture = 0.14
 shader_param/underwater_color = 0.46
 shader_param/underwater_tiling = 2
-shader_param/beach_alpha_fadeout = 1.1
+shader_param/beach_alpha_fadeout = 0.3
 shader_param/beach_normal_fadeout = 0.3
 shader_param/beach_foam_depth = 2.0
 shader_param/beach_foam_distortion = 3.74

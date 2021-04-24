@@ -5,12 +5,11 @@
 [ext_resource path="res://Sprites/wheel.png" type="Texture" id=3]
 [ext_resource path="res://icon.png" type="Texture" id=4]
 
-
 [node name="ui" type="Control"]
 margin_left = 7.0
-margin_top = 8.0
+margin_top = 8.66742
 margin_right = 274.0
-margin_bottom = 156.0
+margin_bottom = 156.667
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -29,14 +28,15 @@ __meta__ = {
 }
 
 [node name="Wheel" type="TextureRect" parent="."]
+visible = false
 anchor_left = 0.0991942
 anchor_top = 0.146
 anchor_right = 1.87119
 anchor_bottom = 3.249
-margin_left = -18.4332
-margin_top = 174.726
-margin_right = -241.557
-margin_bottom = -34.5177
+margin_left = -24.0964
+margin_top = 765.591
+margin_right = -247.22
+margin_bottom = 556.348
 rect_pivot_offset = Vector2( 125, 125 )
 texture = ExtResource( 3 )
 expand = true
@@ -60,7 +60,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="."]
+[node name="LabelWind" type="Label" parent="."]
 margin_right = 121.0
 margin_bottom = 22.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
@@ -81,13 +81,69 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label2" type="Label" parent="."]
-visible = false
+[node name="LabelTime" type="Label" parent="."]
 margin_top = 40.9535
 margin_right = 121.0
 margin_bottom = 62.9535
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "WATER STYLE"
+text = "Time of Day"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Time" type="HSlider" parent="."]
+anchor_right = 1.0
+margin_left = 1.88776
+margin_top = 58.9821
+margin_right = 1.88776
+margin_bottom = 74.9821
+max_value = 1000.0
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CrewLabel1" type="Label" parent="."]
+margin_left = 0.667419
+margin_top = 91.6773
+margin_right = 121.667
+margin_bottom = 113.677
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "CrewWeapons"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CrewSlider1" type="HSlider" parent="."]
+anchor_right = 1.0
+margin_left = 2.55518
+margin_top = 109.706
+margin_right = 2.55518
+margin_bottom = 125.706
+max_value = 20.0
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelAI" type="Label" parent="."]
+visible = false
+margin_left = 2.55518
+margin_top = 86.9872
+margin_right = 123.555
+margin_bottom = 108.987
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "AI On"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckButton" type="CheckBox" parent="LabelAI"]
+margin_left = 44.7171
+margin_top = -12.681
+margin_right = 120.717
+margin_bottom = 27.319
+pressed = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -103,7 +159,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label3" type="Label" parent="."]
+[node name="Labelx" type="Label" parent="."]
 visible = false
 margin_top = 84.751
 margin_right = 121.0
@@ -126,31 +182,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label4" type="Label" parent="."]
-margin_left = 1.88776
-margin_top = 40.2121
-margin_right = 122.888
-margin_bottom = 62.2121
-custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "Time of Day"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Time" type="HSlider" parent="."]
-anchor_right = 1.0
-margin_left = 1.88776
-margin_top = 58.9821
-margin_right = 1.88776
-margin_bottom = 74.9821
-min_value = -3.0
-max_value = 3.0
-step = 0.1
-value = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 [connection signal="value_changed" from="wind_speed" to="." method="_on_wind_speed_value_changed"]
+[connection signal="value_changed" from="Time" to="." method="_on_sun_glare_value_changed"]
+[connection signal="value_changed" from="CrewSlider1" to="." method="_on_CrewSlider1_value_changed"]
+[connection signal="toggled" from="LabelAI/CheckButton" to="." method="_on_CheckButton_toggled"]
 [connection signal="value_changed" from="water_style" to="." method="_on_water_style_value_changed"]
 [connection signal="value_changed" from="subsurface_scattering" to="." method="_on_subsurface_scattering_value_changed"]
-[connection signal="value_changed" from="Time" to="." method="_on_sun_glare_value_changed"]

@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://ObjectNodes/ShipRigidController/AIController.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ObjectNodes/ShipRigidController/ShipRigidController.tscn" type="PackedScene" id=2]
+
+[sub_resource type="CapsuleMesh" id=1]
+radius = 0.2
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.380392, 0.0666667, 0.0666667, 1 )
+
+[sub_resource type="PrismMesh" id=3]
+size = Vector3( 1, 2, 2 )
+
+[node name="Spatial" type="Spatial"]
+
+[node name="Enemy" type="Spatial" parent="." groups=[
+"PlayerShip",
+]]
+transform = Transform( -0.99639, 0, -0.0848773, 0, 1, 0, 0.0848773, 0, -0.99639, -3.87664, 0, -7.25574 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="MeshInstance3" type="MeshInstance" parent="Enemy"]
+transform = Transform( 0.0084537, 0, -0.646638, 0, 0.646693, 0, 0.646638, 0, 0.0084537, -0.497879, 0, -0.483719 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="MeshInstance4" type="MeshInstance" parent="Enemy"]
+transform = Transform( 0.00861995, 0.659358, 2.88214e-08, 0, -2.88239e-08, 0.659414, 0.659358, -0.00861995, -3.7679e-10, 0.490086, 0, -0.504431 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 2 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 17.281, 0 )
+
+[node name="ShipRigid" parent="." instance=ExtResource( 2 )]
+transform = Transform( 0.984844, 0, 0.173442, 0, 1, 0, -0.173442, 0, 0.984844, -0.588371, 4.57764e-05, 2.61385 )
+
+[node name="AIController" parent="ShipRigid" instance=ExtResource( 1 )]
+transform = Transform( 0.161606, 0, -0.986778, 0, 1, 0, 0.986778, 0, 0.161606, 0, 10, 0 )

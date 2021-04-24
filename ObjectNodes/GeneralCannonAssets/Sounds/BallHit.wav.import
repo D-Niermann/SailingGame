@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/BallHit.wav-ece581b8cfeefb03e6473dd3c2e0eb5a.sample"
+
+[deps]
+
+source_file="res://ObjectNodes/GeneralCannonAssets/Sounds/BallHit.wav"
+dest_files=[ "res://.import/BallHit.wav-ece581b8cfeefb03e6473dd3c2e0eb5a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

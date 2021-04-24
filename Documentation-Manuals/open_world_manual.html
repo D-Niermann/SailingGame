@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Open World Manual</title>
+</head>
+
+<body>
+
+<h1>How to use the open world system by mayonnace?</h1>
+<ol>
+<h3><li>Decide your constants</h3>
+<ul>
+<li>PARTSIZE: width of each partition</li>
+<li>EXTENDED: if the grid is 3D or 2D</li>
+<li>CANCROSS: if moving crosswise is possible</li>
+</ul>
+</li>
+<h3><li>Prepare your presets</h3>
+<p>A preset is a dictionary which consists of at least a "CON" and a "RES" entry. Con stands for container, and must be either walls, units, or items. Res stands for resource, and must be the path to the scene of this preset.</p>
+<p>Variables that are written in upper case will be considered as constant, so they won't be copied over dictionary of an instance. Variables that are written in lower case will be copied over, so they can vary between individual instances of this preset. Transform of the instance and name of this preset will be automatically made into variables on the instance, so you don't need to create them.</p>
+</li>
+</li>
+<h3><li>Spawn instances from your preset</h3>
+<p>When creating an instance, you have to use the function "spawn(key: String, at: Vector3)". You can provide name of your preset, and you also need to provide where you want to spawn this instance at. This creates a new entry in the "data", and also in the corresponding type of the preset (wall/unit/item)</p>
+<p>Instead of providing name of a preset, you can provide name of an existing instance from your data. This will not create a new instance, but it will teleport the existing instance to the given coordinates.</p>
+</li>
+<h3><li>Reach properties of your instance</h3>
+<p>"data" stores all the instances, and their varying properties. By searching name of your instance, you can get access to properties of your instance. Like "data[nameOfMyInstance]". Name of your instance should be same with the name of the instanced scene in the world. "spawn" function automatically sets names of scenes to their unique keys. So, nothing gets lost or mistaken, unless you change names yourself, which you should never do!</p>
+<p>If you want to retrieve a constant property, for example "MAXSPEED", then you need to search preset name of your instance in the "presets". Preset name of an instance is automatically created and kept among their properties in the "data". You can get access to constant variables of your instance like, "presets[data[nameOfMyInstance]]". It may look tiresome, but it prevents possibly thousands of instances to have duplicate information.</p>
+</li>
+<h3><li>Iterate over instances</h3>
+<p>When iterating, you should use either walls, units, or items. Each of them keep names of their corresponding types of instances separated under the space partitions they belong to. For example, name of your instance may be listed under the array of "units[Vector3(1, 1, 1)]". This helps manipulating instances according to their spatial partitions, like being aware of the other instances around them, and using different update times depending on their distance to the camera.</p>
+<p>If you want to iterate or get only the names of the instances that are currently being rendered, you can always skip parts which are not listed in the "live". The "live", shows only the partitions which are currently being rendered.</p>
+<p>Do not forget, after a change in the coordinates, instance needs to do necessary changes in several places to maintain the consistency. Due to complexity of this process, we have provided an example as the main iteration for units in the script. You can write further artificial intelligence or behavior in the defined section in that loop. Hope you enjoy it!</p>
+<p>Note that, required functions for the partitioning are kept in a separate script.</p>
+</li>
+</ol>
+<h2>How to use multi-partition instance addon?</h2>
+<ol>
+</li>
+<h3><li>Set an image for your map</h3>
+<p>Each instance will have a different color code. Keeping this in mind, you can paint the pixels which you want the instance to appear when the camera is around. For example, you have two islands as your instances. You can choose two different colors, and paint where you want your islands to appear. If you would paint half of the map red, and the other half blue, one of the islands would appear when camera is on that half of the map, and the other island would appear when the camera is on the other half of the map. But that's not all. When camera would stand at the border, both islands would appear. Because, being on adjacent pixels also get the corresponding instance appear on the world.</p>
+<p>Now, "Where does that pixel shows?", you may ask. The first pixel (top left one) represents the space partition, Vector3(0, 0, 0). Pixels towards right, add to the x axis; and pixels towards down, add to the z axis. So the pixel Vector2(1, 2) would refer to the spatial partition Vector3(1, 0, 2).</p>
+<p>Please note that, to not crash the game, negative partitions and partitions beyond the size of the image, keep spawning things using modulus and such convention. We strongly recommend to not use partitions beyond your image, and leaving edged of your image pitch black for the sake of sanity!</p>
+</li>
+</li>
+<h3><li>Prepare your pre... colors!</h3>
+<p>Just like the "presets", the addon has "colors". Each key is supposed to be a positive number with three digits, which represents a true color in RGB system. Some examples are given below:</p>
+<ul>
+<li>123 <- RGB(0.1, 0.2, 0.3)</li>
+<li>123 <- RGB(0.12, 0.23, 0.34)</li>
+<li>123 <- RGB(0.05, 0.16, 0.27)</li>
+</ul>
+<p>Then each sub dictionary must have a "res" for path to their resource file, and an "origin" to know where to spawn the scene at. To keep things simple and clean, we have decided that it's the best to not allow users to rotate their islands. Thank you for your cooperation!</p>
+<p>Example: {"234": {"res": "res://SceneNodes/Islands/Island_Small.tscn", "origin": Vector3(0, 0, 0)}}</p>
+</li>
+</ol>
+<h3>For further modification</h3>
+<p>You don't! Just let me know what you need, and I'll try to make any necessary changes.</p>
+<br>
+<p align="right">mayonnace</p>
+
+</body>
+
+</html>
