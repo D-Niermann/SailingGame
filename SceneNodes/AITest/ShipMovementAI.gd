@@ -39,7 +39,7 @@ var myShip
 
 func _ready():
 	org_transform = global_transform
-	enemy = get_tree().get_nodes_in_group("PlayerShip")[0]
+	enemy = GlobalObjectReferencer.playerShip
 	myShip = get_parent()
 
 func _physics_process(delta):
@@ -61,7 +61,9 @@ func update(destination: Vector2, objectsInRange : Dictionary):
 	calcTargetVector() # calculate the target vector for the current position
 	rotateToAngle() # rotate this spatial to the target vector
 	turnShip() # control the ship so that it follows the direciton of this spatial 
+	return {}
 
+	
 func aimCannons():
 	var cannon
 	for i in range(len(myShip.itemNodes)): # needs to iterate all the time because cannons can be destroyed
@@ -84,7 +86,7 @@ func calcTargetVector():
 		broadSideVec = towardsEnemy.rotated(up, PI/2)
 	else:
 		broadSideVec = towardsEnemy.rotated(up, -PI/2)
-	targetVector = -enemy.forward * parallelWeight  # add the target of going parallel to enemy
+	targetVector = -enemy.global_transform.basis.z * parallelWeight  # add the target of going parallel to enemy
 	targetVector += windVec.normalized() * windWeight  # add the target of going with the wind
 	targetVector += towardsEnemy * towardsWeight  # add the target of going towards or away from enemy
 	targetVector += broadSideVec * broadsideWeight # add the target of turn into broadside to enemy
@@ -92,7 +94,7 @@ func calcTargetVector():
 	
 func turnShip():
 	""" this function takes the spatial of this and tries to steer and guide the rigidbody ship towards it."""
-	var diff = signedAngle(myShip.forward,forward,up)*rotateSpeed
+	var diff = signedAngle(-myShip.global_transform.basis.z,forward,up)*rotateSpeed
 	myShip.turnForce = (diff)*10
 	
 func rotateToAngle():

@@ -1,4 +1,3 @@
-tool
 extends ImmediateGeometry
 
 func _ready():

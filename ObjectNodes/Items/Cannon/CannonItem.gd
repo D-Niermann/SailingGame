@@ -6,7 +6,6 @@ extends "res://ObjectNodes/Items/BaseItem.gd"
 export var BallScene: PackedScene # scene object of ball
 export var InfoPanel: PackedScene # scene object of cannons info ui panel
 
-var gearLookUpName = "CannonLarge" # the name in the economy gear list
 export(float) var force          = 0.6 # for trajectory prediction: force of ball
 export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
 export(float) var recoil_impulse = 0.3 # when firing to the ship
@@ -48,13 +47,9 @@ var forward2d = Vector2(1,0)
 var trajectoryPoints : Array
 var org_forward
 var reloadTimer : Timer
-
-
 func _ready():
 	## overwrite parent vars
-	maxCrew = 4
-	targetCrewSize = maxCrew
-	fetchDictParams(gearLookUpName)
+	fetchDictParams(databaseName) # todo, get all constants from that dictionary and not define vars here
 
 	marker = $TrajectoryMarkerGroup.get_children()
 	fakeBullet = $FakeBullet
@@ -91,11 +86,7 @@ func _ready():
 func onPlacement():
 	.onPlacement() # calls the parent function
 	org_forward = transform.basis.x.normalized() # used for angle calculation
-
-	## request inital crew TODO: put into function in baseItem
-	GlobalObjectReferencer.crewManager.requestCrew(self,1,GlobalObjectReferencer.crewManager.TG_WEAPONS,global_transform.origin,0) # request 1 man with prio 0
-	GlobalObjectReferencer.crewManager.requestCrew(self,1,GlobalObjectReferencer.crewManager.TG_WEAPONS,global_transform.origin,1) # request 1 man with prio 1
-
+	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -108,8 +99,8 @@ func _process(delta):
 	if playerAimCannons and isActive:
 		aimTo(GlobalObjectReferencer.ocean.waterMousePos)
 	
-	if infoPanel!=null:
-		isActive = infoPanel.isActive
+	# if infoPanel!=null:
+	# 	isActive = infoPanel.isActive
 
 
 		
@@ -179,14 +170,14 @@ func predictTrajectory():
 		if GlobalObjectReferencer.ocean!=null:
 			waterHeight = GlobalObjectReferencer.ocean.getWaterHeight(to_global(point))
 		if to_global(point).y>waterHeight:
-			if myShip.isPlayer:
-				marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*markerMoveSpeed
-				if i>1:
-					if reloaded:
-						marker[i].material_override.albedo_color = Color(1,1,1,0.5)
-					else:
-						marker[i].material_override.albedo_color = Color(0.6,0.2,0.2,0.5)
-					marker[i].visible = true
+		
+			marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*markerMoveSpeed
+			if i>1:
+				if reloaded:
+					marker[i].material_override.albedo_color = Color(1,1,1,0.5)
+				else:
+					marker[i].material_override.albedo_color = Color(0.6,0.2,0.2,0.5)
+				marker[i].visible = true
 			fakeBullet.transform.origin += Vector3(1,0,0)*force*5.2/(1+i*0.05)
 			fakeBullet.global_transform.origin += Vector3(0,-1,0)*0.015*i 
 		else:
@@ -206,20 +197,18 @@ func predictTrajectory():
 				underWater = halfPoint
 		## now take either the underwater or above water point
 		var preciseWaterPoint = aboveWater
-		if myShip.isPlayer:
-			for i in range(last_i, lineSize):
-				trajectoryPoints[i] = preciseWaterPoint
-				marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*markerMoveSpeed
-				marker[i].visible = true
+		for i in range(last_i, lineSize):
+			trajectoryPoints[i] = preciseWaterPoint
+			marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*markerMoveSpeed
+			marker[i].visible = true
 
 
-	if myShip.isPlayer:
-		if reloaded:
-			waterHitMarker.material_override.albedo_color = Color(1,1,1,0.5)
-		else:
-			waterHitMarker.material_override.albedo_color = Color(0.6,0.2,0.2,0.5)
-		waterHitMarker.visible = true
-		waterHitMarker.translation += (trajectoryPoints[lineSize-1] - waterHitMarker.translation)*markerMoveSpeed
+	if reloaded:
+		waterHitMarker.material_override.albedo_color = Color(1,1,1,0.5)
+	else:
+		waterHitMarker.material_override.albedo_color = Color(0.6,0.2,0.2,0.5)
+	waterHitMarker.visible = true
+	waterHitMarker.translation += (trajectoryPoints[lineSize-1] - waterHitMarker.translation)*markerMoveSpeed
 
 			
 func clearTrajectory():
@@ -239,7 +228,7 @@ func fireBall():
 		playAudio()
 		doParticles()
 		GlobalObjectReferencer.camera.shake_val += cam_shake/clamp(GlobalObjectReferencer.camera.global_transform.origin.distance_to(global_transform.origin)*0.02,1,99999)
-		myShip.applyCannonImpulse(translation, -transform.basis.x.normalized()*recoil_impulse)
+		GlobalObjectReferencer.playerShip.applyCannonImpulse(translation, -transform.basis.x.normalized()*recoil_impulse)
 		yield(get_tree().create_timer(rand_range(0,rand_max_delay)),"timeout")
 		var ball = BallScene.instance()
 		get_tree().get_root().add_child(ball)

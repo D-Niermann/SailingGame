@@ -16,16 +16,17 @@ var myShip # parent ship of this manager
 var decks # ref list of all decks on player ship
 # var humanNodes # list of all humans on ship (refs) needed? -> check currentAssignments
 
-# task dict (maybe change this to specific crewRequestsDict)
-# structure: tasks = {"0":[task1, task2, ...], "1" : [task1, task2, ..], "2": } these numbers can also be names 
+# structure: tasks = [[task1, task2, ...],[task1, task2, ..], ...] with 0th eleemnt being prio 0 and so on, so new tasks are being appended to the correct list, no sorting needed
 # a task is a dict: {"id": prio_12,"itemRef": asd, "position": V(0,0,0), "taskGroup": TG_Asd, }
-var tasks = {"0": [], "1": [], "2": [], "3": [], "4": []} # dict of all idle tasks, this list is always sorted per priority (because tasks get added so), key 0 is high prio, key 99 low
+var tasks = [] # list of lists of all queued tasks, this list is always sorted per priority (because tasks get added so), list 0 is high prio, list  99 low prio
+var numberOfPriorities = 5 # how large the tasks list will be
 
+var currentAssignments = {TG_RELAX:       {"idle": {}, "busy": []}, # refs to humans, idle means idle for new work busy means already on item or heading to it
+						  TG_WEAPONS:     {"idle": {}, "busy": []}, # make these lists only filled with IDs and then create a separate dict for all crew members refs to access via ID
+						  TG_UTILITY:     {"idle": {}, "busy": []}, 
+						  TG_NAVIGATION:  {"idle": {}, "busy": []}} # these assignments in the busy tab also have the priority herarchy so that code can quickly infer on what priority the man currently is, or if he is idle
 
-var currentAssignments = {TG_RELAX:       {"idle": [], "busy": []}, # TODO: change the arrays into dictionaries and use man ID to quicker acess man based on ID?
-						  TG_WEAPONS:     {"idle": [], "busy": []}, # make these lists only filled with IDs and then create a separate dict for all crew members refs to access via ID
-						  TG_UTILITY:     {"idle": [], "busy": []},
-						  TG_NAVIGATION:  {"idle": [], "busy": []}} # refs to humans, idle means idle for new work busy means already on item
+var items = {} # {itemID: {"itemRef": ref, "jobs": {jobID1 : {manID : ID, isReady: false}, jobID2 : {}, ...}}} # to quicly find man with manID, check the item.jobID description - it has the TG and prio in it
 
 # var crew = {} # crewID: {ref (referenceOfTheCrew), type (typeOfTheCrew), job (jobID), inventory, tired, xform (localTransform),..}
 # var jobs = {} # jobID: {ref (referenceOfTheItem), name (nameOfTheJob), crew (crewID), refName (refID in baseItem for loadGame)}
@@ -34,25 +35,34 @@ var currentAssignments = {TG_RELAX:       {"idle": [], "busy": []}, # TODO: chan
 const HUMAN: PackedScene = preload("res://ObjectNodes/Human/Human.tscn")
 
 func _ready():
+	## base variable init
 	myShip = get_parent()
 	decks = get_tree().get_nodes_in_group("PlayerDeck")
+	GlobalObjectReferencer.crewManager = self
+
+	## fetch all humans ( later will get loaded in )
 	var humanNodes = get_children()
+	
+
+	## init all arrays that contain prio arrays
+	for i in range((numberOfPriorities)):
+		tasks.append([]) 
+		currentAssignments[TG_RELAX].busy.append({})
+		currentAssignments[TG_WEAPONS].busy.append({})
+		currentAssignments[TG_UTILITY].busy.append({})
+		currentAssignments[TG_NAVIGATION].busy.append({})
+
+	## init the assignment data
 	for i in range(len(humanNodes)):
-		currentAssignments[TG_WEAPONS]["idle"].append(humanNodes[i])
+		currentAssignments[TG_WEAPONS]["idle"][humanNodes[i].id] = humanNodes[i]
 		humanNodes[i].assignDeck(decks[0])
 	print(currentAssignments)
-	GlobalObjectReferencer.crewManager = self
+
 	
 func _physics_process(delta):
 	checkMen()
-	# is this needed?: sortTasks() # sorting tasks array by priority 
-	checkTasks() # go through tasks and assign men
+	checkTasks() 
 
-# func sortTasks():
-# 	"""
-# 	sorting the tasks array by prio.
-# 	"""
-# 	pass
 
 	
 func checkTasks():
@@ -62,62 +72,106 @@ func checkTasks():
 	"""
 	# var bestMan = findBestMan(itemRef.translation, taskGroup)
 	## first priority
-	var t
-	for p in tasks.keys():
+	var task
+	# fetch a tasks beginning from prio 0 and the oldest task i that prio
+	for p in range(numberOfPriorities):
 		for i in range(len(tasks[p])):
-			t = tasks[p][i]
-			var manRef = findBestMen(t.position, t.taskGroup)
-			if manRef!=null:
-				## do something with the found man
-				manRef.giveTarget(t.itemRef, t.position, t.taskGroup)
-				tasks[p].remove(i)
-				print(currentAssignments)
-				## break here to save CPU (only one task per frame gets assigned this way)
-				break
+			task = tasks[p][i]
+			if items.has(task.itemID): # check if item still exists, could be deleted in the main time, task stays in task array when item unregisterd
+				## if task is found, find a suitable man
+				var manRef = findAndAssignBestMen(task.position, task.taskGroup, p)
+				if manRef!=null:
+					## do something with the found man
+					## give man the new item target
+					manRef.giveTarget(task.position, task.itemID, task.jobID) #todo: wrap this into one function "assignMantoitem"
+					items[task.itemID].jobs[task.jobID].manID = manRef.id
+					
+					## remove task
+					tasks[p].remove(i)
+					## break here to save CPU (only one task per frame gets assigned this way)
+					break
 
 	
 func checkMen():
 	"""
-	checks if men is able to stay in assigned group. If a man is not, force him into RELAX group, de-assign him from item that he is on.
-	Caution: if tired he goes to hammock: then do not remove him from hammock again, so only check TGs that are non RELAX
+	checks if men is able to stay in assigned group, maybe he is too tired or hungry. If a man is not, force him into RELAX group, de-assign him from item that he is on.
+	Caution: if tired he goes to hammock: then do not remove him from hammock again, he will still be tired, so only check TGs that are non RELAX (?)
+	Maybe also here check if human is in range to assign to item and assign him? could enable partitioning of these checks
 	"""
 	# for i in humans:
 		# if human.S_HUNGRY:
-			# item.unassignMan(human)
+			# item.unassignManFromItem(human)
 			# searchFood
 		# if human.S_TIRED:
 			# search hammock
 		# if human.S_WOUNDED:
 			# ...
 		# ...
-	pass
 
-func requestCrew(itemRef, amount : int, taskGroup, targetPosition, priority):
+
+	var man
+	# iterate all men
+	for tg in currentAssignments: # TODO: partioning idea: only check one TG per frame, (at the end of process(), go change the current tg to the next one)
+		for manID in currentAssignments[tg]["idle"]:
+			## do stuff with the idle man, like move them randomly or make them group together
+			pass
+		for prio in range(numberOfPriorities):
+			for manID in currentAssignments[tg]["busy"][prio]:
+				man = currentAssignments[tg]["busy"][prio][manID]
+				## do stuff with busy man (that are in tg and working in priority prio), maybe reduce their stamina faster
+				## if man is not assigned to his item yet, check if he can be
+				if man.itemID!=null && items[man.itemID].jobs[man.jobID].isReady==false:
+					if (man.translation-man.targetPos).length()<man.bodyHeight*5: # if human is within his body height close to item
+						# man.targetItem.assignManToItem(manID, {"taskGroup": tg, "priority": prio}) # give item and infoDict so that later the item can also tell CrewManager where to find id
+						## set the man of the item to "is ready"
+						items[man.itemID].jobs[man.jobID].isReady = true
+
+
+func requestCrew(itemID, jobID, taskGroup, targetPosition : Vector3, priority : int):
 	"""
 	When a cannon or something requests crew of type taskgroup, this function gets called.
-	itemRef: refernce to the item that requested the crew
+	itemID: id to the item that requested the crew
 	amunt: how many men are needed
+	jobID: the name of the item specific job 
 	taskGroup: from which task group
 	"""
-	for _i in range(amount):
-		# add the request to tasks array already in the correct order (prio)
-		tasks[str(priority)].append({"id": str(priority)+str(len(tasks[str(priority)])),"itemRef": itemRef, "position": targetPosition, "taskGroup": taskGroup})
+	# add the request to tasks array already in the correct order (prio)
+	tasks[priority].append({"id": IDGenerator.getID(), "itemID": itemID, "jobID": jobID, "position": targetPosition, "taskGroup": taskGroup})
 
 
 
-func findBestMen(itemPos : Vector3, taskGroup):
+func findAndAssignBestMen(itemPos : Vector3, taskGroup, priority : int):
 	"""
-	Searches for the best fitting crew member to do the task, removes him already from idle group and adds him to busy
+	Searches for the best fitting crew member to do the task and assigns him to item
+	searches first men that are completly idle, if none are found searches for man that do less prioritzed work 
+	returns manID
 	"""
-	## for now could only return the nearset
 	var foundMen
-	for i in range(len(currentAssignments[taskGroup]["idle"])):
+	var foundID
+
+	## first check idle men in task group
+	for id in currentAssignments[taskGroup]["idle"]:
 		if true: # TODO: put real check here
-			foundMen = currentAssignments[taskGroup]["idle"][i]
+			foundMen = currentAssignments[taskGroup]["idle"][id]
+			foundID = id
 			## put human into busy list and remove from idle list
-			currentAssignments[taskGroup]["busy"].append(foundMen)
-			currentAssignments[taskGroup]["idle"].remove(i)
+			currentAssignments[taskGroup]["busy"][priority][id] = foundMen
+			currentAssignments[taskGroup]["idle"].erase(id)
+			print("Found man for task with prio", priority)
 			return foundMen
+	## if non are idle or suitable, check busy men from lower priorites, but check the lowest prio first
+	for prio in range(numberOfPriorities-1,priority,-1): # doest go to priority, stops at priority+1
+		for id in currentAssignments[taskGroup]["busy"][prio]:
+			if true: # TODO: put actual condition here
+				foundMen = currentAssignments[taskGroup]["busy"][prio][id]
+				foundID = id
+				## put man in new group and del from old group
+				currentAssignments[taskGroup]["busy"][priority][id] = foundMen
+				# and unassign from item that he was on, while also allowing the item to directly search for new man
+				# foundMen.targetItem.unassignManfromItem(id)
+				currentAssignments[taskGroup]["busy"][prio].erase(id)
+				print("Found man for task with prio", priority)
+				return foundMen
 
 
 func requestItems(items : Dictionary, priority):
@@ -125,7 +179,10 @@ func requestItems(items : Dictionary, priority):
 	When a cannon or something requests items like gunpowder and cannonballs, this function gets called.
 	
 	"""
-	var itemsChunked = groupItemsIntoChunks(items)
+	###
+	## no more chunking, crew can only carry one unit of anything
+	###
+	# var itemsChunked = groupItemsIntoChunks(items)
 	# for every chunk: 
 	# check where items are stored (needs global storage array with positions to calc distance)
 	# findClosestItem(pos)
@@ -133,27 +190,67 @@ func requestItems(items : Dictionary, priority):
 	# human registers to barrel, fetches item. (what if item then is already gone? - items need to be reserved)
 	pass
 
-func groupItemsIntoChunks(items : Dictionary):
+
+
+
+func makeManIdle(manID : int, tg, priority):
 	"""
-	groups item dictionary into chunks useable per crew member when item dictionary request is large.
-	one crew member can hold N items, so one chunk also contains N items, maybe even of the same type, so crew is walking optimal.
-	returns a new array with the chunks. 
-	eg: [{gunpowder:10}, #chunk1
-		{gunpowder:2, cannonballs:5}] #chunk 2
+	move man into the idle group , remove targets on man,
+	when man was busy, he was connected to an item, so disconnect him from that
+	also when men gets disconnected from item, item needs to request new one
+	"""
+	var manRef = currentAssignments[tg]["busy"][priority][manID]
+	manRef.removeTarget()
+	# add to idle
+	currentAssignments[tg]["idle"][manID] = manRef
+	## remove from busy
+	currentAssignments[tg]["busy"][priority].erase(manID)
+
+
+func forceManintoRelaxed(id):
+	""" 
+	Called from crew manager when man is too tired and then gets into relax TG
+	when that happens, automatically replace the removed man with a man from RELAX[idle] group - if non there take the relax[busy] man that has most health and stamina
 	"""
 	pass
 
+func registerItem(itemRef):
+	""" called from item when item is placed 
+	only adds item to item dict and requests the crew (adds taks)"""
+	if not items.has(itemRef.id): # could be because of loaded items dictionary
+		if Economy.goods.has(itemRef.databaseName):
+			print("CM: registered item")
+			
+			items[itemRef.id] = {"databaseName" : itemRef.databaseName, "jobs": {}} 
+			
+			# add job data
+			for jobID in Economy.goods[itemRef.databaseName]["jobs"]:
+				items[itemRef.id].jobs[jobID] = {"manID" : null, "isReady" : false}
+				
+				# make crew request for each job
+				requestCrew(
+					itemRef.id, # id of item
+					jobID, # id of the item specific job
+					Economy.goods[itemRef.databaseName]["jobs"][jobID].tg,  # taskgroup
+					Economy.goods[itemRef.databaseName]["jobs"][jobID].posOffset + itemRef.transform.origin,  # position
+					Economy.goods[itemRef.databaseName]["jobs"][jobID].priority) # prio
+		else:
+			print("warning: name not found in economy: ",itemRef.databaseName)
 
-func makeManIdle(manRef):
-	var a = currentAssignments[manRef.currentTaskGroup]["busy"]
-	for i in range(len(a)):
-		if a[i].name == manRef.name:
-			currentAssignments[manRef.currentTaskGroup]["idle"].append(manRef)
-			manRef.removeTarget()
-			a.remove(i)
-			print("making man idle")
-			break
-
+func unregisterItem(itemRef):
+	""" called from item when item is placed 
+	only removes assigned man from items dict and makes man idle """
+	print("CM: unregistered item")
+	## iterate all jobs of that item, and remove assigned man from items list
+	for jobID in items[itemRef.id].jobs:
+		if items[itemRef.id].jobs[jobID].manID != null: 
+			var taskGroup = Economy.goods[itemRef.databaseName]["jobs"][jobID].tg
+			var priority = Economy.goods[itemRef.databaseName]["jobs"][jobID].priority
+			makeManIdle(items[itemRef.id].jobs[jobID].manID, taskGroup, priority)
+		items[itemRef.id].jobs[jobID] = {"manID" : null, "isReady" : false}
+	# remove item from items list
+	items.erase(itemRef.id)
+### mayonnace stuff
 	# func reconnectJobs():
 	# 	"""
 	# 	Reconnects item references with the help of refName in their data.

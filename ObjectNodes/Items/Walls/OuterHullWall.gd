@@ -10,13 +10,11 @@ func _ready():
 	maxHealth = 10
 	currentHealth = maxHealth
 	## outer hull walls are always already placed on ship model, so they can register in the ready() call
-	fetchMyShip()
-	myShip.registerItem(self)
 
 
 func _physics_process(delta):
 	if isLeaking:
-		myShip.fillWater(0.01*delta)
+		GlobalObjectReferencer.playerShip.fillWater(0.01*delta)
 
 # overwrite base function for extra stuff
 func giveDmg(damage : float):
@@ -24,13 +22,12 @@ func giveDmg(damage : float):
 	## extras
 	if currentHealth<leakHealth:
 		isLeaking = true
-		if myShip.isPlayer: # only make particle effects if ship is player
-			if $WaterLeakParticles!=null:
-				$WaterLeakParticles.emitting = true
-			if $WaterLeakParticles2!=null:
-				$WaterLeakParticles2.emitting = true
-			if $WaterLeakParticles3!=null:
-				$WaterLeakParticles3.emitting = true
+		if $WaterLeakParticles!=null:
+			$WaterLeakParticles.emitting = true
+		if $WaterLeakParticles2!=null:
+			$WaterLeakParticles2.emitting = true
+		if $WaterLeakParticles3!=null:
+			$WaterLeakParticles3.emitting = true
 	
 
 func createInfo(placeholder):

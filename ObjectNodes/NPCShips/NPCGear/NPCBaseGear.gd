@@ -12,7 +12,7 @@ Item names need to have the same name as in 'economy.goods' dictionary
 
 ## item specifc settings (should be fetched from dictionary)
 var penetrationFactor = 0 # penetration factor used for bullets, 0-1, 1 = like air, 0 = inpenetrable
-# var dataBaseName = "baseName" # set this in the inherited items
+var databaseName = "baseItemName" # the name in the economy gear list, set this in the inherited gear
 var maxHealth = 1
 var damageMultiplier = 10 # multiple base damage by this value, just so that the maxHealth values can be bigger integers
 var isCannon = false # used for AI

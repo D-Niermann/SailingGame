@@ -3,7 +3,6 @@
 [ext_resource path="res://ControlNodes/ExampleTheme.tres" type="Theme" id=1]
 [ext_resource path="res://ObjectNodes/Items/Cannon/CannonInfoBox.gd" type="Script" id=2]
 
-
 [node name="CannonInfo" type="TextureRect"]
 anchor_right = 0.196
 anchor_bottom = 0.162
@@ -144,4 +143,5 @@ pressed = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="toggled" from="Panel/ActiveToggle" to="." method="_on_ActiveToggle_toggled"]

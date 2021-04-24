@@ -35,9 +35,9 @@ var colors: Dictionary = { # like data, but for the multi-partition stuff
 	"030": {"res": "res://SceneNodes/Islands/dummyIslandThree.tscn", "origin": Vector3(5, 0, 1)}
 }
 var presets: Dictionary = { # constants are not copied over the instance, this is where we summon stuff from, and also check some constant variables from
-	"example": {"CON": "units", "PRE": "NPC01", "RES": "res://ObjectNodes/NPCShips/NPC1/NPC1ShipTestWithoutScripts.tscn", "SPEED": 1, "weight": 1, "side": "spanish", "type": "trade", "pack": [], "gold": INF, "mode": "sell"}
+	"example": {"CON": "units", "PRE": "NPC01", "RES": "res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn", "SPEED": 1, "weight": 1, "side": "spanish", "type": "trade", "pack": [], "gold": INF, "mode": "sell"}
 }
-var NPC01: PackedScene = preload("res://ObjectNodes/NPCShips/NPC1/NPC1ShipTestWithoutScripts.tscn")
+var NPC01: PackedScene = preload("res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -49,15 +49,10 @@ func _ready():
 	Utility.topograph = topograph # map for loading islands and also for pathfinding
 	Utility.dominions = dominions # map for goalfinding and pathfinding, shows regions
 	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
+	spawn("example", Utility.partitionLocation(Vector3(1, 0, 0), PARTSIZE, false))
+	spawn("example", Utility.partitionLocation(Vector3(2, 0, 0), PARTSIZE, false))
+	spawn("example", Utility.partitionLocation(Vector3(3, 0, 0), PARTSIZE, false))
+	spawn("example", Utility.partitionLocation(Vector3(4, 0, 0), PARTSIZE, false))
 	if Utility.lastSlot != null:
 		loadGame(Utility.lastSlot)
 	else:
@@ -139,9 +134,10 @@ func _physics_process(delta):
 				for unit in units[partition]:
 					inProx[unit] = data[unit]
 					var side = data[unit]["side"]
-					if !sides[partition].has(side):
-						sides[partition][side] = 0
-					sides[partition][side] += 1 # this "1" can be replaced with scoring of power of that ship
+					if sides.has(partition):
+						if !sides[partition].has(side):
+							sides[partition][side] = 0
+						sides[partition][side] += 1 # TODO : this "1" can be replaced with scoring of power of that ship
 		var sidesSpread: Dictionary = sides.duplicate(true)
 		for partition in sides.keys():
 			for partitionTwo in sides.keys():

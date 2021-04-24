@@ -55,9 +55,9 @@ func _ready():
 	turnForce = 0
 	sails = 0
 
-
 	## add Decks to item placeable deck group if ship belongs to player
 	if isPlayer:
+		print("PlayerShip Ready Call")
 		GlobalObjectReferencer.playerShip = self # register player ship
 		var a = model.get_children()
 		for i in range(1, a.size()):

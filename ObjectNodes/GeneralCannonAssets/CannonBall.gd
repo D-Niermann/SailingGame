@@ -4,7 +4,7 @@ extends KinematicBody
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var velocity = 6 
+var velocity = 6 # the velocity in horizontla direciton, used for move and slide commands
 var dir = Vector3(-1,0,0)
 var default_gravity = 1
 var gravity = default_gravity
@@ -33,6 +33,7 @@ var stopMove = false  # true if movement should stop (stuck inside some body)
 var coll # the colliding object
 var waterEntered = false
 var ocean
+var speed = 0 # the actual, measured speed
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	time = 0
@@ -53,8 +54,8 @@ func checkAndDestroy():
 
 
 func _process(delta):
-	if isMarkedasDestruct:
-		$Mesh.get_surface_material(0).albedo_color.a -= 1/60.0
+	# if isMarkedasDestruct:
+	# 	$Mesh.get_surface_material(0).albedo_color.a -= 1/60.0 # bug: looks shitty over water shader, and also affects all other balls materials
 	time += delta
 	grav_time += delta
 	var waterHeight = 0
@@ -86,9 +87,11 @@ func _process(delta):
 			## gravity move
 			move_and_slide(gravity_dir*gravity*grav_time*drag_factor) 
 
+	speed = (translation-last_pos).length()
 
-	if velocity<0.1:
+	if speed<0.1:
 		$Trail.emitting = false
+	if speed<0.0001:
 		if coll_obj != null and !stopMove: # permanently stuck inside some body, add as child to obj to keep moving with it 
 			var globalPos = global_transform.origin
 			get_parent().remove_child(self)
@@ -115,16 +118,18 @@ func _process(delta):
 			else:
 				## if inside body:
 				coll_obj = instance_from_id(coll.collider_id)
+				
 				if not coll_obj.get("penetrationFactor") == null:
 					drag_factor = coll_obj.penetrationFactor
 				else:
 					drag_factor = 0.5
 				if coll_obj.has_method("giveDmg"):
-					coll_obj.giveDmg((translation-last_pos).length()) ##give damage to object
+					coll_obj.giveDmg(speed) ##give damage to object
 				gravity = 0
-				playAudio()
-				$HitParticle.emitting = true
-				$HitParticle.get_child(0).emitting = true
+				if speed>0.1:
+					playAudio()
+					$HitParticle.emitting = true
+					$HitParticle.get_child(0).emitting = true
 				isInsideBody = true
 	else:
 		## if no collision with object

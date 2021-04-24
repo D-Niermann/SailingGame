@@ -2,6 +2,7 @@ extends KinematicBody
 class_name Human
 """
 base Script on each human. maybe other special humans like officers can inherit from this.
+gets controlled by crew manager, only feature is that he gets a target position and walks there, maybe later adding stamina and so on, but that can be done in crew manager too
 """
 
 export var InfoPanel: PackedScene # scene object of cannons info ui panel
@@ -13,35 +14,43 @@ const S_HUNGRY = "S_HUNGRY" # too hungry
 const S_THIRSTY = "S_THIRSTY" # too thirsty
 const S_WOUNDED = "S_WOUNDED"  # too wounded - needs to go to doctor
 
-var targetItem = null # ref to the curernt item the human is working
+var itemID = null # ref to the curernt item the human is working
+var jobID = null # ref to the curernt item the human is working
 var stati = [] #keeps track of all stati (stati = [S_Hungry, S_THIRSTY, ...]) 
 var targetPos = Vector3.ZERO
 var currentDeck = 0
 var bodyHeight = 0.1
-var currentTaskGroup = null
+# var currentTaskGroup = null
 var isHuman = true # flag for shopping script to see if this kin body is human
 var infoPanel
-var isAssigned = false
+# var isAssigned = false
+var id
 
 func _ready():
-	pass
+	targetPos.x += rand_range(-0.3,0.3)
+	targetPos.z += rand_range(-0.3,0.3)
+	id = IDGenerator.getID()
 
 func assignDeck(deckRef):
 	get_parent().remove_child(self)
 	deckRef.add_child(self)
 
-func giveTarget(itemRef, target_position : Vector3, TG):
+func giveTarget(target_position : Vector3, itemID : int, jobID : String):
 	"""
 	gives a target item to walk to
 	"""
-	targetPos = to_local(target_position)
-	targetItem = itemRef
-	currentTaskGroup = TG
+	targetPos = (target_position)
+	self.itemID = itemID
+	self.jobID = jobID
+	# currentTaskGroup = TG
 
 func removeTarget():
-	targetItem = null
-	currentTaskGroup = null
+	# targetPos = (target_position)
+	self.itemID = null
+	self.jobID = null
 	targetPos = Vector3.ZERO
+	targetPos.x += rand_range(-0.3,0.3)
+	targetPos.z += rand_range(-0.3,0.3)
 	
 func walkTowards(targetPos : Vector3):
 	""" for now some simple function, later will use navmesh """
@@ -50,11 +59,7 @@ func walkTowards(targetPos : Vector3):
 
 func _process(delta):
 	walkTowards(targetPos)
-	## if near the item, assign to it
-	if !isAssigned:
-		if (translation-targetPos).length()<bodyHeight*5 && targetItem!=null: # if human is within his body height close to item
-			targetItem.assignMan(self)
-			isAssigned = true
+
 
 
 func createInfo(placeholder):

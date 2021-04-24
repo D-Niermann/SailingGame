@@ -51,9 +51,9 @@ __meta__ = {
 }
 
 [node name="HealthLabel" type="RichTextLabel" parent="Panel"]
-margin_left = 197.751
+margin_left = 95.0
 margin_top = 66.0
-margin_right = 256.751
+margin_right = 257.0
 margin_bottom = 99.0
 text = "100"
 __meta__ = {
@@ -71,11 +71,11 @@ __meta__ = {
 }
 
 [node name="StatusLabel" type="RichTextLabel" parent="Panel"]
-margin_left = 71.0
-margin_top = 131.666
-margin_right = 263.0
-margin_bottom = 164.666
-text = "Idle/Busy"
+margin_left = 139.849
+margin_top = 132.0
+margin_right = 241.849
+margin_bottom = 165.0
+text = "0"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -90,10 +90,10 @@ __meta__ = {
 }
 
 [node name="MaxUsers" type="RichTextLabel" parent="Panel"]
-margin_top = 131.666
-margin_right = 71.0
-margin_bottom = 164.666
-text = "Status"
+margin_top = 132.0
+margin_right = 122.0
+margin_bottom = 165.0
+text = "Assigned:"
 __meta__ = {
 "_edit_use_anchors_": false
 }

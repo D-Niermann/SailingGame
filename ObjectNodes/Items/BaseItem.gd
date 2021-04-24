@@ -1,7 +1,7 @@
 extends KinematicBody
 
 """
-All Gear shall inherit from this script.
+All player Gear shall inherit from this script.
 Here also all children instances can be stored, so that other script can acces the correct stuff from here. 
 EG dont use $Mesh1 in some script but define mesh var here and access this var.
 
@@ -9,22 +9,21 @@ Item names need to have the same name as in economy.goods dictionary
 """
 
 export(bool) var movable = true # set false in godot editor for pre placed gear 
+export var databaseName = "putEconomyItemDictKeyHere" # the name in the economy gear list, set this in the inherited gear
 
 ## item specifc settings (TODO: should be fetched from dictionary)
-var penetrationFactor = 0 # penetration factor used for bullets, 0-1, 1 = like air, 0 = inpenetrable
-var dataBaseName = "baseName" # set this in the inherited gear
+var penetrationFactor = 0.5 # penetration factor used for bullets, 0-1, 1 = like air, 0 = inpenetrable
 var maxHealth = 1
 var damageMultiplier = 10 # multiple base damage by this value, just so that the maxHealth values can be bigger integers
 var isCannon = false # used for AI
 var weight = 2.0 
 
 ## crew and task stuff
-var maxCrew = 0 # TODO :could also be defined in some dictionary
-var targetCrewSize = 0 # for maybe if  player makes restictions to this item 
-var assignedMen = [] # refs to all men assigned to this item
+# var maxCrew = 0 # TODO :could also be defined in some dictionary
+# var targetCrewSize = 0 # for maybe if  player makes restictions to this item 
+# var assignedMen = {} # IDs and data of all men assigned to this item, if specific refernce to human is needed, call the crewManager with the mans ID -> cannot control human directly. values are infoDictionaries  {taskGropup :xxx, priority: yyy}
 
 ## 
-var myShip # obj ship that this is on
 var gridMesh # green/red mesh that displays the hitbox of gear
 var pAudio # audio player thats emitting when item is placed
 var itemPlaceParticle # dynamically loaded particles 
@@ -32,8 +31,10 @@ var currentHealth = maxHealth
 var particleRes = load("res://ObjectNodes/Items/ItemPlaceParticle.tscn") # universal placement particles
 var isPlayerControlable = false # if player can control this item (also maybe click on it)
 var isPlaced = false
+var id # id of this item
 
 func _ready():
+	id = IDGenerator.getID()
 	## TODO: this gets also called when item is picked in shop
 	# print("BaseItem ready()")
 	gridMesh = get_node("GridShowMesh")
@@ -45,37 +46,35 @@ func _ready():
 	itemPlaceParticle.one_shot = true
 	itemPlaceParticle.emitting = false
 	add_child(itemPlaceParticle)
-	# onPlacement()
 
 
 
-func fetchMyShip():
-	myShip = get_parent().get_parent().get_parent()
-	if myShip != null:
-		if "isPlayer" in myShip:
-			if myShip.isPlayer:
-				isPlayerControlable = true
-		else:
-			myShip = null # reset this var to null because it is not a rigid body ship node
+
+# func fetchMyShip():
+# 	myShip = get_parent().get_parent().get_parent()
+# 	if myShip != null:
+# 		if "isPlayer" in myShip:
+# 			if myShip.isPlayer:
+# 				isPlayerControlable = true
+# 		else:
+# 			myShip = null # reset this var to null because it is not a rigid body ship node
 
 
 func onPlacement():
 	"""
 	Gets called every time the item is placed onto the ship (shopping, replacing, loading).
 	"""
-	print("BaseItem onPlacement()")
-	fetchMyShip()
-	if myShip!=null: #if actually on ship
-		myShip.registerItem(self)
-		if gridMesh!=null:
-			gridMesh.visible = false # make the grid item invisible again
-		itemPlaceParticle.emitting = true
-		# play Audio
-		if pAudio!=null:
-			pAudio.set_pitch_scale(pAudio.pitch_scale+rand_range(-0.2,0.2))
-			pAudio.play()
+	# fetchMyShip() # obsolete cause this is player item, use globalObjectReferencer
+	registerItem()
+	if gridMesh!=null:
+		gridMesh.visible = false # make the grid item invisible again
+	itemPlaceParticle.emitting = true
+	# play Audio
+	if pAudio!=null:
+		pAudio.set_pitch_scale(pAudio.pitch_scale+rand_range(-0.2,0.2))
+		pAudio.play()
+	isPlaced = true
 
-		isPlaced = true
 
 func onHover():
 	"""
@@ -89,14 +88,26 @@ func onRemove():
 	When item is removed from deck (picked up by player, maybe later also destroyed)
 	"""
 	print("item remove")
-	for i in range(len(assignedMen)):
-		print("making man idle :item")
-		unassignMan(assignedMen[i])
-	if myShip.has_method("unregisterItem"):
-		myShip.unregisterItem(self)
+	# for id in assignedMen:
+	# 	print("making man idle :item id: ", id)
+	# 	GlobalObjectReferencer.crewManager.makeManIdle(id, assignedMen[id])
+	# assignedMen = {}
+	# if GlobalObjectReferencer.playerShip.has_method("unregisterItem"):
+	unregisterItem()
 	isPlaced = false
 	
-	
+
+func registerItem():
+	""" registers item in all necessary control units (ship, crewmanager)"""
+	GlobalObjectReferencer.playerShip.registerItem(self)
+	GlobalObjectReferencer.crewManager.registerItem(self)
+
+
+func unregisterItem():
+	""" unregisters item in all necessary control units (ship, crewmanager)"""
+	GlobalObjectReferencer.playerShip.unregisterItem(self)
+	GlobalObjectReferencer.crewManager.unregisterItem(self)
+
 
 func giveDmg(damage : float):
 	"""
@@ -135,15 +146,31 @@ func removeInfo():
 	pass
 
 
-func assignMan(manRef):
-	""" assign a human to this item """
-	assignedMen.append(manRef)
+
+# func assignManToItem(id:int, infoDict):
+# 	""" assign a human to this item, called from Crewmanager """
+# 	assignedMen[id] = infoDict # {taskGropup :xxx, priority: yyy}
 	
-func unassignMan(manRef):
-	for i in range(len(assignedMen)):
-		if assignedMen[i].name == manRef.name:
-			GlobalObjectReferencer.crewManager.makeManIdle(assignedMen[i])
-			assignedMen.remove(i)
-			print("test if i really is the right index")
-			break
-	pass
+# func unassignManfromItem(id):
+# 	""" 
+# 	unassign a human from this item, called from this item when removed and from crew manager when reassigning man to better prio
+# 	"""
+# 	assignedMen.erase(id)
+	## request new crew because a man got removed
+	# GlobalObjectReferencer.crewManager.makeManIdle(assignedMen[i])
+	# for i in range(len(assignedMen)):
+	# 	if assignedMen[i].name == manRef.name:
+	# 		assignedMen.remove(i)
+	# 		break
+	# pass
+
+# func unassignManfromItem(id):
+# 	""" 
+# 	unassign a human from this item, called from Crewmanager
+# 	and directly request a new man
+# 	"""
+# 	if id in assignedMen.keys():
+# 		GlobalObjectReferencer.crewManager.requestCrew(self,assignedMen[id].taskGroup, global_transform.origin, assignedMen[id].priority) # TODO: need to know what position of man was removed (what prio) so that the request crew function requests the same position again
+# 		assignedMen.erase(id)
+# 	else:
+# 		print("failed try to unassign man from item: ",self.name)
