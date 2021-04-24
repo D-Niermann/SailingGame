@@ -202,9 +202,9 @@ func _physics_process(delta):
 		if sprite!=null:
 			sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		highlight = null
-	if newHighlight != null:
+	if is_instance_valid(newHighlight):
 		highlight = newHighlight
-	if highlight != null:
+	if is_instance_valid(highlight):
 		var sprite = highlight.get_node("Sprite3D")
 		if sprite!=null:
 			sprite.modulate = Color(1.0, 1.0, 0.0, 1.0)

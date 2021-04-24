@@ -223,7 +223,7 @@ func fireBall():
 		playAudio()
 		doParticles()
 		GlobalObjectReferencer.camera.shake_val += cam_shake/clamp(GlobalObjectReferencer.camera.global_transform.origin.distance_to(global_transform.origin)*0.02,1,99999)
-		myShip.applyCannonImpulse(translation, -transform.basis.x.normalized()*recoil_impulse)
+		myShip.applyCannonImpulse(translation, transform.basis.z.normalized()*recoil_impulse)
 		yield(get_tree().create_timer(rand_range(0,rand_max_delay)),"timeout")
 		var ball = BallScene.instance()
 		get_tree().get_root().add_child(ball)

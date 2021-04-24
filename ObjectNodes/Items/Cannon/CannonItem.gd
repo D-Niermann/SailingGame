@@ -137,10 +137,9 @@ func _unhandled_input(event):
 	if event.is_action_released("FireCannons"):
 		playerAimCannons = false
 		clearTrajectory()
-		if canShoot:
-			fireBall()
+		fireBall()
 	if playerAimCannons:
-		if event.is_action_released("testFire") and isTestCannon and canShoot:
+		if event.is_action_released("testFire") and isTestCannon:
 			fireBall()
 		
 	# if event.is_action_released("RotateCannonLeft"):
@@ -221,13 +220,13 @@ func clearTrajectory():
 		trajectoryPoints[i] = point
 
 func fireBall():
-	if reloaded and isActive:
+	if GlobalObjectReferencer.crewManager.items[id].crewScore>0 and reloaded and isActive and canShoot:
 		reloaded = false
 		yield(get_tree().create_timer(fire_delay_sec),"timeout")
 		playAudio()
 		doParticles()
 		GlobalObjectReferencer.camera.shake_val += cam_shake/clamp(GlobalObjectReferencer.camera.global_transform.origin.distance_to(global_transform.origin)*0.02,1,99999)
-		GlobalObjectReferencer.playerShip.applyCannonImpulse(translation, -transform.basis.x.normalized()*recoil_impulse)
+		GlobalObjectReferencer.playerShip.applyCannonImpulse(translation, transform.basis.z.normalized()*recoil_impulse)
 		yield(get_tree().create_timer(rand_range(0,rand_max_delay)),"timeout")
 		var ball = BallScene.instance()
 		get_tree().get_root().add_child(ball)
@@ -235,7 +234,7 @@ func fireBall():
 		ball.transform.origin = self.global_transform.origin+ self.global_transform.basis.x*1 # + foward to give ball a forward offset to get behind own walls
 		ball.dir = global_transform.basis.x
 		ball.velocity = force
-		reloadTimer.set_wait_time(reload_time_sec/GlobalObjectReferencer.crewManager.items[id].crewScore) # if score is 0 cannot even shoot so it should never divide by 0
+		reloadTimer.set_wait_time(reload_time_sec/GlobalObjectReferencer.crewManager.items[id].crewScore) 
 		reloadTimer.start()
 
 
