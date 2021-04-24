@@ -313,22 +313,25 @@ func registerItem(itemRef):
 	only adds item to item dict and requests the crew (adds taks)"""
 	if not items.has(itemRef.id): # could be because of loaded items dictionary
 		if Economy.goods.has(itemRef.databaseName):
-			
-			items[itemRef.id] = {"crewScore": 0, "itemRef" : itemRef, "databaseName" : itemRef.databaseName, "jobs": {}} 
-			
-			# add job data
-			for jobID in Economy.getJobs(itemRef.databaseName):
-				items[itemRef.id].jobs[jobID] = {"manID" : null, "isReady" : false}
+			## only append if item has jobs
+			if len(Economy.getJobs(itemRef.databaseName))>0:
+				items[itemRef.id] = {"crewScore": 0, "itemRef" : itemRef, "databaseName" : itemRef.databaseName, "jobs": {}} 
 				
-				# make crew request for each job
-				requestCrew(
-					itemRef.id, # id of item
-					jobID, # id of the item specific job
-					Economy.getJobs(itemRef.databaseName)[jobID].tg,  # taskgroup
-					Economy.getJobs(itemRef.databaseName)[jobID].posOffset + itemRef.transform.origin,  # position
-					Economy.getJobs(itemRef.databaseName)[jobID].priority) # prio
+				# add job data
+				for jobID in Economy.getJobs(itemRef.databaseName):
+					items[itemRef.id].jobs[jobID] = {"manID" : null, "isReady" : false}
+					
+					# make crew request for each job
+					requestCrew(
+						itemRef.id, # id of item
+						jobID, # id of the item specific job
+						Economy.getJobs(itemRef.databaseName)[jobID].tg,  # taskgroup
+						Economy.getJobs(itemRef.databaseName)[jobID].posOffset + itemRef.transform.origin,  # position
+						Economy.getJobs(itemRef.databaseName)[jobID].priority) # prio
+			else:
+				print("Item not added to crew manager because it has no Jobs")
 		else:
-			print("warning: name not found in economy: ",itemRef.databaseName)
+			print("warning: name not found in economy and thus not  added to crew manager: ",itemRef.databaseName)
 
 func unregisterItem(itemRef):
 	""" called from item when item is placed 
@@ -357,7 +360,6 @@ func getCrewScore(itemID) -> float:
 		if items[itemID].jobs[jobID].isReady: 
 			score += 1
 	score = score / len(items[itemID].jobs)
-	print(score)
 	return score
 
 
