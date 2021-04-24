@@ -59,6 +59,44 @@ var cases: Dictionary = {
 }
 
 
+# Returns true if the given product can be purchased at the given place.
+func canBuy(product: String, at: String):
+	var mall = malls.get(at)
+	if mall == null:
+		return false
+	var amount = mall["goods"].get(product)
+	if amount == null || amount < 1:
+		return false
+	var good = goods.get(product)
+	if good == null:
+		return false
+	var type = good["type"]
+	if mall["black"].has(type):
+		return false
+	if !mall["white"].has(type):
+		return false
+	return true
+
+
+# Returns true if the given product can be sold at the given place.
+func canSell(product: String, at: String):
+	var mall = malls.get(at)
+	if mall == null:
+		return false
+	var good = goods.get(product)
+	if good == null:
+		return false
+	var type = good["type"]
+	if mall["black"].has(type):
+		return false
+	if !mall["white"].has(type):
+		return false
+	var price = getPrice(product, at)
+	if mall["money"] < price:
+		return false
+	return true
+
+
 # Returns size for the given product.
 func getSize(of: String):
 	return goods[of]["size"]
