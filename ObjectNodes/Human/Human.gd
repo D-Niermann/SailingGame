@@ -19,7 +19,7 @@ var jobID = null # ref to the curernt item the human is working
 var stati = [] #keeps track of all stati (stati = [S_Hungry, S_THIRSTY, ...]) 
 var targetPos = Vector3.ZERO
 var currentDeck = 0
-var bodyHeight = 0.05
+var bodyHeight = 0.03
 # var currentTaskGroup = null
 var isHuman = true # flag for shopping script to see if this kin body is human
 var infoPanel
