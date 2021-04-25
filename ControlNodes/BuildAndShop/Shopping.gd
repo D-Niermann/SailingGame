@@ -131,7 +131,6 @@ func _physics_process(delta):
 	var upward = target.global_transform.basis.y.normalized()
 	hit = spaceState.intersect_ray(from, from+toward*2000, toIgnore, layer)
 	while (hologram == null || !is_instance_valid(hologram)) && is_instance_valid(target) && !hit.empty() && hit.collider.get_parent() != target && hit.collider.name != "HTerrain":
-		print(hit.collider.name)
 		toIgnore.append(hit.collider)
 		hit = spaceState.intersect_ray(from, from+toward*2000, toIgnore, layer)
 	var newHighlight = null
