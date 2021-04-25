@@ -188,7 +188,6 @@ func selectDeck(deckNumber: int):
 			else:
 				toggleDeckVisible(-1)
 	GlobalObjectReferencer.camera.selectDeck(deckNumber)
-	return
 	GlobalObjectReferencer.shopping.selectDeck(deckNumber)
 
 
