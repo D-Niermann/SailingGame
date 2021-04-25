@@ -6,9 +6,6 @@
 [ext_resource path="res://ControlNodes/Images/buildButtonPressed.png" type="Texture" id=4]
 [ext_resource path="res://ControlNodes/ExampleTheme.tres" type="Theme" id=5]
 
-
-
-
 [node name="Shopping" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -103,5 +100,6 @@ __meta__ = {
 margin_right = 40.0
 margin_bottom = 40.0
 texture = ExtResource( 1 )
+
 [connection signal="pressed" from="Indicator" to="." method="_on_indicator"]
 [connection signal="pressed" from="Shop/Sell" to="." method="sell"]

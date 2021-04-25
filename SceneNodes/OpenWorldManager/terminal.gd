@@ -51,6 +51,11 @@ func _ready():
 	Utility.topograph = topograph # map for loading islands and also for pathfinding
 	Utility.dominions = dominions # map for goalfinding and pathfinding, shows regions
 	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
+	spawn("example", Utility.partitionLocation(Vector3(1, 0, 0), PARTSIZE, false))
+	spawn("example", Utility.partitionLocation(Vector3(2, 0, 0), PARTSIZE, false))
+	spawn("example", Utility.partitionLocation(Vector3(3, 0, 0), PARTSIZE, false))
+	spawn("example", Utility.partitionLocation(Vector3(4, 0, 0), PARTSIZE, false))
+	spawn("example", Utility.partitionLocation(Vector3(5, 0, 0), PARTSIZE, false))
 #	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
 #	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
 #	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
@@ -415,7 +420,7 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 	if dest == null:
 		var wait = info.get("wait")
 		if wait != null: # waits if set to wait
-			print("waiting: " + str(wait))
+			# print("waiting: " + str(wait))
 			wait -= delta
 			info["wait"] = wait
 			if wait <= 0:
@@ -430,7 +435,7 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 					if followPart != goal:
 						goal = followPart
 			if goal == null: # finds goal if doesn't have one
-				print("goalfinding")
+				# print("goalfinding")
 				dominions.lock()
 				if type == "trade": # go to the closest shop with the highest profit for the current cargo hold
 					var targetShop = null
@@ -497,7 +502,7 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 			elif goal != part: # needs path if is not at goal
 				var path = info.get("path")
 				if path == null: # finds path if doesn't have one
-					print("pathfinding")
+					# print("pathfinding")
 					var filter: Array = []
 					if wars.has(side):
 						filter = wars[side].duplicate()

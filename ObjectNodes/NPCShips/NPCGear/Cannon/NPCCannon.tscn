@@ -118,7 +118,7 @@ color_ramp = SubResource( 13 )
 hue_variation = 0.21
 hue_variation_random = 0.33
 
-[sub_resource type="BoxShape" id=20]
+[sub_resource type="BoxShape" id=19]
 extents = Vector3( 0.179145, 0.128, 0.135657 )
 
 [node name="NPCCannonLarge" type="KinematicBody"]
@@ -151,7 +151,7 @@ lifetime = 10.0
 one_shot = true
 explosiveness = 0.99
 randomness = 0.5
-visibility_aabb = AABB( -4.29954, -3.44353, -3.83205, 7.69707, 8.61505, 9.32809 )
+visibility_aabb = AABB( -26.595, -18.2865, -23.5084, 52.288, 38.3009, 48.6808 )
 local_coords = false
 process_material = SubResource( 9 )
 draw_pass_1 = SubResource( 10 )
@@ -178,7 +178,7 @@ __meta__ = {
 }
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-shape = SubResource( 20 )
+shape = SubResource( 19 )
 
 [node name="Audio1" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 7 )
