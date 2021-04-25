@@ -127,7 +127,7 @@ func _physics_process(delta):
 	var toward = camera.project_ray_normal(cursor)
 	var upward = target.global_transform.basis.y.normalized()
 	hit = spaceState.intersect_ray(from, from+toward*2000, toIgnore, layer)
-	while hologram == null && !hit.empty() && hit.collider.get_parent() != target:
+	while (hologram == null || !is_instance_valid(hologram)) && !hit.empty() && hit.collider.get_parent() != target:
 		toIgnore.append(hit.collider)
 		hit = spaceState.intersect_ray(from, from+toward*2000, toIgnore, layer)
 	var newHighlight = null
@@ -222,6 +222,7 @@ func hologramFromResource(path: String):
 	seller.disabled = true
 	if resource != null:
 		hologram.queue_free()
+		hologram = null
 	resource = path
 	hologram = load(path).instance()
 	viewport.add_child(hologram)
@@ -289,6 +290,7 @@ func placeOrDestroyHologram():
 		hologram.onPlacement()
 	elif hologram != null:
 		hologram.queue_free()
+		hologram = null
 	hologram = null
 	parent = null
 	coords = null
