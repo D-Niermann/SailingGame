@@ -41,6 +41,7 @@ var scrollDown: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	GlobalObjectReferencer.shopping = self
 	seller = get_node("Shop/Sell")
 	connected = "bananaTown"
 	indicator = get_node("Indicator")
@@ -63,8 +64,10 @@ func _unhandled_input(event):
 
 # Called every physics frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if selected_deck!=-1:
+	if selected_deck != -1:
 		target = get_tree().get_nodes_in_group("PlayerDeck")[selected_deck]
+	else:
+		target = null
 	# if connected != null:
 	# 	if open == null:
 	# 		indicator.visible = true
@@ -85,22 +88,22 @@ func _physics_process(delta):
 	if open != null && infoBoxPlaceholder.visible:
 		toggle(null)
 	if switch == true && target == null:
-		if highlight != null:
+		if is_instance_valid(highlight):
 			var sprite = highlight.get_node("Sprite3D")
 			sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
 			highlight = null
 			placeOrDestroyHologram()
 		return
 	if open == null:
-		if highlight != null:
+		if is_instance_valid(highlight):
 			var sprite = highlight.get_node("Sprite3D")
 			sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
 			highlight = null
-		if resource != null || hologram != null:
+		if resource != null || is_instance_valid(hologram):
 			placeOrDestroyHologram()
 #		return
 	var layer = 0b1
-	if hologram != null: 
+	if is_instance_valid(hologram):
 		if selected_deck == 0:
 			layer = 0b10000000000000000000
 		elif selected_deck == 1:
@@ -127,11 +130,12 @@ func _physics_process(delta):
 	var toward = camera.project_ray_normal(cursor)
 	var upward = target.global_transform.basis.y.normalized()
 	hit = spaceState.intersect_ray(from, from+toward*2000, toIgnore, layer)
-	while (hologram == null || !is_instance_valid(hologram)) && !hit.empty() && hit.collider.get_parent() != target:
+	while (hologram == null || !is_instance_valid(hologram)) && is_instance_valid(target) && !hit.empty() && hit.collider.get_parent() != target && hit.collider.name != "HTerrain":
+		print(hit.collider.name)
 		toIgnore.append(hit.collider)
 		hit = spaceState.intersect_ray(from, from+toward*2000, toIgnore, layer)
 	var newHighlight = null
-	if hologram != null:
+	if is_instance_valid(hologram):
 		if scrollUp:
 			rot += PI * 0.5
 			rotSize = Vector3(rotSize.z, size.y, rotSize.x)
