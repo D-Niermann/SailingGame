@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://ObjectNodes/Human/humanMaterial.tres" type="Material" id=1]
-[ext_resource path="res://Sprites/island.png" type="Texture" id=2]
-[ext_resource path="res://Sprites/island_blur.png" type="Texture" id=3]
-[ext_resource path="res://Sprites/tree.png" type="Texture" id=4]
-
-
+[ext_resource path="res://SceneNodes/Islands/island.png" type="Texture" id=2]
+[ext_resource path="res://SceneNodes/Islands/island_blur.png" type="Texture" id=3]
+[ext_resource path="res://SceneNodes/Islands/tree.png" type="Texture" id=4]
+[ext_resource path="res://SceneNodes/Islands/Shipyard-23x16-Base-Map-Day.png" type="Texture" id=5]
 
 [sub_resource type="CapsuleMesh" id=1]
 
@@ -24,7 +23,7 @@ alpha_cut = 2
 texture = ExtResource( 2 )
 
 [node name="Sprite3D2" type="Sprite3D" parent="."]
-transform = Transform( 1, 2.38419e-07, -3.55271e-15, -2.38419e-07, 1, -1.06581e-14, -3.55271e-15, 0, 1, 0, 0, 1.42148 )
+transform = Transform( 1, 2.38419e-07, -3.55271e-15, -2.38419e-07, 1, -1.06581e-14, 0, 0, 1, 0, 0, 0.792605 )
 pixel_size = 0.09
 shaded = true
 alpha_cut = 2
@@ -61,18 +60,28 @@ alpha_cut = 2
 texture = ExtResource( 4 )
 
 [node name="Sprite3D9" type="Sprite3D" parent="."]
-transform = Transform( -0.614532, -0.534977, -2.33845e-08, 0.748719, -0.482625, -4.7373e-08, 3.27276e-08, -4.7373e-08, 0.601143, 27.1851, -2.07034, 2.29677 )
+transform = Transform( -0.614532, -0.534977, -2.33845e-08, 0.748719, -0.482625, -4.7373e-08, 3.27276e-08, -4.7373e-08, 0.601143, 12.4551, -16.624, 2.76721 )
 pixel_size = 0.09
 shaded = true
 alpha_cut = 2
 texture = ExtResource( 4 )
 
 [node name="Sprite3D10" type="Sprite3D" parent="."]
-transform = Transform( -1.02971, -0.0670213, -2.92952e-09, 0.138337, -0.769917, -5.99309e-08, 6.04695e-09, -5.99309e-08, 0.601143, 20.2027, -5.45752, 1.90417 )
+transform = Transform( -1.02971, -0.0670213, -2.92954e-09, 0.138337, -0.769917, -5.99309e-08, 6.04695e-09, -5.99309e-08, 0.601143, 20.2027, -5.45754, 2.42636 )
 pixel_size = 0.09
 shaded = true
 alpha_cut = 2
 texture = ExtResource( 4 )
+
+[node name="Sprite3D11" type="Sprite3D" parent="."]
+transform = Transform( 0.141667, -0.288826, -1.59541e-09, 0.288826, 0.141667, -2.72628e-08, 2.30106e-08, 9.66262e-09, 0.352022, 26.8857, -8.96535, 0.919159 )
+pixel_size = 0.09
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 5 )
+__meta__ = {
+"_editor_description_": "rer"
+}
 
 [node name="MeshInstance2" type="MeshInstance" parent="."]
 transform = Transform( -10.7692, -0.00163246, 29.5969, 30.8876, 0.00466429, 10.3192, -0.0439699, 15.9742, 4.66993e-05, -1.97148, 17.4235, -19.3627 )

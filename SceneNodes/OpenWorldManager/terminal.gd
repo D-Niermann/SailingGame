@@ -51,6 +51,11 @@ func _ready():
 	Utility.topograph = topograph # map for loading islands and also for pathfinding
 	Utility.dominions = dominions # map for goalfinding and pathfinding, shows regions
 	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
+	spawn("example", Utility.partitionLocation(Vector3(1, 0, 0), PARTSIZE, false))
+	spawn("example", Utility.partitionLocation(Vector3(2, 0, 0), PARTSIZE, false))
+	spawn("example", Utility.partitionLocation(Vector3(3, 0, 0), PARTSIZE, false))
+	spawn("example", Utility.partitionLocation(Vector3(4, 0, 0), PARTSIZE, false))
+	spawn("example", Utility.partitionLocation(Vector3(5, 0, 0), PARTSIZE, false))
 #	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
 #	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
 #	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
@@ -415,7 +420,7 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 	if dest == null:
 		var wait = info.get("wait")
 		if wait != null: # waits if set to wait
-			print("waiting: " + str(wait))
+			# print("waiting: " + str(wait))
 			wait -= delta
 			info["wait"] = wait
 			if wait <= 0:
