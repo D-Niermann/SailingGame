@@ -435,7 +435,7 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 					if followPart != goal:
 						goal = followPart
 			if goal == null: # finds goal if doesn't have one
-				print("goalfinding")
+				# print("goalfinding")
 				dominions.lock()
 				if type == "trade": # go to the closest shop with the highest profit for the current cargo hold
 					var targetShop = null
@@ -502,7 +502,7 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 			elif goal != part: # needs path if is not at goal
 				var path = info.get("path")
 				if path == null: # finds path if doesn't have one
-					print("pathfinding")
+					# print("pathfinding")
 					var filter: Array = []
 					if wars.has(side):
 						filter = wars[side].duplicate()

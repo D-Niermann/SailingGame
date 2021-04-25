@@ -92,7 +92,7 @@ func _process(delta):
 	if speed<0.1:
 		$Trail.emitting = false
 	if speed<0.0001:
-		if coll_obj != null and !stopMove: # permanently stuck inside some body, add as child to obj to keep moving with it 
+		if is_instance_valid(coll_obj) and !stopMove: # permanently stuck inside some body, add as child to obj to keep moving with it 
 			var globalPos = global_transform.origin
 			get_parent().remove_child(self)
 			coll_obj.add_child(self)

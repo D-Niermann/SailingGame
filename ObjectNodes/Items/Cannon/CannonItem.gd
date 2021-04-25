@@ -12,9 +12,9 @@ export(float) var recoil_impulse = 0.3 # when firing to the ship
 export var isTestCannon          = false # if cannon is fired when aiming and left clicking, (to test trajectory, without firing the whole broadside), can be set as a gameplay elemetn in th info panel
 var    drag                      = 0.05 # for trajectory prediction: drag of ball
 var    rand_max_delay            = 0.4 # max delay in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
-var    reload_time_sec           = 4 # reload time in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
+var    reload_time_sec           = 10 # reload time in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
 var    cam_shake                 = 0.1 # the amount of camera shake added to camera when shooting
-const  rotateSpeed               = 0.004 # max rotation speed of cannons (up/down rotation is scaled down )
+const  rotateSpeed               = 0.002 # max rotation speed of cannons (up/down rotation is scaled down )
 const  maxRotateAngle            = 20 # in degree,                                           left right rotation
 var    maxUpAngle                = 10 # angle distance in degreee from original rotation that is allowed
 var    minUpAngle                = -5 # angle distance in degreee from original rotation that is allowed
@@ -245,7 +245,7 @@ func rotateLeftRight(multiplicator=1, dir : String = ""):
 	dir :: either 'left' or 'right'
 	TODO: change dir to -1,1 to increase performance
 	"""
-	multiplicator = clamp(abs(multiplicator),0,1)
+	multiplicator = clamp(abs(multiplicator),0,0.5)
 	## left rotation = negative angle distance
 	var angle_dist = rad2deg(Utility.signedAngle(org_forward,(forward),up))
 	if dir == "left" and angle_dist>-maxRotateAngle:
@@ -262,7 +262,7 @@ func rotateUpDown(multiplicator=1, dir : String = ""):
 	dir :: either 'left' or 'right'
 	TODO: change dir to -1,1 to increase performance
 	"""
-	multiplicator = clamp(abs(multiplicator),0,1)
+	multiplicator = clamp(abs(multiplicator),0,0.5)
 	## up rotation = positive angle distance
 	var angle_dist = -rad2deg(Utility.signedAngle(org_forward,(forward),right)) 
 	if dir == "up" and angle_dist<maxUpAngle:

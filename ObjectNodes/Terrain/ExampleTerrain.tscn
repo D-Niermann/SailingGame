@@ -1,20 +1,19 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://addons/zylann.hterrain/hterrain_texture_set.gd" type="Script" id=1]
 [ext_resource path="res://ObjectNodes/Terrain/TerrainData/data.hterrain" type="Resource" id=2]
 [ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=3]
+[ext_resource path="res://ObjectNodes/Terrain/ExampleTerrain_slot0_normal_roughness.packed_tex" type="Texture" id=4]
+[ext_resource path="res://ObjectNodes/Terrain/ExampleTerrain_slot0_albedo_bump.packed_tex" type="Texture" id=5]
 
 [sub_resource type="Resource" id=1]
 script = ExtResource( 1 )
 mode = 0
-textures = [ [  ], [  ] ]
+textures = [ [ ExtResource( 5 ) ], [ ExtResource( 4 ) ] ]
 
 [node name="HTerrain" type="Spatial"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -250, -10.64, -250 )
 script = ExtResource( 3 )
-ambient_wind = 0.0
-lod_scale = 2.0
-map_scale = Vector3( 1, 1, 1 )
 _terrain_data = ExtResource( 2 )
 chunk_size = 16
 collision_enabled = false

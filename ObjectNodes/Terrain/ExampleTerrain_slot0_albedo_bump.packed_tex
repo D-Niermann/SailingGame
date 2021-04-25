@@ -1,6 +1,6 @@
 {
 	"contains_albedo": true,
-	"resolution": 512,
+	"resolution": 128,
 	"src": {
 		"a": "#ff888888",
 		"rgb": "res://SceneNodes/Islands/tiledTextue.png"

@@ -176,6 +176,7 @@ func toggleDeckVisible(deckNumber : int):
 
 # Changes visibility according to the chosen deck on each button press.
 func selectDeck(deckNumber: int):
+	print("deck presed")
 	var decks = get_tree().get_root().get_node("GameWorld/Interface/Decks")
 	for child in decks.get_children():
 		if child.name != str(deckNumber):
@@ -186,8 +187,9 @@ func selectDeck(deckNumber: int):
 				toggleDeckVisible(deckNumber)
 			else:
 				toggleDeckVisible(-1)
-	get_tree().get_root().get_node("GameWorld/Interface/Shopping").selectDeck(deckNumber)
-	get_tree().get_root().get_node("GameWorld/ViewportContainer/Viewport/GameCamera").selectDeck(deckNumber)
+	GlobalObjectReferencer.camera.selectDeck(deckNumber)
+	return
+	GlobalObjectReferencer.shopping.selectDeck(deckNumber)
 
 
 # Recreates and binds buttons for decks.

@@ -1,10 +1,14 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://ObjectNodes/Human/humanMaterial.tres" type="Material" id=1]
 [ext_resource path="res://SceneNodes/Islands/island.png" type="Texture" id=2]
 [ext_resource path="res://SceneNodes/Islands/island_blur.png" type="Texture" id=3]
 [ext_resource path="res://SceneNodes/Islands/tree.png" type="Texture" id=4]
 [ext_resource path="res://SceneNodes/Islands/Shipyard-23x16-Base-Map-Day.png" type="Texture" id=5]
+[ext_resource path="res://addons/zylann.hterrain/hterrain_texture_set.gd" type="Script" id=6]
+[ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=7]
+[ext_resource path="res://SceneNodes/Islands/TestTerrain/data.hterrain" type="Resource" id=8]
+[ext_resource path="res://SceneNodes/Islands/tiledTextue.png" type="Texture" id=9]
 
 [sub_resource type="CapsuleMesh" id=1]
 
@@ -15,8 +19,13 @@ albedo_color = Color( 0.266667, 0.207843, 0.0666667, 1 )
 radius = 27.0658
 height = 7.57183
 
+[sub_resource type="Resource" id=4]
+script = ExtResource( 6 )
+mode = 0
+textures = [ [ ExtResource( 9 ), null ], [ null, null ] ]
+
 [node name="Island" type="Sprite3D"]
-transform = Transform( -0.548814, -0.350442, -1.53183e-08, 0, -4.89131e-08, 1.119, -0.350442, 0.548814, 2.39894e-08, 11.7357, 0.660036, 53.0451 )
+transform = Transform( -0.548814, -0.350442, -1.53183e-08, 0, -4.89131e-08, 1.119, -0.350442, 0.548814, 2.39894e-08, -12.0156, 0.660036, 9.31729 )
 pixel_size = 0.1
 shaded = true
 alpha_cut = 2
@@ -66,8 +75,43 @@ shaded = true
 alpha_cut = 2
 texture = ExtResource( 4 )
 
-[node name="Sprite3D10" type="Sprite3D" parent="."]
+[node name="Tree" type="Sprite3D" parent="."]
 transform = Transform( -1.02971, -0.0670213, -2.92954e-09, 0.138337, -0.769917, -5.99309e-08, 6.04695e-09, -5.99309e-08, 0.601143, 20.2027, -5.45754, 2.42636 )
+pixel_size = 0.09
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 4 )
+
+[node name="Tree2" type="Sprite3D" parent="."]
+transform = Transform( -1.02971, -0.0670213, -2.92955e-09, 0.138337, -0.769917, -5.99309e-08, 6.04695e-09, -5.99309e-08, 0.601143, -13.0634, -1.80603, 2.42636 )
+pixel_size = 0.09
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 4 )
+
+[node name="Tree3" type="Sprite3D" parent="."]
+transform = Transform( -0.69071, 0.577314, -2.72443e-09, -0.776119, -0.513783, -4.65562e-08, -6.32378e-08, -3.71741e-08, 0.601143, -8.02315, -8.15033, 2.42636 )
+pixel_size = 0.09
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 4 )
+
+[node name="Tree4" type="Sprite3D" parent="."]
+transform = Transform( -0.621435, 1.10075, -2.72443e-09, -1.47981, -0.462253, -4.65562e-08, -1.17422e-07, -3.0811e-08, 0.601143, -2.39567, 0.783558, 2.42636 )
+pixel_size = 0.09
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 4 )
+
+[node name="Tree5" type="Sprite3D" parent="."]
+transform = Transform( -1.02971, -0.0670213, -2.92955e-09, 0.138337, -0.769917, -5.99309e-08, 6.04695e-09, -5.99309e-08, 0.601143, 10.5658, -4.05234, 2.42636 )
+pixel_size = 0.09
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 4 )
+
+[node name="Tree6" type="Sprite3D" parent="."]
+transform = Transform( -1.02971, -0.0670213, -2.92955e-09, 0.138337, -0.769917, -5.99309e-08, 6.04695e-09, -5.99309e-08, 0.601143, -0.178109, -9.67075, 2.42636 )
 pixel_size = 0.09
 shaded = true
 alpha_cut = 2
@@ -104,3 +148,24 @@ collision_mask = 2147484675
 [node name="CollisionShape" type="CollisionShape" parent="Collider"]
 transform = Transform( 1, -2.05263e-15, -5.96046e-08, -5.96046e-08, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 shape = SubResource( 3 )
+
+[node name="HTerrain" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 250, -40, -25 )
+script = ExtResource( 7 )
+map_scale = Vector3( 0.5, 0.5, 0.5 )
+_terrain_data = ExtResource( 8 )
+chunk_size = 16
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource( 4 )
+shader_params/u_ground_uv_scale_per_texture = Plane( 20, 20, 20, 20 )
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = false
+shader_params/u_tile_reduction = Plane( 0, 0, 0, 0 )
+shader_params/u_globalmap_blend_start = null
+shader_params/u_globalmap_blend_distance = null
+shader_params/u_colormap_opacity_per_texture = Plane( 1, 1, 1, 1 )

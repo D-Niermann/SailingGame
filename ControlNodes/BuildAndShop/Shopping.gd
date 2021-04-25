@@ -127,9 +127,9 @@ func _physics_process(delta):
 	var toward = camera.project_ray_normal(cursor)
 	var upward = target.global_transform.basis.y.normalized()
 	hit = spaceState.intersect_ray(from, from+toward*2000, toIgnore, layer)
-	while hologram == null && !hit.empty() && hit.collider.get_parent() != target:
-		toIgnore.append(hit.collider)
-		hit = spaceState.intersect_ray(from, from+toward*2000, toIgnore, layer)
+	# while hologram == null && !hit.empty() && hit.collider.get_parent() != target: # TODO this while loop crashes the game
+	# 	toIgnore.append(hit.collider)
+	# 	hit = spaceState.intersect_ray(from, from+toward*2000, toIgnore, layer)
 	var newHighlight = null
 	if hologram != null:
 		if scrollUp:
