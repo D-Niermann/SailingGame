@@ -41,6 +41,7 @@ var scrollDown: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	GlobalObjectReferencer.shopping = self
 	seller = get_node("Shop/Sell")
 	connected = "bananaTown"
 	indicator = get_node("Indicator")
@@ -63,8 +64,10 @@ func _unhandled_input(event):
 
 # Called every physics frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if selected_deck!=-1:
+	if selected_deck != -1:
 		target = get_tree().get_nodes_in_group("PlayerDeck")[selected_deck]
+	else:
+		target = null
 	# if connected != null:
 	# 	if open == null:
 	# 		indicator.visible = true
@@ -85,22 +88,22 @@ func _physics_process(delta):
 	if open != null && infoBoxPlaceholder.visible:
 		toggle(null)
 	if switch == true && target == null:
-		if highlight != null:
+		if is_instance_valid(highlight):
 			var sprite = highlight.get_node("Sprite3D")
 			sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
 			highlight = null
 			placeOrDestroyHologram()
 		return
 	if open == null:
-		if highlight != null:
+		if is_instance_valid(highlight):
 			var sprite = highlight.get_node("Sprite3D")
 			sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
 			highlight = null
-		if resource != null || hologram != null:
+		if resource != null || is_instance_valid(hologram):
 			placeOrDestroyHologram()
 #		return
 	var layer = 0b1
-	if hologram != null: 
+	if is_instance_valid(hologram):
 		if selected_deck == 0:
 			layer = 0b10000000000000000000
 		elif selected_deck == 1:
@@ -127,11 +130,11 @@ func _physics_process(delta):
 	var toward = camera.project_ray_normal(cursor)
 	var upward = target.global_transform.basis.y.normalized()
 	hit = spaceState.intersect_ray(from, from+toward*2000, toIgnore, layer)
-	# while hologram == null && !hit.empty() && hit.collider.get_parent() != target: # TODO this while loop crashes the game
-	# 	toIgnore.append(hit.collider)
-	# 	hit = spaceState.intersect_ray(from, from+toward*2000, toIgnore, layer)
+	while (hologram == null || !is_instance_valid(hologram)) && is_instance_valid(target) && !hit.empty() && hit.collider.get_parent() != target && hit.collider.name != "HTerrain":
+		toIgnore.append(hit.collider)
+		hit = spaceState.intersect_ray(from, from+toward*2000, toIgnore, layer)
 	var newHighlight = null
-	if hologram != null:
+	if is_instance_valid(hologram):
 		if scrollUp:
 			rot += PI * 0.5
 			rotSize = Vector3(rotSize.z, size.y, rotSize.x)
@@ -222,6 +225,7 @@ func hologramFromResource(path: String):
 	seller.disabled = true
 	if resource != null:
 		hologram.queue_free()
+		hologram = null
 	resource = path
 	hologram = load(path).instance()
 	viewport.add_child(hologram)
@@ -289,6 +293,7 @@ func placeOrDestroyHologram():
 		hologram.onPlacement()
 	elif hologram != null:
 		hologram.queue_free()
+		hologram = null
 	hologram = null
 	parent = null
 	coords = null
@@ -326,13 +331,16 @@ func updateLine(item: Button):
 	var itemName = item.get_node("Name").text
 	if !goods.has(itemName):
 		item.queue_free()
+		selected = null
 		return
 	if filter != null && Economy.getType(itemName) != filter:
 		item.queue_free()
+		selected = null
 		return
 	var amount = Economy.getAmount(itemName, open)
 	if amount <= 0:
 		item.queue_free()
+		selected = null
 		return
 	elif amount == INF:
 		amount = "INF"
@@ -361,13 +369,16 @@ func updateList():
 		items[itemName] = null
 		if !goods.has(itemName):
 			item.queue_free()
+			selected = null
 			continue
 		if filter != null && Economy.getType(itemName) != filter:
 			item.queue_free()
+			selected = null
 			continue
 		var amount = Economy.getAmount(itemName, open)
 		if amount <= 0:
 			item.queue_free()
+			selected = null
 			continue
 		elif amount == INF:
 			amount = "INF"
@@ -463,6 +474,7 @@ func closeShop():
 	get_node("Shop").visible = false
 	for item in list.get_children():
 		item.queue_free()
+		selected = null
 	for type in tabs.get_children():
 		type.queue_free()
 	open = null
