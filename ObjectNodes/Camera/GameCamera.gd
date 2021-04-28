@@ -126,10 +126,11 @@ func _unhandled_input(event):
 
 # Changes camera position according to the chosen deck.
 func selectDeck(deckNumber):
-	var difference = deckNumber * 2
-	if targetPos.y > 20 - difference:
-		targetPos.y = 20 - difference
-		do_center = true
+	if deckNumber != -1:
+		var difference = deckNumber * 2
+		if targetPos.y > 20 - difference:
+			targetPos.y = 20 - difference
+			do_center = true
 
 
 func mouseRotate():
@@ -151,11 +152,16 @@ func checkToggleOnHeight(heightThresh):
 	"""
 	if translation.y>heightThresh and heightToggle:
 		GlobalObjectReferencer.playerShip.toggleDeckVisible(-1)
-		shopping.selected_deck = -1
+		var deckButtons = get_tree().get_root().get_node("GameWorld/Interface/Decks")
+		for deckButton in deckButtons.get_children():
+			var theButton = get_node_or_null("TextureButton")
+			if is_instance_valid(theButton):
+				theButton.pressed = false
+		GlobalObjectReferencer.camera.selectDeck(-1)
+		GlobalObjectReferencer.cursor.selectDeck(-1)
 		var decks = get_tree().get_root().get_node("GameWorld/Interface/Decks")
 		for child in decks.get_children():
 			child.get_node("TextureButton").pressed = false
 		heightToggle = false
 	if translation.y<heightThresh:
 		heightToggle = true
-
