@@ -64,7 +64,7 @@ func _ready():
 			# iterate through children, skip 1st because it is Sails
 			a[i].add_to_group("PlayerDeck")
 		reloadDecks(2)
-			
+
 func registerItem(node):
 	"""
 	Adds Item to array containing all items that are on ship.
@@ -176,19 +176,17 @@ func toggleDeckVisible(deckNumber : int):
 
 # Changes visibility according to the chosen deck on each button press.
 func selectDeck(deckNumber: int):
-	print("deck presed")
 	var decks = get_tree().get_root().get_node("GameWorld/Interface/Decks")
 	for child in decks.get_children():
 		if child.name != str(deckNumber):
 			child.get_node("TextureButton").pressed = false
 		else:
 			var theButton = child.get_node("TextureButton")
-			if theButton.pressed:
-				toggleDeckVisible(deckNumber)
-			else:
-				toggleDeckVisible(-1)
+			if !theButton.pressed:
+				deckNumber = -1
+	toggleDeckVisible(deckNumber)
 	GlobalObjectReferencer.camera.selectDeck(deckNumber)
-	GlobalObjectReferencer.shopping.selectDeck(deckNumber)
+	GlobalObjectReferencer.cursor.selectDeck(deckNumber)
 
 
 # Recreates and binds buttons for decks.

@@ -1,6 +1,5 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://ControlNodes/BuildAndShop/Shopping.gd" type="Script" id=2]
 [ext_resource path="res://ControlNodes/Images/buildButton.png" type="Texture" id=3]
 [ext_resource path="res://ControlNodes/Images/buildButtonPressed.png" type="Texture" id=4]
@@ -79,27 +78,6 @@ flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Info" type="Control" parent="."]
-visible = false
-margin_right = 40.0
-margin_bottom = 40.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="Label" parent="Info"]
-margin_right = 40.0
-margin_bottom = 14.0
-text = "testing"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="TextureRect" type="TextureRect" parent="Info"]
-margin_right = 40.0
-margin_bottom = 40.0
-texture = ExtResource( 1 )
 
 [connection signal="pressed" from="Indicator" to="." method="_on_indicator"]
 [connection signal="pressed" from="Shop/Sell" to="." method="sell"]
