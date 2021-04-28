@@ -90,7 +90,7 @@ func _physics_process(delta):
 		if shopping.open==null: # shop is not open
 			targetPos += (moveVector.x *right - moveVector.y * up)*panSpeed*clamp(translation.y*0.01,0.1,5)
 			
-		targetPos.y = clamp(targetPos.y,minHeight+dist_from_ship_xz*2,maxHeight)
+		targetPos.y = clamp(targetPos.y,clamp(minHeight+dist_from_ship_xz*2,0,maxHeight),maxHeight)
 
 		## camera shake
 		targetPos += Vector3(rand_range(-shake_val,shake_val),0,rand_range(-shake_val,shake_val))
