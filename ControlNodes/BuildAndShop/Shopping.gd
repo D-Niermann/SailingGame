@@ -5,7 +5,6 @@ const CURRENCY: String = "g"
 const ITEM: PackedScene = preload("res://ControlNodes/BuildAndShop/listItem.tscn")
 const TYPE: PackedScene = preload("res://ControlNodes/BuildAndShop/tabsType.tscn")
 
-var infoBoxPlaceholder = null
 var open = null
 var tabs = null
 var list = null
@@ -19,19 +18,16 @@ var viewport: Viewport
 const TILEWIDTH: float = 0.2 # width of one tile which all items must be designed accordingly
 const STACKED: bool = false
 var target = null
-var selected_deck : int = -1 # index of the  get_tree().get_nodes_in_group("PlayerDeck") array
 var highlight = null
 var hologram = null
 var resource = null
 var parent = null
 var coords = null
-var xform = null
 var angle = 0.0
 var rot = 0.0
 var size = Vector3.ONE # in terms of tile size given above, each component must be an integer
 var rotSize = Vector3.ONE
 var switch: bool = true
-var toggled = null
 
 var leftClick: bool = false
 var rightClick: bool = false
@@ -47,7 +43,6 @@ func _ready():
 	indicator = get_node("Indicator")
 	tabs = get_node("Shop/Tabs/Container")
 	list = get_node("Shop/List/Container")
-	infoBoxPlaceholder = get_node("Info")
 	viewport = get_tree().get_root().get_node("GameWorld/ViewportContainer/Viewport")
 
 # Catches only the input which has not been handled yet.
@@ -64,10 +59,14 @@ func _unhandled_input(event):
 
 # Called every physics frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if selected_deck != -1:
-		target = get_tree().get_nodes_in_group("PlayerDeck")[selected_deck]
-	else:
+	target = null
+	var selectedDeckNumber: int = GlobalObjectReferencer.cursor.selectedDeckNumber
+	if selectedDeckNumber != -1:
+		target = get_tree().get_nodes_in_group("PlayerDeck")[selectedDeckNumber]
+	if target != null && !is_instance_valid(target):
 		target = null
+	if target == null && open != null:
+		closeShop()
 	# if connected != null:
 	# 	if open == null:
 	# 		indicator.visible = true
@@ -85,8 +84,6 @@ func _physics_process(delta):
 		var itemName: String = selected.get_node("Name").text
 		var good: Dictionary = Economy.goods[itemName]
 		hologramFromResource(good["res"])
-	if open != null && infoBoxPlaceholder.visible:
-		toggle(null)
 	if switch == true && target == null:
 		if is_instance_valid(highlight):
 			var sprite = highlight.get_node("Sprite3D")
@@ -101,38 +98,8 @@ func _physics_process(delta):
 			highlight = null
 		if resource != null || is_instance_valid(hologram):
 			placeOrDestroyHologram()
-#		return
-	var layer = 0b1
-	if is_instance_valid(hologram):
-		if selected_deck == 0:
-			layer = 0b10000000000000000000
-		elif selected_deck == 1:
-			layer = 0b01000000000000000000
-		elif selected_deck == 2:
-			layer = 0b00100000000000000000
-		elif selected_deck == 3:
-			layer = 0b00010000000000000000
-		elif selected_deck == 4:
-			layer = 0b00001000000000000000
-	var camera: Camera = viewport.get_camera()
-	var spaceState: PhysicsDirectSpaceState = camera.get_world().direct_space_state
-	var viewportContainer: ViewportContainer = viewport.get_parent()
-	if toggled == null:
-		if infoBoxPlaceholder.visible:
-			toggle(null)
-	else:
-		var pos: Vector2 = camera.unproject_position(toggled.global_transform.origin)
-		infoBoxPlaceholder.rect_position = Vector2(clamp(pos.x, 0, viewport.size.x), clamp(pos.y, 0, viewport.size.y)) * viewportContainer.stretch_shrink
-	var cursor = get_viewport().get_mouse_position() / viewportContainer.stretch_shrink
-	var hit: Dictionary
-	var toIgnore: Array = [hologram]
-	var from = camera.project_ray_origin(cursor)
-	var toward = camera.project_ray_normal(cursor)
 	var upward = target.global_transform.basis.y.normalized()
-	hit = spaceState.intersect_ray(from, from+toward*2000, toIgnore, layer)
-	while (hologram == null || !is_instance_valid(hologram)) && is_instance_valid(target) && !hit.empty() && hit.collider.get_parent() != target && hit.collider.name != "HTerrain":
-		toIgnore.append(hit.collider)
-		hit = spaceState.intersect_ray(from, from+toward*2000, toIgnore, layer)
+	var hit: Dictionary = GlobalObjectReferencer.cursor.hit
 	var newHighlight = null
 	if is_instance_valid(hologram):
 		if scrollUp:
@@ -143,7 +110,6 @@ func _physics_process(delta):
 			rotSize = Vector3(rotSize.z, size.y, rotSize.x)
 		var canPlace = false
 		if !hit.empty() && (STACKED || hit.collider == target):
-			# print("hit")
 			var offset = Vector3(fmod(rotSize.x, 2), 0, fmod(rotSize.z, 2)) * TILEWIDTH * 0.5 + TILEWIDTH * Vector3.UP * (size.y/2)
 			var partition: Vector3 = (target.global_transform.xform_inv(hit.position) / TILEWIDTH).floor()
 			hologram.global_transform.origin = target.global_transform.xform(partition * TILEWIDTH + offset)
@@ -151,7 +117,7 @@ func _physics_process(delta):
 			var collision: KinematicCollision = hologram.move_and_collide(Vector3(0,0.01,0), false, false, true)
 			if !collision:
 				canPlace = true
-				# print("canPlace")
+#				print("canPlace")
 		if rightClick:
 			if parent != null:
 				placeOrDestroyHologram()
@@ -160,46 +126,39 @@ func _physics_process(delta):
 			sprite.modulate = Color(0.0, 1.0, 0.0, 0.5)
 			if leftClick:
 				parent = target
-				coords = hologram.global_transform.origin -  parent.global_transform.origin
-				xform = hologram.transform
+				coords = parent.to_local(hologram.global_transform.origin)
 				angle = rot
 				placeOrDestroyHologram()
 		else:
 			var sprite = hologram.get_node("Sprite3D")
 			sprite.modulate = Color(1.0, 0.0, 0.0, 0.5)
-	else:
-		if !hit.empty() && hit.collider.get("isHuman") != null: #check if hit is human
-			if hit.collider.get("isHuman")==true && leftClick && open == null:
-				toggle(hit.collider)
-		elif !hit.empty() && hit.collider.get("movable") != null: # checks if hit is an item
-			if open != null && hit.collider.get("movable") == true:
-				var temp = hit.collider.get_parent()
-				if temp != null && temp == target:
-					if leftClick:
-						resource = null
-						hologram = hit.collider
-						hologram.onRemove()
-						var mall: Dictionary = Economy.malls[open]
-						var itemName = Utility.resName(hologram.name)
-						var itemPrice = Economy.getPrice(itemName, open)
-						if itemPrice <= mall["money"] && !mall["black"].has(itemName) && mall["white"].has(Economy.goods[itemName]["type"]):
-							seller.text = str(itemPrice) + CURRENCY
-							seller.disabled = false
-						else:
-							seller.disabled = true
-						parent = temp
-						coords = hologram.global_transform.origin - parent.global_transform.origin
-						xform = hologram.transform
-						angle = -Utility.signedAngle(parent.global_transform.basis.x.normalized(), hologram.global_transform.basis.x.normalized(), parent.global_transform.basis.y.normalized())
-						setSize()
-						rot = angle
+	elif !hit.empty() && hit.collider.get("movable") != null: # this branch is where we try to pick item up
+		if open != null && hit.collider.get("movable") == true:
+			var temp = hit.collider.get_parent()
+			if temp != null && temp == target:
+				if leftClick:
+					resource = null
+					hologram = hit.collider
+					hologram.onRemove()
+					var mall: Dictionary = Economy.malls[open]
+					var itemName = Utility.resName(hologram.name)
+					var itemPrice = Economy.getPrice(itemName, open)
+					if itemPrice <= mall["money"] && !mall["black"].has(itemName) && mall["white"].has(Economy.goods[itemName]["type"]):
+						seller.text = str(itemPrice) + CURRENCY
+						seller.disabled = false
 					else:
-						newHighlight = hit.collider
-			elif open == null && leftClick:
-				toggle(hit.collider)
-		else:
-			if leftClick:
-				toggle(null)
+						seller.disabled = true
+					parent = temp
+					print("pickedFromParent: "+str(parent.name))
+					coords = parent.to_local(hologram.global_transform.origin)
+					angle = -Utility.signedAngle(parent.global_transform.basis.x.normalized(), hologram.global_transform.basis.x.normalized(), parent.global_transform.basis.y.normalized())
+					setSize()
+					rot = angle
+					if is_instance_valid(hologram.get_parent()):
+						hologram.get_parent().remove_child(hologram)
+						viewport.add_child(hologram)
+				else:
+					newHighlight = hit.collider
 	if is_instance_valid(highlight):
 		var sprite = highlight.get_node("Sprite3D")
 		if sprite!=null:
@@ -211,8 +170,6 @@ func _physics_process(delta):
 		var sprite = highlight.get_node("Sprite3D")
 		if sprite!=null:
 			sprite.modulate = Color(1.0, 1.0, 0.0, 1.0)
-	if selected_deck==-1:
-		closeShop()
 	leftClick = false
 	rightClick = false
 	scrollUp = false
@@ -231,7 +188,6 @@ func hologramFromResource(path: String):
 	viewport.add_child(hologram)
 	parent = null
 	coords = null
-	xform = null
 	angle = 0.0
 	var itemName: String = Utility.resName(hologram.name)
 	size = Economy.getSize(itemName)
@@ -265,7 +221,7 @@ func placeOrDestroyHologram():
 			var duplicate = load(resource).instance()
 			if duplicate.get_parent() != parent:
 				parent.add_child(duplicate)
-			duplicate.global_transform.origin = coords + parent.global_transform.origin
+			duplicate.global_transform.origin = parent.to_global(coords)
 			duplicate.global_transform.basis = parent.global_transform.basis.rotated(parent.global_transform.basis.y.normalized(), angle)
 			parent = null
 			duplicate.onPlacement()
@@ -276,18 +232,18 @@ func placeOrDestroyHologram():
 				hologram.queue_free()
 				hologram = null
 			coords = null
-			xform = null
 			angle = null
 			size = null
 			rot = null
 			rotSize = null
 		return
 	elif parent != null:
-		if hologram.get_parent() != parent:
+		if !is_instance_valid(hologram.get_parent()) || hologram.get_parent() != parent:
+			if is_instance_valid(hologram.get_parent()):
+				hologram.get_parent().remove_child(hologram)
 			parent.add_child(hologram)
-		hologram.global_transform.origin = coords + parent.global_transform.origin
+		hologram.global_transform.origin = parent.to_global(coords)
 		hologram.global_transform.basis = parent.global_transform.basis.rotated(parent.global_transform.basis.y.normalized(), angle)
-		hologram.transform = xform
 		var sprite = hologram.get_node("Sprite3D")
 		sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		hologram.onPlacement()
@@ -297,7 +253,6 @@ func placeOrDestroyHologram():
 	hologram = null
 	parent = null
 	coords = null
-	xform = null
 	angle = null
 	size = null
 	rot = null
@@ -423,9 +378,13 @@ func updateList():
 
 # Opens the given shop.
 func openShop(shop: String):
-	if selected_deck == -1:
-		selected_deck = 0
-		target = get_tree().get_nodes_in_group("PlayerDeck")[selected_deck]
+	var selectedDeckNumber = GlobalObjectReferencer.cursor.selectedDeckNumber
+	if selectedDeckNumber == -1:
+		selectedDeckNumber = 0
+		var theButton: TextureButton = get_parent().get_node("Decks").get_child(0).get_node("TextureButton")
+		theButton.pressed = true
+		GlobalObjectReferencer.playerShip.selectDeck(0)
+		target = get_tree().get_nodes_in_group("PlayerDeck")[selectedDeckNumber]
 	if open != null:
 		closeShop()
 	var mall: Dictionary = Economy.malls[shop]
@@ -465,12 +424,14 @@ func openShop(shop: String):
 		else:
 			item.disabled = false
 	get_node("Shop").visible = true
-	get_tree().get_root().get_node("GameWorld/ViewportContainer/Viewport/GameCamera").selectDeck(selected_deck)
+	get_tree().get_root().get_node("GameWorld/ViewportContainer/Viewport/GameCamera").selectDeck(selectedDeckNumber)
 	open = shop
 
 
 # Closes any open shop.
 func closeShop():
+	if is_instance_valid(hologram) && is_instance_valid(parent):
+		placeOrDestroyHologram()
 	get_node("Shop").visible = false
 	for item in list.get_children():
 		item.queue_free()
@@ -537,33 +498,8 @@ func sell():
 				updateList()
 
 
-# Changes toggled item that information will be shown about.
-func toggle(thing):
-	if toggled == null || thing != toggled:
-		# infoBoxPlaceholder.visible = false
-		for child in infoBoxPlaceholder.get_children(): # TODO: is this necessary now if we dont do the add_child(rect) below?
-			child.queue_free()
-	if toggled!=null:
-		toggled.removeInfo()	
-	toggled = thing
-	if toggled != null:
-		## set position of infoBoxPlaceholder so that the infoBoxPlaceholder panel is not spawned at old position
-		var camera: Camera = viewport.get_camera()
-		var viewportContainer: ViewportContainer = viewport.get_parent()
-		var pos: Vector2 = camera.unproject_position(toggled.global_transform.origin)
-		infoBoxPlaceholder.rect_position = Vector2(clamp(pos.x, 0, viewport.size.x), clamp(pos.y, 0, viewport.size.y)) * viewportContainer.stretch_shrink
-		infoBoxPlaceholder.visible = true
-		# then create infoBoxPlaceholder box
-		thing.createInfo(infoBoxPlaceholder)
-
-
 func _on_indicator():
 	if open==null: #if shop is closed
 		openShop(connected) # connects=name of shop, defined in _ready() for now.
 	else:
 		closeShop()
-
-
-# Changes chosen deck.
-func selectDeck(deckNumber):
-	selected_deck = deckNumber
