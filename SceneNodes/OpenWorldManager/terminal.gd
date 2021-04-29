@@ -5,11 +5,13 @@ var time: int = 0
 var frac: float = 0.0
 var updatePeriodForEconomy: float = 64.0
 
+const PROXMARK: PackedScene = preload("res://ControlNodes/Indicators/mark.tscn")
 const PARTSIZE: float = 64.0 # width of each partition
 const EXTENDED: bool = false # if the grid is 3D, or 2D
 const CANCROSS: bool = true # if moving crosswise is possible
 var viewport: Viewport = null
 # var camera: Camera = null
+var indicators: Control = null
 var walls: Dictionary = {} # arrays of partitions, filled with static stuff
 var units: Dictionary = {} # arrays of partitions, filled with dynamic stuff which are intelligent (self-driving)
 var items: Dictionary = {} # {Vector3(0, 0, 0): ["example"]} # arrays of partitions, filled with dynamic stuff which are dumb (can be picked up and dropped)
@@ -43,6 +45,7 @@ var NPC01: PackedScene = preload("res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn"
 func _ready():
 	viewport = get_node("ViewportContainer/Viewport")
 	# camera = viewport.get_node("GameCamera")
+	indicators = get_node("Interface/Indicators")
 	var topographTexture: Texture = load("res://SceneNodes/OpenWorldManager/topograph.png")
 	var dominionsTexture: Texture = load("res://SceneNodes/OpenWorldManager/dominions.png")
 	topograph = topographTexture.get_data()
@@ -77,6 +80,9 @@ func _ready():
 
 # Called every physics frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	# cleaning offscreen indicators
+	for child in indicators.get_children():
+		child.queue_free()
 	# randomizing number generator for further use
 	randomize()
 	# advancing time
@@ -200,6 +206,15 @@ func _physics_process(delta):
 				holo.queue_free()
 				refs.erase(unit)
 				print("destroyed")
+			if holo != null && live.has(newPart): # creating offscreen indicator
+				var pos = GlobalObjectReferencer.camera.unproject_position(holo.global_transform.origin)
+				var facing = -1 * GlobalObjectReferencer.camera.global_transform.basis.z.normalized()
+				if facing.dot((holo.global_transform.origin - GlobalObjectReferencer.camera.global_transform.origin).normalized()) > 0:
+					var guiPosition: Vector2 = Vector2(clamp(pos.x, 0.0, get_viewport().size.x), clamp(pos.y, 0.0, get_viewport().size.y))
+					if guiPosition != pos: # only if unit is outside of the screen, we create an indicator for it
+						var gui: Sprite = PROXMARK.instance()
+						indicators.add_child(gui)
+						gui.position = guiPosition
 
 
 # Loads the given part of the world.
