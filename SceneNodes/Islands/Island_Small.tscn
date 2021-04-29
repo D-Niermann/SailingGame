@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://ObjectNodes/Human/humanMaterial.tres" type="Material" id=1]
 [ext_resource path="res://SceneNodes/Islands/island.png" type="Texture" id=2]
@@ -8,7 +8,10 @@
 [ext_resource path="res://addons/zylann.hterrain/hterrain_texture_set.gd" type="Script" id=6]
 [ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=7]
 [ext_resource path="res://SceneNodes/Islands/TestTerrain/data.hterrain" type="Resource" id=8]
-[ext_resource path="res://SceneNodes/Islands/tiledTextue.png" type="Texture" id=9]
+[ext_resource path="res://SceneNodes/Islands/Island_Small_slot0_albedo_bump.packed_tex" type="Texture" id=9]
+[ext_resource path="res://SceneNodes/Islands/Island_Small_slot1_albedo_bump.packed_tex" type="Texture" id=10]
+[ext_resource path="res://SceneNodes/Islands/Island_Small_slot1_normal_roughness.packed_tex" type="Texture" id=11]
+[ext_resource path="res://SceneNodes/Islands/Island_Small_slot0_normal_roughness.packed_tex" type="Texture" id=12]
 
 [sub_resource type="CapsuleMesh" id=1]
 
@@ -19,10 +22,10 @@ albedo_color = Color( 0.266667, 0.207843, 0.0666667, 1 )
 radius = 27.0658
 height = 7.57183
 
-[sub_resource type="Resource" id=4]
+[sub_resource type="Resource" id=5]
 script = ExtResource( 6 )
 mode = 0
-textures = [ [ ExtResource( 9 ), null ], [ null, null ] ]
+textures = [ [ ExtResource( 9 ), ExtResource( 10 ) ], [ ExtResource( 12 ), ExtResource( 11 ) ] ]
 
 [node name="Island" type="Sprite3D"]
 transform = Transform( -0.548814, -0.350442, -1.53183e-08, 0, -4.89131e-08, 1.119, -0.350442, 0.548814, 2.39894e-08, -12.0156, 0.660036, 9.31729 )
@@ -161,7 +164,7 @@ collision_mask = 1
 shader_type = "Classic4"
 custom_shader = null
 custom_globalmap_shader = null
-texture_set = SubResource( 4 )
+texture_set = SubResource( 5 )
 shader_params/u_ground_uv_scale_per_texture = Plane( 20, 20, 20, 20 )
 shader_params/u_depth_blending = true
 shader_params/u_triplanar = false

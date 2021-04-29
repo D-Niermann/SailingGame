@@ -197,6 +197,7 @@ func _physics_process(delta):
 					print("spawned")
 					var pre = presets[info["preset"]].get("PRE")
 					if pre != null:
+						print("using preloaded NPC")
 						holo = get(pre).instance()
 					else:
 						holo = load(presets[info["preset"]]["RES"]).instance()
