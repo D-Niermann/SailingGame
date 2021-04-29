@@ -130,7 +130,7 @@ func _process(delta):
 
 				if speed>0.1:
 					playAudio()
-					GlobalObjectReferencer.camera.shake_val += speed * camShakeMod /clamp(GlobalObjectReferencer.camera.global_transform.origin.distance_to(global_transform.origin)*0.02,1,99999)	
+					GlobalObjectReferencer.camera.shake_val += clamp(speed * camShakeMod /clamp(GlobalObjectReferencer.camera.global_transform.origin.distance_to(global_transform.origin)*0.02,1,99999),0,1)	
 					$HitParticle.emitting = true
 					$HitParticle.get_child(0).emitting = true
 				isInsideBody = true

@@ -116,6 +116,7 @@ angular_damp = 3.0
 script = ExtResource( 2 )
 
 [node name="AIController" parent="." instance=ExtResource( 6 )]
+visible = false
 parallelWeight = 0.4
 windWeight = 0.6
 
