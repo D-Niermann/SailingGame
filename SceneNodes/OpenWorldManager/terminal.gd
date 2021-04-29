@@ -43,7 +43,7 @@ var NPC01: PackedScene = preload("res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn"
 func _ready():
 	viewport = get_node("ViewportContainer/Viewport")
 	# camera = viewport.get_node("GameCamera")
-	var topographTexture: Texture = load("res://SceneNodes/OpenWorldManager/topograph.png")
+	var topographTexture: Texture = load("res://SceneNodes/OpenWorldManager/topograph2.png")
 	var dominionsTexture: Texture = load("res://SceneNodes/OpenWorldManager/dominions.png")
 	topograph = topographTexture.get_data()
 	dominions = dominionsTexture.get_data()
