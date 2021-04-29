@@ -10,6 +10,8 @@ export var zoomSensitivity = 0.2
 export var defaultMousePanEdgeSize = 0.02 # how much percent of screen is a edge for panning 
 export var aimMousePanEdgeSize = 0.6 # how much percent of screen is a edge for panning 
 export var panSpeed = 1.0
+export var maxDistFromShip = 100
+
 
 ## init of vars, dont change
 var mousePanEdgeSize
@@ -30,6 +32,7 @@ var playerIsAiming = false
 var localShipVec  = Vector2(0,0)
 var mouseDistFromMid = 0.0
 var y_save = 0.0 # just a buffer to save the cams y coord
+var dist_from_ship_xz = 0.0
 
 func _ready():
 	GlobalObjectReferencer.camera = self
@@ -39,8 +42,14 @@ func _ready():
 
 func _physics_process(delta):
 	
+
+	dist_from_ship_xz = Vector2(global_transform.origin.x - GlobalObjectReferencer.playerShip.global_transform.origin.x,
+								global_transform.origin.z - GlobalObjectReferencer.playerShip.global_transform.origin.z).length()
+
 	cursorPos = GlobalObjectReferencer.viewport.get_mouse_position()/GlobalObjectReferencer.viewport.size
 	mouseDistFromMid = (cursorPos - Vector2(0.5,0.5)).length()*2
+
+
 	var relMousePos : Vector2 = (cursorPos - Vector2(0.5,0.5))
 	var moveVector : Vector2 = relMousePos 
 	if playerIsAiming:
@@ -81,7 +90,7 @@ func _physics_process(delta):
 		if shopping.open==null: # shop is not open
 			targetPos += (moveVector.x *right - moveVector.y * up)*panSpeed*clamp(translation.y*0.01,0.1,5)
 			
-		targetPos.y = clamp(targetPos.y,minHeight,maxHeight)
+		targetPos.y = clamp(targetPos.y,clamp(minHeight+dist_from_ship_xz*2,0,maxHeight),maxHeight)
 
 		## camera shake
 		targetPos += Vector3(rand_range(-shake_val,shake_val),0,rand_range(-shake_val,shake_val))
