@@ -1,11 +1,9 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=28 format=2]
 
-[ext_resource path="res://SceneNodes/Islands/dummyIslandOne_slot0_normal_roughness.packed_tex" type="Texture" id=1]
+[ext_resource path="res://SceneNodes/Islands/island1.png" type="Texture" id=1]
 [ext_resource path="res://SceneNodes/Islands/Shipyard-23x16-Base-Map-Day.png" type="Texture" id=2]
 [ext_resource path="res://SceneNodes/Islands/tiledTextue.png" type="Texture" id=3]
-[ext_resource path="res://SceneNodes/Islands/TestTerrain/data.hterrain" type="Resource" id=4]
-[ext_resource path="res://addons/zylann.hterrain/hterrain.gd" type="Script" id=5]
-[ext_resource path="res://addons/zylann.hterrain/hterrain_texture_set.gd" type="Script" id=6]
+[ext_resource path="res://SceneNodes/Islands/IslandTerrain1.tscn" type="PackedScene" id=4]
 [ext_resource path="res://SceneNodes/Islands/Images/Bush, 1.png" type="Texture" id=7]
 [ext_resource path="res://SceneNodes/Islands/Images/Tree, fallen.png" type="Texture" id=8]
 [ext_resource path="res://SceneNodes/Islands/Images/Rocky slope, ridge.png" type="Texture" id=9]
@@ -14,9 +12,6 @@
 [ext_resource path="res://SceneNodes/Islands/Images/Tree, 2.png" type="Texture" id=12]
 [ext_resource path="res://SceneNodes/Islands/Images/Tree, 3.png" type="Texture" id=13]
 [ext_resource path="res://SceneNodes/Islands/Images/Rocks, 7.png" type="Texture" id=14]
-[ext_resource path="res://SceneNodes/Islands/dummyIslandOne_slot1_albedo_bump.packed_tex" type="Texture" id=15]
-[ext_resource path="res://SceneNodes/Islands/dummyIslandOne_slot1_normal_roughness.packed_tex" type="Texture" id=16]
-[ext_resource path="res://SceneNodes/Islands/dummyIslandOne_slot0_albedo_bump.packed_tex" type="Texture" id=17]
 [ext_resource path="res://SceneNodes/Islands/Images/Thicket, long.png" type="Texture" id=18]
 [ext_resource path="res://SceneNodes/Islands/Images/House.png" type="Texture" id=19]
 [ext_resource path="res://SceneNodes/Islands/Images/Mushrooms, 3.png" type="Texture" id=20]
@@ -37,25 +32,25 @@ albedo_color = Color( 0.0784314, 0.956863, 0.482353, 1 )
 albedo_texture = ExtResource( 3 )
 uv1_scale = Vector3( 100, 50, 50 )
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="SpatialMaterial" id=5]
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.05
 albedo_texture = ExtResource( 2 )
 
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="SpatialMaterial" id=6]
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.77
 albedo_color = Color( 0.752941, 0.752941, 0.752941, 1 )
 albedo_texture = ExtResource( 9 )
 
-[sub_resource type="SpatialMaterial" id=8]
+[sub_resource type="SpatialMaterial" id=7]
 albedo_texture = ExtResource( 3 )
 uv1_scale = Vector3( 3, 3, 3 )
 
-[sub_resource type="Resource" id=5]
-script = ExtResource( 6 )
-mode = 0
-textures = [ [ ExtResource( 17 ), ExtResource( 15 ) ], [ ExtResource( 1 ), ExtResource( 16 ) ] ]
+[sub_resource type="CubeMesh" id=8]
+
+[sub_resource type="SpatialMaterial" id=9]
+albedo_color = Color( 0.372549, 0.352941, 0.207843, 1 )
 
 [node name="Spatial" type="Spatial"]
 
@@ -162,7 +157,7 @@ shaded = true
 texture = ExtResource( 23 )
 
 [node name="StaticBody6" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 1.67757, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 0.846372, 0 )
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody6"]
 shape = SubResource( 1 )
@@ -175,7 +170,7 @@ material/0 = SubResource( 4 )
 
 [node name="Sprite3D" type="Sprite3D" parent="StaticBody6"]
 transform = Transform( -1.40946, 0, -0.382941, 0, 1, 0, 0.382941, 0, -1.40946, -4.79603, 1.60075, -3.92412 )
-material_override = SubResource( 6 )
+material_override = SubResource( 5 )
 axis = 1
 shaded = true
 texture = ExtResource( 2 )
@@ -189,195 +184,226 @@ texture = ExtResource( 7 )
 
 [node name="GrassRocky" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( -0.320142, 0, 0.174482, 0, 0.496877, 0, -0.174482, 0, -0.320142, -6.04319, -0.577518, -2.20402 )
-material_override = SubResource( 7 )
+material_override = SubResource( 6 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="GrassRocky8" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( -0.364568, 0, -0.00499527, 0, 0.496877, 0, 0.00499529, 0, -0.364568, -8.90723, -0.669583, -2.7561 )
-material_override = SubResource( 7 )
+material_override = SubResource( 6 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="GrassRocky6" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( -0.340892, 0, 0.129336, 0, 0.496877, 0, -0.129336, 0, -0.340892, -10.7208, -1.69713, -2.88964 )
-material_override = SubResource( 7 )
+material_override = SubResource( 6 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="GrassRocky3" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( -0.342803, 0, 0.124181, 0, 0.496877, 0, -0.124181, 0, -0.342803, -14.166, -0.239315, -4.44546 )
-material_override = SubResource( 7 )
+material_override = SubResource( 6 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="GrassRocky7" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( -0.189842, 0, 0.31128, 0, 0.496877, 0, -0.31128, 0, -0.189842, -17.8897, -0.723063, -7.06041 )
-material_override = SubResource( 7 )
+material_override = SubResource( 6 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="GrassRocky4" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( -0.332494, 0, -0.208775, 0, 0.5, 0, 0.208775, 0, -0.332494, 7.43044, -0.72046, -3.41145 )
-material_override = SubResource( 7 )
+material_override = SubResource( 6 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="GrassRocky5" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( -0.254937, 0, -0.189886, 0, 0.275851, 0, 0.189886, 0, -0.254937, 10.2855, -0.853, -5.63548 )
-material_override = SubResource( 7 )
+material_override = SubResource( 6 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Sprite3D8" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.2, 0, -7.45058e-09, 0, 0.2, 0, -7.45058e-09, 0, 0.2, -3.66674, 0.366777, -9.00693 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 23 )
 
 [node name="Sprite3D9" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.2, 0, -7.45058e-09, 0, 0.2, 0, -7.45058e-09, 0, 0.2, -3.67785, 0.366777, -12.1312 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 23 )
 
 [node name="Sprite3D10" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.2, 0, -7.45058e-09, 0, 0.2, 0, -7.45058e-09, 0, 0.2, 6.10895, 0.366777, -9.88193 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 23 )
 
 [node name="Sprite3D5" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.2, 0, -7.45058e-09, 0, 0.2, 0, -7.45058e-09, 0, 0.2, -5.9786, 0.366776, -5.17917 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 23 )
 
 [node name="Sprite3D6" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.2, 0, -7.45058e-09, 0, 0.2, 0, -7.45058e-09, 0, 0.2, -7.86303, 0.366777, -6.86835 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 23 )
 
 [node name="Sprite3D7" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.2, 0, -7.45058e-09, 0, 0.2, 0, -7.45058e-09, 0, 0.2, -7.09162, 0.366777, -7.9047 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 23 )
 
 [node name="Tree" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.2, 0, -7.45058e-09, 0, 0.2, 0, -7.45058e-09, 0, 0.2, 3.18454, 0.802306, -2.87433 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree2" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.2, 0, -7.45058e-09, 0, 0.2, 0, -7.45058e-09, 0, 0.2, 5.16538, 0.802306, -2.57419 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree30" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.190037, 0, -0.0623376, 0, 0.2, 0, 0.0623376, 0, 0.190037, -0.886368, 0.802306, -2.80518 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree31" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.2, 0, -7.45058e-09, 0, 0.2, 0, -7.45058e-09, 0, 0.2, 0.860744, 0.802306, -2.89625 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree32" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.0676129, 0, 0.188225, 0, 0.2, 0, -0.188225, 0, 0.0676129, -4.54614, 0.802306, -2.92632 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree33" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.0676129, 0, 0.188225, 0, 0.2, 0, -0.188225, 0, 0.0676129, -2.77566, 1.18904, -5.40158 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree3" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.2, 0, -7.45058e-09, 0, 0.2, 0, -7.45058e-09, 0, 0.2, 4.39661, 0.802306, -4.17787 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 13 )
 
 [node name="Tree5" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.133608, 0, 0.148825, 0, 0.2, 0, -0.148825, 0, 0.133608, 5.37722, 0.66385, -5.75977 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree6" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.133608, 0, 0.148825, 0, 0.2, 0, -0.148825, 0, 0.133608, 7.35807, 0.802306, -5.45963 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree7" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( -0.244123, 0, -0.271927, 0, 0.2, 0, 0.271927, 0, -0.244123, 6.98671, -0.638667, -4.32111 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 14 )
 
 [node name="Tree68" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.365431, 0, -6.4224e-06, 0, 0.2, 0, 6.40005e-06, 0, 0.365431, 10.1991, -0.638667, -6.99072 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 14 )
 
 [node name="Tree69" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.365431, 0, -6.4224e-06, 0, 0.2, 0, 6.40005e-06, 0, 0.365431, -12.5157, -0.638665, -12.3429 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 14 )
 
 [node name="House" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.927641, 0, -0.373474, 0, 1, 0, 0.373474, 0, 0.927641, 2.15114, 0.301042, -3.50603 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 19 )
 
 [node name="House3" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.340964, 0, 0.482506, 0, 1, 0, -0.482506, 0, 0.340964, 5.49644, 0.301042, -4.49794 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 19 )
 
 [node name="House4" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( -0.326302, 0, 0.49254, 0, 1, 0, -0.49254, 0, -0.326302, 4.34535, 0.301042, -7.22178 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 19 )
 
 [node name="House2" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.0150443, 0, 0.999887, 0, 1, 0, -0.999887, 0, 0.0150441, -2.71193, 0.301042, -3.6375 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 19 )
 
 [node name="Tree11" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.196394, 0, 0.0378054, 0, 0.2, 0, -0.0378054, 0, 0.196394, -8.41461, 0.802305, -4.36118 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree12" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.196394, 0, 0.0378054, 0, 0.2, 0, -0.0378054, 0, 0.196394, -6.43375, 0.802305, -4.06104 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree13" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -385,12 +411,14 @@ transform = Transform( 0.196394, 0, 0.0378054, 0, 0.2, 0, -0.0378054, 0, 0.19639
 modulate = Color( 0.917647, 0.721569, 0.721569, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 13 )
 
 [node name="Tree14" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.196394, 0, 0.0378054, 0, 0.2, 0, -0.0378054, 0, 0.196394, -11.9207, 0.802307, -6.34091 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree15" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -398,12 +426,14 @@ transform = Transform( 0.196106, 0, 0.0392748, 0, 0.2, 0, -0.0392748, 0, 0.19610
 modulate = Color( 0.74902, 0.72549, 0.72549, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree61" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.196394, 0, 0.0378054, 0, 0.2, 0, -0.0378054, 0, 0.196394, -11.9023, 0.802307, -4.67486 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree65" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -411,12 +441,14 @@ transform = Transform( 0.196106, 0, 0.0392748, 0, 0.2, 0, -0.0392748, 0, 0.19610
 modulate = Color( 0.74902, 0.72549, 0.72549, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree66" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( -0.198406, 0, 0.0252017, 0, 0.2, 0, -0.0252017, 0, -0.198406, -13.1583, 0.802307, -5.31321 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree67" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -424,6 +456,7 @@ transform = Transform( -0.198589, 0, 0.0237154, 0, 0.2, 0, -0.0237154, 0, -0.198
 modulate = Color( 0.74902, 0.72549, 0.72549, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree16" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -431,12 +464,14 @@ transform = Transform( 0.196394, 0, 0.0378054, 0, 0.2, 0, -0.0378054, 0, 0.19639
 modulate = Color( 0.917647, 0.721569, 0.721569, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 13 )
 
 [node name="Tree17" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.180618, 0, -0.0858911, 0, 0.2, 0, 0.0858911, 0, 0.180618, -10.0148, 0.802307, -9.38638 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree18" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -444,6 +479,7 @@ transform = Transform( 0.180618, 0, -0.0858911, 0, 0.2, 0, 0.0858911, 0, 0.18061
 modulate = Color( 0.74902, 0.72549, 0.72549, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree19" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -451,6 +487,7 @@ transform = Transform( 0.180618, 0, -0.0858911, 0, 0.2, 0, 0.0858911, 0, 0.18061
 modulate = Color( 0.917647, 0.721569, 0.721569, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 13 )
 
 [node name="Tree8" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -458,6 +495,7 @@ transform = Transform( 0.22982, 0, -0.0233159, 0, 0.2, 0, 0.0233159, 0, 0.22982,
 modulate = Color( 0.898039, 0.854902, 0.819608, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree9" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -465,6 +503,7 @@ transform = Transform( 0.198979, 0, -0.020187, 0, 0.2, 0, 0.020187, 0, 0.198979,
 modulate = Color( 0.917647, 0.721569, 0.721569, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree10" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -472,6 +511,7 @@ transform = Transform( 0.22982, 0, -0.0233159, 0, 0.2, 0, 0.0233159, 0, 0.22982,
 modulate = Color( 0.898039, 0.854902, 0.819608, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 13 )
 
 [node name="Tree21" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -479,12 +519,14 @@ transform = Transform( 0.242023, 0, -0.121026, 0, 0.2, 0, 0.121926, 0, 0.240237,
 modulate = Color( 0.74902, 0.72549, 0.72549, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 10 )
 
 [node name="Tree22" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.178615, 0, -0.0899823, 0, 0.2, 0, 0.0899823, 0, 0.178615, 6.44412, 0.946176, -6.80906 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree23" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -492,12 +534,14 @@ transform = Transform( 0.893073, 0, -0.449911, 0, 1, 0, 0.449911, 0, 0.893073, 3
 modulate = Color( 0.898039, 0.854902, 0.819608, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 22 )
 
 [node name="Tree24" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.242023, 0, -0.121026, 0, 0.2, 0, 0.121926, 0, 0.240237, 3.38258, 0.946176, -8.39895 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree25" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -505,18 +549,21 @@ transform = Transform( 0.178615, 0, -0.0899823, 0, 0.2, 0, 0.0899823, 0, 0.17861
 modulate = Color( 0.917647, 0.721569, 0.721569, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree26" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.178615, 0, -0.0899823, 0, 0.2, 0, 0.0899823, 0, 0.178615, 4.59466, 0.946176, -9.70249 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 13 )
 
 [node name="shrroms" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.178615, 0, -0.0899823, 0, 0.2, 0, 0.0899823, 0, 0.178615, 4.52046, -0.151818, -6.75959 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 21 )
 
 [node name="shrroms2" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -524,30 +571,35 @@ transform = Transform( 0.178615, 0, -0.0899823, 0, 0.2, 0, 0.0899823, 0, 0.17861
 modulate = Color( 0.658824, 0.658824, 0.658824, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 18 )
 
 [node name="shrroms3" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.178615, 0, -0.0899823, 0, 0.2, 0, 0.0899823, 0, 0.178615, 5.62501, -0.151818, -9.39709 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 21 )
 
 [node name="shrroms4" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.178615, 0, -0.0899823, 0, 0.2, 0, 0.0899823, 0, 0.178615, 1.00283, -0.151818, -6.73661 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 20 )
 
 [node name="Tree27" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.242023, 0, -0.121026, 0, 0.2, 0, 0.121926, 0, 0.240237, 7.04424, 0.946175, -8.55849 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree34" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( -0.0198466, 0, 0.199013, 0, 0.2, 0, -0.199013, 0, -0.0198465, -4.50846, 1.5718, -7.49808 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree35" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -555,12 +607,14 @@ transform = Transform( 0.149053, 0, 0.133353, 0, 0.2, 0, -0.133353, 0, 0.149053,
 modulate = Color( 0.917647, 0.721569, 0.721569, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree36" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.186875, 0, 0.0712596, 0, 0.2, 0, -0.0712596, 0, 0.186875, -5.86103, 1.39227, -7.20968 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree37" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -568,12 +622,14 @@ transform = Transform( 0.253215, 0, 0.0958441, 0, 0.2, 0, -0.0965567, 0, 0.25134
 modulate = Color( 0.898039, 0.854902, 0.819608, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 13 )
 
 [node name="Tree38" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.253215, 0, 0.0958441, 0, 0.2, 0, -0.0965567, 0, 0.251346, -6.5031, 1.85413, -10.1373 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree39" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -581,24 +637,28 @@ transform = Transform( 0.186875, 0, 0.0712596, 0, 0.2, 0, -0.0712596, 0, 0.18687
 modulate = Color( 0.917647, 0.721569, 0.721569, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree40" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.186875, 0, 0.0712596, 0, 0.2, 0, -0.0712596, 0, 0.186875, -5.29103, 1.85413, -11.4408 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 13 )
 
 [node name="Tree41" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.253215, 0, 0.0958441, 0, 0.2, 0, -0.0965567, 0, 0.251346, -2.84144, 1.85412, -10.2968 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree42" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( -0.176831, 0, 0.0934379, 0, 0.2, 0, -0.0934379, 0, -0.176831, 0.0166855, 0.478194, -4.98308 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree43" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -606,12 +666,14 @@ transform = Transform( -0.0287711, 0, 0.19792, 0, 0.2, 0, -0.19792, 0, -0.028771
 modulate = Color( 0.917647, 0.721569, 0.721569, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree44" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.0438807, 0, 0.195127, 0, 0.2, 0, -0.195127, 0, 0.0438807, -1.33588, 1.05243, -4.69469 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree45" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -619,12 +681,14 @@ transform = Transform( 0.0594584, 0, 0.262446, 0, 0.2, 0, -0.264397, 0, 0.059019
 modulate = Color( 0.898039, 0.854902, 0.819608, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 13 )
 
 [node name="Tree46" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.0594584, 0, 0.262446, 0, 0.2, 0, -0.264397, 0, 0.0590195, -1.97795, 0.76052, -7.62226 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree47" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -632,24 +696,28 @@ transform = Transform( 0.0438807, 0, 0.195127, 0, 0.2, 0, -0.195127, 0, 0.043880
 modulate = Color( 0.917647, 0.721569, 0.721569, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree48" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.0438807, 0, 0.195127, 0, 0.2, 0, -0.195127, 0, 0.0438807, -0.765877, 0.76052, -8.9258 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 13 )
 
 [node name="Tree49" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.0594584, 0, 0.262446, 0, 0.2, 0, -0.264397, 0, 0.0590195, 1.68371, 0.760519, -7.7818 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree50" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( -0.176831, 0, 0.0934379, 0, 0.2, 0, -0.0934379, 0, -0.176831, 0.371498, 0.689983, -11.3805 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree51" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -657,12 +725,14 @@ transform = Transform( -0.0287711, 0, 0.19792, 0, 0.2, 0, -0.19792, 0, -0.028771
 modulate = Color( 0.917647, 0.721569, 0.721569, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree52" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.0438807, 0, 0.195127, 0, 0.2, 0, -0.195127, 0, 0.0438807, -0.981075, 0.972309, -11.0921 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree53" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -670,12 +740,14 @@ transform = Transform( 0.0594584, 0, 0.262446, 0, 0.2, 0, -0.264397, 0, 0.059019
 modulate = Color( 0.898039, 0.854902, 0.819608, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 13 )
 
 [node name="Tree54" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.0594584, 0, 0.262446, 0, 0.2, 0, -0.264397, 0, 0.0590195, -1.62314, 0.972309, -14.0197 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree55" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -683,18 +755,21 @@ transform = Transform( 0.0438807, 0, 0.195127, 0, 0.2, 0, -0.195127, 0, 0.043880
 modulate = Color( 0.917647, 0.721569, 0.721569, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree56" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.0438807, 0, 0.195127, 0, 0.2, 0, -0.195127, 0, 0.0438807, -0.411057, 0.972309, -15.3232 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 13 )
 
 [node name="Tree57" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.0594584, 0, 0.262446, 0, 0.2, 0, -0.264397, 0, 0.0590195, 2.03852, 0.972308, -14.1792 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree28" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -702,6 +777,7 @@ transform = Transform( 0.2063, 0, -0.10393, 0, 0.2, 0, 0.10393, 0, 0.2063, 9.025
 modulate = Color( 0.898039, 0.854902, 0.819608, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree29" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -709,24 +785,28 @@ transform = Transform( 0.2063, 0, -0.10393, 0, 0.2, 0, 0.10393, 0, 0.2063, 8.256
 modulate = Color( 0.898039, 0.854902, 0.819608, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 13 )
 
 [node name="Tree4" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.2, 0, -7.45058e-09, 0, 0.2, 0, -7.45058e-09, 0, 0.2, -3.90832, 0.802307, -7.0013 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 8 )
 
 [node name="Tree20" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.0585511, 0, 0.191237, 0, 0.2, 0, -0.191237, 0, 0.0585511, 6.71371, 0.802307, -12.168 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 8 )
 
 [node name="shrroms5" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.0730209, 0, 0.186193, 0, 0.2, 0, -0.186193, 0, 0.0730209, -8.11549, 0.388366, -11.9773 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 21 )
 
 [node name="shrroms6" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -734,18 +814,21 @@ transform = Transform( 0.0730209, 0, 0.186193, 0, 0.2, 0, -0.186193, 0, 0.073020
 modulate = Color( 0.658824, 0.658824, 0.658824, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 18 )
 
 [node name="shrroms7" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.0730209, 0, 0.186193, 0, 0.2, 0, -0.186193, 0, 0.0730209, -7.01094, 0.388366, -14.6147 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 21 )
 
 [node name="Tree58" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.0989433, 0, 0.25043, 0, 0.2, 0, -0.252292, 0, 0.0982131, -5.59171, 1.48636, -13.7761 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 11 )
 
 [node name="Tree59" type="Sprite3D" parent="StaticBody6/Sprite3D"]
@@ -753,60 +836,67 @@ transform = Transform( 0.0843391, 0, 0.215053, 0, 0.2, 0, -0.215053, 0, 0.084339
 modulate = Color( 0.898039, 0.854902, 0.819608, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 12 )
 
 [node name="Tree62" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.0221381, 0, 1.8276, 0, 0.2, 0, -1.8276, 0, 0.0221382, 11.1997, -1.04179, -8.02302 )
 visible = false
-material_override = SubResource( 8 )
+material_override = SubResource( 7 )
 modulate = Color( 0.898039, 0.854902, 0.819608, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 3 )
 
 [node name="Tree63" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.0221381, 0, 1.8276, 0, 0.2, 0, -1.8276, 0, 0.0221382, -12.5273, -1.04179, -8.31043 )
 visible = false
-material_override = SubResource( 8 )
+material_override = SubResource( 7 )
 modulate = Color( 0.898039, 0.854902, 0.819608, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 3 )
 
 [node name="Tree64" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( 0.0221381, 0, 1.8276, 0, 0.2, 0, -1.8276, 0, 0.0221382, -0.515545, -1.04179, -19.4375 )
-material_override = SubResource( 8 )
+material_override = SubResource( 7 )
 modulate = Color( 0.898039, 0.854902, 0.819608, 1 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 3 )
 
 [node name="Tree60" type="Sprite3D" parent="StaticBody6/Sprite3D"]
 transform = Transform( -0.195845, 0, 0.0405541, 0, 0.2, 0, -0.040554, 0, -0.195845, -5.92224, 1.34249, -17.3856 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 8 )
 
 [node name="TerrainHolder" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.67757, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.921505, 0 )
 
-[node name="HTerrain" type="Spatial" parent="TerrainHolder"]
-transform = Transform( -0.548814, -0.350442, -1.53183e-08, 0, -4.89131e-08, 1.119, -0.350442, 0.548814, 2.39894e-08, -69.393, -21.8975, -76.7184 )
-script = ExtResource( 5 )
-map_scale = Vector3( 0.5, 0.5, 0.5 )
-_terrain_data = ExtResource( 4 )
-chunk_size = 16
-collision_enabled = true
-collision_layer = 1
-collision_mask = 1
-shader_type = "Classic4"
-custom_shader = null
-custom_globalmap_shader = null
-texture_set = SubResource( 5 )
-shader_params/u_ground_uv_scale_per_texture = Plane( 3, 10, 3, 3 )
-shader_params/u_depth_blending = true
-shader_params/u_triplanar = false
-shader_params/u_tile_reduction = Plane( 0, 0, 0, 0 )
-shader_params/u_globalmap_blend_start = null
-shader_params/u_globalmap_blend_distance = null
-shader_params/u_colormap_opacity_per_texture = Plane( 1, 1, 1, 1 )
+[node name="MeshInstance" type="MeshInstance" parent="TerrainHolder"]
+transform = Transform( 16.3461, -4.53324e-09, -1.28885e-06, 0, -0.108277, 7.06034, 1.42902e-06, 0.0518543, 14.7427, 73.859, -8.94351, -17.2336 )
+visible = false
+mesh = SubResource( 8 )
+material/0 = SubResource( 9 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="TerrainHolder"]
+transform = Transform( 14.607, 0.0218779, 6.70504, 0, -0.109713, 6.63656, -7.33696, 0.0435561, 13.3489, 48.1042, -9.41845, -11.5123 )
+visible = false
+mesh = SubResource( 8 )
+material/0 = SubResource( 9 )
+
+[node name="IslandSprite" type="Sprite3D" parent="TerrainHolder"]
+transform = Transform( 0.927275, 0, 0.37438, 0, 1, 0, -0.37438, 0, 0.927275, 70.3643, 1.22582, 19.2958 )
+pixel_size = 0.017
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 1 )
+
+[node name="HTerrain" parent="TerrainHolder" instance=ExtResource( 4 )]
+shader_type = "LowPoly"

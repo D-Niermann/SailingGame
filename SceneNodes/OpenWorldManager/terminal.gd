@@ -56,11 +56,11 @@ func _ready():
 	Utility.topograph = topograph # map for loading islands and also for pathfinding
 	Utility.dominions = dominions # map for goalfinding and pathfinding, shows regions
 	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(1, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(2, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(3, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(4, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(5, 0, 0), PARTSIZE, false))
+	# spawn("example", Utility.partitionLocation(Vector3(1, 0, 0), PARTSIZE, false))
+	# spawn("example", Utility.partitionLocation(Vector3(2, 0, 0), PARTSIZE, false))
+	# spawn("example", Utility.partitionLocation(Vector3(3, 0, 0), PARTSIZE, false))
+	# spawn("example", Utility.partitionLocation(Vector3(4, 0, 0), PARTSIZE, false))
+	# spawn("example", Utility.partitionLocation(Vector3(5, 0, 0), PARTSIZE, false))
 #	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
 #	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
 #	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))

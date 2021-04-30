@@ -145,9 +145,8 @@ __meta__ = {
 }
 
 [node name="Deck" type="Sprite3D" parent="Deck1"]
-transform = Transform( 1.04162, 0, 0, 0, 1, 0, 0, 0, 1.04162, 0, 0, 0 )
+transform = Transform( 0.8, 0, 0, 0, 1, 0, 0, 0, 0.8, 0, 0, 0 )
 material_override = SubResource( 4 )
-pixel_size = 0.004
 axis = 1
 shaded = true
 alpha_cut = 2

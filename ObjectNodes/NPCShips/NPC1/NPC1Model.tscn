@@ -12,7 +12,6 @@
 [ext_resource path="res://ObjectNodes/NPCShips/NPCGear/HullWalls/NPCOuterHullWall3m.tscn" type="PackedScene" id=12]
 [ext_resource path="res://ObjectNodes/NPCShips/NPCGear/HullWalls/NPCOuterHullWall.tscn" type="PackedScene" id=13]
 
-
 [sub_resource type="CylinderMesh" id=1]
 material = ExtResource( 4 )
 top_radius = 0.2
@@ -148,7 +147,7 @@ __meta__ = {
 [node name="Deck" type="Sprite3D" parent="Deck1"]
 transform = Transform( 1.04162, 0, 0, 0, 1, 0, 0, 0, 1.04162, 0, 0, 0 )
 material_override = SubResource( 4 )
-pixel_size = 0.004
+pixel_size = 0.008
 axis = 1
 shaded = true
 alpha_cut = 2
