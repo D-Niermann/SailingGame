@@ -6,7 +6,7 @@ extends KinematicBody
 # var b = "text"
 var velocity # the velocity in horizontla direciton, used for move and slide commands
 var dir = Vector3(0,0,0)
-var default_gravity = 1.0
+const default_gravity = 1.0
 var gravity = default_gravity
 export var camShakeMod = 2.5
 var gravity_dir = Vector3(0,-1,0)
@@ -59,6 +59,7 @@ func _process(delta):
 	# 	$Mesh.get_surface_material(0).albedo_color.a -= 1/60.0 # bug: looks shitty over water shader, and also affects all other balls materials
 	time += delta
 	grav_time += delta
+	coll = null
 	var waterHeight = 0
 	checkAndDestroy()
 	if ocean!= null:
