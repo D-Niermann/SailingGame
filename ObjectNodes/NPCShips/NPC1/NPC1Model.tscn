@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/topDeck.png" type="Texture" id=1]
-[ext_resource path="res://ObjectNodes/Flag/FlagExample.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ObjectNodes/FlagsAndSails/BaseFlag/BaseFlag.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/shipDeck.png" type="Texture" id=3]
 [ext_resource path="res://ObjectNodes/ShipModels/WoodMaterial.tres" type="Material" id=4]
 [ext_resource path="res://ObjectNodes/DefaultDeckLight/DefaultDeckLight.tscn" type="PackedScene" id=5]

@@ -5,7 +5,7 @@ extends "res://ObjectNodes/NPCShips/NPCGear/NPCBaseGear.gd"
 export var BallScene: PackedScene # scene object of ball
 # export var InfoPanel: PackedScene # scene object of cannons info ui panel
 
-var force          = 0.6 # for trajectory prediction: force of ball
+export var force          = 0.6 # for trajectory prediction: force of ball
 export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
 var recoil_impulse = 0.3 # when firing to the ship
 var    drag                      = 0.05 # for trajectory prediction: drag of ball
