@@ -25,7 +25,7 @@ void vertex(){
 	
 	VERTEX.y += texture_based_offset + UV.x * sin(UV.x * 2.0 * 3.14 - (TIME+time_offset) * wave_speed) * wave_size;
 	
-	VERTEX.z += texture_based_offset * face_distortion + UV.x * UV.x*gravity+UV.x*sin((TIME+time_offset)*0.5)*gravity/3.0;
+	VERTEX.z += 0.5-face_distortion + UV.x * UV.x*gravity+UV.x*sin((TIME+time_offset)*0.5)*gravity/3.0;
 	VERTEX.x += texture_based_offset * -face_distortion;
 	
 	

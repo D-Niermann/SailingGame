@@ -3,7 +3,7 @@
 [ext_resource path="res://ObjectNodes/Flags/BaseFlag/ExampleflagTexture.png" type="Texture" id=1]
 [ext_resource path="res://ObjectNodes/Flags/BaseFlag/FlagScript.gd" type="Script" id=3]
 
-[sub_resource type="Shader" id=5]
+[sub_resource type="Shader" id=7]
 code = "shader_type spatial;
 
 render_mode cull_disabled;
@@ -31,7 +31,7 @@ void vertex(){
 	
 	VERTEX.y += texture_based_offset + UV.x * sin(UV.x * 2.0 * 3.14 - (TIME+time_offset) * wave_speed) * wave_size;
 	
-	VERTEX.z += texture_based_offset * face_distortion + UV.x * UV.x*gravity+UV.x*sin((TIME+time_offset)*0.5)*gravity/3.0;
+	VERTEX.z += 0.5-face_distortion + UV.x * UV.x*gravity+UV.x*sin((TIME+time_offset)*0.5)*gravity/3.0;
 	VERTEX.x += texture_based_offset * -face_distortion;
 	
 	
@@ -61,11 +61,11 @@ noise = SubResource( 1 )
 [sub_resource type="ShaderMaterial" id=6]
 resource_local_to_scene = true
 render_priority = 23
-shader = SubResource( 5 )
+shader = SubResource( 7 )
 shader_param/albedo = Color( 1, 1, 1, 1 )
 shader_param/wave_size = 0.235
 shader_param/wave_speed = 1.905
-shader_param/noise_strength = 1.788
+shader_param/noise_strength = 3.85
 shader_param/gravity = -1.427
 shader_param/time_offset = 0.0
 shader_param/uv_offset_scale = Vector2( -0.2, -0.1 )
