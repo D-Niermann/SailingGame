@@ -1,0 +1,26 @@
+[gd_resource type="ShaderMaterial" load_steps=5 format=2]
+
+[ext_resource path="res://ObjectNodes/ShipModels/Sails/SailShader.shader" type="Shader" id=1]
+[ext_resource path="res://ObjectNodes/ShipModels/Sails/segel-schatten-flat.png" type="Texture" id=2]
+
+[sub_resource type="OpenSimplexNoise" id=1]
+
+[sub_resource type="NoiseTexture" id=2]
+seamless = true
+noise = SubResource( 1 )
+
+[resource]
+resource_local_to_scene = true
+render_priority = 2
+shader = ExtResource( 1 )
+shader_param/albedo = Color( 1, 1, 1, 1 )
+shader_param/wave_size = 0.048
+shader_param/wave_speed = 2.726
+shader_param/noise_strength = 0.391
+shader_param/side_wind_strength = -0.01
+shader_param/time_offset = 0.0
+shader_param/uv_offset_scale = Vector2( -0.2, -0.1 )
+shader_param/time_scale = Vector2( 0.079, -0.033 )
+shader_param/face_distortion = 0.5
+shader_param/texture_albedo = ExtResource( 2 )
+shader_param/uv_offset_texture = SubResource( 2 )

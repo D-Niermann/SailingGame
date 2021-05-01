@@ -123,12 +123,14 @@ hue_variation = 0.21
 hue_variation_random = 0.33
 
 [sub_resource type="SpatialMaterial" id=19]
+resource_local_to_scene = true
 flags_transparent = true
 flags_no_depth_test = true
 albedo_color = Color( 1, 1, 1, 0.168627 )
 albedo_texture = ExtResource( 9 )
 
 [sub_resource type="SpatialMaterial" id=20]
+resource_local_to_scene = true
 flags_transparent = true
 flags_no_depth_test = true
 albedo_texture = ExtResource( 10 )
@@ -151,6 +153,7 @@ script = ExtResource( 1 )
 databaseName = "CannonLarge"
 BallScene = ExtResource( 2 )
 InfoPanel = ExtResource( 14 )
+force = 0.5
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform( -4.70073e-08, 0, -0.257923, 0, 0.166714, 0, 0.288529, 0, -4.2021e-08, 0.139893, 0.0154406, -0.0031288 )
