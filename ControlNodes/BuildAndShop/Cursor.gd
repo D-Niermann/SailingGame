@@ -42,6 +42,8 @@ func _physics_process(delta):
 	# on leftclick, if shop is closed, if hit has info, open info box
 	if GlobalObjectReferencer.shopping.open == null:
 		if leftClick: # and not in shop or building
+			if !hit.empty() && Economy.malls.has(hit.collider.name): # opens shop, if hit's a shop
+				GlobalObjectReferencer.shopping.openShop(hit.collider.name)
 			if !hit.empty() && hit.collider.has_method("createInfo"):
 				if is_instance_valid(selected):
 					selected.removeInfo()
