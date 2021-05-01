@@ -14,7 +14,8 @@ var malls: Dictionary = {
 		"white": ["food", "gear"],
 		"black": ["drug"],
 		"money": 1000,
-		"part": Vector3(0, 0, 9)
+		"part": Vector3(0, 0, 9),
+		"loci": Vector3.ZERO
 	},
 	"appleCity": {
 		"capacity": Vector2(0, 100),
@@ -24,7 +25,8 @@ var malls: Dictionary = {
 		"white": ["food"],
 		"black": [],
 		"money": 1000,
-		"part": Vector3(4, 0, 4)
+		"part": Vector3(4, 0, 4),
+		"loci": Vector3.ZERO
 	}
 }
 # when adding new parameters/keys, also add them into BaseItem.fetchDictParams()
