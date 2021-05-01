@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/segel-schatten-flat.png-e99f386f757638e10f738df27cb22839.s3tc.stex"
-path.etc2="res://.import/segel-schatten-flat.png-e99f386f757638e10f738df27cb22839.etc2.stex"
+path.s3tc="res://.import/segel-schatten-flat.png-296a8555665c519585f2a2f622dca076.s3tc.stex"
+path.etc2="res://.import/segel-schatten-flat.png-296a8555665c519585f2a2f622dca076.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://ObjectNodes/FlagsAndSails/Sails/segel-schatten-flat.png"
-dest_files=[ "res://.import/segel-schatten-flat.png-e99f386f757638e10f738df27cb22839.s3tc.stex", "res://.import/segel-schatten-flat.png-e99f386f757638e10f738df27cb22839.etc2.stex" ]
+source_file="res://ObjectNodes/ShipModels/Sails/segel-schatten-flat.png"
+dest_files=[ "res://.import/segel-schatten-flat.png-296a8555665c519585f2a2f622dca076.s3tc.stex", "res://.import/segel-schatten-flat.png-296a8555665c519585f2a2f622dca076.etc2.stex" ]
 
 [params]
 

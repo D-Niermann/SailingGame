@@ -4,7 +4,7 @@
 [ext_resource path="res://ObjectNodes/NPCShips/NPC1/NPC1Model.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ObjectNodes/GeneralCannonAssets/CannonBall.tscn" type="PackedScene" id=3]
 [ext_resource path="res://ObjectNodes/Human/Human.tscn" type="PackedScene" id=4]
-[ext_resource path="res://ObjectNodes/FlagsAndSails/BigFlagBalcAndWhite/BigFlag.tscn" type="PackedScene" id=5]
+[ext_resource path="res://ObjectNodes/Flags/BigFlagBalcAndWhite/BigFlag.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 2, 1, 2 )

@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/ExampleflagTexture.png-e4d805e6ba188e4c18f6c94a3127a425.s3tc.stex"
-path.etc2="res://.import/ExampleflagTexture.png-e4d805e6ba188e4c18f6c94a3127a425.etc2.stex"
+path.s3tc="res://.import/ExampleflagTexture2.png-2e9b38d9e93ca721d8e68059acefaa5a.s3tc.stex"
+path.etc2="res://.import/ExampleflagTexture2.png-2e9b38d9e93ca721d8e68059acefaa5a.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://ObjectNodes/FlagsAndSails/BaseFlag/ExampleflagTexture.png"
-dest_files=[ "res://.import/ExampleflagTexture.png-e4d805e6ba188e4c18f6c94a3127a425.s3tc.stex", "res://.import/ExampleflagTexture.png-e4d805e6ba188e4c18f6c94a3127a425.etc2.stex" ]
+source_file="res://ObjectNodes/Flags/BaseFlag/ExampleflagTexture2.png"
+dest_files=[ "res://.import/ExampleflagTexture2.png-2e9b38d9e93ca721d8e68059acefaa5a.s3tc.stex", "res://.import/ExampleflagTexture2.png-2e9b38d9e93ca721d8e68059acefaa5a.etc2.stex" ]
 
 [params]
 

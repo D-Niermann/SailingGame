@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/sailBalken.png-833a3331cbf261eef3de4fedd12b74b8.s3tc.stex"
-path.etc2="res://.import/sailBalken.png-833a3331cbf261eef3de4fedd12b74b8.etc2.stex"
+path.s3tc="res://.import/sailBalken.png-b6578d567567b40fcb7940b033014d0f.s3tc.stex"
+path.etc2="res://.import/sailBalken.png-b6578d567567b40fcb7940b033014d0f.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://ObjectNodes/FlagsAndSails/Sails/sailBalken.png"
-dest_files=[ "res://.import/sailBalken.png-833a3331cbf261eef3de4fedd12b74b8.s3tc.stex", "res://.import/sailBalken.png-833a3331cbf261eef3de4fedd12b74b8.etc2.stex" ]
+source_file="res://ObjectNodes/ShipModels/Sails/sailBalken.png"
+dest_files=[ "res://.import/sailBalken.png-b6578d567567b40fcb7940b033014d0f.s3tc.stex", "res://.import/sailBalken.png-b6578d567567b40fcb7940b033014d0f.etc2.stex" ]
 
 [params]
 
