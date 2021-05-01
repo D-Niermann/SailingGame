@@ -1,8 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Fonts/LCALLIG.TTF" type="DynamicFontData" id=1]
 [ext_resource path="res://ControlNodes/Menu/MainMenu.gd" type="Script" id=2]
-
+[ext_resource path="res://SceneNodes/MainMenuScene.tscn" type="PackedScene" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -45,6 +45,8 @@ __meta__ = {
 "_editor_description_": ""
 }
 
+[node name="Scene" parent="ViewportContainer/Viewport" instance=ExtResource( 3 )]
+
 [node name="Interface" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.002
@@ -59,7 +61,7 @@ __meta__ = {
 anchor_left = 0.8
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0.258824 )
+color = Color( 0, 0, 0, 0.490196 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -194,7 +196,7 @@ __meta__ = {
 anchor_right = 0.8
 anchor_bottom = 1.0
 mouse_filter = 2
-color = Color( 0, 0, 0, 0.258824 )
+color = Color( 0, 0, 0, 0 )
 
 [node name="Container" type="GridContainer" parent="Interface/Continue"]
 anchor_right = 1.0
@@ -204,6 +206,7 @@ columns = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="pressed" from="Interface/Menu/List/Continue" to="." method="_on_Continue_pressed"]
 [connection signal="pressed" from="Interface/Menu/List/NewGame" to="." method="_on_NewGame_pressed"]
 [connection signal="pressed" from="Interface/Menu/List/Options" to="." method="_on_Options_pressed"]
