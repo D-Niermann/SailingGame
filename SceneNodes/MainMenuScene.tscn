@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://ObjectNodes/ShipRigidController/RigidShipController.gd" type="Script" id=1]
 [ext_resource path="res://ObjectNodes/Human/humanMaterial.tres" type="Material" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://SceneNodes/OceanEnv/OceanEnvironment.tscn" type="PackedScene" id=6]
 [ext_resource path="res://SceneNodes/Islands/dummyIslandOne.tscn" type="PackedScene" id=7]
 [ext_resource path="res://SceneNodes/OceanEnv/Sky.tscn" type="PackedScene" id=8]
+[ext_resource path="res://ObjectNodes/Clouds/Clouds.tscn" type="PackedScene" id=9]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 2.89, 2.91, 0.27 )
@@ -540,3 +541,6 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.0664575, 4.23114, -0.0711889 )
 
 [node name="Sky" parent="." instance=ExtResource( 8 )]
+
+[node name="Clouds" parent="." instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.43619, 0 )
