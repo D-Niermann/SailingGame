@@ -1,10 +1,10 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://SceneNodes/Islands/island1.png" type="Texture" id=1]
 [ext_resource path="res://SceneNodes/Islands/Shipyard-23x16-Base-Map-Day.png" type="Texture" id=2]
 [ext_resource path="res://SceneNodes/Islands/tiledTextue.png" type="Texture" id=3]
 [ext_resource path="res://SceneNodes/Islands/IslandTerrain1.tscn" type="PackedScene" id=4]
-[ext_resource path="res://SceneNodes/Islands/Images/ShoppingHouse.png" type="Texture" id=5]
+[ext_resource path="res://SceneNodes/Islands/Buildings/ShopHouse.tscn" type="PackedScene" id=5]
 [ext_resource path="res://SceneNodes/Islands/Images/Bush, 1.png" type="Texture" id=7]
 [ext_resource path="res://SceneNodes/Islands/Images/Tree, 1.png" type="Texture" id=11]
 [ext_resource path="res://SceneNodes/Islands/Images/Tree, 2.png" type="Texture" id=12]
@@ -26,12 +26,9 @@ albedo_color = Color( 0.0784314, 0.956863, 0.482353, 1 )
 albedo_texture = ExtResource( 3 )
 uv1_scale = Vector3( 100, 50, 50 )
 
-[sub_resource type="BoxShape" id=10]
-extents = Vector3( 1, 0.260266, 1.34321 )
+[sub_resource type="CubeMesh" id=5]
 
-[sub_resource type="CubeMesh" id=8]
-
-[sub_resource type="SpatialMaterial" id=9]
+[sub_resource type="SpatialMaterial" id=6]
 albedo_color = Color( 0.372549, 0.352941, 0.207843, 1 )
 
 [node name="Spatial" type="Spatial"]
@@ -262,17 +259,8 @@ shaded = true
 alpha_cut = 2
 texture = ExtResource( 19 )
 
-[node name="ClickableHouse" type="Sprite3D" parent="StaticBody6"]
-transform = Transform( -1.41096, 0, -0.377378, 0, 1, 0, 0.377378, 0, -1.41096, 0.52742, 1.34994, -3.30471 )
-axis = 1
-shaded = true
-alpha_cut = 2
-texture = ExtResource( 5 )
-
-[node name="StaticBody" type="StaticBody" parent="StaticBody6/ClickableHouse"]
-
-[node name="CollisionShape" type="CollisionShape" parent="StaticBody6/ClickableHouse/StaticBody"]
-shape = SubResource( 10 )
+[node name="ShopHouse" parent="StaticBody6" instance=ExtResource( 5 )]
+transform = Transform( 1.17972, 0, 0.336697, 0, 1, 0, -0.336697, 0, 1.17972, 0.438156, 1.36867, -3.62073 )
 
 [node name="Tree11" type="Sprite3D" parent="StaticBody6"]
 transform = Transform( -0.262332, 0, -0.128493, 0, 0.2, 0, 0.128493, 0, -0.262332, 8.7341, 1.81086, -0.999511 )
@@ -443,14 +431,14 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.921505, 0 )
 [node name="MeshInstance" type="MeshInstance" parent="TerrainHolder"]
 transform = Transform( 16.3461, -4.53324e-09, -1.28885e-06, 0, -0.108277, 7.06034, 1.42902e-06, 0.0518543, 14.7427, 73.859, -8.94351, -17.2336 )
 visible = false
-mesh = SubResource( 8 )
-material/0 = SubResource( 9 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
 
 [node name="MeshInstance2" type="MeshInstance" parent="TerrainHolder"]
 transform = Transform( 14.607, 0.0218779, 6.70504, 0, -0.109713, 6.63656, -7.33696, 0.0435561, 13.3489, 48.1042, -9.41845, -11.5123 )
 visible = false
-mesh = SubResource( 8 )
-material/0 = SubResource( 9 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
 
 [node name="IslandSprite" type="Sprite3D" parent="TerrainHolder"]
 transform = Transform( 0.927275, 0, 0.37438, 0, 1, 0, -0.37438, 0, 0.927275, 70.3643, 0.787263, 19.2958 )
