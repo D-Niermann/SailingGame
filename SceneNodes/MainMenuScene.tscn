@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://ObjectNodes/ShipRigidController/RigidShipController.gd" type="Script" id=1]
 [ext_resource path="res://ObjectNodes/Human/humanMaterial.tres" type="Material" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://ObjectNodes/NPCShips/NPC1/NPC1Model.tscn" type="PackedScene" id=5]
 [ext_resource path="res://SceneNodes/OceanEnv/OceanEnvironment.tscn" type="PackedScene" id=6]
 [ext_resource path="res://SceneNodes/Islands/dummyIslandOne.tscn" type="PackedScene" id=7]
+[ext_resource path="res://SceneNodes/OceanEnv/Sky.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 2.89, 2.91, 0.27 )
@@ -107,10 +108,7 @@ metallic_specular = 0.45
 [sub_resource type="QuadMesh" id=21]
 size = Vector2( 5, 5 )
 
-[node name="Spatial" type="Control"]
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="Spatial" type="Spatial"]
 
 [node name="Camera" type="Camera" parent="." groups=[
 "Camera",
@@ -540,3 +538,5 @@ transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0
 
 [node name="MainSailForce" type="Spatial" parent="NPCShipRigid2"]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.0664575, 4.23114, -0.0711889 )
+
+[node name="Sky" parent="." instance=ExtResource( 8 )]

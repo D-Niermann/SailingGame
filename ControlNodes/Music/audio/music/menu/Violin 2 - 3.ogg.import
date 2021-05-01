@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Violin 2 - 3.ogg-5bec745df1da8c8f81a4103b5f0a7421.oggstr"
+
+[deps]
+
+source_file="res://ControlNodes/Music/audio/music/menu/Violin 2 - 3.ogg"
+dest_files=[ "res://.import/Violin 2 - 3.ogg-5bec745df1da8c8f81a4103b5f0a7421.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
