@@ -1,6 +1,5 @@
 extends "res://ObjectNodes/Items/BaseItem.gd"
 
-export var InfoPanel: PackedScene # scene object of cannons info ui panel
 var isLeaking = false 
 var leakHealth = 5 #threshold under which leaking starts
 
@@ -10,6 +9,7 @@ func _ready():
 	maxHealth = 10
 	currentHealth = maxHealth
 	## outer hull walls are always already placed on ship model, so they can register in the ready() call
+
 
 
 func _physics_process(delta):

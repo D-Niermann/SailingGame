@@ -36,7 +36,7 @@ var dist_from_ship_xz = 0.0
 
 func _ready():
 	GlobalObjectReferencer.camera = self
-	targetPos = translation
+	targetPos = Vector3.ZERO
 	shopping = get_tree().get_nodes_in_group("Shopping")[0]
 
 

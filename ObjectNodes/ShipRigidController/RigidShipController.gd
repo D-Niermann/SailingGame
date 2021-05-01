@@ -37,7 +37,7 @@ var right
 const impulse_factor = 3 # overall impulse stength, all impulses should be multiplied by this
 # sailing and wind stuff
 var wind_dir = Vector2(0,1) # TODO: make real wind direction vector in the ocean env
-var speed_mod = 5.2 # speed modifier, more = more max speed, could be changed because of higher load mass
+export var speed_mod = 5.2 # speed modifier, more = more max speed, could be changed because of higher load mass
 const reverse_speed_factor = -0.2 # factor on how much sailing against the wind will reverse the speed direction (0 for still stand, 0.05 for pretty heavy reverse, negative values for allowing sailing against wind)
 const crossWindForce = 0.01 # force that attacks the ship up on the sails, tilting it with the wind
 const maxTurnForce = 0.7 # max turn force of the whole ship
