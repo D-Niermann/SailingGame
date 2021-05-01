@@ -1,0 +1,102 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ControlNodes/ExampleTheme.tres" type="Theme" id=1]
+[ext_resource path="res://ObjectNodes/Items/Barrels/GunpowderBarrel/BarrelInfoBox.gd" type="Script" id=2]
+
+[node name="Barrelinfo" type="TextureRect"]
+anchor_right = 0.196
+anchor_bottom = 0.162
+margin_right = -163.28
+margin_bottom = -0.100006
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 209.0
+margin_bottom = 170.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="RichTextLabel" parent="Panel"]
+margin_left = 13.2348
+margin_top = 1.88776
+margin_right = 198.235
+margin_bottom = 34.8878
+text = "Gunpowder Barrel"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text1" type="RichTextLabel" parent="Panel"]
+margin_top = 66.0373
+margin_right = 83.0
+margin_bottom = 99.0373
+text = "Health"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="isActive" type="RichTextLabel" parent="Panel"]
+margin_left = 42.1766
+margin_top = 32.6663
+margin_right = 125.176
+margin_bottom = 65.6663
+text = "Active"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ActiveToggle" type="CheckButton" parent="Panel"]
+margin_left = 123.114
+margin_top = 33.0
+margin_right = 173.114
+margin_bottom = 64.0
+pressed = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthLabel" type="RichTextLabel" parent="Panel"]
+margin_left = 149.959
+margin_top = 66.0373
+margin_right = 208.959
+margin_bottom = 99.0373
+text = "100"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MaxUsers" type="RichTextLabel" parent="Panel"]
+margin_left = 2.35968
+margin_top = 92.8292
+margin_right = 150.36
+margin_bottom = 125.829
+text = "Inventory:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GunpowderLabel" type="RichTextLabel" parent="Panel"]
+margin_left = 15.5739
+margin_top = 120.202
+margin_right = 163.574
+margin_bottom = 153.202
+text = "Gunpowder:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GPAmount" type="RichTextLabel" parent="Panel"]
+margin_left = 149.487
+margin_top = 118.422
+margin_right = 208.487
+margin_bottom = 151.422
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="toggled" from="Panel/ActiveToggle" to="." method="_on_ActiveToggle_toggled"]

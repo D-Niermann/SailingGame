@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/main_Keys.ogg-ca17d8b534c1fb5dbbb20ec9ff45db4f.oggstr"
+
+[deps]
+
+source_file="res://ControlNodes/Music/audio/music/ingame/main_Keys.ogg"
+dest_files=[ "res://.import/main_Keys.ogg-ca17d8b534c1fb5dbbb20ec9ff45db4f.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

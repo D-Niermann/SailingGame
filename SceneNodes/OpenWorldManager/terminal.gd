@@ -45,8 +45,10 @@ var NPC01: PackedScene = preload("res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn"
 func _ready():
 	viewport = get_node("ViewportContainer/Viewport")
 	# camera = viewport.get_node("GameCamera")
+	
 	indicators = get_node("Interface/Indicators")
 	var topographTexture: Texture = load("res://SceneNodes/OpenWorldManager/topograph.png")
+
 	var dominionsTexture: Texture = load("res://SceneNodes/OpenWorldManager/dominions.png")
 	topograph = topographTexture.get_data()
 	dominions = dominionsTexture.get_data()
@@ -54,11 +56,11 @@ func _ready():
 	Utility.topograph = topograph # map for loading islands and also for pathfinding
 	Utility.dominions = dominions # map for goalfinding and pathfinding, shows regions
 	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(1, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(2, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(3, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(4, 0, 0), PARTSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(5, 0, 0), PARTSIZE, false))
+	# spawn("example", Utility.partitionLocation(Vector3(1, 0, 0), PARTSIZE, false))
+	# spawn("example", Utility.partitionLocation(Vector3(2, 0, 0), PARTSIZE, false))
+	# spawn("example", Utility.partitionLocation(Vector3(3, 0, 0), PARTSIZE, false))
+	# spawn("example", Utility.partitionLocation(Vector3(4, 0, 0), PARTSIZE, false))
+	# spawn("example", Utility.partitionLocation(Vector3(5, 0, 0), PARTSIZE, false))
 #	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
 #	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
 #	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
@@ -195,6 +197,7 @@ func _physics_process(delta):
 					print("spawned")
 					var pre = presets[info["preset"]].get("PRE")
 					if pre != null:
+						print("using preloaded NPC")
 						holo = get(pre).instance()
 					else:
 						holo = load(presets[info["preset"]]["RES"]).instance()

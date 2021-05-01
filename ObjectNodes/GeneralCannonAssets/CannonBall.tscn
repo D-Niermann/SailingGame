@@ -66,6 +66,7 @@ size = Vector2( 5, 5 )
 
 [node name="Ball" type="KinematicBody"]
 script = ExtResource( 3 )
+camShakeMod = 0.25
 
 [node name="Mesh" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )

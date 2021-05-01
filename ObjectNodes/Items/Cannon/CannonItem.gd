@@ -4,7 +4,6 @@ extends "res://ObjectNodes/Items/BaseItem.gd"
 
 ### Paramters
 export var BallScene: PackedScene # scene object of ball
-export var InfoPanel: PackedScene # scene object of cannons info ui panel
 
 export(float) var force          = 0.6 # for trajectory prediction: force of ball
 export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
@@ -48,8 +47,6 @@ var trajectoryPoints : Array
 var org_forward
 var reloadTimer : Timer
 func _ready():
-	## overwrite parent vars
-	fetchDictParams(databaseName) # todo, get all constants from that dictionary and not define vars here
 
 	marker = $TrajectoryMarkerGroup.get_children()
 	fakeBullet = $FakeBullet

@@ -1,4 +1,17 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=19 format=2]
+
+[ext_resource path="res://SceneNodes/Islands/island1.png" type="Texture" id=1]
+[ext_resource path="res://SceneNodes/Islands/Shipyard-23x16-Base-Map-Day.png" type="Texture" id=2]
+[ext_resource path="res://SceneNodes/Islands/tiledTextue.png" type="Texture" id=3]
+[ext_resource path="res://SceneNodes/Islands/IslandTerrain1.tscn" type="PackedScene" id=4]
+[ext_resource path="res://SceneNodes/Islands/Buildings/ShopHouse.tscn" type="PackedScene" id=5]
+[ext_resource path="res://SceneNodes/Islands/Images/Bush, 1.png" type="Texture" id=7]
+[ext_resource path="res://SceneNodes/Islands/Images/Tree, 1.png" type="Texture" id=11]
+[ext_resource path="res://SceneNodes/Islands/Images/Tree, 2.png" type="Texture" id=12]
+[ext_resource path="res://SceneNodes/Islands/Images/Tree, 3.png" type="Texture" id=13]
+[ext_resource path="res://SceneNodes/Islands/Images/House.png" type="Texture" id=19]
+[ext_resource path="res://SceneNodes/Islands/tree.png" type="Texture" id=22]
+[ext_resource path="res://SceneNodes/Islands/Images/Stump, big.png" type="Texture" id=23]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 32, 1, 32 )
@@ -6,30 +19,50 @@ extents = Vector3( 32, 1, 32 )
 [sub_resource type="CubeMesh" id=2]
 size = Vector3( 64, 2, 64 )
 
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.0784314, 0.956863, 0.482353, 1 )
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_texture = ExtResource( 3 )
+uv1_scale = Vector3( 100, 50, 50 )
+
+[sub_resource type="CubeMesh" id=5]
+
+[sub_resource type="SpatialMaterial" id=6]
+albedo_color = Color( 0.372549, 0.352941, 0.207843, 1 )
+
 [node name="Spatial" type="Spatial"]
 
 [node name="StaticBody" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 128, 0, 0 )
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody"]
+visible = false
 mesh = SubResource( 2 )
 material/0 = null
 
 [node name="StaticBody2" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 64 )
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody2"]
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody2"]
+visible = false
 mesh = SubResource( 2 )
 material/0 = null
 
 [node name="StaticBody3" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 128 )
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody3"]
 shape = SubResource( 1 )
@@ -40,6 +73,8 @@ material/0 = null
 
 [node name="StaticBody4" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 0, 128 )
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody4"]
 shape = SubResource( 1 )
@@ -50,6 +85,8 @@ material/0 = null
 
 [node name="StaticBody9" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 128, 0, 128 )
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody9"]
 shape = SubResource( 1 )
@@ -60,50 +97,356 @@ material/0 = null
 
 [node name="StaticBody10" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 128, 0, 64 )
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody10"]
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody10"]
+visible = false
 mesh = SubResource( 2 )
 material/0 = null
 
 [node name="StaticBody7" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 192 )
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody7"]
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody7"]
+visible = false
 mesh = SubResource( 2 )
 material/0 = null
 
 [node name="StaticBody8" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 0, 192 )
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody8"]
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody8"]
+visible = false
 mesh = SubResource( 2 )
-material/0 = null
+material/0 = SubResource( 3 )
 
 [node name="StaticBody5" type="StaticBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 0, 64 )
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody5"]
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody5"]
+visible = false
 mesh = SubResource( 2 )
 material/0 = null
 
 [node name="StaticBody6" type="StaticBody" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 0, 0 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 0.846372, 0 )
+collision_layer = 0
+collision_mask = 0
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody6"]
 shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody6"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15.544, 0 )
+visible = false
 mesh = SubResource( 2 )
-material/0 = null
+material/0 = SubResource( 4 )
+
+[node name="Sprite3D2" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.70473, 0, -0.191471, 0, 0.5, 0, 0.191471, 0, -0.70473, 3.07395, 1.7964, 1.6197 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 7 )
+
+[node name="Sprite3D5" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.281892, 0, -0.0765882, 0, 0.2, 0, 0.0765882, 0, -0.281892, 5.54758, 1.39046, 1.07404 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 23 )
+
+[node name="Sprite3D6" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.281892, 0, -0.0765882, 0, 0.2, 0, 0.0765882, 0, -0.281892, 8.85047, 1.39046, 2.73325 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 23 )
+
+[node name="Tree" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.281892, 0, -0.0765882, 0, 0.2, 0, 0.0765882, 0, -0.281892, -8.25011, 1.82599, 1.3344 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 11 )
+
+[node name="Tree2" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.281892, 0, -0.0765882, 0, 0.2, 0, 0.0765882, 0, -0.281892, -11.157, 1.82599, 1.66991 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 12 )
+
+[node name="Tree30" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.291721, 0, 0.0150894, 0, 0.2, 0, -0.0150894, 0, -0.291721, -2.47251, 1.81086, -0.309758 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 11 )
+
+[node name="Tree31" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.281892, 0, -0.0765882, 0, 0.2, 0, 0.0765882, 0, -0.281892, -4.96642, 1.82599, 0.475423 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 12 )
+
+[node name="Tree32" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.0232186, 0, -0.291187, 0, 0.2, 0, 0.291187, 0, -0.0232186, 2.73219, 1.81086, -1.54049 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 11 )
+
+[node name="Tree33" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.0232186, 0, -0.291187, 0, 0.2, 0, 0.291187, 0, -0.0232186, 1.11834, 2.21273, 2.61406 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 12 )
+
+[node name="Tree3" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.281892, 0, -0.0765882, 0, 0.2, 0, 0.0765882, 0, -0.281892, -9.45929, 1.82599, 3.63584 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 13 )
+
+[node name="Tree5" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.131324, 0, -0.260927, 0, 0.2, 0, 0.260927, 0, -0.131324, -10.2356, 1.68754, 6.24098 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 11 )
+
+[node name="House" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -1.45049, 0, 0.171165, 0, 1, 0, -0.171165, 0, -1.45049, -6.48537, 1.30959, 1.84125 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 19 )
+
+[node name="House3" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.295804, 0, -0.810642, 0, 1, 0, 0.810642, 0, -0.295804, -10.8206, 1.30959, 4.52036 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 19 )
+
+[node name="House4" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( 0.648523, 0, -0.569261, 0, 1, 0, 0.569261, 0, 0.648523, -8.15511, 1.30959, 7.9187 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 19 )
+
+[node name="ShopHouse" parent="StaticBody6" instance=ExtResource( 5 )]
+transform = Transform( 1.17972, 0, 0.336697, 0, 1, 0, -0.336697, 0, 1.17972, 0.438156, 1.36867, -3.62073 )
+
+[node name="Tree11" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.262332, 0, -0.128493, 0, 0.2, 0, 0.128493, 0, -0.262332, 8.7341, 1.81086, -0.999511 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 11 )
+
+[node name="Tree12" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.262332, 0, -0.128493, 0, 0.2, 0, 0.128493, 0, -0.262332, 5.82722, 1.81086, -0.663994 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 12 )
+
+[node name="Tree13" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.262332, 0, -0.128493, 0, 0.2, 0, 0.128493, 0, -0.262332, 7.4586, 1.82599, 1.28972 )
+modulate = Color( 0.917647, 0.721569, 0.721569, 1 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 13 )
+
+[node name="Tree14" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.262332, 0, -0.128493, 0, 0.2, 0, 0.128493, 0, -0.262332, 14.3676, 1.82599, 0.435992 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 11 )
+
+[node name="Tree15" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.261364, 0, -0.130453, 0, 0.2, 0, 0.130453, 0, -0.261364, 11.4608, 1.82599, 0.771502 )
+modulate = Color( 0.74902, 0.72549, 0.72549, 1 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 12 )
+
+[node name="Tree61" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.262332, 0, -0.128493, 0, 0.2, 0, 0.128493, 0, -0.262332, 13.7037, 1.82599, -1.90519 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 11 )
+
+[node name="Tree65" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.261364, 0, -0.130453, 0, 0.2, 0, 0.130453, 0, -0.261364, 10.8631, 1.81086, -1.55743 )
+modulate = Color( 0.74902, 0.72549, 0.72549, 1 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 12 )
+
+[node name="Tree66" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( 0.289296, 0, 0.040457, 0, 0.2, 0, -0.040457, 0, 0.289296, 15.7184, 1.82599, -1.48644 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 11 )
+
+[node name="Tree16" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.262332, 0, -0.128493, 0, 0.2, 0, 0.128493, 0, -0.262332, 13.1585, 1.82599, 2.73741 )
+modulate = Color( 0.917647, 0.721569, 0.721569, 1 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 13 )
+
+[node name="Tree8" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.332851, 0, -0.0551447, 0, 0.2, 0, 0.0551447, 0, -0.332851, -2.36276, 1.82599, 7.35466 )
+modulate = Color( 0.898039, 0.854902, 0.819608, 1 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 11 )
+
+[node name="Tree22" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.286209, 0, 0.0584274, 0, 0.2, 0, -0.0584274, 0, -0.286209, -11.3376, 1.96986, 8.12848 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 12 )
+
+[node name="Tree23" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -1.43104, 0, 0.292137, 0, 1, 0, -0.292137, 0, -1.43104, -6.74201, 1.62392, 6.40742 )
+modulate = Color( 0.898039, 0.854902, 0.819608, 1 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 22 )
+
+[node name="Tree24" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.387812, 0, 0.0785847, 0, 0.2, 0, -0.0791693, 0, -0.38495, -6.41364, 1.96986, 9.19697 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 11 )
+
+[node name="Tree25" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.286209, 0, 0.0584274, 0, 0.2, 0, -0.0584274, 0, -0.286209, -9.32054, 1.96986, 9.5325 )
+modulate = Color( 0.917647, 0.721569, 0.721569, 1 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 12 )
+
+[node name="Tree26" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.286209, 0, 0.0584274, 0, 0.2, 0, -0.0584274, 0, -0.286209, -7.62282, 1.96986, 11.4984 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 13 )
+
+[node name="Tree27" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.387812, 0, 0.0785847, 0, 0.2, 0, -0.0791693, 0, -0.38495, -11.5135, 1.96986, 10.824 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 11 )
+
+[node name="Tree42" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( 0.285017, 0, -0.0639811, 0, 0.2, 0, 0.0639811, 0, 0.285017, -2.97762, 1.50188, 3.0935 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 11 )
+
+[node name="Tree44" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( 0.012874, 0, -0.291827, 0, 0.2, 0, 0.291827, 0, 0.012874, -1.18167, 2.07612, 2.16908 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 12 )
+
+[node name="Tree45" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( 0.0174443, 0, -0.392508, 0, 0.2, 0, 0.395426, 0, 0.0173157, 0.516029, 1.99676, 4.13501 )
+modulate = Color( 0.898039, 0.854902, 0.819608, 1 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 13 )
+
+[node name="Tree49" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( 0.0174443, 0, -0.392508, 0, 0.2, 0, 0.395426, 0, 0.0173157, -4.25547, 1.78421, 7.67655 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 11 )
+
+[node name="Tree29" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -0.330571, 0, 0.0674844, 0, 0.2, 0, -0.0674844, 0, -0.330571, -12.7227, 1.96986, 13.1255 )
+modulate = Color( 0.898039, 0.854902, 0.819608, 1 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 13 )
+
+[node name="Sprite3D" type="Sprite3D" parent="StaticBody6"]
+transform = Transform( -1.14709, 0, -0.311657, 0, 1, 0, 0.311657, 0, -1.14709, -3.20346, 1.08609, -4.06957 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 2 )
+
+[node name="TerrainHolder" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.921505, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="TerrainHolder"]
+transform = Transform( 16.3461, -4.53324e-09, -1.28885e-06, 0, -0.108277, 7.06034, 1.42902e-06, 0.0518543, 14.7427, 73.859, -8.94351, -17.2336 )
+visible = false
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="TerrainHolder"]
+transform = Transform( 14.607, 0.0218779, 6.70504, 0, -0.109713, 6.63656, -7.33696, 0.0435561, 13.3489, 48.1042, -9.41845, -11.5123 )
+visible = false
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="IslandSprite" type="Sprite3D" parent="TerrainHolder"]
+transform = Transform( 0.927275, 0, 0.37438, 0, 1, 0, -0.37438, 0, 0.927275, 70.3643, 0.787263, 19.2958 )
+pixel_size = 0.017
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 1 )
+
+[node name="HTerrain" parent="TerrainHolder" instance=ExtResource( 4 )]
+shader_type = "LowPoly"

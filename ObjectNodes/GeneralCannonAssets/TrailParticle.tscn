@@ -5,7 +5,10 @@
 [sub_resource type="SpatialMaterial" id=1]
 render_priority = 1
 flags_transparent = true
+flags_unshaded = true
 flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+flags_disable_ambient_light = true
 vertex_color_use_as_albedo = true
 params_billboard_mode = 3
 particles_anim_h_frames = 1
@@ -13,7 +16,6 @@ particles_anim_v_frames = 1
 particles_anim_loop = false
 albedo_color = Color( 1, 1, 1, 0.211765 )
 albedo_texture = ExtResource( 1 )
-metallic_specular = 0.45
 
 [sub_resource type="Gradient" id=2]
 offsets = PoolRealArray( 0, 0.162602, 0.633423, 0.781671 )
@@ -44,7 +46,7 @@ size = Vector2( 5, 5 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0211141, 0, 0.00772725 )
 material_override = SubResource( 1 )
 cast_shadow = 2
-amount = 400
+amount = 200
 randomness = 1.0
 visibility_aabb = AABB( -181.604, -196.936, -272.78, 362.306, 395.6, 547.224 )
 local_coords = false

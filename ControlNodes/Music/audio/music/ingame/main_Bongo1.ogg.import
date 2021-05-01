@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/main_Bongo1.ogg-b483bffa57eda4a4b73e2a243ac489fc.oggstr"
+
+[deps]
+
+source_file="res://ControlNodes/Music/audio/music/ingame/main_Bongo1.ogg"
+dest_files=[ "res://.import/main_Bongo1.ogg-b483bffa57eda4a4b73e2a243ac489fc.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

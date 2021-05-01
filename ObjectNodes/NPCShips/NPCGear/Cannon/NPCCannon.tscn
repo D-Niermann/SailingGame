@@ -126,6 +126,7 @@ collision_layer = 16385
 collision_mask = 16385
 script = ExtResource( 1 )
 BallScene = ExtResource( 2 )
+force = 0.5
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform( -4.70073e-08, 0, -0.257923, 0, 0.166714, 0, 0.288529, 0, -4.2021e-08, 0.139893, 0.0154406, -0.0031288 )

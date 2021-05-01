@@ -4,10 +4,11 @@ extends KinematicBody
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var velocity = 6 # the velocity in horizontla direciton, used for move and slide commands
-var dir = Vector3(-1,0,0)
-var default_gravity = 1
+var velocity # the velocity in horizontla direciton, used for move and slide commands
+var dir = Vector3(0,0,0)
+const default_gravity = 1.0
 var gravity = default_gravity
+export var camShakeMod = 2.5
 var gravity_dir = Vector3(0,-1,0)
 var water_gravity = default_gravity/4 # gravity force when underwater
 # var start_impulse = 10
@@ -58,6 +59,7 @@ func _process(delta):
 	# 	$Mesh.get_surface_material(0).albedo_color.a -= 1/60.0 # bug: looks shitty over water shader, and also affects all other balls materials
 	time += delta
 	grav_time += delta
+	coll = null
 	var waterHeight = 0
 	checkAndDestroy()
 	if ocean!= null:
@@ -126,8 +128,10 @@ func _process(delta):
 				if coll_obj.has_method("giveDmg"):
 					coll_obj.giveDmg(speed) ##give damage to object
 				gravity = 0
+
 				if speed>0.1:
 					playAudio()
+					GlobalObjectReferencer.camera.shake_val += clamp(speed * camShakeMod /clamp(GlobalObjectReferencer.camera.global_transform.origin.distance_to(global_transform.origin)*0.02,1,99999),0,1)	
 					$HitParticle.emitting = true
 					$HitParticle.get_child(0).emitting = true
 				isInsideBody = true

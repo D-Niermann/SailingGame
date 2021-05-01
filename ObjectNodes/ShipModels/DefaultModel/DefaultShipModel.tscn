@@ -1,15 +1,15 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/topDeck.png" type="Texture" id=1]
-[ext_resource path="res://ObjectNodes/Flag/FlagExample.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ObjectNodes/Flags/BaseFlag/BaseFlag.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/shipDeck.png" type="Texture" id=3]
 [ext_resource path="res://ObjectNodes/ShipModels/WoodMaterial.tres" type="Material" id=4]
 [ext_resource path="res://ObjectNodes/DefaultDeckLight/DefaultDeckLight.tscn" type="PackedScene" id=5]
-[ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/segel-schatten.png" type="Texture" id=6]
-[ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/segel.png" type="Texture" id=7]
+[ext_resource path="res://ObjectNodes/Flags/BigFlagBalcAndWhite/BigFlag.tscn" type="PackedScene" id=6]
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/segelVorn.png" type="Texture" id=8]
 [ext_resource path="res://ObjectNodes/Items/Walls/OuterHullWall.tscn" type="PackedScene" id=9]
 [ext_resource path="res://ObjectNodes/Items/Walls/OuterHullWall3m.tscn" type="PackedScene" id=10]
+[ext_resource path="res://ObjectNodes/ShipModels/Sails/SailShaderExample.tscn" type="PackedScene" id=11]
 
 [sub_resource type="CylinderMesh" id=1]
 material = ExtResource( 4 )
@@ -17,31 +17,26 @@ top_radius = 0.2
 bottom_radius = 0.3
 height = 9.042
 
-[sub_resource type="SpatialMaterial" id=2]
-params_use_alpha_scissor = true
-params_alpha_scissor_threshold = 0.4
-albedo_texture = ExtResource( 6 )
-
-[sub_resource type="BoxShape" id=3]
+[sub_resource type="BoxShape" id=2]
 extents = Vector3( 5.01352, 0.0385511, 1.50246 )
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=3]
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.85
 albedo_texture = ExtResource( 1 )
 
-[sub_resource type="BoxShape" id=5]
+[sub_resource type="BoxShape" id=4]
 extents = Vector3( 0.846288, 0.533633, 0.643275 )
 
-[sub_resource type="BoxShape" id=6]
+[sub_resource type="BoxShape" id=5]
 extents = Vector3( 5.0327, 0.0424717, 1.61134 )
 
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="SpatialMaterial" id=6]
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.75
 albedo_texture = ExtResource( 3 )
 
-[sub_resource type="StreamTexture" id=8]
+[sub_resource type="StreamTexture" id=7]
 flags = 23
 load_path = "res://.import/shipDeck.png-795b33a120e4e89b82f0c94bb8f9a6cc.s3tc.stex"
 
@@ -60,28 +55,14 @@ transform = Transform( 0.427862, 0, 0, 0, 0.394264, 0, 0, 0, 0.427862, 0, 1.6569
 mesh = SubResource( 1 )
 material/0 = null
 
-[node name="Segel" type="Sprite3D" parent="Sails/FrontMast"]
-transform = Transform( 0.0983173, 0, -0.791588, 0, 0.716448, 0, 0.791588, 0, 0.0983173, -0.17223, 1.25409, 0.118396 )
-material_override = SubResource( 2 )
-axis = 1
-shaded = true
-alpha_cut = 2
-texture = ExtResource( 6 )
+[node name="Flag3DScene2" parent="Sails/FrontMast" instance=ExtResource( 11 )]
+transform = Transform( 0.85201, 0, 0.696451, 0, 1, 0, -0.523525, 0, 1.13344, 0.366559, 1.30163, -0.189389 )
 
-[node name="Segel2" type="Sprite3D" parent="Sails/FrontMast"]
-transform = Transform( 0.0752804, 0, -0.725254, 0, 0.133593, 0, 0.725254, 0, 0.0752804, -0.17223, 2.40967, 0.118396 )
-material_override = SubResource( 2 )
-axis = 1
-shaded = true
-alpha_cut = 2
-texture = ExtResource( 6 )
+[node name="Flag3DScene3" parent="Sails/FrontMast" instance=ExtResource( 11 )]
+transform = Transform( 0.781091, 0, 0.557881, 0, 1, 0, -0.419361, 0, 1.03909, 0.360548, 2.42487, -0.128512 )
 
-[node name="Segel3" type="Sprite3D" parent="Sails/FrontMast"]
-transform = Transform( 0.076577, 0, -0.534115, 0, 0.655463, 0, 0.534115, 0, 0.076577, -0.0606142, 3.1018, 0.0950558 )
-axis = 1
-shaded = true
-alpha_cut = 2
-texture = ExtResource( 7 )
+[node name="Flag3DScene4" parent="Sails/FrontMast" instance=ExtResource( 11 )]
+transform = Transform( 0.584934, 0, 0.417779, 0, 1, 0, -0.314046, 0, 0.778144, 0.246604, 3.09757, -0.175889 )
 
 [node name="FrontSail" type="Sprite3D" parent="Sails/FrontMast"]
 transform = Transform( -0.0418228, 0.0669867, -0.500788, -0.01806, 0.501981, 0.0686546, 0.504925, 0.0235032, -0.0390245, 3.30414, 0.907627, -0.564183 )
@@ -91,7 +72,7 @@ alpha_cut = 2
 texture = ExtResource( 8 )
 
 [node name="Flag3DScene" parent="Sails/FrontMast" instance=ExtResource( 2 )]
-transform = Transform( -0.192357, 0, 0.283321, 0, 0.259697, 0, -0.283321, 0, -0.192357, 0.0070411, 2.44407, -0.00361058 )
+transform = Transform( -0.192357, 0.0720457, 0.266918, 0, 0.244662, -0.11483, -0.283321, -0.0489145, -0.18122, 0.0070411, 3.24533, -0.00361058 )
 
 [node name="Main" type="Spatial" parent="Sails"]
 transform = Transform( 1, 0, 0, 0, 1.63147, 0, 0, 0, 1, -3.35475, -9.53674e-07, 0.124168 )
@@ -101,31 +82,17 @@ transform = Transform( 0.427862, 0, 0, 0, 0.394264, 0, 0, 0, 0.427862, 0, 1.6569
 mesh = SubResource( 1 )
 material/0 = null
 
-[node name="Segel" type="Sprite3D" parent="Sails/Main"]
-transform = Transform( 0.0983173, 0, -0.791588, 0, 0.716448, 0, 0.791588, 0, 0.0983173, -0.17223, 1.25409, 0.118396 )
-material_override = SubResource( 2 )
-axis = 1
-shaded = true
-alpha_cut = 2
-texture = ExtResource( 6 )
+[node name="Flag3DScene5" parent="Sails/Main" instance=ExtResource( 11 )]
+transform = Transform( 0.584934, 0, 0.417779, 0, 0.808259, 0, -0.314047, 0, 0.778144, 0.264281, 2.81001, -0.0808478 )
 
-[node name="Segel2" type="Sprite3D" parent="Sails/Main"]
-transform = Transform( 0.127255, 0, -0.71796, 0, 0.133593, 0, 0.71796, 0, 0.127255, -0.17223, 2.40967, 0.118396 )
-material_override = SubResource( 2 )
-axis = 1
-shaded = true
-alpha_cut = 2
-texture = ExtResource( 6 )
+[node name="Flag3DScene6" parent="Sails/Main" instance=ExtResource( 11 )]
+transform = Transform( 0.792771, 0, 0.583654, 0, 0.808259, 0, -0.438735, 0, 1.05463, 0.386149, 2.39785, -0.163037 )
 
-[node name="Segel3" type="Sprite3D" parent="Sails/Main"]
-transform = Transform( 0.0504036, 0, -0.537217, 0, 0.655463, 0, 0.537217, 0, 0.0504036, -0.0403817, 2.85009, 0.0521205 )
-axis = 1
-shaded = true
-alpha_cut = 2
-texture = ExtResource( 7 )
+[node name="Flag3DScene7" parent="Sails/Main" instance=ExtResource( 11 )]
+transform = Transform( 0.979762, 0, 0.668528, 0, 0.808259, 0, -0.502535, 0, 1.30339, 0.442565, 1.28554, -0.163604 )
 
 [node name="Flag3DScene" parent="Sails/Main" instance=ExtResource( 2 )]
-transform = Transform( -0.234354, 0, 0.274044, 0, 0.360585, 0, -0.274044, 0, -0.234354, 0.00421143, 2.04787, -0.00418377 )
+transform = Transform( -0.234354, -0.0498574, 0.262651, 0, 0.220353, 0.102888, -0.274044, 0.0426366, -0.224611, 0.00421143, 3.29494, -0.00418377 )
 
 [node name="Deck1" type="KinematicBody" parent="." groups=[
 "PlayerDeck",
@@ -139,15 +106,14 @@ __meta__ = {
 
 [node name="CollisionShape" type="CollisionShape" parent="Deck1"]
 transform = Transform( 0.999367, 0, 0.0355972, 0, 1, 0, -0.0355972, 0, 0.999367, -1.72906, -0.0210442, 0.0471487 )
-shape = SubResource( 3 )
+shape = SubResource( 2 )
 __meta__ = {
 "_editor_description_": ""
 }
 
 [node name="Deck" type="Sprite3D" parent="Deck1"]
-transform = Transform( 1.04162, 0, 0, 0, 1, 0, 0, 0, 1.04162, 0, 0, 0 )
-material_override = SubResource( 4 )
-pixel_size = 0.004
+transform = Transform( 0.8, 0, 0, 0, 1, 0, 0, 0, 0.8, 0, 0, 0 )
+material_override = SubResource( 3 )
 axis = 1
 shaded = true
 alpha_cut = 2
@@ -187,7 +153,7 @@ __meta__ = {
 
 [node name="BlockerCollider" type="CollisionShape" parent="Deck1/Blocker3"]
 transform = Transform( 0.999367, 0, 0.0355972, 0, 1, 0, -0.0355972, 0, 0.999367, 0, 0, 0 )
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -204,14 +170,14 @@ __meta__ = {
 
 [node name="CollisionShape" type="CollisionShape" parent="Deck2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.523, 0.0194222, 0.209 )
-shape = SubResource( 6 )
+shape = SubResource( 5 )
 __meta__ = {
 "_editor_description_": ""
 }
 
 [node name="Deck" type="Sprite3D" parent="Deck2"]
 transform = Transform( 0.318932, 0, 0, 0, 0.754314, 0, 0, 0, 0.318932, -1.332, 0, 0.095 )
-material_override = SubResource( 7 )
+material_override = SubResource( 6 )
 pixel_size = 0.02
 axis = 1
 shaded = true
@@ -224,7 +190,7 @@ cast_shadow = 3
 pixel_size = 0.02
 axis = 1
 alpha_cut = 2
-texture = SubResource( 8 )
+texture = SubResource( 7 )
 
 [node name="OmniLight3" parent="Deck2" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.742809, 0.297959, 0.0391541 )
@@ -243,189 +209,224 @@ transform = Transform( -0.171052, 0, 0.985262, 0, 1, 0, -0.985262, 0, -0.171052,
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall6" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( -0.237466, 0, 0.971396, 0, 1, 0, -0.971396, 0, -0.237466, 1.63434, 0.25, 1.19834 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall7" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( -0.38922, 0, 0.921145, 0, 1, 0, -0.921145, 0, -0.38922, 2.52769, 0.25, 0.86883 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall8" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( -0.38922, 0, 0.921145, 0, 1, 0, -0.921145, 0, -0.38922, 3.39907, 0.25, 0.495382 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall9" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( 0.999757, 0, -0.0220418, 0, 1, 0, 0.0220418, 0, 0.999757, -6.44711, 0.25, 0.366041 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall3m" parent="Deck2" instance=ExtResource( 10 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.31531, 0.25, 1.48613 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall3m2" parent="Deck2" instance=ExtResource( 10 )]
 transform = Transform( 0.167388, 0, 0.985891, 0, 1, 0, -0.985891, 0, 0.167388, -4.3132, 0.25, 1.24698 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall10" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( 0.999757, 0, -0.0220418, 0, 1, 0, 0.0220418, 0, 0.999757, -6.41143, 0.25, -0.350605 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall11" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( 0.307058, 0, 0.951691, 0, 1, 0, -0.951691, 0, 0.307058, -6.00414, 0.25, 0.904606 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall12" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( -0.429975, 0, -0.902841, 0, 1, 0, 0.902841, 0, -0.429975, 3.37578, 0.25, -0.0512115 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall13" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( -0.407167, 0, -0.913354, 0, 1, 0, 0.913354, 0, -0.407167, 2.49504, 0.25, -0.472069 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall14" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( -0.419389, 0, -0.907807, 0, 1, 0, 0.907807, 0, -0.419389, 1.59173, 0.25, -0.889722 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall15" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( -0.18462, 0, -0.98281, 0, 1, 0, 0.98281, 0, -0.18462, 0.680505, 0.25, -1.18374 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall3m3" parent="Deck2" instance=ExtResource( 10 )]
 transform = Transform( 1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -1.29972, 0.25, -1.28786 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall3m4" parent="Deck2" instance=ExtResource( 10 )]
 transform = Transform( 0.108173, 0, -0.994132, 0, 1, 0, 0.994132, 0, 0.108173, -4.19947, 0.25, -1.11844 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall16" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( 0.239567, 0, -0.97088, 0, 1, 0, 0.97088, 0, 0.239567, -6.00526, 0.25, -0.865725 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall17" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( -0.171052, 0, 0.985262, 0, 1, 0, -0.985262, 0, -0.171052, 0.675093, -0.235989, 1.39605 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall18" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( -0.237466, 0, 0.971396, 0, 1, 0, -0.971396, 0, -0.237466, 1.63434, -0.235989, 1.19834 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall19" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( -0.38922, 0, 0.921145, 0, 1, 0, -0.921145, 0, -0.38922, 2.52769, -0.235989, 0.86883 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall20" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( -0.38922, 0, 0.921145, 0, 1, 0, -0.921145, 0, -0.38922, 3.39907, -0.235989, 0.495382 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall21" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( 0.999757, 0, -0.0220418, 0, 1, 0, 0.0220418, 0, 0.999757, -6.44711, -0.235989, 0.366041 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall3m5" parent="Deck2" instance=ExtResource( 10 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.31531, -0.235989, 1.48613 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall3m6" parent="Deck2" instance=ExtResource( 10 )]
 transform = Transform( 0.167388, 0, 0.985891, 0, 1, 0, -0.985891, 0, 0.167388, -4.3132, -0.235989, 1.24698 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall22" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( 0.999757, 0, -0.0220418, 0, 1, 0, 0.0220418, 0, 0.999757, -6.41143, -0.235989, -0.350605 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall23" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( 0.307058, 0, 0.951691, 0, 1, 0, -0.951691, 0, 0.307058, -6.00414, -0.235989, 0.904606 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall24" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( -0.429975, 0, -0.902841, 0, 1, 0, 0.902841, 0, -0.429975, 3.37578, -0.235989, -0.0512115 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall25" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( -0.407167, 0, -0.913354, 0, 1, 0, 0.913354, 0, -0.407167, 2.49504, -0.235989, -0.472069 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall26" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( -0.419389, 0, -0.907807, 0, 1, 0, 0.907807, 0, -0.419389, 1.59173, -0.235989, -0.889722 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall27" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( -0.18462, 0, -0.98281, 0, 1, 0, 0.98281, 0, -0.18462, 0.680505, -0.235989, -1.18374 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall3m7" parent="Deck2" instance=ExtResource( 10 )]
 transform = Transform( 1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -1.29972, -0.235989, -1.28786 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall3m8" parent="Deck2" instance=ExtResource( 10 )]
 transform = Transform( 0.108173, 0, -0.994132, 0, 1, 0, 0.994132, 0, 0.108173, -4.19947, -0.235989, -1.11844 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
 
 [node name="OuterHullWall28" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( 0.239567, 0, -0.97088, 0, 1, 0, 0.97088, 0, 0.239567, -6.00526, -0.235989, -0.865725 )
 collision_layer = 262145
 collision_mask = 262145
 movable = false
+databaseName = null
+
+[node name="Flag3DScene" parent="." instance=ExtResource( 6 )]
+transform = Transform( -0.571172, -0.149894, -0.807028, 0, 0.983185, -0.182613, 0.82083, -0.104303, -0.561568, 0.150922, 1.25492, 6.0766 )

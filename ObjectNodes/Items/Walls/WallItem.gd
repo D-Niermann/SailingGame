@@ -1,7 +1,6 @@
 extends "res://ObjectNodes/Items/BaseItem.gd"
 
 
-export var InfoPanel: PackedScene # scene object of cannons info ui panel
 var infoPanel
 
 func _ready():

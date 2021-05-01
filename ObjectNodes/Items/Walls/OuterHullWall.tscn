@@ -16,6 +16,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_editor_description_": "maybe split every ship model hull walls into bigger part (like 3 per side) but still keep the original rounded walls as sprites. then if health is low on one wall get random changes on ball hit to spawn a leakage object"
 }
+databaseName = "OuterHullWall"
 InfoPanel = ExtResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]

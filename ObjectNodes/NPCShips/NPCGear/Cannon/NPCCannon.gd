@@ -5,12 +5,12 @@ extends "res://ObjectNodes/NPCShips/NPCGear/NPCBaseGear.gd"
 export var BallScene: PackedScene # scene object of ball
 # export var InfoPanel: PackedScene # scene object of cannons info ui panel
 
-var force          = 0.6 # for trajectory prediction: force of ball
+export var force          = 0.6 # for trajectory prediction: force of ball
 export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
 var recoil_impulse = 0.3 # when firing to the ship
 var    drag                      = 0.05 # for trajectory prediction: drag of ball
 var    rand_max_delay            = 0.4 # max delay in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
-var    reload_time_sec           = 10 # reload time in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
+var    reload_time_sec           = 20 # reload time in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
 var    cam_shake                 = 0.1 # the amount of camera shake added to camera when shooting
 const  rotateSpeed               = 0.004 # max rotation speed of cannons (up/down rotation is scaled down )
 const  maxRotateAngle            = 20 # in degree,                                           left right rotation

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/main_Ens.ogg-36c71163a3b420bc45b8f00b62212c21.oggstr"
+
+[deps]
+
+source_file="res://ControlNodes/Music/audio/music/ingame/main_Ens.ogg"
+dest_files=[ "res://.import/main_Ens.ogg-36c71163a3b420bc45b8f00b62212c21.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
