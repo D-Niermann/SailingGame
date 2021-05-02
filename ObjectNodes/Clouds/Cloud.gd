@@ -11,10 +11,9 @@ var start_opacity
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
-	pass # Replace with function body.
 	rand = rand_range(-1,1)
 	time = 0
-	start_opacity = rand_range(0,0.7)
+	start_opacity = rand_range(0,0.3)
 	# print(rand)
 	# layers = 2 # change the cull mask layers visibility to 2
 

@@ -2,15 +2,15 @@
 
 [ext_resource path="res://ObjectNodes/Flags/BaseFlag/FlagShader.shader" type="Shader" id=1]
 
-[sub_resource type="StreamTexture" id=2]
+[sub_resource type="StreamTexture" id=1]
 flags = 23
 load_path = "res://.import/ExampleflagTexture2.png-734a49ddf5b9124f5358bd43fb435c21.s3tc.stex"
 
-[sub_resource type="OpenSimplexNoise" id=3]
+[sub_resource type="OpenSimplexNoise" id=2]
 
-[sub_resource type="NoiseTexture" id=4]
+[sub_resource type="NoiseTexture" id=3]
 seamless = true
-noise = SubResource( 3 )
+noise = SubResource( 2 )
 
 [resource]
 resource_local_to_scene = true
@@ -25,5 +25,5 @@ shader_param/time_offset = 0.0
 shader_param/uv_offset_scale = Vector2( -0.2, -0.1 )
 shader_param/time_scale = Vector2( 0.084, 0 )
 shader_param/face_distortion = 0.5
-shader_param/texture_albedo = SubResource( 2 )
-shader_param/uv_offset_texture = SubResource( 4 )
+shader_param/texture_albedo = SubResource( 1 )
+shader_param/uv_offset_texture = SubResource( 3 )

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/barrel.png-cafc42a0abeee03afa3b91b6b7ae5d1e.stex"
+path="res://.import/mdm_icon.png-71c7df286ed8241ae9c76aab0ab7d905.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/barrel.png"
-dest_files=[ "res://.import/barrel.png-cafc42a0abeee03afa3b91b6b7ae5d1e.stex" ]
+source_file="res://ControlNodes/Music/addons/mixing-desk/music/mdm_icon.png"
+dest_files=[ "res://.import/mdm_icon.png-71c7df286ed8241ae9c76aab0ab7d905.stex" ]
 
 [params]
 

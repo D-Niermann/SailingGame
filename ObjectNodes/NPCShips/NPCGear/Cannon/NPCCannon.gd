@@ -9,8 +9,8 @@ export var force          = 0.6 # for trajectory prediction: force of ball
 export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
 var recoil_impulse = 0.3 # when firing to the ship
 var    drag                      = 0.05 # for trajectory prediction: drag of ball
-var    rand_max_delay            = 0.4 # max delay in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
-var    reload_time_sec           = 10 # reload time in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
+var    rand_max_delay            = 1.4 # max delay in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
+var    reload_time_sec           = 20 # reload time in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
 var    cam_shake                 = 0.1 # the amount of camera shake added to camera when shooting
 const  rotateSpeed               = 0.004 # max rotation speed of cannons (up/down rotation is scaled down )
 const  maxRotateAngle            = 20 # in degree,                                           left right rotation
@@ -219,12 +219,12 @@ func predictTrajectory():
 func fireBall():
 	if reloaded and isActive:
 		reloaded = false
-		yield(get_tree().create_timer(fire_delay_sec),"timeout")
-		playAudio()
-		doParticles()
+		# yield(get_tree().create_timer(),"timeout")
+		yield(get_tree().create_timer(fire_delay_sec+rand_range(0,rand_max_delay)),"timeout")
 		GlobalObjectReferencer.camera.shake_val += cam_shake/clamp(GlobalObjectReferencer.camera.global_transform.origin.distance_to(global_transform.origin)*0.02,1,99999)
+		doParticles()
 		myShip.applyCannonImpulse(translation, transform.basis.z.normalized()*recoil_impulse)
-		yield(get_tree().create_timer(rand_range(0,rand_max_delay)),"timeout")
+		playAudio()
 		var ball = BallScene.instance()
 		get_tree().get_root().add_child(ball)
 		ball.set_name("Ball")

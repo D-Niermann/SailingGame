@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://SceneNodes/OceanEnv/OceanEnvironment.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ObjectNodes/NPCShips/NPC1/NPC1Model.tscn" type="PackedScene" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://ObjectNodes/Human/Human.tscn" type="PackedScene" id=4]
 [ext_resource path="res://ObjectNodes/Flags/BigFlagBalcAndWhite/BigFlag.tscn" type="PackedScene" id=5]
 [ext_resource path="res://SceneNodes/Islands/Buildings/ShopHouse.tscn" type="PackedScene" id=6]
+[ext_resource path="res://ObjectNodes/Items/Barrels/GunpowderBarrel/GunpowderBarrel.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/DefaultShipModel.tscn" type="PackedScene" id=8]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 2, 1, 2 )
@@ -45,6 +47,9 @@ material/0 = null
 [node name="Ball" parent="." instance=ExtResource( 3 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.817373, 3.60502, 18.3167 )
 
+[node name="GunpowderBarrel" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.483584, 3.52369, 17.3262 )
+
 [node name="Human" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.817373, 3.59957, 17.0834 )
 
@@ -58,3 +63,6 @@ transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 3.91848
 
 [node name="Flag3DScene" parent="." instance=ExtResource( 5 )]
 transform = Transform( 0.0190579, 0, -0.999818, 0, 1, 0, 0.999818, 0, 0.0190579, 2.23282, 5.2559, 17.3658 )
+
+[node name="DefaultModel (DeckOrder important!)" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.68029, 4.53367, 2.76082 )

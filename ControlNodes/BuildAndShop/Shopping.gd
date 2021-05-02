@@ -5,6 +5,9 @@ const CURRENCY: String = "g"
 const ITEM: PackedScene = preload("res://ControlNodes/BuildAndShop/listItem.tscn")
 const TYPE: PackedScene = preload("res://ControlNodes/BuildAndShop/tabsType.tscn")
 
+var speedLimit: float = 9 # square units that shops get closed automatically when passed beyond
+var distanceLimit: float = 1024 # square units that shops get closed automatically when passed beyond
+
 var open = null
 var tabs = null
 var list = null
@@ -66,6 +69,11 @@ func _physics_process(delta):
 	if target != null && !is_instance_valid(target):
 		target = null
 	if target == null && open != null:
+		closeShop()
+	var player: RigidBody = GlobalObjectReferencer.playerShip
+	if player.linear_velocity.length_squared() > speedLimit:
+		closeShop()
+	if open != null && player.global_transform.origin.distance_squared_to(Economy.malls[open]["loci"]) > distanceLimit:
 		closeShop()
 	# if connected != null:
 	# 	if open == null:
@@ -430,6 +438,11 @@ func openShop(shop: String):
 
 # Closes any open shop.
 func closeShop():
+	GlobalObjectReferencer.cursor.selectedDeckNumber = -1
+	var theButton: TextureButton = get_parent().get_node("Decks").get_child(0).get_node("TextureButton")
+	theButton.pressed = false
+	GlobalObjectReferencer.playerShip.selectDeck(-1)
+	target = null
 	if is_instance_valid(hologram) && is_instance_valid(parent):
 		placeOrDestroyHologram()
 	get_node("Shop").visible = false

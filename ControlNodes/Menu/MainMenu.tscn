@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Fonts/LCALLIG.TTF" type="DynamicFontData" id=1]
 [ext_resource path="res://ControlNodes/Menu/MainMenu.gd" type="Script" id=2]
-
+[ext_resource path="res://SceneNodes/MainMenuScene.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ControlNodes/Music/scenes/MainMenuMusicMixer.tscn" type="PackedScene" id=4]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -45,6 +46,10 @@ __meta__ = {
 "_editor_description_": ""
 }
 
+[node name="Scene" parent="ViewportContainer/Viewport" instance=ExtResource( 3 )]
+
+[node name="Music" parent="ViewportContainer/Viewport" instance=ExtResource( 4 )]
+
 [node name="Interface" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.002
@@ -56,10 +61,9 @@ __meta__ = {
 }
 
 [node name="Menu" type="ColorRect" parent="Interface"]
-anchor_left = 0.8
-anchor_right = 1.0
+anchor_right = 0.179
 anchor_bottom = 1.0
-color = Color( 0, 0, 0, 0.258824 )
+color = Color( 0, 0, 0, 0.490196 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -80,7 +84,7 @@ __meta__ = {
 }
 
 [node name="Continue" type="TextureButton" parent="Interface/Menu/List"]
-margin_right = 336.0
+margin_right = 300.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 0, 60 )
 size_flags_horizontal = 3
@@ -100,7 +104,7 @@ __meta__ = {
 
 [node name="NewGame" type="TextureButton" parent="Interface/Menu/List"]
 margin_top = 64.0
-margin_right = 336.0
+margin_right = 300.0
 margin_bottom = 124.0
 rect_min_size = Vector2( 0, 60 )
 size_flags_horizontal = 3
@@ -120,7 +124,7 @@ __meta__ = {
 
 [node name="Options" type="TextureButton" parent="Interface/Menu/List"]
 margin_top = 128.0
-margin_right = 336.0
+margin_right = 300.0
 margin_bottom = 188.0
 rect_min_size = Vector2( 0, 60 )
 size_flags_horizontal = 3
@@ -140,7 +144,7 @@ __meta__ = {
 
 [node name="Credits" type="TextureButton" parent="Interface/Menu/List"]
 margin_top = 192.0
-margin_right = 336.0
+margin_right = 300.0
 margin_bottom = 252.0
 rect_min_size = Vector2( 0, 60 )
 size_flags_horizontal = 3
@@ -160,7 +164,7 @@ __meta__ = {
 
 [node name="QuitGame" type="TextureButton" parent="Interface/Menu/List"]
 margin_top = 256.0
-margin_right = 336.0
+margin_right = 300.0
 margin_bottom = 376.0
 rect_min_size = Vector2( 0, 120 )
 size_flags_horizontal = 3
@@ -193,8 +197,14 @@ __meta__ = {
 [node name="Continue" type="ColorRect" parent="Interface"]
 anchor_right = 0.8
 anchor_bottom = 1.0
+margin_left = 301.0
+margin_right = 336.0
+margin_bottom = 0.00012207
 mouse_filter = 2
-color = Color( 0, 0, 0, 0.258824 )
+color = Color( 0, 0, 0, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Container" type="GridContainer" parent="Interface/Continue"]
 anchor_right = 1.0
@@ -204,6 +214,7 @@ columns = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="pressed" from="Interface/Menu/List/Continue" to="." method="_on_Continue_pressed"]
 [connection signal="pressed" from="Interface/Menu/List/NewGame" to="." method="_on_NewGame_pressed"]
 [connection signal="pressed" from="Interface/Menu/List/Options" to="." method="_on_Options_pressed"]

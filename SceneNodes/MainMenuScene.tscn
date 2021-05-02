@@ -1,0 +1,546 @@
+[gd_scene load_steps=31 format=2]
+
+[ext_resource path="res://ObjectNodes/ShipRigidController/RigidShipController.gd" type="Script" id=1]
+[ext_resource path="res://ObjectNodes/Human/humanMaterial.tres" type="Material" id=2]
+[ext_resource path="res://ObjectNodes/ShipRigidController/BoyantForce.gd" type="Script" id=3]
+[ext_resource path="res://addons/kenney_particle_pack/fire_01.png" type="Texture" id=4]
+[ext_resource path="res://ObjectNodes/NPCShips/NPC1/NPC1Model.tscn" type="PackedScene" id=5]
+[ext_resource path="res://SceneNodes/OceanEnv/OceanEnvironment.tscn" type="PackedScene" id=6]
+[ext_resource path="res://SceneNodes/Islands/dummyIslandOne.tscn" type="PackedScene" id=7]
+[ext_resource path="res://SceneNodes/OceanEnv/Sky.tscn" type="PackedScene" id=8]
+[ext_resource path="res://ObjectNodes/Clouds/Clouds.tscn" type="PackedScene" id=9]
+
+[sub_resource type="CubeMesh" id=1]
+size = Vector3( 2.89, 2.91, 0.27 )
+
+[sub_resource type="ConvexPolygonShape" id=2]
+points = PoolVector3Array( -1.445, 1.455, 0.135, 1.445, 1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, -1.445, -1.455, 0.135, 1.445, -1.455, -0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, 1.445, 1.455, -0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, -1.455, -0.135, -1.445, -1.455, 0.135, 1.445, 1.455, 0.135, -1.445, -1.455, 0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, 1.445, 1.455, -0.135, -1.445, -1.455, -0.135, -1.445, 1.455, -0.135, 1.445, -1.455, -0.135 )
+
+[sub_resource type="ConvexPolygonShape" id=3]
+points = PoolVector3Array( -1.445, 1.455, 0.135, 1.445, 1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, -1.445, -1.455, 0.135, 1.445, -1.455, -0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, 1.445, 1.455, -0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, -1.455, -0.135, -1.445, -1.455, 0.135, 1.445, 1.455, 0.135, -1.445, -1.455, 0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, 1.445, 1.455, -0.135, -1.445, -1.455, -0.135, -1.445, 1.455, -0.135, 1.445, -1.455, -0.135 )
+
+[sub_resource type="ConvexPolygonShape" id=4]
+points = PoolVector3Array( -1.445, 1.455, 0.135, 1.445, 1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, -1.445, -1.455, 0.135, 1.445, -1.455, -0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, 1.445, 1.455, -0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, -1.455, -0.135, -1.445, -1.455, 0.135, 1.445, 1.455, 0.135, -1.445, -1.455, 0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, 1.445, 1.455, -0.135, -1.445, -1.455, -0.135, -1.445, 1.455, -0.135, 1.445, -1.455, -0.135 )
+
+[sub_resource type="ConvexPolygonShape" id=5]
+points = PoolVector3Array( -1.445, 1.455, 0.135, 1.445, 1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, -1.445, -1.455, 0.135, 1.445, -1.455, -0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, 1.445, 1.455, -0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, -1.455, -0.135, -1.445, -1.455, 0.135, 1.445, 1.455, 0.135, -1.445, -1.455, 0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, 1.445, 1.455, -0.135, -1.445, -1.455, -0.135, -1.445, 1.455, -0.135, 1.445, -1.455, -0.135 )
+
+[sub_resource type="ConvexPolygonShape" id=6]
+points = PoolVector3Array( -1.445, 1.455, 0.135, 1.445, 1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, -1.445, -1.455, 0.135, 1.445, -1.455, -0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, 1.445, 1.455, -0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, -1.455, -0.135, -1.445, -1.455, 0.135, 1.445, 1.455, 0.135, -1.445, -1.455, 0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, 1.445, 1.455, -0.135, -1.445, -1.455, -0.135, -1.445, 1.455, -0.135, 1.445, -1.455, -0.135 )
+
+[sub_resource type="ConvexPolygonShape" id=7]
+points = PoolVector3Array( -1.445, 1.455, 0.135, 1.445, 1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, -1.445, -1.455, 0.135, 1.445, -1.455, -0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, 1.445, 1.455, -0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, -1.455, -0.135, -1.445, -1.455, 0.135, 1.445, 1.455, 0.135, -1.445, -1.455, 0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, 1.445, 1.455, -0.135, -1.445, -1.455, -0.135, -1.445, 1.455, -0.135, 1.445, -1.455, -0.135 )
+
+[sub_resource type="ConvexPolygonShape" id=8]
+points = PoolVector3Array( -1.445, 1.455, 0.135, 1.445, 1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, -1.445, -1.455, 0.135, 1.445, -1.455, -0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, 1.445, 1.455, -0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, -1.455, -0.135, -1.445, -1.455, 0.135, 1.445, 1.455, 0.135, -1.445, -1.455, 0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, 1.445, 1.455, -0.135, -1.445, -1.455, -0.135, -1.445, 1.455, -0.135, 1.445, -1.455, -0.135 )
+
+[sub_resource type="ConvexPolygonShape" id=9]
+points = PoolVector3Array( -1.445, 1.455, 0.135, 1.445, 1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, -1.445, -1.455, 0.135, 1.445, -1.455, -0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, 1.445, 1.455, -0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, -1.455, -0.135, -1.445, -1.455, 0.135, 1.445, 1.455, 0.135, -1.445, -1.455, 0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, 1.445, 1.455, -0.135, -1.445, -1.455, -0.135, -1.445, 1.455, -0.135, 1.445, -1.455, -0.135 )
+
+[sub_resource type="ConvexPolygonShape" id=10]
+points = PoolVector3Array( -1.445, 1.455, 0.135, 1.445, 1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, -1.445, -1.455, 0.135, 1.445, -1.455, -0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, 1.455, 0.135, -1.445, 1.455, -0.135, 1.445, 1.455, -0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, -1.445, -1.455, -0.135, 1.445, -1.455, -0.135, -1.445, -1.455, 0.135, 1.445, 1.455, 0.135, -1.445, -1.455, 0.135, -1.445, 1.455, 0.135, 1.445, -1.455, 0.135, 1.445, 1.455, -0.135, -1.445, -1.455, -0.135, -1.445, 1.455, -0.135, 1.445, -1.455, -0.135 )
+
+[sub_resource type="SpatialMaterial" id=11]
+render_priority = 1
+flags_transparent = true
+flags_vertex_lighting = true
+vertex_color_use_as_albedo = true
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_color = Color( 0.937255, 0.968627, 0.996078, 0.4 )
+albedo_texture = ExtResource( 4 )
+metallic_specular = 0.45
+
+[sub_resource type="Gradient" id=12]
+offsets = PoolRealArray( 0, 0.162602, 0.548781 )
+colors = PoolColorArray( 0, 0, 0, 0, 0.551788, 0.865043, 0.960938, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=13]
+gradient = SubResource( 12 )
+
+[sub_resource type="Curve" id=14]
+max_value = 13.0
+_data = [ Vector2( 0, 0.930681 ), 0.0, 0.0, 0, 0, Vector2( 0.517787, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=15]
+curve = SubResource( 14 )
+
+[sub_resource type="Curve" id=16]
+_data = [ Vector2( 0, 0.553409 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=17]
+curve = SubResource( 16 )
+
+[sub_resource type="ParticlesMaterial" id=18]
+lifetime_randomness = 0.39
+direction = Vector3( 0, 1, 0 )
+spread = 7.38
+gravity = Vector3( 0, -1.4, 0 )
+initial_velocity = 3.0
+initial_velocity_random = 0.46
+angular_velocity_random = 1.0
+damping_random = 0.12
+damping_curve = SubResource( 15 )
+angle = 384.3
+angle_random = 0.8
+scale = 0.5
+scale_random = 1.0
+scale_curve = SubResource( 17 )
+color_ramp = SubResource( 13 )
+
+[sub_resource type="QuadMesh" id=19]
+size = Vector2( 5, 5 )
+
+[sub_resource type="SpatialMaterial" id=20]
+render_priority = 1
+flags_transparent = true
+flags_vertex_lighting = true
+vertex_color_use_as_albedo = true
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_color = Color( 0.866667, 0.968627, 0.972549, 0.215686 )
+albedo_texture = ExtResource( 4 )
+metallic_specular = 0.45
+
+[sub_resource type="QuadMesh" id=21]
+size = Vector2( 5, 5 )
+
+[node name="Spatial" type="Spatial"]
+
+[node name="Camera" type="Camera" parent="." groups=[
+"Camera",
+]]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 63.656, 0 )
+fov = 27.8
+
+[node name="OceanEnvironment" parent="." instance=ExtResource( 6 )]
+
+[node name="Spatial" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -58.0842, 0.73449, 13.1779 )
+
+[node name="NPCShipRigid" type="RigidBody" parent="." groups=[
+"NPCShip",
+]]
+transform = Transform( 0.424452, 0, -0.90545, 0, 1, 0, 0.90545, 0, 0.424452, -3.46076, 1.7932, 4.67373 )
+collision_layer = 2
+collision_mask = 2
+linear_damp = 2.0
+angular_damp = 3.0
+script = ExtResource( 1 )
+speed_mod = 1.954
+
+[node name="Model" parent="NPCShipRigid" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, -1.19209e-07, 0, 1, 0, 1.19209e-07, 0, 1, -0.158606, 2.46327, -1.33472 )
+
+[node name="Body (change to real body soon)" type="Spatial" parent="NPCShipRigid"]
+transform = Transform( -0.16935, 0, 0.985556, 0, 1, 0, -0.985556, 0, -0.16935, -0.859704, 0.835445, 3.14652 )
+
+[node name="Wall" type="MeshInstance" parent="NPCShipRigid/Body (change to real body soon)"]
+transform = Transform( 1.06099, 0, 0, 0, 1, 0, 0, 0, 1, -0.2229, 0, -0.03546 )
+cast_shadow = 3
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+
+[node name="Wall9" type="MeshInstance" parent="NPCShipRigid/Body (change to real body soon)"]
+transform = Transform( -0.0721072, 0, -0.985527, 0, 1, 0, 0.419201, 0, -0.169521, -2.06748, 0.00238037, 0.594125 )
+cast_shadow = 3
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+
+[node name="Wall2" type="MeshInstance" parent="NPCShipRigid/Body (change to real body soon)"]
+transform = Transform( 0.98995, 0, -0.14142, 0, 1, 0, 0.14142, 0, 0.98995, 2.89082, 0, 0.182705 )
+cast_shadow = 3
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+
+[node name="Wall3" type="MeshInstance" parent="NPCShipRigid/Body (change to real body soon)"]
+transform = Transform( 0.731953, 0, -0.319786, 0, 1, 0, 0.247041, 0, 0.94749, 5.38543, 0, 0.742202 )
+cast_shadow = 3
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+
+[node name="Wall4" type="MeshInstance" parent="NPCShipRigid/Body (change to real body soon)"]
+transform = Transform( 0.585702, 0, -0.615799, 0, 1, 0, 0.457765, 0, 0.787904, 7.1911, 0, 1.7067 )
+cast_shadow = 3
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+
+[node name="Wall5" type="MeshInstance" parent="NPCShipRigid/Body (change to real body soon)"]
+transform = Transform( 0.975416, 0, -0.393461, 0, 1, 0, 0.41746, 0, 0.919342, -0.530217, 0, 1.80709 )
+cast_shadow = 3
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Wall6" type="MeshInstance" parent="NPCShipRigid/Body (change to real body soon)"]
+transform = Transform( 0.98995, 0, -0.14142, 0, 1, 0, 0.14142, 0, 0.98995, 2.44902, 0, 2.78485 )
+cast_shadow = 3
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Wall7" type="MeshInstance" parent="NPCShipRigid/Body (change to real body soon)"]
+transform = Transform( 0.772516, 0, 0.00279248, 0, 1, 0, -0.00215727, 0, 0.999997, 4.91554, 0, 2.98229 )
+cast_shadow = 3
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Wall8" type="MeshInstance" parent="NPCShipRigid/Body (change to real body soon)"]
+transform = Transform( 0.716987, 0, 0.264042, 0, 1, 0, -0.19628, 0, 0.964512, 6.96029, 0, 2.69467 )
+cast_shadow = 3
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="NPCShipRigid"]
+transform = Transform( -0.179679, 0, 0.985556, 0, 1, 0, -1.04567, 0, -0.16935, -0.868807, 0.835445, 3.09354 )
+shape = SubResource( 2 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="NPCShipRigid"]
+transform = Transform( -0.0282706, 0, 0.9996, 0, 1, 0, -0.9996, 0, -0.0282706, -1.1692, 0.835445, 0.266508 )
+shape = SubResource( 3 )
+
+[node name="CollisionShape3" type="CollisionShape" parent="NPCShipRigid"]
+transform = Transform( 0.119517, 0, 0.98796, 0, 1, 0, -0.763217, 0, 0.15471, -1.04024, 0.835445, -2.28682 )
+shape = SubResource( 4 )
+
+[node name="CollisionShape4" type="CollisionShape" parent="NPCShipRigid"]
+transform = Transform( 0.351965, 0, 0.880809, 0, 1, 0, -0.654765, 0, 0.473473, -0.395463, 0.835445, -4.22974 )
+shape = SubResource( 5 )
+
+[node name="CollisionShape5" type="CollisionShape" parent="NPCShipRigid"]
+transform = Transform( 0.246244, 0, 0.972695, 0, 1, 0, -1.03202, 0, 0.232087, 1.11666, 0.835445, 3.13365 )
+shape = SubResource( 6 )
+
+[node name="CollisionShape6" type="CollisionShape" parent="NPCShipRigid"]
+transform = Transform( -0.0282706, 0, 0.9996, 0, 1, 0, -0.9996, 0, -0.0282706, 1.47018, 0.835445, 0.261261 )
+shape = SubResource( 7 )
+
+[node name="CollisionShape7" type="CollisionShape" parent="NPCShipRigid"]
+transform = Transform( -0.132951, 0, 0.98508, 0, 1, 0, -0.760992, 0, -0.172101, 1.24707, 0.835445, -2.20308 )
+shape = SubResource( 8 )
+
+[node name="CollisionShape8" type="CollisionShape" parent="NPCShipRigid"]
+transform = Transform( -0.314867, 0, 0.905865, 0, 1, 0, -0.673391, 0, -0.423568, 0.617323, 0.835445, -4.16958 )
+shape = SubResource( 9 )
+
+[node name="CollisionShape9" type="CollisionShape" parent="NPCShipRigid"]
+transform = Transform( 0.425357, 0, -0.000174342, 0, 1, 0, 7.41742e-05, 0, 1, 0.0759688, 0.837825, 5.06695 )
+shape = SubResource( 10 )
+
+[node name="HFront" type="Spatial" parent="NPCShipRigid"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.80033e-07, 0, -4.11868 )
+script = ExtResource( 3 )
+posParticleThresh = 0.0
+
+[node name="WaterSplashParticles" type="Particles" parent="NPCShipRigid/HFront"]
+transform = Transform( 0.961069, 0.276308, 0, -0.276308, 0.961069, 0, 0, 0, 1, 1.34071, 1.67696, 0.198627 )
+material_override = SubResource( 11 )
+cast_shadow = 2
+emitting = false
+amount = 20
+lifetime = 5.0
+randomness = 0.71
+visibility_aabb = AABB( -181.604, -196.936, -272.78, 362.306, 395.6, 547.224 )
+local_coords = false
+process_material = SubResource( 18 )
+draw_pass_1 = SubResource( 19 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="HLeft" type="Spatial" parent="NPCShipRigid"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.5, 0, 6.55671e-08 )
+script = ExtResource( 3 )
+posParticleThresh = 0.2
+
+[node name="WaterSplashParticles" type="Particles" parent="NPCShipRigid/HLeft"]
+transform = Transform( 0.0420866, -0.00842654, -0.999078, 0.196323, 0.980539, 1.64456e-09, 0.979635, -0.196142, 0.0429219, 0.233, 1.591, 0.141 )
+material_override = SubResource( 20 )
+cast_shadow = 2
+emitting = false
+amount = 20
+lifetime = 5.0
+randomness = 0.71
+visibility_aabb = AABB( -181.604, -196.936, -272.78, 362.306, 395.6, 547.224 )
+local_coords = false
+process_material = SubResource( 18 )
+draw_pass_1 = SubResource( 21 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="HRight" type="Spatial" parent="NPCShipRigid"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.5, 0, -6.55671e-08 )
+script = ExtResource( 3 )
+posParticleThresh = 0.2
+
+[node name="WaterSplashParticles" type="Particles" parent="NPCShipRigid/HRight"]
+transform = Transform( -4.26307e-08, -9.65964e-09, -1, -0.220987, 0.975277, 7.85103e-16, 0.975277, 0.220987, -4.37114e-08, 0.436, 1.378, 0 )
+material_override = SubResource( 20 )
+cast_shadow = 2
+emitting = false
+amount = 20
+lifetime = 5.0
+randomness = 0.71
+visibility_aabb = AABB( -181.604, -196.936, -272.78, 362.306, 395.6, 547.224 )
+local_coords = false
+process_material = SubResource( 18 )
+draw_pass_1 = SubResource( 21 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="HBack" type="Spatial" parent="NPCShipRigid"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.86477e-07, 0, 4.2661 )
+script = ExtResource( 3 )
+posParticleThresh = 1.112
+
+[node name="WaterSplashParticles" type="Particles" parent="NPCShipRigid/HBack"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.548396, 1.37803, 0.267233 )
+material_override = SubResource( 20 )
+cast_shadow = 2
+emitting = false
+amount = 20
+lifetime = 5.0
+randomness = 0.71
+visibility_aabb = AABB( -181.604, -196.936, -272.78, 362.306, 395.6, 547.224 )
+local_coords = false
+process_material = SubResource( 18 )
+draw_pass_1 = SubResource( 21 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="CenterofMass" type="Spatial" parent="NPCShipRigid"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
+
+[node name="MainSailForce" type="Spatial" parent="NPCShipRigid"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.0664575, 4.23114, -0.0711889 )
+
+[node name="NPCShipRigid2" type="RigidBody" parent="." groups=[
+"NPCShip",
+]]
+transform = Transform( 0.53478, 0, 0.844991, 0, 1, 0, -0.844991, 0, 0.53478, 9.86211, 1.7932, -2.87965 )
+collision_layer = 2
+collision_mask = 2
+linear_damp = 2.0
+angular_damp = 3.0
+script = ExtResource( 1 )
+speed_mod = 1.954
+
+[node name="Model" parent="NPCShipRigid2" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, -1.19209e-07, 0, 1, 0, 1.19209e-07, 0, 1, -0.158606, 2.46327, -1.33472 )
+
+[node name="Body (change to real body soon)" type="Spatial" parent="NPCShipRigid2"]
+transform = Transform( -0.16935, 0, 0.985556, 0, 1, 0, -0.985556, 0, -0.16935, -0.859704, 0.835445, 3.14652 )
+
+[node name="Wall" type="MeshInstance" parent="NPCShipRigid2/Body (change to real body soon)"]
+transform = Transform( 1.06099, 0, 0, 0, 1, 0, 0, 0, 1, -0.2229, 0, -0.03546 )
+cast_shadow = 3
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+
+[node name="Wall9" type="MeshInstance" parent="NPCShipRigid2/Body (change to real body soon)"]
+transform = Transform( -0.0721072, 0, -0.985527, 0, 1, 0, 0.419201, 0, -0.169521, -2.06748, 0.00238037, 0.594125 )
+cast_shadow = 3
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+
+[node name="Wall2" type="MeshInstance" parent="NPCShipRigid2/Body (change to real body soon)"]
+transform = Transform( 0.98995, 0, -0.14142, 0, 1, 0, 0.14142, 0, 0.98995, 2.89082, 0, 0.182705 )
+cast_shadow = 3
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+
+[node name="Wall3" type="MeshInstance" parent="NPCShipRigid2/Body (change to real body soon)"]
+transform = Transform( 0.731953, 0, -0.319786, 0, 1, 0, 0.247041, 0, 0.94749, 5.38543, 0, 0.742202 )
+cast_shadow = 3
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+
+[node name="Wall4" type="MeshInstance" parent="NPCShipRigid2/Body (change to real body soon)"]
+transform = Transform( 0.585702, 0, -0.615799, 0, 1, 0, 0.457765, 0, 0.787904, 7.1911, 0, 1.7067 )
+cast_shadow = 3
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+
+[node name="Wall5" type="MeshInstance" parent="NPCShipRigid2/Body (change to real body soon)"]
+transform = Transform( 0.975416, 0, -0.393461, 0, 1, 0, 0.41746, 0, 0.919342, -0.530217, 0, 1.80709 )
+cast_shadow = 3
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Wall6" type="MeshInstance" parent="NPCShipRigid2/Body (change to real body soon)"]
+transform = Transform( 0.98995, 0, -0.14142, 0, 1, 0, 0.14142, 0, 0.98995, 2.44902, 0, 2.78485 )
+cast_shadow = 3
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Wall7" type="MeshInstance" parent="NPCShipRigid2/Body (change to real body soon)"]
+transform = Transform( 0.772516, 0, 0.00279248, 0, 1, 0, -0.00215727, 0, 0.999997, 4.91554, 0, 2.98229 )
+cast_shadow = 3
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="Wall8" type="MeshInstance" parent="NPCShipRigid2/Body (change to real body soon)"]
+transform = Transform( 0.716987, 0, 0.264042, 0, 1, 0, -0.19628, 0, 0.964512, 6.96029, 0, 2.69467 )
+cast_shadow = 3
+mesh = SubResource( 1 )
+material/0 = ExtResource( 2 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="CollisionShape" type="CollisionShape" parent="NPCShipRigid2"]
+transform = Transform( -0.179679, 0, 0.985556, 0, 1, 0, -1.04567, 0, -0.16935, -0.868807, 0.835445, 3.09354 )
+shape = SubResource( 2 )
+
+[node name="CollisionShape2" type="CollisionShape" parent="NPCShipRigid2"]
+transform = Transform( -0.0282706, 0, 0.9996, 0, 1, 0, -0.9996, 0, -0.0282706, -1.1692, 0.835445, 0.266508 )
+shape = SubResource( 3 )
+
+[node name="CollisionShape3" type="CollisionShape" parent="NPCShipRigid2"]
+transform = Transform( 0.119517, 0, 0.98796, 0, 1, 0, -0.763217, 0, 0.15471, -1.04024, 0.835445, -2.28682 )
+shape = SubResource( 4 )
+
+[node name="CollisionShape4" type="CollisionShape" parent="NPCShipRigid2"]
+transform = Transform( 0.351965, 0, 0.880809, 0, 1, 0, -0.654765, 0, 0.473473, -0.395463, 0.835445, -4.22974 )
+shape = SubResource( 5 )
+
+[node name="CollisionShape5" type="CollisionShape" parent="NPCShipRigid2"]
+transform = Transform( 0.246244, 0, 0.972695, 0, 1, 0, -1.03202, 0, 0.232087, 1.11666, 0.835445, 3.13365 )
+shape = SubResource( 6 )
+
+[node name="CollisionShape6" type="CollisionShape" parent="NPCShipRigid2"]
+transform = Transform( -0.0282706, 0, 0.9996, 0, 1, 0, -0.9996, 0, -0.0282706, 1.47018, 0.835445, 0.261261 )
+shape = SubResource( 7 )
+
+[node name="CollisionShape7" type="CollisionShape" parent="NPCShipRigid2"]
+transform = Transform( -0.132951, 0, 0.98508, 0, 1, 0, -0.760992, 0, -0.172101, 1.24707, 0.835445, -2.20308 )
+shape = SubResource( 8 )
+
+[node name="CollisionShape8" type="CollisionShape" parent="NPCShipRigid2"]
+transform = Transform( -0.314867, 0, 0.905865, 0, 1, 0, -0.673391, 0, -0.423568, 0.617323, 0.835445, -4.16958 )
+shape = SubResource( 9 )
+
+[node name="CollisionShape9" type="CollisionShape" parent="NPCShipRigid2"]
+transform = Transform( 0.425357, 0, -0.000174342, 0, 1, 0, 7.41742e-05, 0, 1, 0.0759688, 0.837825, 5.06695 )
+shape = SubResource( 10 )
+
+[node name="HFront" type="Spatial" parent="NPCShipRigid2"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.80033e-07, 0, -4.11868 )
+script = ExtResource( 3 )
+posParticleThresh = 0.0
+
+[node name="WaterSplashParticles" type="Particles" parent="NPCShipRigid2/HFront"]
+transform = Transform( 0.961069, 0.276308, 0, -0.276308, 0.961069, 0, 0, 0, 1, 1.34071, 1.67696, 0.198627 )
+material_override = SubResource( 11 )
+cast_shadow = 2
+emitting = false
+amount = 20
+lifetime = 5.0
+randomness = 0.71
+visibility_aabb = AABB( -181.604, -196.936, -272.78, 362.306, 395.6, 547.224 )
+local_coords = false
+process_material = SubResource( 18 )
+draw_pass_1 = SubResource( 19 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="HLeft" type="Spatial" parent="NPCShipRigid2"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -1.5, 0, 6.55671e-08 )
+script = ExtResource( 3 )
+posParticleThresh = 0.2
+
+[node name="WaterSplashParticles" type="Particles" parent="NPCShipRigid2/HLeft"]
+transform = Transform( 0.0420866, -0.00842654, -0.999078, 0.196323, 0.980539, 1.64456e-09, 0.979635, -0.196142, 0.0429219, 0.233, 1.591, 0.141 )
+material_override = SubResource( 20 )
+cast_shadow = 2
+emitting = false
+amount = 20
+lifetime = 5.0
+randomness = 0.71
+visibility_aabb = AABB( -181.604, -196.936, -272.78, 362.306, 395.6, 547.224 )
+local_coords = false
+process_material = SubResource( 18 )
+draw_pass_1 = SubResource( 21 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="HRight" type="Spatial" parent="NPCShipRigid2"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.5, 0, -6.55671e-08 )
+script = ExtResource( 3 )
+posParticleThresh = 0.2
+
+[node name="WaterSplashParticles" type="Particles" parent="NPCShipRigid2/HRight"]
+transform = Transform( -4.26307e-08, -9.65964e-09, -1, -0.220987, 0.975277, 7.85103e-16, 0.975277, 0.220987, -4.37114e-08, 0.436, 1.378, 0 )
+material_override = SubResource( 20 )
+cast_shadow = 2
+emitting = false
+amount = 20
+lifetime = 5.0
+randomness = 0.71
+visibility_aabb = AABB( -181.604, -196.936, -272.78, 362.306, 395.6, 547.224 )
+local_coords = false
+process_material = SubResource( 18 )
+draw_pass_1 = SubResource( 21 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="HBack" type="Spatial" parent="NPCShipRigid2"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.86477e-07, 0, 4.2661 )
+script = ExtResource( 3 )
+posParticleThresh = 1.112
+
+[node name="WaterSplashParticles" type="Particles" parent="NPCShipRigid2/HBack"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.548396, 1.37803, 0.267233 )
+material_override = SubResource( 20 )
+cast_shadow = 2
+emitting = false
+amount = 20
+lifetime = 5.0
+randomness = 0.71
+visibility_aabb = AABB( -181.604, -196.936, -272.78, 362.306, 395.6, 547.224 )
+local_coords = false
+process_material = SubResource( 18 )
+draw_pass_1 = SubResource( 21 )
+__meta__ = {
+"_editor_description_": ""
+}
+
+[node name="CenterofMass" type="Spatial" parent="NPCShipRigid2"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
+
+[node name="MainSailForce" type="Spatial" parent="NPCShipRigid2"]
+transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.0664575, 4.23114, -0.0711889 )
+
+[node name="Sky" parent="." instance=ExtResource( 8 )]
+
+[node name="Clouds" parent="." instance=ExtResource( 9 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.43619, 0 )

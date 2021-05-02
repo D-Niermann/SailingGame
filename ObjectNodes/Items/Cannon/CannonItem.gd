@@ -4,14 +4,13 @@ extends "res://ObjectNodes/Items/BaseItem.gd"
 
 ### Paramters
 export var BallScene: PackedScene # scene object of ball
-export var InfoPanel: PackedScene # scene object of cannons info ui panel
 
 export(float) var force          = 0.6 # for trajectory prediction: force of ball
 export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
 export(float) var recoil_impulse = 0.3 # when firing to the ship
 export var isTestCannon          = false # if cannon is fired when aiming and left clicking, (to test trajectory, without firing the whole broadside), can be set as a gameplay elemetn in th info panel
 var    drag                      = 0.05 # for trajectory prediction: drag of ball
-var    rand_max_delay            = 0.4 # max delay in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
+var    rand_max_delay            = 1.0 # max delay in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
 var    reload_time_sec           = 10 # reload time in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
 var    cam_shake                 = 0.1 # the amount of camera shake added to camera when shooting
 const  rotateSpeed               = 0.002 # max rotation speed of cannons (up/down rotation is scaled down )
@@ -48,8 +47,6 @@ var trajectoryPoints : Array
 var org_forward
 var reloadTimer : Timer
 func _ready():
-	## overwrite parent vars
-	fetchDictParams(databaseName) # todo, get all constants from that dictionary and not define vars here
 
 	marker = $TrajectoryMarkerGroup.get_children()
 	fakeBullet = $FakeBullet
@@ -222,12 +219,12 @@ func clearTrajectory():
 func fireBall():
 	if GlobalObjectReferencer.crewManager.items[id].crewScore>0 and reloaded and isActive and canShoot:
 		reloaded = false
-		yield(get_tree().create_timer(fire_delay_sec),"timeout")
-		playAudio()
+		# yield(get_tree().create_timer(fire_delay_sec),"timeout")
+		yield(get_tree().create_timer(fire_delay_sec+rand_range(0,rand_max_delay)),"timeout")
 		doParticles()
 		GlobalObjectReferencer.camera.shake_val += cam_shake/clamp(GlobalObjectReferencer.camera.global_transform.origin.distance_to(global_transform.origin)*0.02,1,99999)
 		GlobalObjectReferencer.playerShip.applyCannonImpulse(translation, transform.basis.z.normalized()*recoil_impulse)
-		yield(get_tree().create_timer(rand_range(0,rand_max_delay)),"timeout")
+		playAudio()
 		var ball = BallScene.instance()
 		get_tree().get_root().add_child(ball)
 		ball.set_name("Ball")

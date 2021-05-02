@@ -10,6 +10,7 @@ Item names need to have the same name as in economy.goods dictionary
 
 export(bool) var movable = true # set false in godot editor for pre placed gear 
 export var databaseName = "putEconomyItemDictKeyHere" # the name in the economy gear list, set this in the inherited gear
+export var InfoPanel: PackedScene # scene object of cannons info ui panel
 
 ## item specifc settings (TODO: should be fetched from dictionary)
 var penetrationFactor = 0.5 # penetration factor used for bullets, 0-1, 1 = like air, 0 = inpenetrable
@@ -33,6 +34,11 @@ var isPlaced = false
 var id # id of this item
 
 func _ready():
+	if databaseName!=null:
+		print("Fetch from: ", databaseName)
+		fetchDictParams(databaseName)
+	else:
+		print("no fetch name was null")
 	id = IDGenerator.getID()
 	## TODO: this gets also called when item is picked in shop
 	# print("BaseItem ready()")
@@ -121,12 +127,13 @@ func fetchDictParams(name : String):
 	Called in the corresponding item
 	"""
 	# TODO: if values in dictionary are constant, dont save them in this item, just use the dictionary entries (saves Ram)
-	weight = Economy.goods[name].weight
-	isCannon = Economy.goods[name].isCannon
-	penetrationFactor = Economy.goods[name].penetrationFactor
-	maxHealth = Economy.goods[name].maxHealth
-	# the only important one
-	currentHealth = Economy.goods[name].maxHealth
+	if Economy.goods.has(name):
+		weight = Economy.goods[name].weight
+		isCannon = Economy.goods[name].isCannon
+		penetrationFactor = Economy.goods[name].penetrationFactor
+		maxHealth = Economy.goods[name].maxHealth
+		# the only important one
+		currentHealth = Economy.goods[name].maxHealth
 
 
 func createInfo(placeholder):

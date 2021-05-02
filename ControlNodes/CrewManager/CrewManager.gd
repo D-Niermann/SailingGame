@@ -3,6 +3,16 @@ extends Node
 """
 Assuming this will stay only on player ship and will be a singleton, (its referenced in the GLobalObjectReferencr)
 """
+## define goods groups
+# goods are stored in barrels, each barrel has a group, gunpowder, ammo, food...
+# this assignment dictionary helps quickly finding the nearest barrel for the requested good and also keeps track of what goods are inside each item
+# are strings ok or int better? int = more performance?
+const IG_GUNPOWDER = "igGunpowder" # gunpowder barrels
+const IG_AMMO = "igAmmo" # ammo barrels
+const IG_FOOD = "igFood" # foodbarrels
+const IG_UTILITY = "igUtils" # repairs, stores woods planks, ropes, tools and so on
+const IG_GEAR = "igGear" # no storage items like cannons, table and so on - these typically make the requests and have fixed jobs
+
 
 ## define task groups
 # if a man is assigned to relax, he stays in relaxed (except panic button is activated). 
@@ -29,9 +39,13 @@ var currentAssignments = {TG_RELAX:       {"idle": {}, "busy": []}, # refs to hu
 
 var items = {} # {itemID: {"itemRef": ref, "jobs": {jobID1 : {manID : ID, isReady: false}, jobID2 : {}, ...}}} # to quicly find man with manID, check the item.jobID description - it has the TG and prio in it
 
-# var crew = {} # crewID: {ref (referenceOfTheCrew), type (typeOfTheCrew), job (jobID), inventory, tired, xform (localTransform),..}
-# var jobs = {} # jobID: {ref (referenceOfTheItem), name (nameOfTheJob), crew (crewID), refName (refID in baseItem for loadGame)}
-# var jobSpecs = {} # nameOfTheJob: {type (typeOfTheJob), priority (priorityOfTheJob)}
+var itemAssignmentsAndInventory = { # keeps track of all items based on these assignments and also whats stored in their inventory
+		IG_GUNPOWDER: {},      # ID: {position : Vec3, inventory : {"blocked" : {}, "free" : {}}}
+		IG_AMMO     : {},      # ID: {position : Vec3, inventory : {"blocked" : {}, "free" : {}}}
+		IG_FOOD     : {},      # ID: {position : Vec3, inventory : {"blocked" : {}, "free" : {}}}
+		IG_UTILITY  : {},      # ID: {position : Vec3, inventory : {"blocked" : {}, "free" : {}}}
+		IG_GEAR     : {},      # ID: {position : Vec3, inventory : {"blocked" : {}, "free" : {}}}
+}
 
 const HUMAN: PackedScene = preload("res://ObjectNodes/Human/Human.tscn")
 
@@ -243,7 +257,7 @@ func fromBusyToBusy(manRef, task, oldTask):
 	requestCrew(
 		oldTask.itemID, # id of item
 		oldTask.jobID, # id of the item specific job
-		Economy.getJobs(items[oldTask.itemID].databaseName)[oldTask.jobID].tg,  # taskgroup
+		Economy.getJobs(items[oldTask.itemID].databaseName)[oldTask.jobID].TG,  # taskgroup
 		Economy.getJobs(items[oldTask.itemID].databaseName)[oldTask.jobID].posOffset + items[oldTask.itemID].itemRef.transform.origin,  # position
 		Economy.getJobs(items[oldTask.itemID].databaseName)[oldTask.jobID].priority)
 
@@ -253,20 +267,11 @@ func fromBusyToBusy(manRef, task, oldTask):
 
 
 
-func requestItems(items : Dictionary, priority):
+func requestGoods(items : Dictionary, priority):
 	"""
-	When a cannon or something requests items like gunpowder and cannonballs, this function gets called.
+	When a cannon or something requests goods like gunpowder and cannonballs, this function gets called.
 	
 	"""
-	###
-	## no more chunking, crew can only carry one unit of anything
-	###
-	# var itemsChunked = groupItemsIntoChunks(items)
-	# for every chunk: 
-	# check where items are stored (needs global storage array with positions to calc distance)
-	# findClosestItem(pos)
-	# that barrel makes then some kind of request crew task, but with target item in it
-	# human registers to barrel, fetches item. (what if item then is already gone? - items need to be reserved)
 	pass
 
 
@@ -301,7 +306,7 @@ func forceManintoRelaxed(taskGroup, state, manRef):
 		requestCrew(
 			t.itemID, # id of item
 			t.jobID, # id of the item specific job
-			Economy.getJobs(items[t.itemID].databaseName)[t.jobID].tg,  # taskgroup
+			Economy.getJobs(items[t.itemID].databaseName)[t.jobID].TG,  # taskgroup
 			Economy.getJobs(items[t.itemID].databaseName)[t.jobID].posOffset + items[t.itemID].itemRef.transform.origin,  # position
 			Economy.getJobs(items[t.itemID].databaseName)[t.jobID].priority)
 		## man worked on item
@@ -313,39 +318,44 @@ func registerItem(itemRef):
 	only adds item to item dict and requests the crew (adds taks)"""
 	if not items.has(itemRef.id): # could be because of loaded items dictionary
 		if Economy.goods.has(itemRef.databaseName):
-			## only append if item has jobs
-			if len(Economy.getJobs(itemRef.databaseName))>0:
-				items[itemRef.id] = {"crewScore": 0, "itemRef" : itemRef, "databaseName" : itemRef.databaseName, "jobs": {}} 
+			items[itemRef.id] = {"crewScore": 0, "itemRef" : itemRef, "databaseName" : itemRef.databaseName, "jobs": {}} 
+			itemAssignmentsAndInventory[Economy.getIG(itemRef.databaseName)][itemRef.id] = {"position" : itemRef.translation, "inventory": {}}
+			## fill inventory for debuggin
+			# TODO: make inventory empty again
+			itemAssignmentsAndInventory[Economy.getIG(itemRef.databaseName)][itemRef.id].inventory["Gunpowder"] = 10
+			print(itemAssignmentsAndInventory)
+			# add job data
+			for jobID in Economy.getJobs(itemRef.databaseName):
+				items[itemRef.id].jobs[jobID] = {"manID" : null, "isReady" : false}
 				
-				# add job data
-				for jobID in Economy.getJobs(itemRef.databaseName):
-					items[itemRef.id].jobs[jobID] = {"manID" : null, "isReady" : false}
-					
-					# make crew request for each job
-					requestCrew(
-						itemRef.id, # id of item
-						jobID, # id of the item specific job
-						Economy.getJobs(itemRef.databaseName)[jobID].tg,  # taskgroup
-						Economy.getJobs(itemRef.databaseName)[jobID].posOffset + itemRef.transform.origin,  # position
-						Economy.getJobs(itemRef.databaseName)[jobID].priority) # prio
-			else:
-				print("Item not added to crew manager because it has no Jobs")
+				# make crew request for each job
+				requestCrew(
+					itemRef.id, # id of item
+					jobID, # id of the item specific job
+					Economy.getJobs(itemRef.databaseName)[jobID].TG,  # taskgroup
+					Economy.getJobs(itemRef.databaseName)[jobID].posOffset + itemRef.transform.origin,  # position
+					Economy.getJobs(itemRef.databaseName)[jobID].priority) # prio
 		else:
 			print("warning: name not found in economy and thus not  added to crew manager: ",itemRef.databaseName)
 
 func unregisterItem(itemRef):
-	""" called from item when item is placed 
-	only removes assigned man from items dict and makes man idle """
-	print("CM: unregistered item")
-	## iterate all jobs of that item, and remove assigned man from items list
-	for jobID in items[itemRef.id].jobs:
-		if items[itemRef.id].jobs[jobID].manID != null: 
-			var taskGroup = Economy.getJobs(itemRef.databaseName)[jobID].tg
-			var priority = Economy.getJobs(itemRef.databaseName)[jobID].priority
-			makeManIdle(items[itemRef.id].jobs[jobID].manID, taskGroup, priority)
-		items[itemRef.id].jobs[jobID] = {"manID" : null, "isReady" : false}
-	# remove item from items list
-	items.erase(itemRef.id)
+	""" called from item when item is removed 
+	removes item and assigned man from items dict and makes man idle """
+	if items.has(itemRef.id):
+
+		## iterate all jobs of that item, and remove assigned man from items list
+		print("CM: unregistered item")
+		for jobID in items[itemRef.id].jobs:
+			if items[itemRef.id].jobs[jobID].manID != null: 
+				var taskGroup = Economy.getJobs(itemRef.databaseName)[jobID].TG
+				var priority = Economy.getJobs(itemRef.databaseName)[jobID].priority
+				makeManIdle(items[itemRef.id].jobs[jobID].manID, taskGroup, priority)
+			items[itemRef.id].jobs[jobID] = {"manID" : null, "isReady" : false}
+			
+		# remove item from items list and assignment list
+		items.erase(itemRef.id)
+		itemAssignmentsAndInventory[Economy.getIG(itemRef.databaseName)].erase(itemRef.id)
+		print(itemAssignmentsAndInventory)
 
 
 func getCrewScore(itemID) -> float:
