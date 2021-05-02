@@ -30,7 +30,7 @@ var imgToWorld = 4 # if gerstner tiling = 1, the height map has size 4x4 units i
 var gerstner_tiling1
 var gerstner_tiling2
 var imSize = 1024.0 # size in px of the height map
-var baseSpeed1 = Vector2(0.01, 0.015)
+var baseSpeed1 = Vector2(0.007, 0.010)
 var baseSpeed2 = Vector2(0.005,0.007) 
 var gerstner_speed1 = baseSpeed1
 var gerstner_speed2 = baseSpeed2
@@ -136,8 +136,8 @@ func set_subsurface_scattering(value):
 	visual_material.set_shader_param("sss_strength", value);
 
 func _physics_process(delta):
-	gerstner_speed1 = baseSpeed1*(1+wind_modified*0.01)
-	gerstner_speed2 = baseSpeed2*(1+wind_modified*0.01)
+	gerstner_speed1 = baseSpeed1*(1+wind_strength*0.2)
+	gerstner_speed2 = baseSpeed2*(1+wind_strength*0.2)
 	## ocean movement
 	visual_material.set_shader_param("time", time)
 	visual_material.set_shader_param("gerstner_speed", gerstner_speed1) 

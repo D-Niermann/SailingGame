@@ -1,6 +1,6 @@
 shader_type spatial;
 
-render_mode cull_disabled;
+render_mode cull_disabled, depth_draw_alpha_prepass;
 uniform sampler2D texture_albedo : hint_albedo;
 uniform vec4 albedo : hint_color;
 uniform float wave_size = 1.0;

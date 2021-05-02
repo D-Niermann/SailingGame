@@ -20,6 +20,7 @@ var stati = [] #keeps track of all stati (stati = [S_Hungry, S_THIRSTY, ...])
 var targetPos = Vector3.ZERO
 var currentDeck = 0
 var bodyHeight = 0.1
+var itemFetchTime = 2
 # var currentTaskGroup = null
 var isHuman = true # flag for shopping script to see if this kin body is human
 var infoPanel
@@ -43,11 +44,24 @@ func giveGoToTask(task):
 	"""
 	currentTask = task
 	targetPos = task.position
-	self.itemID = task.itemID
-	self.jobID = task.jobID
+	self.itemID = task.itemID # the current target item ,  mark itemID for crew manager so he can check if close to item
+	self.jobID = task.jobID 
 	# currentTaskGroup = TG
 
-func removeTarget():
+func giveFetchTask(task):
+	currentTask = task
+	targetPos = task.storageItemPos
+	self.itemID = task.storageItemID # the current target item , mark itemID for crew manager so he can check if close to item
+	self.jobID = null
+
+func proceedFetchTask():
+	print("proceed called . ", self.name)
+	# yield(get_tree().create_timer(itemFetchTime),"timeout")
+	self.itemID = currentTask.targetItemID
+	targetPos = currentTask.targetItemPos
+
+
+func removeTask():
 	# targetPos = (target_position)
 	self.itemID = null
 	currentTask = null
@@ -58,7 +72,10 @@ func removeTarget():
 	
 func walkTowards(targetPos : Vector3):
 	""" for now some simple function, later will use navmesh """
-	self.translation += (targetPos-self.translation)*0.01
+	var walkDir = (targetPos-self.translation)
+	if walkDir.length()>1:
+		walkDir = walkDir.normalized()
+	self.translation += walkDir*0.01
 	self.translation.y = 0#bodyHeight
 
 func _process(delta):
