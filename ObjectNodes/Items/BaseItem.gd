@@ -127,12 +127,13 @@ func fetchDictParams(name : String):
 	Called in the corresponding item
 	"""
 	# TODO: if values in dictionary are constant, dont save them in this item, just use the dictionary entries (saves Ram)
-	weight = Economy.goods[name].weight
-	isCannon = Economy.goods[name].isCannon
-	penetrationFactor = Economy.goods[name].penetrationFactor
-	maxHealth = Economy.goods[name].maxHealth
-	# the only important one
-	currentHealth = Economy.goods[name].maxHealth
+	if Economy.goods.has(name):
+		weight = Economy.goods[name].weight
+		isCannon = Economy.goods[name].isCannon
+		penetrationFactor = Economy.goods[name].penetrationFactor
+		maxHealth = Economy.goods[name].maxHealth
+		# the only important one
+		currentHealth = Economy.goods[name].maxHealth
 
 
 func createInfo(placeholder):

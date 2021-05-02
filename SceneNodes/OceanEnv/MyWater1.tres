@@ -23,6 +23,7 @@ gradient = ExtResource( 12 )
 
 [resource]
 resource_local_to_scene = true
+render_priority = -1
 shader = ExtResource( 1 )
 shader_param/gerstner_height = 0.41
 shader_param/gerstner_normal = 0.18

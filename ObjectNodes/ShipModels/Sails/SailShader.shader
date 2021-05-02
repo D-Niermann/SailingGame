@@ -8,6 +8,7 @@ uniform float wave_speed = 1.0;
 uniform float noise_strength = 5.0;
 uniform float side_wind_strength = 0.2;
 uniform float time_offset = 0.0;
+uniform float sail_in = 1.0; // how far in the sail is, 0 means farest out, 1 means fully pulled in 
 
 
 uniform sampler2D uv_offset_texture : hint_black;
@@ -26,7 +27,7 @@ void vertex(){
 	VERTEX.y += texture_based_offset + UV.x * sin(UV.x * 2.0 * 3.14 - (time_offset+TIME) * wave_speed) * wave_size;
 	
 	VERTEX.z += texture_based_offset * face_distortion + UV.x * UV.x*side_wind_strength;
-	VERTEX.x += texture_based_offset * -face_distortion;
+	VERTEX.x += texture_based_offset * -face_distortion*3.0*UV.x - sail_in*UV.x;
 	
 	
 }
