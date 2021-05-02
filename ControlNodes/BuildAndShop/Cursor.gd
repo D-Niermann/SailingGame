@@ -12,9 +12,6 @@ var rightClick: bool = false
 var scrollUp: bool = false
 var scrollDown: bool = false
 
-var shopper = null
-var builder = null
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
