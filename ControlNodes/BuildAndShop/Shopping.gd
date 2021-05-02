@@ -72,10 +72,8 @@ func _physics_process(delta):
 		closeShop()
 	var player: RigidBody = GlobalObjectReferencer.playerShip
 	if player.linear_velocity.length_squared() > speedLimit:
-		print(player.linear_velocity.length_squared())
 		closeShop()
 	if open != null && player.global_transform.origin.distance_squared_to(Economy.malls[open]["loci"]) > distanceLimit:
-		print(player.global_transform.origin.distance_squared_to(Economy.malls[open]["loci"]))
 		closeShop()
 	# if connected != null:
 	# 	if open == null:
@@ -440,6 +438,11 @@ func openShop(shop: String):
 
 # Closes any open shop.
 func closeShop():
+	GlobalObjectReferencer.cursor.selectedDeckNumber = -1
+	var theButton: TextureButton = get_parent().get_node("Decks").get_child(0).get_node("TextureButton")
+	theButton.pressed = false
+	GlobalObjectReferencer.playerShip.selectDeck(-1)
+	target = null
 	if is_instance_valid(hologram) && is_instance_valid(parent):
 		placeOrDestroyHologram()
 	get_node("Shop").visible = false
