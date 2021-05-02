@@ -257,7 +257,7 @@ func fromBusyToBusy(manRef, task, oldTask):
 	requestCrew(
 		oldTask.itemID, # id of item
 		oldTask.jobID, # id of the item specific job
-		Economy.getJobs(items[oldTask.itemID].databaseName)[oldTask.jobID].tg,  # taskgroup
+		Economy.getJobs(items[oldTask.itemID].databaseName)[oldTask.jobID].TG,  # taskgroup
 		Economy.getJobs(items[oldTask.itemID].databaseName)[oldTask.jobID].posOffset + items[oldTask.itemID].itemRef.transform.origin,  # position
 		Economy.getJobs(items[oldTask.itemID].databaseName)[oldTask.jobID].priority)
 
@@ -347,7 +347,7 @@ func unregisterItem(itemRef):
 		print("CM: unregistered item")
 		for jobID in items[itemRef.id].jobs:
 			if items[itemRef.id].jobs[jobID].manID != null: 
-				var taskGroup = Economy.getJobs(itemRef.databaseName)[jobID].tg
+				var taskGroup = Economy.getJobs(itemRef.databaseName)[jobID].TG
 				var priority = Economy.getJobs(itemRef.databaseName)[jobID].priority
 				makeManIdle(items[itemRef.id].jobs[jobID].manID, taskGroup, priority)
 			items[itemRef.id].jobs[jobID] = {"manID" : null, "isReady" : false}

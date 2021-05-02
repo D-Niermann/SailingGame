@@ -19,6 +19,7 @@ shader_param/wave_speed = 2.726
 shader_param/noise_strength = 0.391
 shader_param/side_wind_strength = -0.01
 shader_param/time_offset = 0.0
+shader_param/sail_in = 0.0
 shader_param/uv_offset_scale = Vector2( -0.2, -0.1 )
 shader_param/time_scale = Vector2( 0.079, -0.033 )
 shader_param/face_distortion = 0.5
