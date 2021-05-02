@@ -213,7 +213,8 @@ func _physics_process(delta):
 				var pos = GlobalObjectReferencer.camera.unproject_position(holo.global_transform.origin)
 				var facing = -1 * GlobalObjectReferencer.camera.global_transform.basis.z.normalized()
 				if facing.dot((holo.global_transform.origin - GlobalObjectReferencer.camera.global_transform.origin).normalized()) > 0:
-					var guiPosition: Vector2 = Vector2(clamp(pos.x, 0.0, get_viewport().size.x), clamp(pos.y, 0.0, get_viewport().size.y))
+					var guiOffset: float = 32
+					var guiPosition: Vector2 = Vector2(clamp(pos.x, 0.0 + guiOffset, get_viewport().size.x - guiOffset), clamp(pos.y, 0.0 + guiOffset, get_viewport().size.y - guiOffset))
 					if guiPosition != pos: # only if unit is outside of the screen, we create an indicator for it
 						var gui: Sprite = PROXMARK.instance()
 						indicators.add_child(gui)
