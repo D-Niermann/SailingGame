@@ -12,9 +12,6 @@ var rightClick: bool = false
 var scrollUp: bool = false
 var scrollDown: bool = false
 
-var shopper = null
-var builder = null
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -42,7 +39,7 @@ func _physics_process(delta):
 	# on leftclick, if shop is closed, if hit has info, open info box
 	if GlobalObjectReferencer.shopping.open == null:
 		if leftClick: # and not in shop or building
-			if !hit.empty() && Economy.malls.has(hit.collider.name): # opens shop, if hit's a shop
+			if !hit.empty() && Economy.malls.has(hit.collider.name) && GlobalObjectReferencer.playerShip.linear_velocity.length_squared() < GlobalObjectReferencer.shopping.speedLimit && GlobalObjectReferencer.playerShip.global_transform.origin.distance_squared_to(Economy.malls[hit.collider.name]["loci"]) < GlobalObjectReferencer.shopping.distanceLimit: # opens shop, if hit's a shop
 				GlobalObjectReferencer.shopping.openShop(hit.collider.name)
 			if !hit.empty() && hit.collider.has_method("createInfo"):
 				if is_instance_valid(selected):
@@ -84,7 +81,7 @@ func scan():
 	var from = camera.project_ray_origin(cursor)
 	var toward = camera.project_ray_normal(cursor)
 	hit = spaceState.intersect_ray(from, from + toward * 2000, toIgnore, 0b1)
-	while !hit.empty() && selectedDeck != null && hit.collider != selectedDeck && hit.collider.get_parent() != selectedDeck && hit.collider.name != "HTerrain":
+	while !hit.empty() && selectedDeck != null && hit.collider != selectedDeck && hit.collider.get_parent() != selectedDeck && hit.collider.name != "HTerrain" && !Economy.malls.has(hit.collider.name):
 		toIgnore.append(hit.collider)
 		hit = spaceState.intersect_ray(from, from + toward * 2000, toIgnore, 0b1)
 #	if !hit.empty():
