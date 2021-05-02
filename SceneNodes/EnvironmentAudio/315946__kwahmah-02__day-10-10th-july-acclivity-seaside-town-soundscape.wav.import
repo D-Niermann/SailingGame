@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/315946__kwahmah-02__day-10-10th-july-acclivity-seaside-town-soundscape.wav-09426c47ea342fc385290fd5949a7bcc.sample"
+
+[deps]
+
+source_file="res://SceneNodes/EnvironmentAudio/315946__kwahmah-02__day-10-10th-july-acclivity-seaside-town-soundscape.wav"
+dest_files=[ "res://.import/315946__kwahmah-02__day-10-10th-july-acclivity-seaside-town-soundscape.wav-09426c47ea342fc385290fd5949a7bcc.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0

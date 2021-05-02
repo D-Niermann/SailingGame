@@ -120,8 +120,10 @@ func _unhandled_input(event):
 		do_center = !do_center
 	if event.is_action_pressed("zoomOut"):
 		targetPos.y *= 1 + zoomSensitivity
+		size *= 1 + zoomSensitivity
 	if event.is_action_pressed("zoomIn"):
 		targetPos.y *= 1 - zoomSensitivity
+		size *= 1 - zoomSensitivity
 	# Receives mouse motion
 	if event is InputEventMouseMotion:
 		_mouse_position = event.relative
