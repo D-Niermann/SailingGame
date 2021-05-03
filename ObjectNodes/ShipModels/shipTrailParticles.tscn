@@ -26,7 +26,7 @@ gradient = SubResource( 2 )
 width = 128
 
 [sub_resource type="Curve" id=4]
-_data = [ Vector2( 0, 0.177273 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.921591 ), 0.0, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 0.367045 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.585227 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=5]
 curve = SubResource( 4 )
@@ -34,7 +34,7 @@ curve = SubResource( 4 )
 [sub_resource type="ParticlesMaterial" id=6]
 lifetime_randomness = 0.22
 emission_shape = 2
-emission_box_extents = Vector3( 0, 0, 1 )
+emission_box_extents = Vector3( 0, 0, 0.3 )
 spread = 2.16
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 0.2

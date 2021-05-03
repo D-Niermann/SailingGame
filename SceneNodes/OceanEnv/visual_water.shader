@@ -266,7 +266,7 @@ void light() {
 //
 	float lambert = clamp(dot(NORMAL, LIGHT), 0.0, 1.0);
 	float spec = clamp( pow( dot( reflect(LIGHT, NORMAL), -VIEW), 5000.0), 0.0, 1.0) * 2.0;
-	float spec_glare = clamp( pow( dot( reflect(LIGHT, NORMAL), -VIEW), 500.0), 0.0, 1.0) * smoothstep(0.0, 0.1, water_highlight_mask_1 * water_highlight_mask_2) * 30.0;
+	float spec_glare = clamp( pow( dot( reflect(LIGHT, NORMAL), -VIEW), 1000.0), 0.0, 1.0) * smoothstep(0.0, 0.1, water_highlight_mask_1 * water_highlight_mask_2) * 30.0;
 
 	DIFFUSE_LIGHT += (LIGHT_COLOR * ALBEDO * ATTENUATION / pi) * lambert;
 //	DIFFUSE_LIGHT += (LIGHT_COLOR * ALBEDO * ATTENUATION / pi) * sss;
