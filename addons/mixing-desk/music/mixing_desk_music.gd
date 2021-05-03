@@ -179,6 +179,7 @@ func play(song):
 				var newtrk = _iplay(o)
 				if first:
 					ref_track = newtrk
+					print(ref_track.name)
 					first = false
 	if !playing:
 		last_beat = 1

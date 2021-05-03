@@ -62,7 +62,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PoolStringArray( "zylann.hterrain" )
+enabled=PoolStringArray( "res://addons/mixing-desk/plugin.cfg" )
 
 [global]
 

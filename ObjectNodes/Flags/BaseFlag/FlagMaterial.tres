@@ -4,7 +4,6 @@
 
 [sub_resource type="StreamTexture" id=1]
 flags = 23
-load_path = "res://.import/ExampleflagTexture2.png-734a49ddf5b9124f5358bd43fb435c21.s3tc.stex"
 
 [sub_resource type="OpenSimplexNoise" id=2]
 

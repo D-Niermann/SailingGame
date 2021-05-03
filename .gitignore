@@ -2,3 +2,5 @@
 build
 logs
 .mono
+*.import
+*.import
