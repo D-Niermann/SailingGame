@@ -48,7 +48,7 @@ __meta__ = {
 
 [node name="Scene" parent="ViewportContainer/Viewport" instance=ExtResource( 3 )]
 
-[node name="Node2D" parent="ViewportContainer/Viewport" instance=ExtResource( 4 )]
+[node name="Music" parent="ViewportContainer/Viewport" instance=ExtResource( 4 )]
 
 [node name="Interface" type="Control" parent="."]
 anchor_right = 1.0

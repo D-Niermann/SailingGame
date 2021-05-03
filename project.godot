@@ -55,6 +55,7 @@ settings/stdout/print_fps=true
 
 window/size/width=1680
 window/size/height=1050
+window/size/always_on_top=true
 window/size/test_width=1073
 window/size/test_height=500
 window/stretch/mode="viewport"

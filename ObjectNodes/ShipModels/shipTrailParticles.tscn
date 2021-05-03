@@ -1,0 +1,67 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://addons/kenney_particle_pack/dirt_03.png" type="Texture" id=1]
+
+[sub_resource type="SpatialMaterial" id=1]
+render_priority = 1
+flags_transparent = true
+flags_unshaded = true
+flags_vertex_lighting = true
+flags_do_not_receive_shadows = true
+flags_disable_ambient_light = true
+vertex_color_use_as_albedo = true
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_color = Color( 1.10196, 1.2, 1.25098, 0.160784 )
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0, 0.0619835, 0.719008, 1 )
+colors = PoolColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0.0328638, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=3]
+gradient = SubResource( 2 )
+width = 128
+
+[sub_resource type="Curve" id=4]
+_data = [ Vector2( 0, 0.177273 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.921591 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=5]
+curve = SubResource( 4 )
+
+[sub_resource type="ParticlesMaterial" id=6]
+lifetime_randomness = 0.22
+emission_shape = 2
+emission_box_extents = Vector3( 0, 0, 1 )
+spread = 2.16
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 0.2
+initial_velocity_random = 0.5
+angular_velocity = 2.0
+angular_velocity_random = 1.0
+damping = 0.01
+angle = 420.3
+angle_random = 1.0
+scale = 0.1
+scale_random = 0.4
+scale_curve = SubResource( 5 )
+color_ramp = SubResource( 3 )
+
+[sub_resource type="QuadMesh" id=7]
+size = Vector2( 5, 5 )
+
+[node name="ShipTrail" type="Particles"]
+material_override = SubResource( 1 )
+cast_shadow = 0
+amount = 50
+lifetime = 10.0
+randomness = 0.8
+visibility_aabb = AABB( -181.604, -196.936, -272.78, 362.306, 395.6, 547.224 )
+local_coords = false
+process_material = SubResource( 6 )
+draw_pass_1 = SubResource( 7 )
+__meta__ = {
+"_editor_description_": ""
+}

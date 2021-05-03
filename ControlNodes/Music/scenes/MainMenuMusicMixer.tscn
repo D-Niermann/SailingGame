@@ -23,7 +23,7 @@
 [ext_resource path="res://ControlNodes/Music/audio/music/menu/Violin 1 - 5.ogg" type="AudioStream" id=21]
 [ext_resource path="res://ControlNodes/Music/audio/music/menu/Violin 2 - 5.ogg" type="AudioStream" id=22]
 
-[node name="Node2D" type="Node"]
+[node name="MainMenuMusic" type="Node"]
 script = ExtResource( 4 )
 
 [node name="MixingDeskMusic" type="Node" parent="."]

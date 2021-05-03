@@ -136,8 +136,8 @@ func set_subsurface_scattering(value):
 	visual_material.set_shader_param("sss_strength", value);
 
 func _physics_process(delta):
-	gerstner_speed1 = baseSpeed1*(1+wind_strength*0.2)
-	gerstner_speed2 = baseSpeed2*(1+wind_strength*0.2)
+	# gerstner_speed1 = baseSpeed1*(1+wind_strength*0.2)
+	# gerstner_speed2 = baseSpeed2*(1+wind_strength*0.2)
 	## ocean movement
 	visual_material.set_shader_param("time", time)
 	visual_material.set_shader_param("gerstner_speed", gerstner_speed1) 

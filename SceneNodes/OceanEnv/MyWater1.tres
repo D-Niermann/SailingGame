@@ -20,6 +20,7 @@ viewport_path = NodePath("render_targets/vector_map_buffer")
 
 [sub_resource type="GradientTexture" id=2]
 gradient = ExtResource( 12 )
+width = 128
 
 [resource]
 resource_local_to_scene = true
@@ -41,13 +42,13 @@ shader_param/time = 0.0
 shader_param/normal_base_intensity = 0.7
 shader_param/normal_peak_intensity = 1.5
 shader_param/normal_dist_fadeout = 0.015
-shader_param/detail_normal_intensity = 0.05
-shader_param/detail_normal_tiling = 30.0
-shader_param/detail_normal_speed = 10.0
+shader_param/detail_normal_intensity = 0.1
+shader_param/detail_normal_tiling = 10.0
+shader_param/detail_normal_speed = 0.0
 shader_param/foam_ramp = 0.2
 shader_param/foam_amount = 1.0
 shader_param/foam_tiling = 8
-shader_param/foam_gerstner = 7.0
+shader_param/foam_gerstner = 5.0
 shader_param/bubble_ramp = 1.0
 shader_param/bubble_amount = 1.0
 shader_param/bubble_tiling = 3
@@ -64,7 +65,7 @@ shader_param/beach_foam_depth = 1.436
 shader_param/beach_foam_distortion = 3.74
 shader_param/beach_foam_amount = 0.7
 shader_param/swimthings_depth = 1.5
-shader_param/swimthings_intensity = 0.8
+shader_param/swimthings_intensity = 0.0
 shader_param/swimthings_tiling = 3
 shader_param/flow_blend_timing = 1.0
 shader_param/flow_blend_stretch = 0.35
