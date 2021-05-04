@@ -1,19 +1,24 @@
 extends Control
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+const SELECT: Texture = preload("res://ControlNodes/Images/cursor.png")
+
+var size: Vector2 = Vector2.ZERO
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	var size: Vector2 = OS.get_screen_size()
+	scaleCursor(size)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	# scaling cursor if screen size is changed
+	var tempSize: Vector2 = OS.get_screen_size()
+	if size != tempSize:
+		size = tempSize
+		scaleCursor(size)
 
 
 func _on_Slot_pressed(slot):
@@ -71,3 +76,17 @@ func _on_Credits_pressed():
 
 func _on_QuitGame_pressed():
 	get_tree().quit()
+
+
+# Updates cursor size according to the given screen size.
+func scaleCursor(screenSize: Vector2):
+	var minDim: int = min(screenSize.x, screenSize.y)
+	var curDim: int = int(floor(float(minDim) / 33.75))
+	curDim = min(curDim, SELECT.get_width())
+	var midPix: Vector2 = Vector2(curDim * 0.5, curDim * 0.5)
+	midPix = midPix.floor()
+	var selectData: Image = SELECT.get_data()
+	selectData.resize(curDim, curDim)
+	var selectCopy: ImageTexture = ImageTexture.new()
+	selectCopy.create_from_image(selectData)
+	Input.set_custom_mouse_cursor(selectCopy, 0)
