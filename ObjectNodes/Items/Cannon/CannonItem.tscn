@@ -82,7 +82,7 @@ params_billboard_mode = 3
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
-albedo_color = Color( 1, 1, 1, 0.392157 )
+albedo_color = Color( 1, 1, 1, 0.780392 )
 albedo_texture = ExtResource( 8 )
 
 [sub_resource type="Gradient" id=12]
@@ -101,7 +101,7 @@ _data = [ Vector2( 0, 117.322 ), 0.0, 0.0, 0, 0, Vector2( 0.209486, 1 ), 0.0, 0.
 curve = SubResource( 14 )
 
 [sub_resource type="Curve" id=16]
-_data = [ Vector2( 0, 0.209091 ), 0.0, 0.975758, 0, 0, Vector2( 0.0197628, 0.490909 ), 1.56071, 1.61, 0, 0, Vector2( 0.980237, 0.945454 ), 0.0, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 0.0420455 ), 0.0, 0.975758, 0, 0, Vector2( 0.0415094, 0.403409 ), 1.27146, 1.27146, 0, 0, Vector2( 1, 0.630682 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=17]
 curve = SubResource( 16 )
@@ -115,7 +115,7 @@ initial_velocity_random = 0.83
 damping_curve = SubResource( 15 )
 angle = 263.7
 angle_random = 1.0
-scale = 0.05
+scale = 0.01
 scale_random = 1.0
 scale_curve = SubResource( 17 )
 color_ramp = SubResource( 13 )
@@ -478,7 +478,7 @@ stream = ExtResource( 6 )
 unit_db = 15.0
 unit_size = 5.0
 max_db = 6.0
-pitch_scale = 0.85
+pitch_scale = 0.65
 max_distance = 250.0
 doppler_tracking = 2
 

@@ -48,9 +48,9 @@ func _physics_process(delta):
 
 func update(destination: Vector2, objectsInRange : Dictionary):
 	# TODO: performance: maybe dont do this every time, only a few times a second?
-	up = (global_transform.basis.y)
-	forward = -(global_transform.basis.z)
-	right = -(global_transform.basis.x)
+	up = (global_transform.basis.y).normalized()
+	forward = -(global_transform.basis.z).normalized()
+	right = -(global_transform.basis.x).normalized()
 
 	distToEnemy = (enemy.global_transform.origin - global_transform.origin).length()
 	angleToEnemy = signedAngle(forward,towardsEnemy,up)

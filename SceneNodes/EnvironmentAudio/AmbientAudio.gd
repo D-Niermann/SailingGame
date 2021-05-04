@@ -26,6 +26,6 @@ func _process(delta):
 
 	## set the wind audio source under the camera but at constant wind height
 	windAudio.translation.x = camera.translation.x
-	windAudio.translation.y = 150
+	windAudio.translation.y = 170
 	windAudio.translation.z = camera.translation.z
 	
