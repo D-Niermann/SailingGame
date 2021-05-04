@@ -68,9 +68,12 @@ func _physics_process(delta):
 			if is_instance_valid(selected):
 				selected.removeInfo()
 				selected = null
-	if GlobalObjectReferencer.shopping.open != null && is_instance_valid(selected):
-		selected.removeInfo()
-		selected = null
+	if GlobalObjectReferencer.shopping.open != null:
+		if is_instance_valid(selected):
+			selected.removeInfo()
+			selected = null
+	elif Input.is_mouse_button_pressed(2):
+		Input.set_default_cursor_shape(1)
 	if is_instance_valid(selected):
 		info2(selected)
 	resetInput()
