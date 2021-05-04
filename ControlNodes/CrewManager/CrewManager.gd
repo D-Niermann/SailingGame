@@ -119,32 +119,47 @@ func checkAndAssignFetchTasks():
 		for i in range(len(fetchTasks[p])):
 			task = fetchTasks[p][i]
 
-			if not items.has(task.storageItemID): # if storage item is gone, queue new task and remove old one
+			if task.storageItemID!= null and not items.has(task.storageItemID): # if storage item is gone, queue new task and remove old one
 				requestGood(task.goodName, items[task.targetItemID].itemRef, task.storageIG, task.targetIG, task.priority)
 				fetchTasks[p].remove(i)
 				return
  
-			elif items.has(task.targetItemID): # check if target item still exists, could be deleted in the main time, task stays in task array when item unregisterd
-				var hasFound =  findAndAssignBestMen(task)
-				if hasFound == true:
-					## remove task if man was found
-					fetchTasks[p].remove(i)
-					## break here to save CPU (only one fetch task per frame gets assigned this way)
-					return
+			elif items.has(task.targetItemID): # check if target item still exists and if there are any idle man in tg, if so , search man
+				## search fo nearest storage barrel item
+				var itemFound = searchAndAddNearStorageItem(task)
+				if itemFound:
+					var manFound =  findAndAssignBestMen(task)
+					if manFound == true:
+						## remove task if man was found
+						fetchTasks[p].remove(i)
+						## break here to save CPU (only one fetch task per frame gets assigned this way)
+						return
 				
 			else:
 				# task has no target item anymore so delete it
 				fetchTasks[p].remove(i)
 				return
 				
-
+func searchAndAddNearStorageItem(task):
+	var storageItemRef = null
+	var minDist = 9999999
+	## search for nearest barrel of item group and add it to task
+	for id in (itemAssignmentsAndInventory[task.storageIG]):
+		if (task.targetItemPos-items[id].itemRef.translation).length()<minDist and itemAssignmentsAndInventory[task.storageIG][id].inventory[task.goodName]>0: # TODO: put real range check here and also check if that item has enough goods in the inventory["free"] list
+			minDist = (task.targetItemPos-items[id].itemRef.translation).length()
+			storageItemRef = items[id].itemRef
+	if storageItemRef != null:
+		task["storageItemID"] = storageItemRef.id 
+		task["storageItemPos"] = storageItemRef.transform.origin
+		return true
+	return false
 
 func updateMen():
 	"""
 	checks if men is able to stay in assigned group, maybe he is too tired or hungry. If a man is tired or hungry, force him into RELAX group, de-assign him from item that he is on.
 	Caution: if tired he goes to hammock: then do not remove him from hammock again, he will still be tired, so only check TGs that are non RELAX (?)
 	
-	TODO: chunk the iteration of all men so that cpu saves ressourced (maybe each frame only check 10 man)
+	TODO: chunk the iteration of all men so that cpu saves ressourced (maybe each frame only check 10 man) -> profiler says 100 man take around 0.18 ms to processess, which is very good
 	"""
 	var manRef
 	
@@ -263,24 +278,19 @@ func requestGood(name : String, targetItemRef, storageItemGroup, targetItemGroup
 	Only requests one item at a time, since man can only carry one
 	creates task and adds it to task list
 	"""
-	var storageItemRef = null
-	## search for nearest barrel of item group
-	for id in (itemAssignmentsAndInventory[storageItemGroup]):
-		if true: # TODO: put real range check here and also check if that item has enough goods in the inventory["free"] list
-			print("Warn: Not really checking for correct storage item!")
-			storageItemRef = items[id].itemRef
 
-	if not is_instance_valid(storageItemRef):
-		## TODO: handle event that no storage item of the needed group is there (make UI popup and so on)
-		print("Warn: No storage Barrels found for type: ", storageItemGroup)
-	else:
+
+	# if not is_instance_valid(storageItemRef):
+	# 	## TODO: handle event that no storage item of the needed group is there (make UI popup and so on)
+	# 	print("Warn: No storage Barrels found for type: ", storageItemGroup)
+	# else:
 		## if an storage item has been found	
 		## append task that has target item and storage item id and position in it
-		fetchTasks[priority].append({"type" : FETCH_TASK, "id": IDGenerator.getID(),
-									"taskGroup": TG_UTILITY, "goodName": name, "storageIG" : storageItemGroup, "targetIG" : targetItemGroup,
-									"targetItemID": targetItemRef.id, "targetItemPos" : targetItemRef.transform.origin,
-									"storageItemID" : storageItemRef.id, "storageItemPos" : storageItemRef.transform.origin,
-									"priority": priority})
+	fetchTasks[priority].append({"type" : FETCH_TASK, "id": IDGenerator.getID(),
+								"taskGroup": TG_UTILITY, "goodName": name, "storageIG" : storageItemGroup, "targetIG" : targetItemGroup,
+								"targetItemID": targetItemRef.id, "targetItemPos" : targetItemRef.transform.origin,
+								"storageItemID" : null, "storageItemPos" : null, # is set when actually searching for the storage item
+								"priority": priority})
 
 func requestAllGoods(itemRef):
 	"""
