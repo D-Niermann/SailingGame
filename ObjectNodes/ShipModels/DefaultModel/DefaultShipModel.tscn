@@ -1,6 +1,6 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=22 format=2]
 
-[ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/topDeck.png" type="Texture" id=1]
+[ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/TopDeck2.png" type="Texture" id=1]
 [ext_resource path="res://ObjectNodes/Flags/BaseFlag/BaseFlag.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/shipDeck.png" type="Texture" id=3]
 [ext_resource path="res://ObjectNodes/ShipModels/WoodMaterial.tres" type="Material" id=4]
@@ -10,8 +10,10 @@
 [ext_resource path="res://ObjectNodes/ShipModels/Sails/FrontSail.tscn" type="PackedScene" id=8]
 [ext_resource path="res://ObjectNodes/Items/Walls/OuterHullWall.tscn" type="PackedScene" id=9]
 [ext_resource path="res://ObjectNodes/Items/Walls/OuterHullWall3m.tscn" type="PackedScene" id=10]
-[ext_resource path="res://ObjectNodes/ShipModels/Sails/SailShaderExample.tscn" type="PackedScene" id=11]
+[ext_resource path="res://ObjectNodes/ShipModels/Sails/MainSail.tscn" type="PackedScene" id=11]
 [ext_resource path="res://ObjectNodes/ShipModels/shipTrailParticles.tscn" type="PackedScene" id=12]
+[ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/Galleon, crowsnest, platform (2x2).png" type="Texture" id=13]
+[ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/BowSprit.png" type="Texture" id=14]
 
 [sub_resource type="CylinderMesh" id=1]
 material = ExtResource( 4 )
@@ -67,7 +69,7 @@ transform = Transform( 0.781091, 0, 0.557881, 0, 1, 0, -0.419361, 0, 1.03909, 0.
 transform = Transform( 0.584934, 0, 0.417779, 0, 1, 0, -0.314046, 0, 0.778144, 0.246604, 3.09757, -0.175889 )
 
 [node name="SailWithShader" parent="Sails/FrontMast" instance=ExtResource( 8 )]
-transform = Transform( -0.123424, 0.0669867, -1.47789, -0.0532973, 0.501981, 0.202608, 1.49009, 0.0235032, -0.115166, 2.96296, 0.366814, 0.471992 )
+transform = Transform( -0.0915128, 0.0496673, -1.09578, -0.0395173, 0.372194, 0.150224, 1.10483, 0.0174265, -0.0853899, 2.41773, 0.640092, 0.41461 )
 
 [node name="Flag3DScene" parent="Sails/FrontMast" instance=ExtResource( 2 )]
 transform = Transform( -0.192357, 0.0720457, 0.266918, 0, 0.244662, -0.11483, -0.283321, -0.0489145, -0.18122, 0.0070411, 3.24533, -0.00361058 )
@@ -92,6 +94,13 @@ transform = Transform( 0.979762, 0, 0.668528, 0, 0.808259, 0, -0.502535, 0, 1.30
 [node name="Flag3DScene" parent="Sails/Main" instance=ExtResource( 2 )]
 transform = Transform( -0.234354, -0.0498574, 0.262651, 0, 0.220353, 0.102888, -0.274044, 0.0426366, -0.224611, 0.00421143, 3.29494, -0.00418377 )
 
+[node name="Sprite3D" type="Sprite3D" parent="Sails/Main"]
+transform = Transform( 0.212892, 0, 0, 0, 0.212892, 0, 0, 0, 0.212892, 0, 3.0964, 0 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 13 )
+
 [node name="Deck1" type="KinematicBody" parent="." groups=[
 "PlayerDeck",
 ]]
@@ -110,7 +119,7 @@ __meta__ = {
 }
 
 [node name="Deck" type="Sprite3D" parent="Deck1"]
-transform = Transform( 0.8, 0, 0, 0, 1, 0, 0, 0, 0.8, 0, 0, 0 )
+transform = Transform( 0.368805, 0, 0, 0, 0.461006, 0, 0, 0, 0.368805, -1.20748, 0, 0.131834 )
 material_override = SubResource( 3 )
 axis = 1
 shaded = true
@@ -167,6 +176,13 @@ shape = SubResource( 4 )
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="Sprite3D" type="Sprite3D" parent="Deck1"]
+transform = Transform( 0.477411, -0.0468779, 0, 0.0468779, 0.477411, 0, 0, 0, 0.479707, 5.07473, 0.176844, 0.0725531 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 14 )
 
 [node name="Deck2" type="KinematicBody" parent="." groups=[
 "PlayerDeck",

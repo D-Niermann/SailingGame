@@ -27,6 +27,17 @@ var malls: Dictionary = {
 		"money": 1000,
 		"part": Vector3(4, 0, 4),
 		"loci": Vector3.ZERO
+	},
+	"kingsPort": {
+		"capacity": Vector2(0, 100),
+		"consumption": 0,
+		"grows": {"apple": 1.0},
+		"goods": {"banana": 10, "apple": INF, "CannonLarge" : 10, "WallLong" : 100, "LightSmall":5, "GunpowderBarrel" : 20},
+		"white": ["food"],
+		"black": [],
+		"money": 1000,
+		"part": Vector3(4, 0, 4),
+		"loci": Vector3.ZERO
 	}
 }
 # when adding new parameters/keys, also add them into BaseItem.fetchDictParams()
