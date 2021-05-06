@@ -14,18 +14,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2( 17.0111, 190.739 )
+color = Color( 0.160784, 0.176471, 0.235294, 1 )
+polygon = PoolVector2Array( -16.6686, -21.0372, 115.849, 3.3078, 246.043, -20.3988 )
+
 [node name="Panel" type="Panel" parent="."]
-margin_right = 259.0
+margin_right = 264.0
 margin_bottom = 170.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Title" type="RichTextLabel" parent="Panel"]
-margin_left = 67.0
-margin_top = 3.1498
-margin_right = 209.0
-margin_bottom = 36.1498
+margin_left = 71.0
+margin_top = 3.0
+margin_right = 200.0
+margin_bottom = 36.0
 text = "Frank Smith"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -41,9 +46,9 @@ __meta__ = {
 }
 
 [node name="Assignment" type="RichTextLabel" parent="Panel"]
-margin_left = 78.8527
+margin_left = 83.0
 margin_top = 33.0
-margin_right = 245.853
+margin_right = 186.0
 margin_bottom = 66.0
 text = "Cannonier"
 __meta__ = {
@@ -51,9 +56,9 @@ __meta__ = {
 }
 
 [node name="HealthLabel" type="RichTextLabel" parent="Panel"]
-margin_left = 95.0
+margin_left = 209.0
 margin_top = 66.0
-margin_right = 257.0
+margin_right = 254.0
 margin_bottom = 99.0
 text = "100"
 __meta__ = {
@@ -61,20 +66,20 @@ __meta__ = {
 }
 
 [node name="ItemLabel" type="RichTextLabel" parent="Panel"]
-margin_left = 67.0
-margin_top = 99.0
-margin_right = 259.0
-margin_bottom = 132.0
+margin_left = 122.0
+margin_top = 98.6663
+margin_right = 264.0
+margin_bottom = 131.666
 text = "ExampleName"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="StatusLabel" type="RichTextLabel" parent="Panel"]
-margin_left = 139.849
-margin_top = 132.0
-margin_right = 241.849
-margin_bottom = 165.0
+margin_left = 216.946
+margin_top = 131.666
+margin_right = 243.946
+margin_bottom = 164.666
 text = "0"
 __meta__ = {
 "_edit_use_anchors_": false

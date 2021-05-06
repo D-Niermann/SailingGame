@@ -13,7 +13,7 @@ func _ready():
 	randomize()
 	rand = rand_range(-1,1)
 	time = 0
-	start_opacity = rand_range(0,0.3)
+	start_opacity = rand_range(0,0.8)
 	# print(rand)
 	# layers = 2 # change the cull mask layers visibility to 2
 

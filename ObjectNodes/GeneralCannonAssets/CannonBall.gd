@@ -62,7 +62,7 @@ func _process(delta):
 	coll = null
 	var waterHeight = 0
 	checkAndDestroy()
-	if ocean!= null:
+	if is_instance_valid(ocean):
 		waterHeight = ocean.getWaterHeight(global_transform.origin)
 	if  waterHeight > global_transform.origin.y:
 		drag_factor = 0.1

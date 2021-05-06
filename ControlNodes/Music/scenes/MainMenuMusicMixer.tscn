@@ -1,10 +1,10 @@
 [gd_scene load_steps=23 format=2]
 
-[ext_resource path="res://ControlNodes/Music/addons/mixing-desk/music/mixing_desk_music.gd" type="Script" id=1]
-[ext_resource path="res://ControlNodes/Music/addons/mixing-desk/music/song.gd" type="Script" id=2]
-[ext_resource path="res://ControlNodes/Music/addons/mixing-desk/music/containers/ran_cont.gd" type="Script" id=3]
+[ext_resource path="res://addons/mixing-desk/music/mixing_desk_music.gd" type="Script" id=1]
+[ext_resource path="res://addons/mixing-desk/music/song.gd" type="Script" id=2]
+[ext_resource path="res://addons/mixing-desk/music/containers/ran_cont.gd" type="Script" id=3]
 [ext_resource path="res://ControlNodes/Music/scenes/MainMusicMixer.gd" type="Script" id=4]
-[ext_resource path="res://ControlNodes/Music/addons/mixing-desk/music/containers/core_cont.gd" type="Script" id=5]
+[ext_resource path="res://addons/mixing-desk/music/containers/core_cont.gd" type="Script" id=5]
 [ext_resource path="res://ControlNodes/Music/audio/music/menu/Cello - 3.ogg" type="AudioStream" id=6]
 [ext_resource path="res://ControlNodes/Music/audio/music/menu/Viola - 4.ogg" type="AudioStream" id=7]
 [ext_resource path="res://ControlNodes/Music/audio/music/menu/Cello - 4.ogg" type="AudioStream" id=8]
@@ -23,18 +23,18 @@
 [ext_resource path="res://ControlNodes/Music/audio/music/menu/Violin 1 - 5.ogg" type="AudioStream" id=21]
 [ext_resource path="res://ControlNodes/Music/audio/music/menu/Violin 2 - 5.ogg" type="AudioStream" id=22]
 
-[node name="Node2D" type="Node"]
+[node name="MainMenuMusic" type="Node"]
 script = ExtResource( 4 )
 
 [node name="MixingDeskMusic" type="Node" parent="."]
 script = ExtResource( 1 )
-play_mode = 4
+play_mode = 1
 autoplay = true
 autoplay_song = NodePath("menu")
 
 [node name="menu" type="Node" parent="MixingDeskMusic"]
 script = ExtResource( 2 )
-tempo = 74
+tempo = 75
 bars = 4
 beats_in_bar = 4
 transition_beats = 1.0
@@ -43,6 +43,8 @@ transition_beats = 1.0
 script = ExtResource( 5 )
 
 [node name="silence" type="AudioStreamPlayer" parent="MixingDeskMusic/menu/CoreContainer"]
+stream = ExtResource( 20 )
+volume_db = -60.0
 
 [node name="cello" type="Node" parent="MixingDeskMusic/menu"]
 script = ExtResource( 3 )
@@ -50,6 +52,7 @@ random_chance = 0.7
 
 [node name="1" type="AudioStreamPlayer" parent="MixingDeskMusic/menu/cello"]
 stream = ExtResource( 20 )
+volume_db = -60.0
 
 [node name="2" type="AudioStreamPlayer" parent="MixingDeskMusic/menu/cello"]
 stream = ExtResource( 11 )

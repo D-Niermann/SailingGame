@@ -26,6 +26,8 @@ func _process(delta):
 	healthLabel.text = str(round(myItem.currentHealth))
 	if positionRef!=null:
 		self.rect_position =  positionRef.rect_position
+		self.rect_position.x -=  100 # half the width of panel
+		self.rect_position.y -=  220 # height of info panel
 
 
 func _on_ActiveToggle_toggled(button_pressed):
