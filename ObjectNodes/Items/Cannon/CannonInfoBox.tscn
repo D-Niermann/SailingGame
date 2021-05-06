@@ -15,8 +15,8 @@ __meta__ = {
 }
 
 [node name="Panel" type="Panel" parent="."]
-margin_right = 209.0
-margin_bottom = 170.0
+margin_right = 200.0
+margin_bottom = 168.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -60,20 +60,20 @@ __meta__ = {
 }
 
 [node name="HealthLabel" type="RichTextLabel" parent="Panel"]
-margin_left = 149.959
-margin_top = 66.0373
-margin_right = 208.959
-margin_bottom = 99.0373
+margin_left = 150.0
+margin_top = 66.0
+margin_right = 200.0
+margin_bottom = 99.0
 text = "100"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Health2" type="RichTextLabel" parent="Panel"]
-margin_left = 149.959
-margin_top = 99.0373
-margin_right = 208.959
-margin_bottom = 132.037
+margin_left = 150.0
+margin_top = 99.0
+margin_right = 200.0
+margin_bottom = 132.0
 text = "0.2 s"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -142,6 +142,14 @@ margin_bottom = 162.666
 pressed = true
 __meta__ = {
 "_edit_use_anchors_": false
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2( 16, 192 )
+color = Color( 0.160784, 0.176471, 0.235294, 1 )
+polygon = PoolVector2Array( -16, -24, 83.9805, -0.0918427, 184, -24 )
+__meta__ = {
+"_editor_description_": ""
 }
 
 [connection signal="toggled" from="Panel/ActiveToggle" to="." method="_on_ActiveToggle_toggled"]

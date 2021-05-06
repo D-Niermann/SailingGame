@@ -36,9 +36,11 @@ func _process(delta):
 
 	# statusLabel.text = str(myHuman.isAssigned)
 
-	if positionRef!=null:
+	if is_instance_valid(positionRef):
 		self.rect_position =  positionRef.rect_position
-	pass
+		# center position
+		self.rect_position.x -=  132 # half the width of panel
+		self.rect_position.y -=  220 # height of info panel
 
 
 # func _on_ActiveToggle_toggled(button_pressed):

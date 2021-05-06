@@ -71,7 +71,7 @@ script = ExtResource( 1 )
 [node name="EnvAudioSource" parent="." instance=ExtResource( 4 )]
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( -0.665785, 0.97492, 2.4886, -6.61753, -0.148667, 0.581751, 0.887574, -0.377119, 6.20414, 4.064, 6.203, 6.357 )
+transform = Transform( -4.79179, 0.646761, 2.27327, -4.61234, -0.744494, -1.16782, 0.887574, -0.377119, 6.20414, 4.064, -1.5807, 6.357 )
 visible = false
 mesh = SubResource( 3 )
 material/0 = ExtResource( 8 )
