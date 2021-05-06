@@ -5,7 +5,10 @@ const SELECT: Texture = preload("res://ControlNodes/Images/cursor.png")
 const ATTACK: Texture = preload("res://ControlNodes/Images/attackCursor.png")
 const BUILD: Texture = preload("res://ControlNodes/Images/shoppingCursor.png")
 
+var camera: Camera
 var viewport: Viewport
+var viewportContainer: ViewportContainer
+var spaceState: PhysicsDirectSpaceState
 var selectedDeckNumber: int
 var hit: Dictionary = {}
 var selected = null
@@ -21,7 +24,10 @@ var scrollDown: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	viewport = get_tree().get_root().get_node("GameWorld/ViewportContainer/Viewport")
+	camera = GlobalObjectReferencer.camera
+	viewport = camera.get_viewport()
+	viewportContainer = viewport.get_parent()
+	spaceState = camera.get_world().direct_space_state
 	var size: Vector2 = OS.get_screen_size()
 	scaleCursor(size)
 	GlobalObjectReferencer.cursor = self
@@ -102,9 +108,6 @@ func scan():
 	var selectedDeck = null
 	if selectedDeckNumber != -1:
 		selectedDeck = get_tree().get_nodes_in_group("PlayerDeck")[selectedDeckNumber]
-	var camera: Camera = viewport.get_camera()
-	var spaceState: PhysicsDirectSpaceState = camera.get_world().direct_space_state
-	var viewportContainer: ViewportContainer = viewport.get_parent()
 	var cursor = get_viewport().get_mouse_position() / viewportContainer.stretch_shrink
 	var toIgnore: Array = []
 	if is_instance_valid(GlobalObjectReferencer.shopping.hologram):
@@ -121,8 +124,6 @@ func scan():
 
 # Updates location of infobox to hover above the given thing.
 func info2(thing):
-	var camera: Camera = viewport.get_camera()
-	var viewportContainer: ViewportContainer = viewport.get_parent()
 	var pos: Vector2 = camera.unproject_position(selected.global_transform.origin)
 	info.rect_position = Vector2(clamp(pos.x, 0, viewport.size.x), clamp(pos.y, 0, viewport.size.y)) * viewportContainer.stretch_shrink
 
