@@ -33,10 +33,12 @@ var topograph: Image = Image.new() # what we use for maintaining multi-partition
 var picked: Dictionary = {} # like live, but for the multi-partition stuff
 var colors: Dictionary = { # like data, but for the multi-partition stuff
 	"010": {"pre": "ISLAND01", "res": "res://SceneNodes/Islands/Island1.tscn", "origin": Vector3(0, 0, 0)},
-	"020": {"pre": "ISLAND01", "res": "res://SceneNodes/Islands/Island2.tscn", "origin": Vector3(2, 0, 0)},
-	"030": {"pre": "ISLAND01", "res": "res://SceneNodes/Islands/Island3.tscn", "origin": Vector3(4, 0, 2)}
+	"020": {"pre": "ISLAND02", "res": "res://SceneNodes/Islands/Island2.tscn", "origin": Vector3(2, 0, 0)},
+	"030": {"pre": "ISLAND03", "res": "res://SceneNodes/Islands/Island3.tscn", "origin": Vector3(4, 0, 2)}
 }
 var ISLAND01: PackedScene = preload("res://SceneNodes/Islands/Island1.tscn")
+var ISLAND02: PackedScene = preload("res://SceneNodes/Islands/Island2.tscn")
+var ISLAND03: PackedScene = preload("res://SceneNodes/Islands/Island3.tscn")
 var presets: Dictionary = { # constants are not copied over the instance, this is where we summon stuff from, and also check some constant variables from
 	"example": {"CON": "units", "PRE": "NPC01", "RES": "res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn", "SPEED": 1, "weight": 1, "side": "spanish", "type": "trade", "pack": [], "gold": 100, "mode": "sell"}
 }
