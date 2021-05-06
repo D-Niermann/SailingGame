@@ -32,11 +32,11 @@ var dominions: Image = Image.new() # what we use for defining regions, like what
 var topograph: Image = Image.new() # what we use for maintaining multi-partition stuff, like islands
 var picked: Dictionary = {} # like live, but for the multi-partition stuff
 var colors: Dictionary = { # like data, but for the multi-partition stuff
-	"010": {"pre": "ISLAND01", "res": "res://SceneNodes/Islands/dummyIslandOne.tscn", "origin": Vector3(1, 0, 1)},
-	"020": {"res": "res://SceneNodes/Islands/dummyIslandTwo.tscn", "origin": Vector3(1, 0, 6)},
-	"030": {"res": "res://SceneNodes/Islands/dummyIslandThree.tscn", "origin": Vector3(5, 0, 1)}
+	"010": {"pre": "ISLAND01", "res": "res://SceneNodes/Islands/Island1.tscn", "origin": Vector3(0, 0, 0)},
+	"020": {"res": "res://SceneNodes/Islands/Island2.tscn", "origin": Vector3(0, 0, 0)},
+	"030": {"res": "res://SceneNodes/Islands/Island3.tscn", "origin": Vector3(0, 0, 0)}
 }
-var ISLAND01: PackedScene = preload("res://SceneNodes/Islands/dummyIslandOne.tscn")
+var ISLAND01: PackedScene = preload("res://SceneNodes/Islands/Island1.tscn")
 var presets: Dictionary = { # constants are not copied over the instance, this is where we summon stuff from, and also check some constant variables from
 	"example": {"CON": "units", "PRE": "NPC01", "RES": "res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn", "SPEED": 1, "weight": 1, "side": "spanish", "type": "trade", "pack": [], "gold": 100, "mode": "sell"}
 }

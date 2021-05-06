@@ -14,14 +14,14 @@ extents = Vector3( 32, 1, 32 )
 [sub_resource type="CubeMesh" id=2]
 size = Vector3( 64, 2, 64 )
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=3]
 albedo_texture = ExtResource( 3 )
 uv1_scale = Vector3( 100, 50, 50 )
 
-[sub_resource type="BoxShape" id=5]
+[sub_resource type="BoxShape" id=4]
 extents = Vector3( 1.74462, 0.21604, 1 )
 
-[sub_resource type="CylinderShape" id=6]
+[sub_resource type="CylinderShape" id=5]
 radius = 3.80863
 height = 0.399176
 
@@ -52,7 +52,7 @@ shape = SubResource( 1 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15.544, 0 )
 visible = false
 mesh = SubResource( 2 )
-material/0 = SubResource( 4 )
+material/0 = SubResource( 3 )
 
 [node name="TerrainHolder" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -69, -0.954, -14 )
@@ -65,7 +65,7 @@ shaded = true
 alpha_cut = 2
 texture = ExtResource( 4 )
 
-[node name="bananaTown" parent="TerrainHolder" instance=ExtResource( 5 )]
+[node name="kingsPort" parent="TerrainHolder" instance=ExtResource( 5 )]
 transform = Transform( -1.17972, 0, -0.336697, 0, 1, 0, 0.336697, 0, -1.17972, 64.4382, 2.96102, -3.62073 )
 
 [node name="Haven" type="Sprite3D" parent="TerrainHolder"]
@@ -114,7 +114,7 @@ collision_mask = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="TerrainHolder/StaticBody"]
 transform = Transform( 6.36293, 0, 1.84246, 0, 6.62431, 0, -1.84246, 0, 6.36293, 2.88025, -1.13343, 3.27564 )
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="StaticBody2" type="StaticBody" parent="TerrainHolder"]
 transform = Transform( 0.998948, 0, -0.0458686, 0, 1, 0, 0.0458686, 0, 0.998948, 63.512, 3.8662, -5.6032 )
@@ -123,4 +123,4 @@ collision_mask = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="TerrainHolder/StaticBody2"]
 transform = Transform( 6.36292, 0, 1.84246, 0, 6.62431, 0, -1.84246, 0, 6.36292, 6.27113, -0.937014, 22.5066 )
-shape = SubResource( 6 )
+shape = SubResource( 5 )
