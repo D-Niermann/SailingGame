@@ -81,12 +81,15 @@ func onPlacement():
 	isPlaced = true
 
 
-func onHover():
+func onHover(switch: bool):
 	"""
 	Gets called when while shopping or building the mouse is hovering over item.
-	Not yet implemented!
 	"""
-	pass
+	var sprite = get_node("Sprite3D")
+	if switch:
+		sprite.modulate = Color(1.0, 1.0, 0.0, 1.0)
+	else:
+		sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
 
 func onRemove():
 	"""

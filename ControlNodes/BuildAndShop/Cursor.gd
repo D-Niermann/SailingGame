@@ -9,6 +9,7 @@ var viewport: Viewport
 var selectedDeckNumber: int
 var hit: Dictionary = {}
 var selected = null
+var hovering = null
 var info: Control = null
 var size: Vector2 = Vector2.ZERO
 
@@ -48,6 +49,9 @@ func _physics_process(delta):
 		size = tempSize
 		scaleCursor(size)
 	scan() # raycasts to set the dictionary called hit
+	var newHovering = null # to change highlighted objects
+	if !hit.empty() && hit.collider.has_method("onHover"):
+		newHovering = hit.collider
 	if hit.empty():
 		Input.set_default_cursor_shape(0)
 	elif Economy.malls.has(hit.collider.name) && GlobalObjectReferencer.playerShip.linear_velocity.length_squared() < GlobalObjectReferencer.shopping.speedLimit && GlobalObjectReferencer.playerShip.global_transform.origin.distance_squared_to(Economy.malls[hit.collider.name]["loci"]) < GlobalObjectReferencer.shopping.distanceLimit: # opens shop, if hit's a shop
@@ -76,6 +80,12 @@ func _physics_process(delta):
 		Input.set_default_cursor_shape(1)
 	if is_instance_valid(selected):
 		info2(selected)
+	if newHovering != hovering:
+		if is_instance_valid(hovering):
+			hovering.onHover(false)
+		hovering = newHovering
+		if is_instance_valid(hovering):
+			hovering.onHover(true)
 	resetInput()
 
 
