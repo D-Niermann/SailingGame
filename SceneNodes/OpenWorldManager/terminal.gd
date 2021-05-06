@@ -32,9 +32,9 @@ var dominions: Image = Image.new() # what we use for defining regions, like what
 var topograph: Image = Image.new() # what we use for maintaining multi-partition stuff, like islands
 var picked: Dictionary = {} # like live, but for the multi-partition stuff
 var colors: Dictionary = { # like data, but for the multi-partition stuff
-	"010": {"pre": "ISLAND01", "res": "res://SceneNodes/Islands/Island1.tscn", "origin": Vector3(0, 0, 0)},
-	"020": {"pre": "ISLAND02", "res": "res://SceneNodes/Islands/Island2.tscn", "origin": Vector3(2, 0, 0)},
-	"030": {"pre": "ISLAND03", "res": "res://SceneNodes/Islands/Island3.tscn", "origin": Vector3(4, 0, 2)}
+	"010": {"pre": "ISLAND01", "res": "res://SceneNodes/Islands/Island1.tscn", "origin": Vector3(2, 0, 1)},
+	"020": {"pre": "ISLAND02", "res": "res://SceneNodes/Islands/Island2.tscn", "origin": Vector3(5, 0, 2)},
+	"030": {"pre": "ISLAND03", "res": "res://SceneNodes/Islands/Island3.tscn", "origin": Vector3(7, 0, 5)}
 }
 var ISLAND01: PackedScene = preload("res://SceneNodes/Islands/Island1.tscn")
 var ISLAND02: PackedScene = preload("res://SceneNodes/Islands/Island2.tscn")
