@@ -2,8 +2,8 @@
 
 importer="texture"
 type="StreamTexture"
-path.s3tc="res://.import/cannon.png-a7486004edc9ef4b384565f12fe6153e.s3tc.stex"
-path.etc2="res://.import/cannon.png-a7486004edc9ef4b384565f12fe6153e.etc2.stex"
+path.s3tc="res://.import/Cannon.png-03193d583bf90ffe77faffbe5ef0791d.s3tc.stex"
+path.etc2="res://.import/Cannon.png-03193d583bf90ffe77faffbe5ef0791d.etc2.stex"
 metadata={
 "imported_formats": [ "s3tc", "etc2" ],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://ObjectNodes/Items/Cannon/cannon.png"
-dest_files=[ "res://.import/cannon.png-a7486004edc9ef4b384565f12fe6153e.s3tc.stex", "res://.import/cannon.png-a7486004edc9ef4b384565f12fe6153e.etc2.stex" ]
+source_file="res://ObjectNodes/Items/Cannon/Cannon.png"
+dest_files=[ "res://.import/Cannon.png-03193d583bf90ffe77faffbe5ef0791d.s3tc.stex", "res://.import/Cannon.png-03193d583bf90ffe77faffbe5ef0791d.etc2.stex" ]
 
 [params]
 

@@ -115,8 +115,8 @@ func scan():
 	while !hit.empty() && selectedDeck != null && hit.collider != selectedDeck && hit.collider.get_parent() != selectedDeck && hit.collider.name != "HTerrain" && !Economy.malls.has(hit.collider.name):
 		toIgnore.append(hit.collider)
 		hit = spaceState.intersect_ray(from, from + toward * 2000, toIgnore, 0b1)
-#	if !hit.empty():
-#		print(hit.collider.name)
+	if !hit.empty():
+		print(hit.collider.name)
 
 
 # Updates location of infobox to hover above the given thing.

@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/segelVorn.png" type="Texture" id=1]
-[ext_resource path="res://ObjectNodes/ShipModels/Sails/SailShaderExample.gd" type="Script" id=3]
+[ext_resource path="res://ObjectNodes/ShipModels/Sails/MainSail.gd" type="Script" id=3]
 
-[sub_resource type="Shader" id=3]
+[sub_resource type="Shader" id=1]
 code = "shader_type spatial;
 
 render_mode cull_disabled, depth_draw_alpha_prepass;
@@ -52,16 +52,16 @@ void fragment(){
 }
 "
 
-[sub_resource type="OpenSimplexNoise" id=1]
+[sub_resource type="OpenSimplexNoise" id=2]
 
-[sub_resource type="NoiseTexture" id=2]
+[sub_resource type="NoiseTexture" id=3]
 seamless = true
-noise = SubResource( 1 )
+noise = SubResource( 2 )
 
 [sub_resource type="ShaderMaterial" id=4]
 resource_local_to_scene = true
 render_priority = 2
-shader = SubResource( 3 )
+shader = SubResource( 1 )
 shader_param/albedo = Color( 1, 1, 1, 1 )
 shader_param/wave_size = 0.048
 shader_param/wave_speed = 2.726
@@ -73,7 +73,7 @@ shader_param/uv_offset_scale = Vector2( -0.2, -0.1 )
 shader_param/time_scale = Vector2( 0.079, -0.033 )
 shader_param/face_distortion = 0.5
 shader_param/texture_albedo = ExtResource( 1 )
-shader_param/uv_offset_texture = SubResource( 2 )
+shader_param/uv_offset_texture = SubResource( 3 )
 
 [sub_resource type="PlaneMesh" id=5]
 size = Vector2( 1.21, 2.842 )
