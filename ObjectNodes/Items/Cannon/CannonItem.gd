@@ -46,6 +46,10 @@ var forward2d = Vector2(1,0)
 var trajectoryPoints : Array
 var org_forward
 var reloadTimer : Timer
+
+
+
+
 func _ready():
 
 	marker = $TrajectoryMarkerGroup.get_children()

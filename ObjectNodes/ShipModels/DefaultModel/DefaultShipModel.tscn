@@ -154,7 +154,7 @@ omni_range = 1.0
 amp = 0.001
 
 [node name="OmniLight8" parent="Deck1" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.47418, 0.466614, -0.535401 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.77703, 0.436577, -0.504438 )
 light_energy = 2.74
 shadow_enabled = false
 shadow_color = Color( 0, 0, 0, 1 )
@@ -183,6 +183,9 @@ axis = 1
 shaded = true
 alpha_cut = 2
 texture = ExtResource( 14 )
+
+[node name="Flag3DScene" parent="Deck1" instance=ExtResource( 6 )]
+transform = Transform( 0.601536, 0, 0.798846, 0, 1, 0, -0.798845, 0, 0.601536, -6.0766, 0.574546, 0.150922 )
 
 [node name="Deck2" type="KinematicBody" parent="." groups=[
 "PlayerDeck",
@@ -453,9 +456,6 @@ collision_layer = 262145
 collision_mask = 262145
 movable = false
 databaseName = "putEconomyItemDictKeyHere"
-
-[node name="Flag3DScene" parent="." instance=ExtResource( 6 )]
-transform = Transform( -0.571172, -0.149894, -0.807028, 0, 0.983185, -0.182613, 0.82083, -0.104303, -0.561568, 0.150922, 1.25492, 6.0766 )
 
 [node name="ShipAmbientAudio" parent="." instance=ExtResource( 7 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0 )
