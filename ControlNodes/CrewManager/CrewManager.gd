@@ -460,7 +460,7 @@ func registerItem(itemRef):
 					itemRef.id, # id of item
 					jobID, # id of the item specific job
 					Economy.getJobs(itemRef.databaseName)[jobID].TG,  # taskgroup
-					Economy.getJobs(itemRef.databaseName)[jobID].posOffset + itemRef.transform.origin,  # position
+					Economy.getJobs(itemRef.databaseName)[jobID].posOffset  + itemRef.transform.origin,  # position
 					Economy.getJobs(itemRef.databaseName)[jobID].priority) # prio
 		else:
 			print("warning: name not found in economy and thus not  added to crew manager: ",itemRef.databaseName)

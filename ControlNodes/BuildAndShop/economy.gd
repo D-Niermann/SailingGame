@@ -65,8 +65,8 @@ var goods: Dictionary = { # TODO: RENAME INTO GEAR or ITEMS, this list is not ab
 	"apple"      : {"type": "food", "size": Vector3(2,1, 1), "penetrationFactor": 0.9, "IG": IG_FOOD, "jobs": {}, "capacity" : {}, "maxHealth": 1, "isCannon" : false, "price": 10, "weight": 1.0, "res": "res://ControlNodes/BuildAndShop/exampleItem.tscn", "icon": "res://icon.png"},
 	
 	"Large Cannon": {"type": "gear", "size": Vector3(3,1, 2), "penetrationFactor": 0.3, "IG" : IG_GEAR,  
-					"jobs": {"Gunner1": {"posOffset":Vector3(0,0,0.1), "TG": TG_WEAPONS, "priority" : 0}, 
-							"Gunner2": {"posOffset":Vector3(0,0,-0.1), "TG": TG_WEAPONS, "priority" : 1}},
+					"jobs": {"Gunner1": {"posOffset":Vector3(0.2,0,0), "TG": TG_WEAPONS, "priority" : 0}, 
+							"Gunner2": {"posOffset":Vector3(-0.2,0,0), "TG": TG_WEAPONS, "priority" : 1}},
 					"capacity" : {"Gunpowder": 10, "Cannonballs" : 5}, 
 					"maxHealth": 60, "isCannon" : true, "price": 10, "weight": 10.0, "res": "res://ObjectNodes/Items/Cannon/CannonItem.tscn", "icon": "res://ObjectNodes/Items/Cannon/cannon.png"},
 	

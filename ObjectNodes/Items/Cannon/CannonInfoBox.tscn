@@ -70,9 +70,9 @@ __meta__ = {
 }
 
 [node name="testCannonLabel" type="RichTextLabel" parent="Panel"]
-margin_left = 16.5178
+margin_left = 17.0
 margin_top = 50.0
-margin_right = 141.518
+margin_right = 134.0
 margin_bottom = 83.0
 text = "Test-Cannon"
 __meta__ = {
@@ -80,10 +80,10 @@ __meta__ = {
 }
 
 [node name="IsTestCannon" type="CheckButton" parent="Panel"]
-margin_left = 139.632
-margin_top = 50.4617
-margin_right = 189.632
-margin_bottom = 81.4617
+margin_left = 146.0
+margin_top = 50.0
+margin_right = 196.0
+margin_bottom = 81.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
