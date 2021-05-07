@@ -120,7 +120,7 @@ func checkAndAssignFetchTasks():
 			task = fetchTasks[p][i]
 
 			if task.storageItemID!= null and not items.has(task.storageItemID): # if storage item is gone, queue new task and remove old one
-				requestGood(task.goodName, items[task.targetItemID].itemRef, task.storageIG, task.targetIG, task.priority)
+				requestGood(task.goodName, items[task.targetItemID].itemRef, task.storageIG, task.priority)
 				fetchTasks[p].remove(i)
 				return
  
@@ -222,7 +222,7 @@ func updateMen():
 							items[manRef.itemID].jobs[manRef.jobID].isReady = true
 							items[manRef.itemID].crewScore = getCrewScore(manRef.itemID)
 				
-				## check buys man with fetch task (put this into one function like checkManFetchTaskComplete(manRef))
+				## check busy man with fetch task (put this into one function like checkManFetchTaskComplete(manRef))
 				elif manRef.currentTask.type == FETCH_TASK:
 					checkManFetchTaskComplete(manRef)
 					
@@ -240,7 +240,7 @@ func checkManFetchTaskComplete(manRef):
 				manRef.proceedFetchTask()
 			else:
 				## man has already collected good and now gives good to targetItem
-				itemAssignmentsAndInventory[currTask.targetIG][manRef.itemID].inventory[currTask.goodName] += 1 # give good to target item
+				itemAssignmentsAndInventory[Economy.getIG(items[currTask.targetItemID].databaseName)][manRef.itemID].inventory[currTask.goodName] += 1 # give good to target item
 				print("giving item to: ",items[manRef.itemID].itemRef.name, currTask.goodName)
 				fromBusyToIdle(manRef.id, currTask.taskGroup, currTask.priority)
 	elif not items.has(currTask.storageItemID):
@@ -248,7 +248,7 @@ func checkManFetchTaskComplete(manRef):
 		print("only barrel is missing") 
 		if manRef.itemID == currTask.storageItemID:
 			## if target was the barrel that is missing, free the man and make new request
-			requestGood(currTask.goodName, items[currTask.targetItemID].itemRef, currTask.storageIG, currTask.targetIG, currTask.priority)
+			requestGood(currTask.goodName, items[currTask.targetItemID].itemRef, currTask.storageIG, currTask.priority)
 			fromBusyToIdle(manRef.id, currTask.taskGroup, currTask.priority)
 	else:
 		# target item not there anymore, delete task
@@ -272,7 +272,7 @@ func requestCrew(itemID, jobID, taskGroup, targetPosition : Vector3, priority : 
 
 
 
-func requestGood(name : String, targetItemRef, storageItemGroup, targetItemGroup, priority : int):
+func requestGood(name : String, targetItemRef, storageItemGroup, priority : int):
 	"""
 	When a cannon or something requests goods like gunpowder and cannonballs, this function gets called.
 	Only requests one item at a time, since man can only carry one
@@ -287,7 +287,7 @@ func requestGood(name : String, targetItemRef, storageItemGroup, targetItemGroup
 		## if an storage item has been found	
 		## append task that has target item and storage item id and position in it
 	fetchTasks[priority].append({"type" : FETCH_TASK, "id": IDGenerator.getID(),
-								"taskGroup": TG_UTILITY, "goodName": name, "storageIG" : storageItemGroup, "targetIG" : targetItemGroup,
+								"taskGroup": TG_UTILITY, "goodName": name, "storageIG" : storageItemGroup,
 								"targetItemID": targetItemRef.id, "targetItemPos" : targetItemRef.transform.origin,
 								"storageItemID" : null, "storageItemPos" : null, # is set when actually searching for the storage item
 								"priority": priority})
@@ -300,7 +300,7 @@ func requestAllGoods(itemRef):
 	for good in capacity:
 		for i in range(capacity[good]):
 			var prio = clamp(i,0,numberOfPriorities-1) # TODO : think aboput hot to do priorities here (wall leak objects needs items more than cannons), for now, first item request is always high rpio then it gets lower
-			requestGood(good, itemRef, Economy.consumables[good].IG, IG_GEAR,  prio) 
+			requestGood(good, itemRef, Economy.consumables[good].GG,  prio) 
 
 func findAndAssignBestMen(task):
 	"""
@@ -486,13 +486,18 @@ func unregisterItem(itemRef):
 		itemAssignmentsAndInventory[Economy.getIG(itemRef.databaseName)].erase(itemRef.id)
 		print(itemAssignmentsAndInventory)
 
-func consumeGood(itemGroup : String, itemID, goodName : String) -> bool:
+
+func consumeGood(itemGroup : String, itemID, goodName : String, requestNew = false) -> bool:
 	"""
 	Reduces goods in ItemAssignmentAndInventory dictionary
 	returns true if good was consumed and false if not (inventory was empty)
+	if requestNew is true, the consumed good is directly requested again
 	"""
-	if itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName]>0:
+	var amount : int = itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName]
+	if amount>0:
 		itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName] -= 1
+		if requestNew:
+			requestGood(goodName,items[itemID].itemRef,Economy.getGG(goodName),clamp(amount-1,0,numberOfPriorities-1)) 
 		return true
 	return false
 
@@ -510,3 +515,9 @@ func getCrewScore(itemID) -> float:
 			score += 1
 	score = score / len(items[itemID].jobs)
 	return score
+
+func getInventoryCount(id, goodName) -> int:
+	"""
+	returns the inventory count  of the given item (returning only the count to secure that inventory is not modified)
+	"""
+	return itemAssignmentsAndInventory[Economy.getIG(items[id].databaseName)][id].inventory[goodName]

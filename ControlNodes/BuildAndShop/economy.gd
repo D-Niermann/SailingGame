@@ -54,8 +54,8 @@ const IG_GEAR = "igGear" # no storage items like cannons, table and so on - thes
 
 
 
-var consumables = {"Gunpowder" : {"IG": IG_GUNPOWDER},
-				   "Cannonballs" : {"IG": IG_AMMO}} # this should be named "goods", or include it into goods dict?
+var consumables = {"Gunpowder" : {"GG": IG_GUNPOWDER}, # "GG" = GoodsGroup
+				   "Cannonballs" : {"GG": IG_AMMO}} # this should be named "goods", or include it into goods dict?
 
 
 
@@ -66,7 +66,7 @@ var goods: Dictionary = { # TODO: RENAME INTO GEAR or ITEMS, this list is not ab
 	
 	"Large Cannon": {"type": "gear", "size": Vector3(3,1, 2), "penetrationFactor": 0.3, "IG" : IG_GEAR,  
 					"jobs": {"Gunner1": {"posOffset":Vector3(0.2,0,0), "TG": TG_WEAPONS, "priority" : 0}, 
-							"Gunner2": {"posOffset":Vector3(-0.2,0,0), "TG": TG_WEAPONS, "priority" : 1}},
+							"Gunner2": {"posOffset":Vector3(0,0,0.2), "TG": TG_WEAPONS, "priority" : 1}},
 					"capacity" : {"Gunpowder": 10, "Cannonballs" : 5}, 
 					"maxHealth": 60, "isCannon" : true, "price": 10, "weight": 10.0, "res": "res://ObjectNodes/Items/Cannon/CannonItem.tscn", "icon": "res://ObjectNodes/Items/Cannon/cannon.png"},
 	
@@ -161,7 +161,10 @@ func getJobs(of: String):
 func getIG(of: String):
 	""" returns item group of given item name """
 	return goods[of]["IG"]
-
+	
+func getGG(of: String):
+	""" returns goods group of given consumable name """
+	return consumables[of]["GG"]
 
 func getCapacity(of: String):
 	""" returns capacity of given item name """

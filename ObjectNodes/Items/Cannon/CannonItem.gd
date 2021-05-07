@@ -98,7 +98,8 @@ func _process(delta):
 	forward = transform.basis.x.normalized()
 
 	if playerAimCannons and isActive and GlobalObjectReferencer.crewManager.items[id].crewScore>0:
-		aimTo(GlobalObjectReferencer.ocean.waterMousePos)
+		if GlobalObjectReferencer.crewManager.getInventoryCount(id, "Gunpowder")>0: # if enough in inventory
+			aimTo(GlobalObjectReferencer.ocean.waterMousePos)
 	
 	# if infoPanel!=null:
 	# 	isActive = infoPanel.isActive
@@ -128,8 +129,6 @@ func aimTo(global_position : Vector3):
 
 func giveDmg(damage):
 	.giveDmg(damage)
-	if infoPanel!=null:
-		infoPanel.updateHealth(currentHealth)
 
 func _unhandled_input(event):
 	# Receives key input
@@ -222,21 +221,23 @@ func clearTrajectory():
 
 func fireBall():
 	if GlobalObjectReferencer.crewManager.items[id].crewScore>0 and reloaded and isActive and canShoot:
-		reloaded = false
-		# yield(get_tree().create_timer(fire_delay_sec),"timeout")
-		yield(get_tree().create_timer(fire_delay_sec+rand_range(0,rand_max_delay)),"timeout")
-		doParticles()
-		GlobalObjectReferencer.camera.shake_val += cam_shake/clamp(GlobalObjectReferencer.camera.global_transform.origin.distance_to(global_transform.origin)*0.02,1,99999)
-		GlobalObjectReferencer.playerShip.applyCannonImpulse(translation, transform.basis.z.normalized()*recoil_impulse)
-		playAudio()
-		var ball = BallScene.instance()
-		get_tree().get_root().add_child(ball)
-		ball.set_name("Ball")
-		ball.transform.origin = self.global_transform.origin+ self.global_transform.basis.x*1 # + foward to give ball a forward offset to get behind own walls
-		ball.dir = global_transform.basis.x
-		ball.velocity = force
-		reloadTimer.set_wait_time(reload_time_sec/GlobalObjectReferencer.crewManager.items[id].crewScore) 
-		reloadTimer.start()
+		if GlobalObjectReferencer.crewManager.getInventoryCount(id, "Gunpowder")>0: # if inventory is noit empty
+			reloaded = false
+			# yield(get_tree().create_timer(fire_delay_sec),"timeout")
+			yield(get_tree().create_timer(fire_delay_sec+rand_range(0,rand_max_delay)),"timeout")
+			doParticles()
+			GlobalObjectReferencer.camera.shake_val += cam_shake/clamp(GlobalObjectReferencer.camera.global_transform.origin.distance_to(global_transform.origin)*0.02,1,99999)
+			GlobalObjectReferencer.playerShip.applyCannonImpulse(translation, transform.basis.z.normalized()*recoil_impulse)
+			playAudio()
+			var ball = BallScene.instance()
+			get_tree().get_root().add_child(ball)
+			ball.set_name("Ball")
+			ball.transform.origin = self.global_transform.origin+ self.global_transform.basis.x*1 # + foward to give ball a forward offset to get behind own walls
+			ball.dir = global_transform.basis.x
+			ball.velocity = force
+			reloadTimer.set_wait_time(reload_time_sec/GlobalObjectReferencer.crewManager.items[id].crewScore) 
+			reloadTimer.start()
+			GlobalObjectReferencer.crewManager.consumeGood(Economy.IG_GEAR,id,"Gunpowder", true)
 
 
 ## TODO: change these funtions into 1 or 2 functions

@@ -30,8 +30,7 @@ func link(itemRef):
 func _process(delta):
 	healthLabel.text = str(round(myItem.currentHealth))
 	crewRatingLabel.text = str(GlobalObjectReferencer.crewManager.items[myItem.id].crewScore)
-	$Panel/GunpowderCount.text = str(GlobalObjectReferencer.crewManager.itemAssignmentsAndInventory[Economy.IG_GEAR][myItem.id].inventory["Gunpowder"])
-	# $Panel/GunpowderCount.text = str(GlobalObjectReferencer.crewManager.itemAssignmentsAndInventory[myItem.id].inventory["Gunpowder"])
+	$Panel/GunpowderCount.text = str(GlobalObjectReferencer.crewManager.getInventoryCount(myItem.id, "Gunpowder"))
 	if is_instance_valid(positionRef):
 		self.rect_position =  positionRef.rect_position
 		self.rect_position.x -=  100 # half the width of panel
