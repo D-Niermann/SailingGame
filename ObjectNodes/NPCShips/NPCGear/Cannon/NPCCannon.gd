@@ -48,7 +48,6 @@ var reloadTimer : Timer
 
 func _ready():
 	## overwrite parent vars
-	databaseName = "CannonLarge"
 	fetchDictParams(databaseName)
 
 	# marker = $TrajectoryMarkerGroup.get_children()

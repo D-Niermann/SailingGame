@@ -142,11 +142,11 @@ flags_transparent = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0.188235, 0.976471, 0.164706, 0.0980392 )
 
-[node name="CannonLarge" type="KinematicBody"]
+[node name="Large Cannon" type="KinematicBody"]
 collision_layer = 16385
 collision_mask = 16385
 script = ExtResource( 1 )
-databaseName = "CannonLarge"
+databaseName = "Large Cannon"
 InfoPanel = ExtResource( 14 )
 BallScene = ExtResource( 2 )
 force = 0.5

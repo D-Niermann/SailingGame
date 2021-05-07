@@ -5,20 +5,20 @@ extends "res://ObjectNodes/Items/BaseItem.gd"
 ### Paramters
 export var BallScene: PackedScene # scene object of ball
 
-export(float) var force          = 0.6 # for trajectory prediction: force of ball
-export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
-export(float) var recoil_impulse = 0.3 # when firing to the ship
-export var isTestCannon          = false # if cannon is fired when aiming and left clicking, (to test trajectory, without firing the whole broadside), can be set as a gameplay elemetn in th info panel
-var    drag                      = 0.05 # for trajectory prediction: drag of ball
-var    rand_max_delay            = 1.0 # max delay in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
-var    reload_time_sec           = 10 # reload time in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
-var    cam_shake                 = 0.1 # the amount of camera shake added to camera when shooting
-const  rotateSpeed               = 0.002 # max rotation speed of cannons (up/down rotation is scaled down )
-const  maxRotateAngle            = 20 # in degree,                                           left right rotation
-var    maxUpAngle                = 10 # angle distance in degreee from original rotation that is allowed
-var    minUpAngle                = -5 # angle distance in degreee from original rotation that is allowed
-const  unprecision               = 4 # in units,                                             how max unprecise a connon is (random)
-var    markerMoveSpeed           = 0.05 # how fast markes of trajectory move
+export(float) var force              = 0.6 # for trajectory prediction: force of ball
+export(float) var fire_delay_sec     = 0.1 # fire delay after pressing fire button
+export(float) var recoil_impulse     = 0.3 # when firing to the ship
+export(bool)  var isTestCannon       = false # if cannon is fired when aiming and left clicking, (to test trajectory, without firing the whole broadside), can be set as a gameplay elemetn in th info panel
+export(float) var    drag            = 0.05 # for trajectory prediction: drag of ball
+export(float) var    rand_max_delay  = 1.0 # max delay in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
+export(float) var    reload_time_sec = 10 # reload time in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
+export(float) var    cam_shake       = 0.1 # the amount of camera shake added to camera when shooting
+export(float) var    rotateSpeed     = 0.002 # max rotation speed of cannons (up/down rotation is scaled down )
+export(float) var    maxRotateAngle  = 20 # in degree,                                           left right rotation
+export(float) var    maxUpAngle      = 10 # angle distance in degreee from original rotation that is allowed
+export(float) var    minUpAngle      = -5 # angle distance in degreee from original rotation that is allowed
+export(float) var    unprecision     = 4 # in units,                                             how max unprecise a connon is (random)
+export(float) var    markerMoveSpeed = 0.05 # how fast markes of trajectory move
 
 
 ### 

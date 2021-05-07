@@ -11,12 +11,12 @@ Item names need to have the same name as in 'economy.goods' dictionary
 # export(bool) var movable = true # set false in godot editor for pre placed items 
 
 ## item specifc settings (should be fetched from dictionary)
-var penetrationFactor = 0 # penetration factor used for bullets, 0-1, 1 = like air, 0 = inpenetrable
-var databaseName = "baseItemName" # the name in the economy gear list, set this in the inherited gear
-var maxHealth = 1
-var damageMultiplier = 10 # multiple base damage by this value, just so that the maxHealth values can be bigger integers
-var isCannon = false # used for AI
-var weight = 2.0 
+export var penetrationFactor = 0.6 # penetration factor used for bullets, 0-1, 1 = like air, 0 = inpenetrable
+export var databaseName = "putEconomyGearNameHere" # the name in the economy gear list, set this in the inherited gear
+export var maxHealth = 1
+export var damageMultiplier = 10 # multiple base damage by this value, just so that the maxHealth values can be bigger integers
+export var isCannon = false # used for AI
+export var weight = 2.0 
 
 ## crew and task stuff
 # var maxCrew = 0 # TODO :could also be defined in some dictionary

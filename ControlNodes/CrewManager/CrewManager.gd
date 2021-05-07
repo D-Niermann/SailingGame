@@ -44,11 +44,11 @@ var currentAssignments = {TG_RELAX:       {"idle": {}, "busy": []}, # refs to hu
 var items = {} # {itemID: {"itemRef": ref, "jobs": {jobID1 : {manID : ID, isReady: false}, jobID2 : {}, ...}}} # to quicly find man with manID, check the item.jobID description - it has the TG and prio in it
 
 var itemAssignmentsAndInventory = { # keeps track of all items based on these assignments and also whats stored in their inventory
-		IG_GUNPOWDER: {},      # ID: {position : Vec3, inventory : {"blocked" : {}, "free" : {}}}
-		IG_AMMO     : {},      # ID: {position : Vec3, inventory : {"blocked" : {}, "free" : {}}}
-		IG_FOOD     : {},      # ID: {position : Vec3, inventory : {"blocked" : {}, "free" : {}}}
-		IG_UTILITY  : {},      # ID: {position : Vec3, inventory : {"blocked" : {}, "free" : {}}}
-		IG_GEAR     : {},      # ID: {position : Vec3, inventory : {"blocked" : {}, "free" : {}}}
+		IG_GUNPOWDER: {},      # ID: {position : Vec3, inventory : {"goodName1" : {}, "goodName2" : {}}}
+		IG_AMMO     : {},      # ID: {position : Vec3, inventory : {"goodName1" : {}, "goodName2" : {}}}
+		IG_FOOD     : {},      # ID: {position : Vec3, inventory : {"goodName1" : {}, "goodName2" : {}}}
+		IG_UTILITY  : {},      # ID: {position : Vec3, inventory : {"goodName1" : {}, "goodName2" : {}}}
+		IG_GEAR     : {},      # ID: {position : Vec3, inventory : {"goodName1" : {}, "goodName2" : {}}}
 }
 
 const HUMAN: PackedScene = preload("res://ObjectNodes/Human/Human.tscn")
@@ -232,7 +232,7 @@ func checkManFetchTaskComplete(manRef):
 	Checks if man manRef is close to his target item, if so proceeds to next item. checks if items still are defined, if not clears man from task and so on
 	"""
 	var currTask = manRef.currentTask
-	if items.has(currTask.targetItemID) && (items.has(currTask.storageItemID) || manRef.itemID == currTask.targetItemID) : # TODO*: make if sentence better (check behaviour when barrel is removed)
+	if items.has(currTask.targetItemID) && (items.has(currTask.storageItemID) || manRef.itemID == currTask.targetItemID) :
 		## if man is near barrel
 		if manRef.itemID!=null && (manRef.translation-manRef.targetPos).length()<manRef.bodyHeight*2:
 			if manRef.itemID == currTask.storageItemID:
@@ -245,7 +245,7 @@ func checkManFetchTaskComplete(manRef):
 				fromBusyToIdle(manRef.id, currTask.taskGroup, currTask.priority)
 	elif not items.has(currTask.storageItemID):
 		## if the barrel is removed queue a new request from the targetitem
-		print("only barrel is missing") # TODO*: if structure needs to be better, now they walk to target item if barrel is missing but never clear their task
+		print("only barrel is missing") 
 		if manRef.itemID == currTask.storageItemID:
 			## if target was the barrel that is missing, free the man and make new request
 			requestGood(currTask.goodName, items[currTask.targetItemID].itemRef, currTask.storageIG, currTask.targetIG, currTask.priority)
@@ -437,7 +437,7 @@ func registerItem(itemRef):
 
 			## add item to items dict and itemASsignment dict
 			items[itemRef.id] = {"crewScore": 0, "itemRef" : itemRef, "databaseName" : itemRef.databaseName, "jobs": {}} 
-			itemAssignmentsAndInventory[IG][itemRef.id] = {"position" : itemRef.translation, "inventory": {}} # TODO: make sub lists with "free" and "blocked" or directly subtract goods if task is assigned?
+			itemAssignmentsAndInventory[IG][itemRef.id] = {"position" : itemRef.translation, "inventory": {}}
 			## add item names to inventory based on economy capacity dict
 			for key in Economy.getCapacity(itemRef.databaseName):
 				itemAssignmentsAndInventory[IG][itemRef.id].inventory[key] = 0
@@ -485,6 +485,16 @@ func unregisterItem(itemRef):
 		items.erase(itemRef.id)
 		itemAssignmentsAndInventory[Economy.getIG(itemRef.databaseName)].erase(itemRef.id)
 		print(itemAssignmentsAndInventory)
+
+func consumeGood(itemGroup : String, itemID, goodName : String) -> bool:
+	"""
+	Reduces goods in ItemAssignmentAndInventory dictionary
+	returns true if good was consumed and false if not (inventory was empty)
+	"""
+	if itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName]>0:
+		itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName] -= 1
+		return true
+	return false
 
 
 func getCrewScore(itemID) -> float:

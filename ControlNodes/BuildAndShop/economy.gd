@@ -10,7 +10,7 @@ var malls: Dictionary = {
 		"capacity": Vector2(0, 100),
 		"consumption": 0,
 		"grows": {"banana": 2.0},
-		"goods": {"banana": 10, "apple": INF, "CannonLarge" : 10, "WallLong" : 100, "LightSmall":5, "GunpowderBarrel" : 20},
+		"goods": {"banana": 10, "apple": INF, "Large Cannon" : 10, "WallLong" : 100, "LightSmall":5, "GunpowderBarrel" : 20},
 		"white": ["food", "gear"],
 		"black": ["drug"],
 		"money": 1000,
@@ -32,7 +32,7 @@ var malls: Dictionary = {
 		"capacity": Vector2(0, 100),
 		"consumption": 0,
 		"grows": {"apple": 1.0},
-		"goods": {"banana": 10, "apple": INF, "CannonLarge" : 10, "WallLong" : 100, "LightSmall":5, "GunpowderBarrel" : 20},
+		"goods": {"banana": 10, "apple": INF, "Large Cannon" : 10, "WallLong" : 100, "LightSmall":5, "GunpowderBarrel" : 20},
 		"white": ["food"],
 		"black": [],
 		"money": 1000,
@@ -64,10 +64,10 @@ var goods: Dictionary = { # TODO: RENAME INTO GEAR or ITEMS, this list is not ab
 	
 	"apple"      : {"type": "food", "size": Vector3(2,1, 1), "penetrationFactor": 0.9, "IG": IG_FOOD, "jobs": {}, "capacity" : {}, "maxHealth": 1, "isCannon" : false, "price": 10, "weight": 1.0, "res": "res://ControlNodes/BuildAndShop/exampleItem.tscn", "icon": "res://icon.png"},
 	
-	"CannonLarge": {"type": "gear", "size": Vector3(3,1, 2), "penetrationFactor": 0.3, "IG" : IG_GEAR,  
+	"Large Cannon": {"type": "gear", "size": Vector3(3,1, 2), "penetrationFactor": 0.3, "IG" : IG_GEAR,  
 					"jobs": {"Gunner1": {"posOffset":Vector3(0,0,0.1), "TG": TG_WEAPONS, "priority" : 0}, 
 							"Gunner2": {"posOffset":Vector3(0,0,-0.1), "TG": TG_WEAPONS, "priority" : 1}},
-					"capacity" : {"Gunpowder": 10, "Cannonballs" : 1}, 
+					"capacity" : {"Gunpowder": 10, "Cannonballs" : 5}, 
 					"maxHealth": 60, "isCannon" : true, "price": 10, "weight": 10.0, "res": "res://ObjectNodes/Items/Cannon/CannonItem.tscn", "icon": "res://ObjectNodes/Items/Cannon/cannon.png"},
 	
 	"GunpowderBarrel": {"type": "gear", "size": Vector3(1,1, 1), "penetrationFactor": 0.3, "IG" : IG_GUNPOWDER,  
@@ -85,7 +85,7 @@ var goods: Dictionary = { # TODO: RENAME INTO GEAR or ITEMS, this list is not ab
 }
 # var types: Dictionary = { ## this could be auto generated?
 # 	"food": ["banana", "apple"],
-# 	"gear": ["CannonLarge", "WallLong", "LightSmall"]
+# 	"gear": ["Large Cannon", "WallLong", "LightSmall"]
 # }
 var cases: Dictionary = {
 	"storm": {

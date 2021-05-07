@@ -149,7 +149,7 @@ func _physics_process(delta):
 					hologram = hit.collider
 					hologram.onRemove()
 					var mall: Dictionary = Economy.malls[open]
-					var itemName = Utility.resName(hologram.name)
+					var itemName = hologram.databaseName
 					var itemPrice = Economy.getPrice(itemName, open)
 					if itemPrice <= mall["money"] && !mall["black"].has(itemName) && mall["white"].has(Economy.goods[itemName]["type"]):
 						seller.text = str(itemPrice) + CURRENCY
@@ -197,8 +197,8 @@ func hologramFromResource(path: String):
 	parent = null
 	coords = null
 	angle = 0.0
-	var itemName: String = Utility.resName(hologram.name)
-	size = Economy.getSize(itemName)
+	# var itemName: String = Utility.resName(hologram.databaseName)
+	size = Economy.getSize(hologram.databaseName)
 	if size is Vector2:
 		size = Vector3(size.x, 1.0, size.y)
 	hologram.global_transform.basis = target.global_transform.basis
@@ -269,7 +269,7 @@ func placeOrDestroyHologram():
 
 # Sets size and rotated size for the selected item.
 func setSize():
-	var itemName: String = Utility.resName(hologram.name)
+	var itemName: String = hologram.databaseName
 	size = Economy.getSize(itemName)
 	if size is Vector2:
 		size = Vector3(size.x, 1.0, size.y)
@@ -500,7 +500,7 @@ func purchase(node: Node):
 func sell():
 	if hologram != null:
 		if resource == null:
-			var itemName: String = Utility.resName(hologram.name)
+			var itemName: String = hologram.databaseName
 			var mall: Dictionary = Economy.malls[open]
 			var itemPrice = Economy.getPrice(itemName, open)
 			if itemPrice <= mall["money"] && !mall["black"].has(itemName) && mall["white"].has(Economy.goods[itemName]["type"]):

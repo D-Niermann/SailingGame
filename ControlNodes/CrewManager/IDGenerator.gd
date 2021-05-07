@@ -1,6 +1,6 @@
 extends Node
 
-var ID = 1000
+var ID : int = 1000
 
 func _ready():
 	pass

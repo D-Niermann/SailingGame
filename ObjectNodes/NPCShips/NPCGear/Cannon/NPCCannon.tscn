@@ -121,6 +121,7 @@ extents = Vector3( 0.179145, 0.128, 0.135657 )
 collision_layer = 16385
 collision_mask = 16385
 script = ExtResource( 1 )
+databaseName = "Large Cannon"
 BallScene = ExtResource( 2 )
 force = 0.5
 
