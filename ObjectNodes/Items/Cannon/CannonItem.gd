@@ -98,7 +98,7 @@ func _process(delta):
 	forward = transform.basis.x.normalized()
 
 	if playerAimCannons and isActive and GlobalObjectReferencer.crewManager.items[id].crewScore>0:
-		if GlobalObjectReferencer.crewManager.getInventoryCount(id, "Gunpowder")>0: # if enough in inventory
+		if GlobalObjectReferencer.crewManager.getInventoryCount(id, "Gunpowder")>0 and GlobalObjectReferencer.crewManager.getInventoryCount(id, "Cannonballs")>0: # if enough in inventory
 			aimTo(GlobalObjectReferencer.ocean.waterMousePos)
 	
 	# if infoPanel!=null:
@@ -225,7 +225,7 @@ func clearTrajectory():
 
 func fireBall():
 	if GlobalObjectReferencer.crewManager.items[id].crewScore>0 and reloaded and isActive and canShoot:
-		if GlobalObjectReferencer.crewManager.getInventoryCount(id, "Gunpowder")>0: # if inventory is noit empty
+		if GlobalObjectReferencer.crewManager.getInventoryCount(id, "Gunpowder")>0 and GlobalObjectReferencer.crewManager.getInventoryCount(id, "Cannonballs")>0: # if inventory is noit empty
 			reloaded = false
 			# yield(get_tree().create_timer(fire_delay_sec),"timeout")
 			yield(get_tree().create_timer(fire_delay_sec+rand_range(0,rand_max_delay)),"timeout")
@@ -242,6 +242,7 @@ func fireBall():
 			reloadTimer.set_wait_time(reload_time_sec/GlobalObjectReferencer.crewManager.items[id].crewScore) 
 			reloadTimer.start()
 			GlobalObjectReferencer.crewManager.consumeGood(Economy.IG_GEAR,id,"Gunpowder", true)
+			GlobalObjectReferencer.crewManager.consumeGood(Economy.IG_GEAR,id,"Cannonballs", true)
 
 
 ## TODO: change these funtions into 1 or 2 functions

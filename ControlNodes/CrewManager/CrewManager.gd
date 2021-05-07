@@ -444,8 +444,10 @@ func registerItem(itemRef):
 
 			## fill inventory for debuggin
 			# TODO: make inventory empty again
-			if itemRef.databaseName=="GunpowderBarrel":
+			if itemRef.databaseName=="Gunpowder Barrel":
 				itemAssignmentsAndInventory[IG][itemRef.id].inventory["Gunpowder"] = Economy.getCapacity(itemRef.databaseName)["Gunpowder"]
+			if itemRef.databaseName=="Ammo Barrel":
+				itemAssignmentsAndInventory[IG][itemRef.id].inventory["Cannonballs"] = Economy.getCapacity(itemRef.databaseName)["Cannonballs"]
 			
 			# request goods
 			if IG == IG_GEAR:

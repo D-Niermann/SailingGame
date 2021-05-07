@@ -15,7 +15,6 @@ export var penetrationFactor = 0.6 # penetration factor used for bullets, 0-1, 1
 export var databaseName = "putEconomyGearNameHere" # the name in the economy gear list, set this in the inherited gear
 export var maxHealth = 1
 export var damageMultiplier = 10 # multiple base damage by this value, just so that the maxHealth values can be bigger integers
-export var isCannon = false # used for AI
 export var weight = 2.0 
 
 ## crew and task stuff
@@ -116,7 +115,6 @@ func fetchDictParams(name : String):
 	"""
 	# TODO: if values in dictionary are constant, dont save them in this item, just use the dictionary entries (saves Ram)
 	weight = Economy.goods[name].weight
-	isCannon = Economy.goods[name].isCannon
 	penetrationFactor = Economy.goods[name].penetrationFactor
 	maxHealth = Economy.goods[name].maxHealth
 	# the only important one

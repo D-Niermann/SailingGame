@@ -16,7 +16,7 @@ extents = Vector3( 0.145895, 0.174897, 0.189048 )
 
 [node name="GunpowderBarrel" type="KinematicBody"]
 script = ExtResource( 2 )
-databaseName = "GunpowderBarrel"
+databaseName = "Gunpowder Barrel"
 InfoPanel = ExtResource( 3 )
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
