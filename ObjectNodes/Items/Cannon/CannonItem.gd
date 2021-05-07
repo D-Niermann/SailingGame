@@ -166,15 +166,15 @@ func predictTrajectory():
 		point = fakeBullet.transform.origin
 		trajectoryPoints[i] = point
 		if GlobalObjectReferencer.ocean!=null:
-			waterHeight = GlobalObjectReferencer.ocean.getWaterHeight(to_global(point))
+			waterHeight = GlobalObjectReferencer.ocean.getWaterHeight(to_global(point))-0.4 # small negative offset because for some reason markers appear to be floating above water 
 		if to_global(point).y>waterHeight:
 		
 			marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*markerMoveSpeed
 			if i>1:
 				if reloaded:
-					marker[i].material_override.albedo_color = Color(1,1,1,0.5)
+					marker[i].modulate = Color(1,1,1,0.5)
 				else:
-					marker[i].material_override.albedo_color = Color(0.6,0.2,0.2,0.5)
+					marker[i].modulate = Color(0.6,0.2,0.2,0.5)
 				marker[i].visible = true
 			fakeBullet.transform.origin += Vector3(1,0,0)*force*5.2/(1+i*0.05)
 			fakeBullet.global_transform.origin += Vector3(0,-1,0)*0.015*i 
@@ -198,13 +198,17 @@ func predictTrajectory():
 		for i in range(last_i, lineSize):
 			trajectoryPoints[i] = preciseWaterPoint
 			marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*markerMoveSpeed
+			if reloaded:
+				marker[i].modulate = Color(1,1,1,0.5)
+			else:
+				marker[i].modulate = Color(0.6,0.2,0.2,0.5)
 			marker[i].visible = true
 
 
 	if reloaded:
-		waterHitMarker.material_override.albedo_color = Color(1,1,1,0.5)
+		waterHitMarker.modulate = Color(1,1,1,0.5)
 	else:
-		waterHitMarker.material_override.albedo_color = Color(0.6,0.2,0.2,0.5)
+		waterHitMarker.modulate = Color(0.6,0.2,0.2,0.5)
 	waterHitMarker.visible = true
 	waterHitMarker.translation += (trajectoryPoints[lineSize-1] - waterHitMarker.translation)*markerMoveSpeed
 
