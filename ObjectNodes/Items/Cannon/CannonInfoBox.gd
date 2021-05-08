@@ -29,7 +29,7 @@ func link(itemRef):
 	
 func _process(delta):
 	healthLabel.text = str(round(myItem.currentHealth))
-	crewRatingLabel.text = str(GlobalObjectReferencer.crewManager.items[myItem.id].crewScore)
+	crewRatingLabel.text = str(round(3*GlobalObjectReferencer.crewManager.items[myItem.id].crewScore))+"/3"
 	$Panel/GunpowderCount.text = str(GlobalObjectReferencer.crewManager.getInventoryCount(myItem.id, "Gunpowder"))
 	$Panel/BallsCount.text = str(GlobalObjectReferencer.crewManager.getInventoryCount(myItem.id, "Cannonballs"))
 	if is_instance_valid(positionRef):

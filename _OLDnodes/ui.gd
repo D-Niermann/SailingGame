@@ -24,5 +24,11 @@ func _on_CheckButton_toggled(state:bool):
 	# 	NPCships[i].get_node("AIController").isActive = state
 	pass
 
-func _on_CrewSlider1_value_changed(val):
-	GlobalObjectReferencer.crewManager.targetCrewCount[GlobalObjectReferencer.crewManager.TG_WEAPONS] = val
+func _on_WeaponSlider_value_changed(val):
+	GlobalObjectReferencer.crewManager.setCrewCount(Economy.TG_WEAPONS, val)
+
+func _on_NavSlider_value_changed(val):
+	GlobalObjectReferencer.crewManager.setCrewCount(Economy.TG_NAVIGATION, val)
+
+func _on_UtilsSlider_value_changed(val):
+	GlobalObjectReferencer.crewManager.setCrewCount(Economy.TG_UTILITY, val)

@@ -118,13 +118,13 @@ color_ramp = SubResource( 12 )
 hue_variation = 0.21
 hue_variation_random = 0.33
 
-[sub_resource type="BoxShape" id=20]
+[sub_resource type="BoxShape" id=18]
 extents = Vector3( 0.179145, 0.128, 0.135657 )
 
-[sub_resource type="CubeMesh" id=21]
+[sub_resource type="CubeMesh" id=19]
 size = Vector3( 1, 1, 1 )
 
-[sub_resource type="SpatialMaterial" id=22]
+[sub_resource type="SpatialMaterial" id=20]
 flags_transparent = true
 flags_do_not_receive_shadows = true
 albedo_color = Color( 0.188235, 0.976471, 0.164706, 0.0980392 )
@@ -195,126 +195,108 @@ Number of Sprites automatically sets number of Line sampling points
 [node name="Marker" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -0.00273146, 0, -0.00533216 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker2" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker3" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker4" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker5" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker6" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker7" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker8" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker9" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker10" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker11" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker12" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker13" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker14" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker15" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker16" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker17" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker18" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
@@ -327,77 +309,66 @@ texture = ExtResource( 9 )
 [node name="Marker20" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker21" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker22" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker23" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker24" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker25" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker26" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker27" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker28" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker29" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
 [node name="Marker30" type="Sprite3D" parent="TrajectoryMarkerGroup"]
 transform = Transform( 0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0 )
 axis = 1
-shaded = true
 alpha_cut = 2
 texture = ExtResource( 9 )
 
@@ -411,7 +382,7 @@ texture = ExtResource( 10 )
 [node name="FakeBullet" type="Spatial" parent="."]
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-shape = SubResource( 20 )
+shape = SubResource( 18 )
 
 [node name="Audio1" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 7 )
@@ -461,7 +432,7 @@ doppler_tracking = 2
 [node name="GridShowMesh" type="MeshInstance" parent="."]
 visible = false
 cast_shadow = 0
-mesh = SubResource( 21 )
-material/0 = SubResource( 22 )
+mesh = SubResource( 19 )
+material/0 = SubResource( 20 )
 
 [node name="PlaceAudio" parent="." instance=ExtResource( 3 )]

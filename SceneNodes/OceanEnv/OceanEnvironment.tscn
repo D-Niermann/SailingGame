@@ -58,8 +58,14 @@ collision_mask = 1024
 [node name="CollisionShape" type="CollisionShape" parent="waterplane/MouseCollider"]
 shape = SubResource( 2 )
 
+[node name="MeshInstance" type="MeshInstance" parent="waterplane"]
+transform = Transform( -4.79179, 0.646761, 2.27327, -4.61234, -0.744494, -1.16782, 0.887574, -0.377119, 6.20414, -0.735821, -1.91036, -3.10803 )
+visible = false
+mesh = SubResource( 3 )
+material/0 = ExtResource( 8 )
+
 [node name="SunLight" type="DirectionalLight" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.508726, 0.860929, 0, -0.860929, 0.508726, 0, 8.64, 0 )
+transform = Transform( 1, 0, 0, 0, -0.566219, 0.824255, 0, -0.824255, -0.566219, 0, 8.64, 0 )
 light_energy = 1.5
 light_specular = 1.0
 shadow_enabled = true
@@ -70,9 +76,3 @@ directional_shadow_max_distance = 65.0
 script = ExtResource( 1 )
 
 [node name="EnvAudioSource" parent="." instance=ExtResource( 4 )]
-
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( -4.79179, 0.646761, 2.27327, -4.61234, -0.744494, -1.16782, 0.887574, -0.377119, 6.20414, 4.064, -1.5807, 6.357 )
-visible = false
-mesh = SubResource( 3 )
-material/0 = ExtResource( 8 )

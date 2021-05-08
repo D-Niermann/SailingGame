@@ -220,10 +220,10 @@ func fireBall():
 		reloaded = false
 		# yield(get_tree().create_timer(),"timeout")
 		yield(get_tree().create_timer(fire_delay_sec+rand_range(0,rand_max_delay)),"timeout")
-		GlobalObjectReferencer.camera.shake_val += cam_shake/clamp(GlobalObjectReferencer.camera.global_transform.origin.distance_to(global_transform.origin)*0.02,1,99999)
 		doParticles()
 		myShip.applyCannonImpulse(translation, transform.basis.z.normalized()*recoil_impulse)
 		playAudio()
+		GlobalObjectReferencer.camera.shake_val += cam_shake/clamp(GlobalObjectReferencer.camera.global_transform.origin.distance_to(global_transform.origin)*0.02,1,99999)
 		var ball = BallScene.instance()
 		get_tree().get_root().add_child(ball)
 		ball.set_name("Ball")
