@@ -14,7 +14,6 @@ var list = null
 var filter = null
 var seller = null
 var selected = null
-var connected = null
 var indicator = null
 var viewport: Viewport
 
@@ -42,8 +41,9 @@ var scrollDown: bool = false
 func _ready():
 	GlobalObjectReferencer.shopping = self
 	seller = get_node("Shop/Sell")
-	connected = "bananaTown"
 	indicator = get_node("Indicator")
+	indicator.visible = false
+	indicator.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	tabs = get_node("Shop/Tabs/Container")
 	list = get_node("Shop/List/Container")
 	viewport = get_tree().get_root().get_node("GameWorld/ViewportContainer/Viewport")
@@ -434,6 +434,8 @@ func openShop(shop: String):
 	get_node("Shop").visible = true
 	get_tree().get_root().get_node("GameWorld/ViewportContainer/Viewport/GameCamera").selectDeck(selectedDeckNumber)
 	open = shop
+	indicator.visible = true
+	indicator.mouse_filter = Control.MOUSE_FILTER_STOP
 
 
 # Closes any open shop.
@@ -512,7 +514,6 @@ func sell():
 
 
 func _on_indicator():
-	if open==null: #if shop is closed
-		openShop(connected) # connects=name of shop, defined in _ready() for now.
-	else:
-		closeShop()
+	closeShop()
+	indicator.visible = false
+	indicator.mouse_filter = Control.MOUSE_FILTER_IGNORE
