@@ -10,7 +10,7 @@ var malls: Dictionary = {
 		"capacity": Vector2(0, 100),
 		"consumption": 0,
 		"grows": {"banana": 2.0},
-		"goods": {"banana": 10, "apple": INF, "Large Cannon" : 10, "WallLong" : 100, "LightSmall":5, "Gunpowder Barrel" : 20, "Ammo Barrel": 10},
+		"goods": {"banana": 10, "apple": INF, "Large Cannon" : 10, "WallLong" : 100, "LightSmall":5, "Gunpowder Barrel" : 20, "Ammo Barrel": 10, "Rigging":30},
 		"white": ["food", "gear"],
 		"black": ["drug"],
 		"money": 1000,
@@ -81,7 +81,8 @@ var goods: Dictionary = { # TODO: RENAME INTO GEAR or ITEMS, this list is not ab
 	"Large Cannon": {"type": "gear", "size": Vector3(3,1, 2), "penetrationFactor": 0.3, "IG" : IG_GEAR,  
 					"jobs": {"Gunner1": {"posOffset":Vector3(-0.2,0,0), "TG": TG_WEAPONS, "priority" : 0}, 
 							"Gunner2": {"posOffset":Vector3(0,0,0.2), "TG": TG_WEAPONS, "priority" : 1},
-							"Gunner3": {"posOffset":Vector3(0,0,-0.2), "TG": TG_WEAPONS, "priority" : 2}},
+							"Gunner3": {"posOffset":Vector3(0,0,-0.2), "TG": TG_WEAPONS, "priority" : 2},
+						},
 					"capacity" : {"Gunpowder": 10, "Cannonballs" : 5}, 
 					"maxHealth": 60, "price": 10, "weight": 10.0, "res": "res://ObjectNodes/Items/Cannon/CannonItem.tscn", "icon": "res://ObjectNodes/Items/Cannon/cannon.png"},
 	
@@ -94,6 +95,14 @@ var goods: Dictionary = { # TODO: RENAME INTO GEAR or ITEMS, this list is not ab
 						"jobs": {},
 						"capacity" : {"Cannonballs": 10}, 
 						"maxHealth": 30, "price": 5, "weight": 1.0, "res": "res://ObjectNodes/Items/Barrels/AmmoBarrel/AmmoBarrel.tscn", "icon": "res://ObjectNodes/Items/Barrels/AmmoBarrel/AmmoBarrel.png"},
+
+	"Rigging": {"type": "gear", "size": Vector3(2,1, 1), "penetrationFactor": 0.3, "IG" : IG_GEAR,  
+						"jobs": {
+							"Navigator1" : {"posOffset" : Vector3(0.1,0,-0.1), "TG":TG_NAVIGATION, "priority" : 0},
+							"Navigator2" : {"posOffset" : Vector3(-0.1,0,-0.1), "TG":TG_NAVIGATION, "priority" : 1},
+						},
+						"capacity" : {}, 
+						"maxHealth": 30, "price": 5, "weight": 1.0, "res": "res://ObjectNodes/Items/RiggingItem/Rigging.tscn", "icon": "res://ObjectNodes/Items/RiggingItem/RiggingSprite.png"},
 
 	"WallLong"   : {"type": "gear", "size": Vector3(1,2, 3), "penetrationFactor": 0.6, "IG" : IG_GEAR, "jobs": {},  "capacity" : {}, "maxHealth": 50, "price": 1, "weight": 1.0, "res": "res://ObjectNodes/Items/Walls/WallLong.tscn", "icon": "res://ObjectNodes/Items/Walls/Sprites/Wall.png"},
 

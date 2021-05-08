@@ -229,6 +229,7 @@ func updateMen():
 							# manRef.targetItem.assignManToItem(manID, {"taskGroup": TG, "priority": prio}) # give item and infoDict so that later the item can also tell CrewManager where to find id
 							## set the manRef of the item to "is ready"
 							items[manRef.itemID].jobs[manRef.jobID].isReady = true
+							## set the crew rating to this item
 							items[manRef.itemID].crewScore = getCrewScore(manRef.itemID)
 				
 				## check busy man with fetch task (put this into one function like checkManFetchTaskComplete(manRef))
