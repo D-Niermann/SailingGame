@@ -104,6 +104,15 @@ func isFiltered(partition: Vector3, filter: Array):
 	return false
 
 
+# Returns overlapping elements for the given arrays.
+func findOverlapping(one: Array, two: Array):
+	var overlaps: Array = []
+	for element in one:
+		if two.has(element):
+			overlaps.append(element)
+	return overlaps
+
+
 # Returns adjacent parts for the given part.
 func findAdjacent(partition: Vector3, canCross: bool, extended: bool):
 	var keys = []
