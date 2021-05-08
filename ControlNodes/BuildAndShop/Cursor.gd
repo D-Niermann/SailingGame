@@ -67,6 +67,10 @@ func _physics_process(delta):
 	# doing some other stuff, depending on if hit is a shop or item or whatnot
 	if hit.empty():
 		Input.set_default_cursor_shape(0)
+		if leftClick:
+			if is_instance_valid(selected):
+				selected.removeInfo()
+				selected = null
 	elif Economy.malls.has(hit.collider.name) && GlobalObjectReferencer.playerShip.linear_velocity.length_squared() < GlobalObjectReferencer.shopping.speedLimit && GlobalObjectReferencer.playerShip.global_transform.origin.distance_squared_to(Economy.malls[hit.collider.name]["loci"]) < GlobalObjectReferencer.shopping.distanceLimit: # opens shop, if hit's a shop
 		Input.set_default_cursor_shape(2)
 		if leftClick:
