@@ -300,7 +300,7 @@ func setSize():
 func tiles4(targetCoordinates: Vector3, targetAngle: float, targetDimensions: Vector3):
 	var occupation: Array = []
 	# rotating dimensions if needed
-	if targetAngle == PI * 0.5 || targetAngle == PI * 1.5:
+	if (targetAngle > 1.57 && targetAngle < 1.58) || (targetAngle > 4.71 && targetAngle < 4.72):
 		targetDimensions = Vector3(targetDimensions.z, targetDimensions.y, targetDimensions.x)
 	# finding the coordinates for the top leftmost partition
 	targetCoordinates -= (targetDimensions * 0.5).floor() * TILEWIDTH
