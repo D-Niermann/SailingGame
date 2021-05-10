@@ -163,8 +163,8 @@ func _physics_process(delta):
 					setSize()
 					rot = angle
 					var occupation: Array = tiles4(coords, rot, Economy.getSize(itemName))
-					#print(occupation)
-					hologram.onRemove(occupation)
+					print("occupation: "+str(occupation))
+					hologram.onRemove()
 					if is_instance_valid(hologram.get_parent()):
 						hologram.get_parent().remove_child(hologram)
 						viewport.add_child(hologram)
@@ -237,8 +237,8 @@ func placeOrDestroyHologram():
 			parent = null
 			var itemName: String = selected.get_node("Name").text
 			var occupation: Array = tiles4(coords, rot, Economy.getSize(itemName))
-			#print(occupation)
-			duplicate.onPlacement(occupation)
+			print("occupation: "+str(occupation))
+			duplicate.onPlacement()
 			purchase(duplicate)
 		else:
 			resource = null
@@ -262,8 +262,8 @@ func placeOrDestroyHologram():
 		sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		var itemName: String = Utility.resName(hologram.name)
 		var occupation: Array = tiles4(coords, rot, Economy.getSize(itemName))
-		#print(occupation)
-		hologram.onPlacement(occupation)
+		print("occupation: "+str(occupation))
+		hologram.onPlacement()
 	elif hologram != null:
 		hologram.queue_free()
 		hologram = null
