@@ -147,9 +147,9 @@ func _physics_process(delta):
 				if leftClick:
 					resource = null
 					hologram = hit.collider
-					hologram.onRemove()
 					var mall: Dictionary = Economy.malls[open]
-					var itemName = hologram.databaseName
+					# var itemName = hologram.databaseName # What is databaseName? Also this is not the only place which I use resName on hologram
+					var itemName: String = Utility.resName(hologram.name)
 					var itemPrice = Economy.getPrice(itemName, open)
 					if itemPrice <= mall["money"] && !mall["black"].has(itemName) && mall["white"].has(Economy.goods[itemName]["type"]):
 						seller.text = str(itemPrice) + CURRENCY
@@ -162,6 +162,9 @@ func _physics_process(delta):
 					angle = -Utility.signedAngle(parent.global_transform.basis.x.normalized(), hologram.global_transform.basis.x.normalized(), parent.global_transform.basis.y.normalized())
 					setSize()
 					rot = angle
+					var occupation: Array = tiles4(coords, rot, Economy.getSize(itemName))
+					print(occupation)
+					hologram.onRemove()
 					if is_instance_valid(hologram.get_parent()):
 						hologram.get_parent().remove_child(hologram)
 						viewport.add_child(hologram)
@@ -232,6 +235,9 @@ func placeOrDestroyHologram():
 			duplicate.global_transform.origin = parent.to_global(coords)
 			duplicate.global_transform.basis = parent.global_transform.basis.rotated(parent.global_transform.basis.y.normalized(), angle)
 			parent = null
+			var itemName: String = selected.get_node("Name").text
+			var occupation: Array = tiles4(coords, rot, Economy.getSize(itemName))
+			print(occupation)
 			duplicate.onPlacement()
 			purchase(duplicate)
 		else:
@@ -254,6 +260,9 @@ func placeOrDestroyHologram():
 		hologram.global_transform.basis = parent.global_transform.basis.rotated(parent.global_transform.basis.y.normalized(), angle)
 		var sprite = hologram.get_node("Sprite3D")
 		sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		var itemName: String = Utility.resName(hologram.name)
+		var occupation: Array = tiles4(coords, rot, Economy.getSize(itemName))
+		print(occupation)
 		hologram.onPlacement()
 	elif hologram != null:
 		hologram.queue_free()
@@ -283,6 +292,25 @@ func setSize():
 	if gridMesh != null:
 		gridMesh.visible = true
 		gridMesh.scale = Vector3(size.x, size.y, size.z) * TILEWIDTH - Vector3.ONE * 0.005
+
+
+# Returns what tiles the given orientation would occupy.
+func tiles4(targetCoordinates: Vector3, targetAngle: float, targetDimensions: Vector3):
+	var occupation: Array = []
+	# rotating dimensions if needed
+	if targetAngle == PI * 0.5 || targetAngle == PI * 1.5:
+		targetDimensions = Vector3(targetDimensions.z, targetDimensions.y, targetDimensions.x)
+	# finding the coordinates for the top leftmost partition
+	targetCoordinates -= (targetDimensions * 0.5).floor() * TILEWIDTH
+	var offset = Vector3(1 - fmod(targetDimensions.x, 2), 0, 1 - fmod(targetDimensions.z, 2)) * TILEWIDTH * 0.5
+	targetCoordinates += offset
+	# finding the top leftmost partition
+	var partition: Vector3 = (targetCoordinates / TILEWIDTH).floor()
+	# offsetting and appending as many tiles as dimensions
+	for x in range(targetDimensions.x):
+		for z in range(targetDimensions.z):
+			occupation.append(partition + Vector3(x, 0, z))
+	return occupation
 
 
 # Updates the shopping line for the open shopping screen.
