@@ -135,6 +135,7 @@ func _physics_process(delta):
 			if leftClick:
 				parent = target
 				coords = parent.to_local(hologram.global_transform.origin)
+				coords = coords.snapped(Vector3(0.1, 0.1, 0.1))
 				angle = rot
 				placeOrDestroyHologram()
 		else:
@@ -159,6 +160,7 @@ func _physics_process(delta):
 					parent = temp
 					print("pickedFromParent: "+str(parent.name))
 					coords = parent.to_local(hologram.global_transform.origin)
+					coords = coords.snapped(Vector3(0.1, 0.1, 0.1))
 					angle = -Utility.signedAngle(parent.global_transform.basis.x.normalized(), hologram.global_transform.basis.x.normalized(), parent.global_transform.basis.y.normalized())
 					setSize()
 					rot = angle
