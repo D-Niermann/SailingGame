@@ -82,7 +82,6 @@ subdivide_width = 20
 subdivide_depth = 5
 
 [node name="BigFlag" type="Spatial"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
 script = ExtResource( 3 )
 
 [node name="Flag" type="MeshInstance" parent="."]

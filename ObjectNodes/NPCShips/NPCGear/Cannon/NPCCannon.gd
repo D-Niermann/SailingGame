@@ -245,10 +245,10 @@ func rotateLeftRight(multiplicator=1, dir : String = ""):
 	var angle_dist = rad2deg(Utility.signedAngle(org_forward,(forward),up))
 	if dir == "left" and angle_dist>-maxRotateAngle:
 		rotate(up,rotateSpeed*multiplicator)
-		$CollisionShape.rotate(up,-rotateSpeed*multiplicator) # counter rotate the collider so it stays on grid
+		# $CollisionShape.rotate(up,-rotateSpeed*multiplicator) # counter rotate the collider so it stays on grid
 	elif dir == "right" and angle_dist<maxRotateAngle:
 		rotate(up,-rotateSpeed*multiplicator)
-		$CollisionShape.rotate(up,rotateSpeed*multiplicator) # counter rotate the collider so it stays on grid
+		# $CollisionShape.rotate(up,rotateSpeed*multiplicator) # counter rotate the collider so it stays on grid
 
 
 func rotateUpDown(multiplicator=1, dir : String = ""):

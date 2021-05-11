@@ -1,11 +1,10 @@
-extends KinematicBody
+extends Spatial
 
 """
 All NPC Items shall inherit from this script.
 Here also all children instances can be stored, so that other script can acces the correct stuff from here. 
 	EG dont use $Mesh1 in some script but define mesh var here and access this var.
 
-Item names need to have the same name as in 'economy.goods' dictionary
 """
 
 # export(bool) var movable = true # set false in godot editor for pre placed items 
@@ -26,12 +25,7 @@ export var weight = 2.0
 var myShip # obj ship that this is on
 var gridMesh # green/red mesh that displays the hitbox of items
 var pAudio # audio player thats emitting when item is placed
-var itemPlaceParticle # dynamically loaded particles 
 var currentHealth = maxHealth
-var particleRes = load("res://ObjectNodes/Items/ItemPlaceParticle.tscn") # universal placement particles
-var isPlayerControlable = false # if player can control this item (also maybe click on it)
-var isPlaced = false
-var requested = false
 
 func _ready():
 	## TODO: this gets also called when item is picked in shop
@@ -54,12 +48,6 @@ func _ready():
 
 func fetchMyShip():
 	myShip = get_parent().get_parent().get_parent()
-	if myShip != null:
-		if "isPlayer" in myShip:
-			if myShip.isPlayer:
-				isPlayerControlable = true
-		else:
-			myShip = null # reset this var to null because it is not a rigid body ship node
 
 
 # func onPlacement():

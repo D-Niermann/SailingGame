@@ -49,11 +49,15 @@ func _ready():
 					isTileOccupied[Vector2(x,y)] = false
 
 func _process(delta):
-	if GlobalObjectReferencer.shopping.open != null:
-		## shop is open: 
-		markerManager.visible = true
+	if is_instance_valid(GlobalObjectReferencer.shopping):
+		if GlobalObjectReferencer.shopping.open != null:
+			## shop is open: 
+			markerManager.visible = true
+		else:
+			markerManager.visible = false
 	else:
 		markerManager.visible = false
+
 
 func checkIfFree(array)-> bool:
 	"""
