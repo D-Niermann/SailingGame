@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/TopDeck2.png" type="Texture" id=1]
 [ext_resource path="res://ObjectNodes/Flags/BaseFlag/BaseFlag.tscn" type="PackedScene" id=2]
@@ -14,6 +14,10 @@
 [ext_resource path="res://ObjectNodes/ShipModels/shipTrailParticles.tscn" type="PackedScene" id=12]
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/Galleon, crowsnest, platform (2x2).png" type="Texture" id=13]
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/BowSprit.png" type="Texture" id=14]
+[ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/3DModels/TopDeckColl.tres" type="Shape" id=15]
+[ext_resource path="res://ObjectNodes/ShipModels/BuildMarkerManager.gd" type="Script" id=16]
+[ext_resource path="res://ObjectNodes/ShipModels/BuildingMarker.tscn" type="PackedScene" id=17]
+[ext_resource path="res://ObjectNodes/ShipModels/Deck.gd" type="Script" id=18]
 
 [sub_resource type="CylinderMesh" id=1]
 material = ExtResource( 4 )
@@ -21,26 +25,59 @@ top_radius = 0.2
 bottom_radius = 0.3
 height = 9.042
 
-[sub_resource type="BoxShape" id=2]
-extents = Vector3( 5.01352, 0.0385511, 1.50246 )
-
-[sub_resource type="SpatialMaterial" id=3]
+[sub_resource type="SpatialMaterial" id=2]
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.85
 albedo_texture = ExtResource( 1 )
 
-[sub_resource type="BoxShape" id=4]
-extents = Vector3( 0.846288, 0.533633, 0.643275 )
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 0.08, 0.1, 0.08 )
 
-[sub_resource type="BoxShape" id=5]
-extents = Vector3( 5.0327, 0.0424717, 1.61134 )
+[sub_resource type="BoxShape" id=6]
+extents = Vector3( 0.1, 0.05, 0.1 )
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="Shader" id=4]
+code = "shader_type spatial;
+
+render_mode cull_disabled, depth_draw_alpha_prepass;
+
+
+uniform sampler2D texture_albedo : hint_albedo;
+uniform float uv_offset_scale = 1.0;
+uniform bool isBuilding = false;
+
+void fragment(){
+	vec2 base_uv_offset = UV * uv_offset_scale;
+	vec4 albedo_tex = texture(texture_albedo,UV);
+	if (isBuilding==true){
+		albedo_tex.g *= 1.0;
+		albedo_tex.r = albedo_tex.g;
+		albedo_tex.b = albedo_tex.g;
+	}
+	ALBEDO = albedo_tex.rgb;
+	ALPHA = albedo_tex.a;
+}"
+
+[sub_resource type="ShaderMaterial" id=10]
+render_priority = -1
+shader = SubResource( 4 )
+shader_param/uv_offset_scale = 1.0
+shader_param/isBuilding = true
+shader_param/texture_albedo = ExtResource( 1 )
+
+[sub_resource type="ShaderMaterial" id=11]
+render_priority = -1
+shader = SubResource( 4 )
+shader_param/uv_offset_scale = 1.0
+shader_param/isBuilding = true
+shader_param/texture_albedo = ExtResource( 3 )
+
+[sub_resource type="SpatialMaterial" id=8]
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.75
 albedo_texture = ExtResource( 3 )
 
-[sub_resource type="StreamTexture" id=7]
+[sub_resource type="StreamTexture" id=9]
 flags = 23
 load_path = "res://.import/shipDeck.png-795b33a120e4e89b82f0c94bb8f9a6cc.s3tc.stex"
 
@@ -107,20 +144,17 @@ texture = ExtResource( 13 )
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.0687942, 0 )
 collision_layer = 524289
 collision_mask = 524289
+script = ExtResource( 18 )
 __meta__ = {
 "_editor_description_": "Using the sprite with a spatial material and alpha scissors, so that its not flagged as transparent!"
 }
-
-[node name="CollisionShape" type="CollisionShape" parent="Deck1"]
-transform = Transform( 0.999367, 0, 0.0355972, 0, 1, 0, -0.0355972, 0, 0.999367, -1.72906, -0.0210442, 0.0471487 )
-shape = SubResource( 2 )
-__meta__ = {
-"_editor_description_": ""
-}
+Marker = ExtResource( 17 )
+xRange = [ -7, 4 ]
+yRange = [ -2, 2 ]
 
 [node name="Deck" type="Sprite3D" parent="Deck1"]
 transform = Transform( 0.368805, 0, 0, 0, 0.461006, 0, 0, 0, 0.368805, -1.20748, 0, 0.131834 )
-material_override = SubResource( 3 )
+material_override = SubResource( 2 )
 axis = 1
 shaded = true
 alpha_cut = 2
@@ -163,21 +197,34 @@ omni_range = 1.0
 amp = 0.001
 
 [node name="Blocker3" type="KinematicBody" parent="Deck1"]
-transform = Transform( 1.59388, 0, 0.616625, 0, 1, 0, -0.616625, 0, 1.59388, 2.96222, 0.0744184, 1.82213 )
-collision_layer = 16384
-collision_mask = 16384
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.4, 0.074, 0 )
+collision_layer = 524289
+collision_mask = 524289
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="BlockerCollider" type="CollisionShape" parent="Deck1/Blocker3"]
-transform = Transform( 0.999367, 0, 0.0355972, 0, 1, 0, -0.0355972, 0, 0.999367, 0, 0, 0 )
-shape = SubResource( 4 )
+shape = SubResource( 3 )
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sprite3D" type="Sprite3D" parent="Deck1"]
+[node name="Blocker4" type="KinematicBody" parent="Deck1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4, 0.1, 0.1 )
+collision_layer = 524288
+collision_mask = 524288
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="BlockerCollider" type="CollisionShape" parent="Deck1/Blocker4"]
+shape = SubResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Bowsprit" type="Sprite3D" parent="Deck1"]
 transform = Transform( 0.477411, -0.0468779, 0, 0.0468779, 0.477411, 0, 0, 0, 0.479707, 5.07473, 0.176844, 0.0725531 )
 axis = 1
 shaded = true
@@ -187,26 +234,75 @@ texture = ExtResource( 14 )
 [node name="Flag3DScene" parent="Deck1" instance=ExtResource( 6 )]
 transform = Transform( 0.601536, 0, 0.798846, 0, 1, 0, -0.798845, 0, 0.601536, -6.0766, 0.574546, 0.150922 )
 
+[node name="DeckCollider" type="CollisionShape" parent="Deck1"]
+transform = Transform( 1.97386, 0, 0, 0, 1, 0, 0, 0, 1.83236, -1.34612, -0.0505385, 0.120314 )
+shape = ExtResource( 15 )
+
+[node name="CollChecker" type="KinematicBody" parent="Deck1"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.148623, 0 )
+collision_layer = 540672
+collision_mask = 540672
+
+[node name="CollisionShape" type="CollisionShape" parent="Deck1/CollChecker"]
+shape = SubResource( 6 )
+
+[node name="BuildMarkerManager" type="Spatial" parent="Deck1"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0 )
+script = ExtResource( 16 )
+xRange = [ -7, 4 ]
+yRange = [ -2, 2 ]
+
+[node name="DeckWithShader" type="Sprite3D" parent="Deck1/BuildMarkerManager"]
+transform = Transform( 0.368805, 0, 0, 0, 0.461006, 0, 0, 0, 0.368805, -1.20748, -0.0791079, 0.131834 )
+material_override = SubResource( 10 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 1 )
+
 [node name="Deck2" type="KinematicBody" parent="." groups=[
 "PlayerDeck",
 ]]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.5, 0 )
 collision_layer = 262145
 collision_mask = 262145
+script = ExtResource( 18 )
 __meta__ = {
 "_editor_description_": "Using the sprite with a spatial material and alpha scissors, so that its not flagged as transparent!"
 }
+Marker = ExtResource( 17 )
+xRange = [ -7, 4 ]
+yRange = [ -2, 2 ]
 
-[node name="CollisionShape" type="CollisionShape" parent="Deck2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.523, 0.0194222, 0.209 )
-shape = SubResource( 5 )
-__meta__ = {
-"_editor_description_": ""
-}
+[node name="DeckCollider" type="CollisionShape" parent="Deck2"]
+transform = Transform( 2.08633, 0, 0, 0, 1, 0, 0, 0, 1.83236, -1.346, -0.0190256, 0.12 )
+shape = ExtResource( 15 )
+
+[node name="CollChecker" type="KinematicBody" parent="Deck2"]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0.127465, 0 )
+collision_layer = 278528
+collision_mask = 278528
+
+[node name="CollisionShape" type="CollisionShape" parent="Deck2/CollChecker"]
+shape = SubResource( 6 )
+
+[node name="BuildMarkerManager" type="Spatial" parent="Deck2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.073, 0 )
+script = ExtResource( 16 )
+xRange = [ -7, 4 ]
+yRange = [ -2, 2 ]
+
+[node name="DeckWithShader" type="Sprite3D" parent="Deck2/BuildMarkerManager"]
+transform = Transform( 0.319, 0, 0, 0, 0.461, 0, 0, 0, 0.319, -1.20748, -0.021855, 0.131834 )
+material_override = SubResource( 11 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 1 )
 
 [node name="Deck" type="Sprite3D" parent="Deck2"]
 transform = Transform( 0.318932, 0, 0, 0, 0.754314, 0, 0, 0, 0.318932, -1.332, 0, 0.095 )
-material_override = SubResource( 6 )
+material_override = SubResource( 8 )
 pixel_size = 0.02
 axis = 1
 shaded = true
@@ -219,7 +315,7 @@ cast_shadow = 3
 pixel_size = 0.02
 axis = 1
 alpha_cut = 2
-texture = SubResource( 7 )
+texture = SubResource( 9 )
 
 [node name="OmniLight3" parent="Deck2" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.742809, 0.297959, 0.0391541 )

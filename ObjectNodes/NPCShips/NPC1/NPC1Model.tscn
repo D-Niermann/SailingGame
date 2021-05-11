@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/topDeck.png" type="Texture" id=1]
 [ext_resource path="res://ObjectNodes/Flags/BaseFlag/BaseFlag.tscn" type="PackedScene" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/segel.png" type="Texture" id=7]
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/Sprites/segelVorn.png" type="Texture" id=8]
 [ext_resource path="res://ObjectNodes/NPCShips/NPCGear/Cannon/NPCCannon.tscn" type="PackedScene" id=9]
+[ext_resource path="res://ObjectNodes/ShipModels/hull.tscn" type="PackedScene" id=10]
+[ext_resource path="res://ObjectNodes/ShipModels/DefaultDeckMesh.tscn" type="PackedScene" id=11]
 [ext_resource path="res://ObjectNodes/NPCShips/NPCGear/HullWalls/NPCOuterHullWall3m.tscn" type="PackedScene" id=12]
 [ext_resource path="res://ObjectNodes/NPCShips/NPCGear/HullWalls/NPCOuterHullWall.tscn" type="PackedScene" id=13]
 
@@ -33,12 +35,9 @@ params_alpha_scissor_threshold = 0.85
 albedo_texture = ExtResource( 1 )
 
 [sub_resource type="BoxShape" id=5]
-extents = Vector3( 0.846288, 0.533633, 0.643275 )
-
-[sub_resource type="BoxShape" id=6]
 extents = Vector3( 5.0327, 0.0424717, 1.61134 )
 
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="SpatialMaterial" id=6]
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.75
 albedo_texture = ExtResource( 3 )
@@ -167,21 +166,6 @@ shadow_enabled = false
 omni_range = 1.0
 amp = 0.001
 
-[node name="Blocker3" type="KinematicBody" parent="Deck1"]
-transform = Transform( 1.59388, 0, 0.616625, 0, 1, 0, -0.616625, 0, 1.59388, 2.96222, 0.0744184, 1.82213 )
-collision_layer = 16384
-collision_mask = 16384
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="BlockerCollider" type="CollisionShape" parent="Deck1/Blocker3"]
-transform = Transform( 0.999367, 0, 0.0355972, 0, 1, 0, -0.0355972, 0, 0.999367, 0, 0, 0 )
-shape = SubResource( 5 )
-__meta__ = {
-"_edit_lock_": true
-}
-
 [node name="CannonLarge" parent="Deck1" instance=ExtResource( 9 )]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.958654, 0.0746313, -1.08726 )
 
@@ -227,14 +211,14 @@ __meta__ = {
 
 [node name="CollisionShape" type="CollisionShape" parent="Deck2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.523, 0.0194222, 0.209 )
-shape = SubResource( 6 )
+shape = SubResource( 5 )
 __meta__ = {
 "_editor_description_": ""
 }
 
 [node name="Deck" type="Sprite3D" parent="Deck2"]
 transform = Transform( 0.318932, 0, 0, 0, 0.754314, 0, 0, 0, 0.318932, -1.332, 0, 0.095 )
-material_override = SubResource( 7 )
+material_override = SubResource( 6 )
 pixel_size = 0.02
 axis = 1
 shaded = true
@@ -380,3 +364,9 @@ fire_delay_sec = 0.2
 [node name="CannonLarge12" parent="Deck2" instance=ExtResource( 9 )]
 transform = Transform( 7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, -1.75234, 0.145059, 1.33163 )
 fire_delay_sec = 0.2
+
+[node name="hull" parent="." instance=ExtResource( 10 )]
+transform = Transform( -9.38627e-08, 0, 2.14733, 0, 2.14733, 0, -2.14733, 0, -9.38627e-08, 0.12827, -0.68985, 1.30181 )
+
+[node name="TopDeck2" parent="." instance=ExtResource( 11 )]
+transform = Transform( -9.81164e-08, 0, 2.24464, 0, 8.46485, 0, -2.24464, 0, -9.81164e-08, 0.168089, -0.392205, 1.27095 )

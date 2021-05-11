@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/gridLine.png" type="Texture" id=1]
+
+[node name="Marker" type="Sprite3D"]
+cast_shadow = 0
+modulate = Color( 0, 0, 0, 0.501961 )
+pixel_size = 0.003
+axis = 1
+alpha_cut = 2
+texture = ExtResource( 1 )

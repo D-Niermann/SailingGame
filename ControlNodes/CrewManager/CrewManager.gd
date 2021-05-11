@@ -74,7 +74,7 @@ func _ready():
 	for i in range(len(humanNodes)):
 		currentAssignments[TG_UTILITY]["idle"][humanNodes[i].id] = humanNodes[i]
 		humanNodes[i].assignDeck(decks[0])
-	print(currentAssignments)
+	# print(currentAssignments)
 
 
 	
@@ -186,7 +186,7 @@ func updateMen():
 			## man needs to be removed from TG into relaxed
 			## first pick idle man, then the ones with highest priorityNumber
 			for manID in currentAssignments[TG]["idle"]:
-				print("force idle into relax: ",manID)
+				# print("force idle into relax: ",manID)
 				forceManintoRelaxed(TG, "idle", currentAssignments[TG]["idle"][manID])
 				return
 			for prio in range(numberOfPriorities-1,-1,-1):

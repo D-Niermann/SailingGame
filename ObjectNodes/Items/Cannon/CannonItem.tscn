@@ -12,6 +12,7 @@
 [ext_resource path="res://ObjectNodes/Items/Cannon/WaterHitRing.png" type="Texture" id=10]
 [ext_resource path="res://ObjectNodes/GeneralCannonAssets/Sounds/Cannon4.wav" type="AudioStream" id=11]
 [ext_resource path="res://ObjectNodes/GeneralCannonAssets/Sounds/390182__eardeer__explosion.wav" type="AudioStream" id=12]
+[ext_resource path="res://ObjectNodes/Items/gridMeshMaterial.tres" type="Material" id=13]
 [ext_resource path="res://ObjectNodes/Items/Cannon/CannonInfoBox.tscn" type="PackedScene" id=14]
 
 [sub_resource type="SpatialMaterial" id=1]
@@ -123,11 +124,6 @@ extents = Vector3( 0.179145, 0.128, 0.135657 )
 
 [sub_resource type="CubeMesh" id=19]
 size = Vector3( 1, 1, 1 )
-
-[sub_resource type="SpatialMaterial" id=20]
-flags_transparent = true
-flags_do_not_receive_shadows = true
-albedo_color = Color( 0.188235, 0.976471, 0.164706, 0.0980392 )
 
 [node name="Large Cannon" type="KinematicBody"]
 collision_layer = 16385
@@ -433,6 +429,6 @@ doppler_tracking = 2
 visible = false
 cast_shadow = 0
 mesh = SubResource( 19 )
-material/0 = SubResource( 20 )
+material/0 = ExtResource( 13 )
 
 [node name="PlaceAudio" parent="." instance=ExtResource( 3 )]

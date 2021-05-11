@@ -83,7 +83,8 @@ func get_split_scale() -> float:
 
 
 func update(view_pos: Vector3):
-	_update(_tree, _max_depth, view_pos)
+	if rand_range(0,30)>28: # hacky way to reduce the number of update calls and save CPU
+		_update(_tree, _max_depth, view_pos)
 	
 	# This makes sure we keep seeing the lowest LOD,
 	# if the tree is cleared while we are far away

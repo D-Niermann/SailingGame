@@ -197,10 +197,10 @@ func _physics_process(delta):
 				units[newPart].append(unit)
 			if live.has(newPart): # if new partition is live but unit is not spawned, we spawn it
 				if holo == null:
-					print("spawned")
+					# print("spawned")
 					var pre = presets[info["preset"]].get("PRE")
 					if pre != null:
-						print("using preloaded NPC")
+						# print("using preloaded NPC")
 						holo = get(pre).instance()
 					else:
 						holo = load(presets[info["preset"]]["RES"]).instance()
