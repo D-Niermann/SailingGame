@@ -40,13 +40,13 @@ func _ready():
 				markerManager.add_child(marker)
 				marker.set_name("Marker")
 				marker.transform.origin = Vector3(x,0,y)
-				isTileOccupied[Vector2(x,y)] = true
+				isTileOccupied[Vector2(x,y)] = false
 				positionMarkers[Vector2(x,y)] = marker
 				marker.modulate = C_FREE
 				var coll2 = collider.move_and_collide(Vector3(0.0,+0.1,0.0), true , true , true)
 				if is_instance_valid(coll2):
 					marker.modulate = C_BLOCKED
-					isTileOccupied[Vector2(x,y)] = false
+					isTileOccupied[Vector2(x,y)] = true
 
 func _process(delta):
 	if is_instance_valid(GlobalObjectReferencer.shopping):
@@ -64,7 +64,11 @@ func checkIfFree(array)-> bool:
 	given an array of vector2 positions, checks if all the tiles are free
 	"""
 	for pos in array:
+		if !isTileOccupied.has(pos):
+			#print("tile does not exist: "+str(pos))
+			return false
 		if isTileOccupied[pos]:
+			#print("tile is not free: "+str(pos))
 			return false
 	return true
 
