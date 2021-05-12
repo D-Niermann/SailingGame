@@ -65,10 +65,10 @@ func checkIfFree(array)-> bool:
 	"""
 	for pos in array:
 		if !isTileOccupied.has(pos):
-			print("tile does not exist: "+str(pos))
+			#print("tile does not exist: "+str(pos))
 			return false
 		if isTileOccupied[pos]:
-			print("tile is not free: "+str(pos))
+			#print("tile is not free: "+str(pos))
 			return false
 	return true
 
