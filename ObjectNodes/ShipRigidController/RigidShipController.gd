@@ -217,3 +217,14 @@ func calcCenterOfMass():
 	centerOfMass = avPos
 	# print("CoM: ",centerOfMass)
 	# print("NumItems: ",len(itemNodes))
+
+func onHover(isHovering):
+	if isHovering:
+		print("hovering")
+
+func createInfo(placeholder):
+	print("show info")
+
+
+func removeInfo():
+	print("remove info")
