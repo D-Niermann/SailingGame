@@ -24,7 +24,7 @@ var weight = 2.0
 # var assignedMen = {} # IDs and data of all men assigned to this item, if specific refernce to human is needed, call the crewManager with the mans ID -> cannot control human directly. values are infoDictionaries  {taskGropup :xxx, priority: yyy}
 
 ## 
-var gridMesh # green/red mesh that displays the hitbox of gear
+# var gridMesh # green/red mesh that displays the hitbox of gear
 var pAudio # audio player thats emitting when item is placed
 var itemPlaceParticle # dynamically loaded particles 
 var currentHealth = maxHealth
@@ -41,7 +41,7 @@ func _ready():
 	id = IDGenerator.getID()
 	## TODO: this gets also called when item is picked in shop
 	# print("BaseItem ready()")
-	gridMesh = get_node("GridShowMesh")
+	# gridMesh = get_node("GridShowMesh")
 	pAudio = $PlaceAudio
 	# weight = Economy.goods[Utility.resName(self.name)]["weight"]
 	# print("Weight:",weight)
@@ -70,8 +70,8 @@ func onPlacement():
 	"""
 	# fetchMyShip() # obsolete cause this is player item, use globalObjectReferencer
 	registerItem()
-	if gridMesh!=null:
-		gridMesh.visible = false # make the grid item invisible again
+	# if gridMesh!=null:
+		# gridMesh.visible = false # make the grid item invisible again
 	itemPlaceParticle.emitting = true
 	# play Audio
 	if pAudio!=null:
@@ -82,7 +82,7 @@ func onPlacement():
 
 func onHover(is_hovered: bool):
 	"""
-	Gets called when while shopping or building the mouse is hovering over item.
+	Gets called when the mouse is hovering over item.
 	"""
 	var sprite = get_node("Sprite3D")
 	if is_hovered:

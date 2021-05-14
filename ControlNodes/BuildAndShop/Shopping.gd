@@ -86,14 +86,14 @@ func _physics_process(delta):
 	if switch == true && target == null:
 		if is_instance_valid(highlight):
 			var sprite = highlight.get_node("Sprite3D")
-			sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
+			# sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
 			highlight = null
 			placeOrDestroyHologram()
 		return
 	if open == null:
 		if is_instance_valid(highlight):
 			var sprite = highlight.get_node("Sprite3D")
-			sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
+			# sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
 			highlight = null
 		if resource != null || is_instance_valid(hologram):
 			placeOrDestroyHologram()
@@ -144,7 +144,7 @@ func _physics_process(delta):
 				placeOrDestroyHologram()
 		elif canPlace:
 			var sprite = hologram.get_node("Sprite3D")
-			sprite.modulate = Color(0.0, 1.0, 0.0, 0.5)
+			# sprite.modulate = Color(0.0, 1.0, 0.0, 0.5)
 			# placing item
 			if leftClick:
 				parent = target
@@ -155,7 +155,7 @@ func _physics_process(delta):
 				placeOrDestroyHologram()
 		else:
 			var sprite = hologram.get_node("Sprite3D")
-			sprite.modulate = Color(1.0, 0.0, 0.0, 0.5)
+			# sprite.modulate = Color(1.0, 0.0, 0.0, 0.5)
 	# checking if item can be picked up
 	elif !hit.empty() && hit.collider.get("movable") != null:
 		if open != null && hit.collider.get("movable") == true:
@@ -194,14 +194,16 @@ func _physics_process(delta):
 	if is_instance_valid(highlight):
 		var sprite = highlight.get_node("Sprite3D")
 		if sprite!=null:
-			sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
+			pass
+			# sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		highlight = null
 	if is_instance_valid(newHighlight):
 		highlight = newHighlight
 	if is_instance_valid(highlight):
 		var sprite = highlight.get_node("Sprite3D")
 		if sprite!=null:
-			sprite.modulate = Color(1.0, 1.0, 0.0, 1.0)
+			pass
+			# sprite.modulate = Color(1.0, 1.0, 0.0, 1.0)
 	leftClick = false
 	rightClick = false
 	scrollUp = false
@@ -276,7 +278,7 @@ func placeOrDestroyHologram():
 		hologram.global_transform.origin = parent.to_global(pos)
 		lookAtLocal(hologram, parent, rot, parent.global_transform.basis.y)
 		var sprite = hologram.get_node("Sprite3D")
-		sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		# sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		var itemName: String = hologram.databaseName
 		var occupation: Array = tiles4(pos, rot, Economy.getSize(itemName))
 #		print("occupation: "+str(occupation))

@@ -18,6 +18,7 @@
 [ext_resource path="res://ObjectNodes/ShipModels/BuildMarkerManager.gd" type="Script" id=16]
 [ext_resource path="res://ObjectNodes/ShipModels/BuildingMarker.tscn" type="PackedScene" id=17]
 [ext_resource path="res://ObjectNodes/ShipModels/Deck.gd" type="Script" id=18]
+[ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/DeckBuildSahder.shader" type="Shader" id=19]
 
 [sub_resource type="CylinderMesh" id=1]
 material = ExtResource( 4 )
@@ -36,38 +37,16 @@ extents = Vector3( 0.16, 0.1, 0.16 )
 [sub_resource type="BoxShape" id=4]
 extents = Vector3( 0.1, 0.05, 0.1 )
 
-[sub_resource type="Shader" id=5]
-code = "shader_type spatial;
-
-render_mode cull_disabled, depth_draw_alpha_prepass;
-
-
-uniform sampler2D texture_albedo : hint_albedo;
-uniform float uv_offset_scale = 1.0;
-uniform bool isBuilding = false;
-
-void fragment(){
-	vec2 base_uv_offset = UV * uv_offset_scale;
-	vec4 albedo_tex = texture(texture_albedo,UV);
-	if (isBuilding==true){
-		albedo_tex.g *= 1.0;
-		albedo_tex.r = albedo_tex.g;
-		albedo_tex.b = albedo_tex.g;
-	}
-	ALBEDO = albedo_tex.rgb;
-	ALPHA = albedo_tex.a;
-}"
-
 [sub_resource type="ShaderMaterial" id=6]
 render_priority = -1
-shader = SubResource( 5 )
+shader = ExtResource( 19 )
 shader_param/uv_offset_scale = 1.0
 shader_param/isBuilding = true
 shader_param/texture_albedo = ExtResource( 1 )
 
 [sub_resource type="ShaderMaterial" id=7]
 render_priority = -1
-shader = SubResource( 5 )
+shader = ExtResource( 19 )
 shader_param/uv_offset_scale = 1.0
 shader_param/isBuilding = true
 shader_param/texture_albedo = ExtResource( 3 )

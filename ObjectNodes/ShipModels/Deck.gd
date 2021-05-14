@@ -13,9 +13,10 @@ var markerManager
 
 var collider = null
 var isTileOccupied = {} # dictionary of keys vec2 positions contains boolen if the current thing is occupied or not
-var positionMarkers = {}
-var lastCheckedXY = []
-var toBeCleared = {}
+var positionMarkers = {} # dict of all sprites key is positions of tile
+var lastCheckedXY = [] # save of the last checked positions
+var toBeCleared = {} # dict of last marked tiles and how to turn them back to the prev marking color
+var canBePlaced:bool = false ## if the checked item can be palced, used for markings 
 
 export var xRange = [0,0] # user input for the range in wich the deck is, this is an integer list because range() only supports integer
 export var yRange = [0,0] # user input for the range in wich the deck is, this is an integer list because range() only supports integer
@@ -52,14 +53,21 @@ func _ready():
 					isTileOccupied[Vector2(x,y)] = true
 
 func _process(delta):
-	for pos in toBeCleared:
-		if not pos in lastCheckedXY:
-			if toBeCleared[pos] == true:
-				positionMarkers[pos].modulate = C_BLOCKED
-			else:
-				positionMarkers[pos].modulate = C_FREE
-			toBeCleared.erase(pos)
 
+	for pos in toBeCleared:
+		if toBeCleared[pos] == true:
+			positionMarkers[pos].modulate = C_BLOCKED
+		else:
+			positionMarkers[pos].modulate = C_FREE
+	toBeCleared = {}
+	for pos in lastCheckedXY:
+		if positionMarkers.has(pos):
+			toBeCleared[pos] = isTileOccupied[pos]
+			if canBePlaced:
+				positionMarkers[pos].modulate = C_MARKED
+			else:
+				positionMarkers[pos].modulate = C_BLOCKED
+	lastCheckedXY = []
 
 	if is_instance_valid(GlobalObjectReferencer.shopping):
 		if GlobalObjectReferencer.shopping.open != null:
@@ -75,26 +83,17 @@ func checkIfFree(array)-> bool:
 	"""
 	given an array of vector2 positions, checks if all the tiles are free
 	"""
-	var val = true
+	canBePlaced = true
+	lastCheckedXY = array
 	for pos in array:
 		if !isTileOccupied.has(pos):
-			val = false
+			canBePlaced = false
+			return false
 		else:
-			toBeCleared[pos] = isTileOccupied[pos]
 			if isTileOccupied[pos]:
-				val = false
-
-	for pos in array:
-		if positionMarkers.has(pos):
-			if val==false:
-				positionMarkers[pos].modulate = C_BLOCKED
-			else:
-				positionMarkers[pos].modulate = C_MARKED
-	
-	
-	lastCheckedXY = array
-	
-	return val
+				canBePlaced = false
+				return false
+	return canBePlaced
 
 func occupyTiles(array):
 	"""
