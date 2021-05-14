@@ -31,6 +31,8 @@ var currentTask
 
 var pathDeck = null # used by navigator, don't change manually
 var pathLocs: Array = [] # used by navigator, don't change manually
+var toIgnore: Array = [] # used by navigator, don't change manually
+var nextDest = null # used by navigator, don't change manually
 var speed: float = 1 # maximum speed per second for this unit's movement
 
 
@@ -75,7 +77,7 @@ func removeTask():
 	targetPos.x += rand_range(-0.3,0.3)
 	targetPos.z += rand_range(-0.3,0.3)
 	
-func walkTowards(targetPos : Vector3):
+func walkTowards(targetPos : Vector3): # this function is not needed anymore
 	""" for now some simple function, later will use navmesh """
 	var walkDir = (targetPos-self.translation)
 	if walkDir.length()>1:
@@ -84,13 +86,10 @@ func walkTowards(targetPos : Vector3):
 	self.translation.y = 0#bodyHeight
 
 func _process(delta):
-#	walkTowards(targetPos)
+#	walkTowards(targetPos) # this is not needed anymore
 	targetPos = Vector3(0, 0, 0) # remove this line later, this is for test purpose
-	targetDeck = get_parent() # remove this line later, this is for test purpose
-	if is_instance_valid(targetDeck):
-		var velocity: Vector3 = findVelocity(Vector2(targetPos.x, targetPos.z), targetDeck)
-		translation += velocity * delta
-		translation.y = 0
+	targetDeck = get_tree().get_nodes_in_group("PlayerDeck")[1] # remove this line later, this is for test purpose
+	moveTo(delta, targetPos, targetDeck)
 
 
 func createInfo(placeholder):
@@ -123,42 +122,99 @@ func removeInfo():
 
 
 
-# Tries to get directions, using pathfinding when necessary.
-func findVelocity(toLoc: Vector2, atDeck: Spatial):
+# Tries to move to the given location.
+func moveTo(delta: float, toLoc: Vector3, atDeck: Spatial):
+	if is_instance_valid(atDeck):
+		var velocity: Vector3 = findVelocity(delta, Vector2(toLoc.x, toLoc.z), atDeck)
+		translation += velocity * delta
+		translation.y = 0
+
+# Tries to find velocity to reach the given location.
+func findVelocity(delta: float, toLoc: Vector2, atDeck: Spatial):
 	# aborting operation if deck is not found
 	if !is_instance_valid(atDeck):
 		return Vector3.ZERO
-	# cleaning path if target has changed
-	if pathDeck != atDeck || (!pathLocs.empty() && pathLocs[0] != toLoc):
-			pathLocs.clear()
-			pathDeck = atDeck
+	# cleaning path if target deck has changed
+	if pathDeck != atDeck || (nextDest != null && !pathLocs.empty() && pathLocs[0] != partitionID(nextDest, GlobalObjectReferencer.shopping.TILEWIDTH)):
+		pathLocs.clear()
+		pathDeck = atDeck
+		nextDest = null
+	# removing location from path if reached
+	var thisPart: Vector2 = partitionID(Vector2(translation.x, translation.y), GlobalObjectReferencer.shopping.TILEWIDTH)
+	if !pathLocs.empty() && pathLocs[-1] == thisPart:
+		pathLocs.pop_back()
+#		print("waypointReached")
+	# deciding either target or stairs
+	if atDeck == get_parent(): # can go directly towards the target
+		nextDest = toLoc
+#		print("sameDeck")
+	elif nextDest == null: # needs to find stairs
+		var closestStairs = null
+		var shortestDistance = 999999999
+		for stairs in GlobalObjectReferencer.playerShip.stairs:
+			var destPart: Vector2 = partitionID(stairs, GlobalObjectReferencer.shopping.TILEWIDTH)
+			var destDist = chebyshevDistance(thisPart, destPart)
+			if destDist < shortestDistance:
+				shortestDistance = destDist
+				closestStairs = stairs
+		if closestStairs != null:
+			nextDest = closestStairs
+#			print("stairsFound")
+		else:
+			nextDest = null
+#			print("stairsNotFound")
 	# getting directions
-	if atDeck != get_parent(): # then go to stairs instead
-		return Vector3.ZERO # this part is under construction
-	else:
-		var thisPart: Vector2 = closestPartition(Vector2(translation.x, translation.y))
-		var destPart: Vector2 = closestPartition(toLoc)
-		print("thisPart: "+str(thisPart)+" destPart: "+str(destPart))
-		var destDist = chebyshevDistance(thisPart, destPart)
-		if destDist == 0: # means we already are inside the tile
-#			return Vector3.ZERO # opt for this one if you don't want units to keep going till they reach the center of the tile
-			return limitVelocity(Vector3(toLoc.x, 0, toLoc.y) - translation, speed)
-		elif destDist < 2: # means we are so close that we can directly go towards
-			return limitVelocity(Vector3(toLoc.x, 0, toLoc.y) - translation, speed)
-		else: # means it is far away and we need to follow path
-			if !is_instance_valid(pathDeck) || pathDeck != atDeck || pathLocs.empty() || chebyshevDistance(thisPart, pathLocs[-1]) > 1 || isOccupied(pathLocs[-1]):
-				pathLocs = findPath(thisPart, destPart, true)
-			if !pathLocs.empty():
-				return limitVelocity(Vector3(pathLocs[-1].x, 0, pathLocs[-1].y) - translation, speed)
-			else:
-				return Vector3.ZERO
+	if nextDest == null:
+#		print("noDestinations")
+		return Vector3.ZERO
+	elif atDeck != get_parent():
+		if translation.distance_squared_to(Vector3(nextDest.x, 0, nextDest.y)) < 0.25:
+			assignDeck(atDeck)
+#			print("changedDecks")
+			return Vector3.ZERO
+	var destPart: Vector2 = partitionID(nextDest, GlobalObjectReferencer.shopping.TILEWIDTH)
+#	print("thisPart: "+str(thisPart)+" destPart: "+str(destPart))
+	var destDist = chebyshevDistance(thisPart, destPart)
+	if destDist == 0: # means we already are inside the tile
+#		print("sameTile")
+#		return Vector3.ZERO # opt for this one if you don't want units to keep going till they reach the center of the tile
+		var localCoordinates = partitionLocation(nextDest, GlobalObjectReferencer.shopping.TILEWIDTH)
+		return adjustVelocity(delta, Vector3(localCoordinates.x, 0, localCoordinates.y) - translation, speed)
+	elif destDist < 2: # means we are so close that we can directly go towards
+#		print("adjacentTile")
+		var localCoordinates = partitionLocation(nextDest, GlobalObjectReferencer.shopping.TILEWIDTH)
+		return adjustVelocity(delta, Vector3(localCoordinates.x, 0, localCoordinates.y) - translation, speed)
+	else: # means it is far away and we need to follow path
+		if !pathLocs.empty() && !toIgnore.has(pathLocs[0]):
+			toIgnore.append(pathLocs[0])
+		if !is_instance_valid(pathDeck) || pathDeck != atDeck || pathLocs.empty() || chebyshevDistance(thisPart, pathLocs[-1]) > 1 || isOccupied(pathLocs[-1]):
+			toIgnore.clear()
+			toIgnore.append(destPart)
+			toIgnore.append(thisPart)
+			pathLocs = findPath(thisPart, destPart, true)
+#			print("pathfinding...")
+		if !pathLocs.empty(): # path is available
+#			print("followingPath")
+			var localCoordinates = partitionLocation(pathLocs[-1], GlobalObjectReferencer.shopping.TILEWIDTH)
+			return adjustVelocity(delta, Vector3(localCoordinates.x, 0, localCoordinates.y) - translation, speed)
+		else:
+#			print("pathIsEmpty")
+			return Vector3.ZERO # this means no path has been found
 
-# Truncates length of the given velocity according to the given maximum speed.
-func limitVelocity(velocity: Vector3, maxSpeed: float):
-	if velocity.length_squared() > pow(maxSpeed, 2):
+# Clamps length of the given velocity according to the given maximum speed.
+func adjustVelocity(delta: float, velocity: Vector3, maxSpeed: float):
+	var sqrMagnitude: float = velocity.length_squared()
+	if sqrMagnitude > pow(maxSpeed, 2):
+		print("hmm")
 		return velocity.normalized() * maxSpeed
 	else:
-		return velocity
+		var estLength: float = pathLocs.size() * GlobalObjectReferencer.shopping.TILEWIDTH
+		if maxSpeed > pow(estLength, 2):
+			print("huh")
+			return velocity.normalized() * estLength
+		else:
+			print("pff")
+			return velocity.normalized() * maxSpeed
 
 # Finds path between the given parts.
 func findPath(from: Vector2, to: Vector2, canCross: bool):
@@ -191,6 +247,7 @@ func findPath(from: Vector2, to: Vector2, canCross: bool):
 				break
 		limit -= 1
 	if temp == null:
+		print("failedToFindPath")
 		return []
 		var lowest: Vector2
 		var value: int = -1
@@ -206,7 +263,7 @@ func findPath(from: Vector2, to: Vector2, canCross: bool):
 # Checks if transition between the given parts is possible.
 func canPass(from: Vector2, to: Vector2, canCross: bool):
 	var difference: Vector2 = to - from
-	var distance: int = chebyshevDistance(from, to)
+	var distance = chebyshevDistance(from, to)
 	if distance > 1:
 		return false
 	if difference.length_squared() > 1:
@@ -226,35 +283,35 @@ func canPass(from: Vector2, to: Vector2, canCross: bool):
 
 # Checks if the given part is occupied.
 func isOccupied(partition: Vector2):
+	if toIgnore.has(partition):
+		return false
 	if !get_parent().isTileOccupied.has(partition) || get_parent().isTileOccupied[partition]:
 		return true
 	return false
 
 # Returns adjacent parts for the given part.
 func findAdjacent(partition: Vector2, canCross: bool):
-	var tilewidth: float = GlobalObjectReferencer.shopping.TILEWIDTH
 	var keys = []
-	keys.append(partition + Vector2(tilewidth, 0))
-	keys.append(partition + Vector2(-tilewidth, 0))
-	keys.append(partition + Vector2(0, tilewidth))
-	keys.append(partition + Vector2(0, -tilewidth))
+	keys.append(partition + Vector2(1, 0))
+	keys.append(partition + Vector2(-1, 0))
+	keys.append(partition + Vector2(0, 1))
+	keys.append(partition + Vector2(0, -1))
 	if canCross:
-		keys.append(partition + Vector2(tilewidth, tilewidth))
-		keys.append(partition + Vector2(tilewidth, -tilewidth))
-		keys.append(partition + Vector2(-tilewidth, tilewidth))
-		keys.append(partition + Vector2(-tilewidth, -tilewidth))
+		keys.append(partition + Vector2(1, 1))
+		keys.append(partition + Vector2(1, -1))
+		keys.append(partition + Vector2(-1, 1))
+		keys.append(partition + Vector2(-1, -1))
 	return keys
 
-# Returns closest partition identification key for the given location according to the tilewidth.
-func closestPartition(location: Vector2):
-	var halfwidth: float = GlobalObjectReferencer.shopping.TILEWIDTH * 0.5
-	location.x = stepify(location.x, halfwidth)
-	location.y = stepify(location.y, halfwidth)
-	if location.x - floor(location.x) == 0:
-		location.x += halfwidth
-	if location.y - floor(location.y) == 0:
-		location.y += halfwidth
-	return location
+# Returns partition identification key for the given location.
+func partitionID(location: Vector2, length: float):
+	var partition = location / length
+	return partition.floor()
+
+# Returns location of the given partition.
+func partitionLocation(partition: Vector2, length: float):
+	var halfLength = length * 0.5
+	return partition * length + Vector2(halfLength, halfLength)
 
 # Returns chebyshev distance between two three dimensional vectors.
 func chebyshevDistance(from: Vector2, to: Vector2):
