@@ -44,7 +44,7 @@ func _ready():
 				markerManager.add_child(marker)
 				marker.set_name("Marker")
 				marker.transform.origin = Vector3(x,0,y)
-				var convertedCoordinates = Utility.partitionID(Vector3(x, 0, y), 0.2, false)
+				var convertedCoordinates = Utility.partitionID(Vector3(x, 0, y), TILEWIDTH, false)
 				convertedCoordinates = Vector2(convertedCoordinates.x, convertedCoordinates.z)
 #				isTileOccupied[Vector2(x,y)] = false
 #				positionMarkers[Vector2(x,y)] = marker
