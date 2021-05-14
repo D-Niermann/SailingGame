@@ -23,8 +23,8 @@ func _ready():
 
 
 func _physics_process(delta):
-	if isOn:
-		global_transform.origin.y += (ocean.getWaterHeight(translation) - global_transform.origin.y)*reactionSpeed
+	# if isOn:
+	# 	global_transform.origin.y += (ocean.getWaterHeight(translation) - global_transform.origin.y)*reactionSpeed
 
 	var vel = (global_transform.origin.y - last_pos)/delta
 	last_pos = global_transform.origin.y

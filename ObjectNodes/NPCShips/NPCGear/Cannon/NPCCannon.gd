@@ -163,36 +163,36 @@ func predictTrajectory():
 	"""
 	fakeBullet.transform.origin = Vector3(0,0,0)
 	var point : Vector3 
-	var waterHeight = -10000
+	var waterHeight = 0
 	var last_i = 0
 	for i in range(lineSize):
 		point = fakeBullet.transform.origin
 		trajectoryPoints[i] = point
-		if GlobalObjectReferencer.ocean!=null:
-			waterHeight = GlobalObjectReferencer.ocean.getWaterHeight(to_global(point))
+		# if GlobalObjectReferencer.ocean!=null:
+		# 	waterHeight = GlobalObjectReferencer.ocean.getWaterHeight(to_global(point))
 		if to_global(point).y>waterHeight:
 			fakeBullet.transform.origin += Vector3(1,0,0)*force*5.2/(1+i*0.05)
 			fakeBullet.global_transform.origin += Vector3(0,-1,0)*0.015*i 
 		else:
 			last_i = i
 			break
-	if last_i != 0: # if line ever crossed the water line (went under water)
-		var aboveWater : Vector3 = (trajectoryPoints[last_i-1]) #
-		var underWater : Vector3 = (trajectoryPoints[last_i])  # last point position in array (threw error once)
-		var halfPoint
-		for _i in range(8): # number of bisections (1/2 -> 1/4 -> 1/8 -> 1/16 -> ...)
-			halfPoint = underWater + ((aboveWater - underWater)/2) #
-			if GlobalObjectReferencer.ocean.getWaterHeight(to_global(halfPoint))<to_global(halfPoint).y:
-				# half point is over water
-				aboveWater = halfPoint
-			else:
-				# half point is under water
-				underWater = halfPoint
-		## now take either the underwater or above water point
-		var preciseWaterPoint = aboveWater
-		for i in range(last_i, lineSize):
-			trajectoryPoints[i] = preciseWaterPoint
-			# marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*markerMoveSpeed
+	# if last_i != 0: # if line ever crossed the water line (went under water)
+	# 	var aboveWater : Vector3 = (trajectoryPoints[last_i-1]) #
+	# 	var underWater : Vector3 = (trajectoryPoints[last_i])  # last point position in array (threw error once)
+	# 	var halfPoint
+	# 	for _i in range(8): # number of bisections (1/2 -> 1/4 -> 1/8 -> 1/16 -> ...)
+	# 		halfPoint = underWater + ((aboveWater - underWater)/2) #
+	# 		if GlobalObjectReferencer.ocean.getWaterHeight(to_global(halfPoint))<to_global(halfPoint).y:
+	# 			# half point is over water
+	# 			aboveWater = halfPoint
+	# 		else:
+	# 			# half point is under water
+	# 			underWater = halfPoint
+	# 	## now take either the underwater or above water point
+	# 	var preciseWaterPoint = aboveWater
+	# 	for i in range(last_i, lineSize):
+	# 		trajectoryPoints[i] = preciseWaterPoint
+	# 		# marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*markerMoveSpeed
 			# marker[i].visible = true
 
 
