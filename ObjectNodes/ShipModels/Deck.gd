@@ -48,7 +48,8 @@ func _ready():
 				convertedCoordinates = Vector2(convertedCoordinates.x, convertedCoordinates.z)
 #				isTileOccupied[Vector2(x,y)] = false
 #				positionMarkers[Vector2(x,y)] = marker
-				isTileOccupied[convertedCoordinates] = false
+#				isTileOccupied[convertedCoordinates] = false
+				isTileOccupied[convertedCoordinates] = null
 				positionMarkers[convertedCoordinates] = marker
 				marker.modulate = C_FREE
 				var coll2 = collider.move_and_collide(Vector3(0.0,+0.1,0.0), true , true , true)
@@ -60,7 +61,8 @@ func _ready():
 func _process(delta):
 
 	for pos in toBeCleared:
-		if toBeCleared[pos] == true:
+#		if toBeCleared[pos] == true:
+		if toBeCleared[pos] != null:
 			positionMarkers[pos].modulate = C_BLOCKED
 		else:
 			positionMarkers[pos].modulate = C_FREE
@@ -101,12 +103,12 @@ func checkIfFree(array)-> bool:
 func markTile(pos:Vector2):
 	lastMarkedXY.append(pos)
 
-func occupyTiles(array):
+func occupyTiles(array, id):
 	"""
 	given an array of vector2 positions, occupies all these positions
 	"""
 	for pos in array:
-		_occupyTile(pos)
+		_occupyTile(pos, id)
 
 func freeTiles(array):
 	"""
@@ -115,10 +117,10 @@ func freeTiles(array):
 	for pos in array:
 		_freeTile(pos)
 
-func _occupyTile(pos : Vector2):
-	isTileOccupied[pos] = true
+func _occupyTile(pos : Vector2, id : int):
+	isTileOccupied[pos] = id
 	positionMarkers[pos].modulate = C_BLOCKED
 
 func _freeTile(pos : Vector2):
-	isTileOccupied[pos] = false
+	isTileOccupied[pos] = null
 	positionMarkers[pos].modulate = C_FREE
