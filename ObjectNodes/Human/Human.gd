@@ -31,13 +31,13 @@ var currentTask
 
 var pathDeck = null # used by navigator, don't change manually
 var pathLocs: Array = [] # used by navigator, don't change manually
-var toIgnore: Array = [] # used by navigator, don't change manually
+#var toIgnore: Array = [] # used by navigator, don't change manually
 var nextDest = null # used by navigator, don't change manually
 var speed: float = 1 # maximum speed per second for this unit's movement
 
 
 func _ready():
-	targetPos = Vector3(-2, 0, 0) # remove this line later, this is for test purpose
+	targetPos = Vector3(0, 0, 0) # remove this line later, this is for test purpose
 	targetDeck = get_tree().get_nodes_in_group("PlayerDeck")[0] # remove this line later, this is for test purpose
 
 	targetPos.x += rand_range(-0.3,0.3)
@@ -191,12 +191,12 @@ func findVelocity(delta: float, toLoc: Vector2, atDeck: Spatial):
 #		print("adjacentTile")
 		return adjustVelocity(delta, Vector3(nextDest.x, 0, nextDest.y) - Vector3(translation.x, 0, translation.z), speed)
 	else: # means it is far away and we need to follow path
-		if !pathLocs.empty() && !toIgnore.has(pathLocs[0]):
-			toIgnore.append(pathLocs[0])
+#		if !pathLocs.empty() && !toIgnore.has(pathLocs[0]):
+#			toIgnore.append(pathLocs[0])
 		if !is_instance_valid(pathDeck) || pathDeck != atDeck || pathLocs.empty() || chebyshevDistance(thisPart, pathLocs[-1]) > 1 || isOccupied(pathLocs[-1]):
-			toIgnore.clear()
-			toIgnore.append(destPart)
-			toIgnore.append(thisPart)
+#			toIgnore.clear()
+#			toIgnore.append(destPart)
+#			toIgnore.append(thisPart)
 			pathLocs = findPath(thisPart, destPart, true)
 #			print("pathfinding...")
 		if !pathLocs.empty(): # path is available
@@ -287,9 +287,12 @@ func canPass(from: Vector2, to: Vector2, canCross: bool):
 
 # Checks if the given part is occupied.
 func isOccupied(partition: Vector2):
-	if toIgnore.has(partition):
-		return false
-	if !get_parent().isTileOccupied.has(partition) || get_parent().isTileOccupied[partition]:
+#	if toIgnore.has(partition):
+#		return false
+	if !get_parent().isTileOccupied.has(partition) || (get_parent().isTileOccupied[partition] != null && get_parent().isTileOccupied[partition] != itemID):
+		if get_parent().isTileOccupied.has(partition):
+			print(get_parent().isTileOccupied[partition])
+			print(itemID)
 		return true
 	return false
 
