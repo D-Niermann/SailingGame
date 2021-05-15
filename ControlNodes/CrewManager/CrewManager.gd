@@ -52,7 +52,7 @@ var itemAssignmentsAndInventory = { # keeps track of all items based on these as
 }
 
 const HUMAN: PackedScene = preload("res://ObjectNodes/Human/Human.tscn")
-var currentlyPathfinding = null
+var requestsToPathfind: Array = []
 
 func _ready():
 	## base variable init
@@ -78,14 +78,20 @@ func _ready():
 	# print(currentAssignments)
 
 
-	
+
 func _physics_process(delta):
-	currentlyPathfinding = null
 	updateMen()
+	checkAndLetPathfinding()
 	checkAndAssignJobTasks() 
 	checkAndAssignFetchTasks()
 
-
+func checkAndLetPathfinding():
+	if !requestsToPathfind.empty():
+		requestsToPathfind.shuffle()
+		var luckyOne = requestsToPathfind.pop_back()
+		luckyOne.who.requestedForPathfinding = false
+		luckyOne.who.pathLocs = luckyOne.who.findPath(luckyOne.from, luckyOne.to, true)
+#		print("grantedPermissionToFindPath")
 
 func checkAndAssignJobTasks():
 	"""
