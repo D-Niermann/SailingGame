@@ -100,7 +100,6 @@ func _process(delta):
 	# this part below is for debugging, you can comment it out
 	for tile in pathLocs:
 		get_parent().markTile(tile)
-	print(currentTask)
 
 
 func createInfo(placeholder):
