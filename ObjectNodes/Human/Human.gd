@@ -33,6 +33,11 @@ func _ready():
 	targetPos.x += rand_range(-0.3,0.3)
 	targetPos.z += rand_range(-0.3,0.3)
 	id = IDGenerator.getID()
+	# make sprite randomly height
+	$Sprite3D.translation.y += rand_range(-0.01,0.01)
+	$Sprite3D.modulate*= rand_range(0.4,1.0)
+	$Sprite3D.modulate.b*= rand_range(0.4,1.0)
+	$Sprite3D.modulate.a = 1
 
 func assignDeck(deckRef):
 	get_parent().remove_child(self)
@@ -67,16 +72,18 @@ func removeTask():
 	currentTask = null
 	self.jobID = null
 	targetPos = Vector3.ZERO
-	targetPos.x += rand_range(-0.3,0.3)
-	targetPos.z += rand_range(-0.3,0.3)
+	targetPos.x += rand_range(-0.6,0.6)
+	targetPos.z += rand_range(-0.6,0.6)
 	
 func walkTowards(targetPos : Vector3):
-	""" for now some simple function, later will use navmesh """
+	""" for now some simple function, later will use pathfinding """
 	var walkDir = (targetPos-self.translation)
 	if walkDir.length()>1:
 		walkDir = walkDir.normalized()
-	self.translation += walkDir*0.01
-	self.translation.y = 0#bodyHeight
+	self.translation += walkDir * 0.01
+	self.translation.y = 0 #bodyHeight
+
+	
 
 func _process(delta):
 	walkTowards(targetPos)

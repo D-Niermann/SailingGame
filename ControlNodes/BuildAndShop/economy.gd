@@ -98,8 +98,8 @@ var goods: Dictionary = { # TODO: RENAME INTO GEAR or ITEMS, this list is not ab
 
 	"Rigging": {"type": "gear", "size": Vector3(2,1, 1), "penetrationFactor": 0.3, "IG" : IG_GEAR,  
 						"jobs": {
-							"Navigator1" : {"posOffset" : Vector3(0.1,0,-0.1), "TG":TG_NAVIGATION, "priority" : 0},
-							"Navigator2" : {"posOffset" : Vector3(-0.1,0,-0.1), "TG":TG_NAVIGATION, "priority" : 1},
+							"Navigator1" : {"posOffset" : Vector3(0.1,0,0.0), "TG":TG_NAVIGATION, "priority" : 0},
+							"Navigator2" : {"posOffset" : Vector3(-0.1,0,0.0), "TG":TG_NAVIGATION, "priority" : 1},
 						},
 						"capacity" : {}, 
 						"maxHealth": 30, "price": 5, "weight": 1.0, "res": "res://ObjectNodes/Items/RiggingItem/Rigging.tscn", "icon": "res://ObjectNodes/Items/RiggingItem/RiggingSprite.png"},

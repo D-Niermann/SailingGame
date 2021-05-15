@@ -35,28 +35,28 @@ albedo_texture = ExtResource( 1 )
 extents = Vector3( 0.16, 0.1, 0.16 )
 
 [sub_resource type="BoxShape" id=4]
-extents = Vector3( 0.1, 0.05, 0.1 )
+extents = Vector3( 0.0230173, 0.05, 0.0307552 )
 
-[sub_resource type="ShaderMaterial" id=6]
+[sub_resource type="ShaderMaterial" id=5]
 render_priority = -1
 shader = ExtResource( 19 )
 shader_param/uv_offset_scale = 1.0
 shader_param/isBuilding = true
 shader_param/texture_albedo = ExtResource( 1 )
 
-[sub_resource type="ShaderMaterial" id=7]
+[sub_resource type="ShaderMaterial" id=6]
 render_priority = -1
 shader = ExtResource( 19 )
 shader_param/uv_offset_scale = 1.0
 shader_param/isBuilding = true
 shader_param/texture_albedo = ExtResource( 3 )
 
-[sub_resource type="SpatialMaterial" id=8]
+[sub_resource type="SpatialMaterial" id=7]
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.75
 albedo_texture = ExtResource( 3 )
 
-[sub_resource type="StreamTexture" id=9]
+[sub_resource type="StreamTexture" id=8]
 flags = 23
 load_path = "res://.import/shipDeck.png-795b33a120e4e89b82f0c94bb8f9a6cc.s3tc.stex"
 
@@ -234,7 +234,7 @@ yRange = [ -2, 2 ]
 
 [node name="DeckWithShader" type="Sprite3D" parent="Deck1/BuildMarkerManager"]
 transform = Transform( 0.368805, 0, 0, 0, 0.461006, 0, 0, 0, 0.368805, -1.20748, -0.0791079, 0.131834 )
-material_override = SubResource( 6 )
+material_override = SubResource( 5 )
 axis = 1
 shaded = true
 alpha_cut = 2
@@ -274,7 +274,7 @@ yRange = [ -2, 2 ]
 
 [node name="DeckWithShader" type="Sprite3D" parent="Deck2/BuildMarkerManager"]
 transform = Transform( 0.319, 0, 0, 0, 0.461, 0, 0, 0, 0.319, -1.20748, -0.021855, 0.131834 )
-material_override = SubResource( 7 )
+material_override = SubResource( 6 )
 axis = 1
 shaded = true
 alpha_cut = 2
@@ -282,7 +282,7 @@ texture = ExtResource( 1 )
 
 [node name="Deck" type="Sprite3D" parent="Deck2"]
 transform = Transform( 0.318932, 0, 0, 0, 0.754314, 0, 0, 0, 0.318932, -1.332, 0, 0.095 )
-material_override = SubResource( 8 )
+material_override = SubResource( 7 )
 pixel_size = 0.02
 axis = 1
 shaded = true
@@ -295,7 +295,7 @@ cast_shadow = 3
 pixel_size = 0.02
 axis = 1
 alpha_cut = 2
-texture = SubResource( 9 )
+texture = SubResource( 8 )
 
 [node name="OmniLight3" parent="Deck2" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.742809, 0.297959, 0.0391541 )
