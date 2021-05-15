@@ -14,7 +14,7 @@ databaseName = "Rigging"
 shape = SubResource( 1 )
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform( 0.156181, 0, 0, 0, 0.156181, 0, 0, 0, 0.156181, 0, 0.0943699, 0 )
+transform = Transform( 0.156181, 0, 0, 0, 0.156181, 0, 0, 0, 0.156181, 0, 0.0253411, 0 )
 axis = 1
 shaded = true
 alpha_cut = 2

@@ -35,7 +35,7 @@ func _process(delta):
 	if is_instance_valid(positionRef):
 		self.rect_position =  positionRef.rect_position
 		self.rect_position.x -=  100 # half the width of panel
-		self.rect_position.y -=  270 # height of info panel
+		self.rect_position.y -=  250 # height of info panel
 
 
 func _on_ActiveToggle_toggled(button_pressed):

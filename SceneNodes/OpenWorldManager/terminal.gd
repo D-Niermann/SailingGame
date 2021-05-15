@@ -57,9 +57,9 @@ func _ready():
 	GlobalObjectReferencer.viewport = get_tree().get_root().get_viewport() # set the viewport in global refs (viewport has no script attached so it needs to be set here)
 	Utility.topograph = topograph # map for loading islands and also for pathfinding
 	Utility.dominions = dominions # map for goalfinding and pathfinding, shows regions
-	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), CELLSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(1, 0, 0), CELLSIZE, false))
-	spawn("example", Utility.partitionLocation(Vector3(0, 0, 1), CELLSIZE, false))
+	# spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), CELLSIZE, false))
+	# spawn("example", Utility.partitionLocation(Vector3(1, 0, 0), CELLSIZE, false))
+	# spawn("example", Utility.partitionLocation(Vector3(0, 0, 1), CELLSIZE, false))
 	if Utility.lastSlot != null:
 		loadGame(Utility.lastSlot)
 	else:
