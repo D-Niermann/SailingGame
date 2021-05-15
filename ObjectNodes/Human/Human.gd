@@ -37,7 +37,7 @@ var speed: float = 1 # maximum speed per second for this unit's movement
 
 
 func _ready():
-	targetPos = Vector3(0, 0, 0) # remove this line later, this is for test purpose
+	targetPos = Vector3(-2, 0, 0) # remove this line later, this is for test purpose
 	targetDeck = get_tree().get_nodes_in_group("PlayerDeck")[0] # remove this line later, this is for test purpose
 
 	targetPos.x += rand_range(-0.3,0.3)
@@ -93,11 +93,14 @@ func walkTowards(targetPos : Vector3): # this function is not needed anymore
 	self.translation += walkDir * 0.01
 	self.translation.y = 0 #bodyHeight
 
-	
 
 func _process(delta):
 #	walkTowards(targetPos) # this is not needed anymore
 	moveTo(delta, targetPos, targetDeck)
+	# this part below is for debugging, you can comment it out
+	for tile in pathLocs:
+		get_parent().markTile(tile)
+	print(currentTask)
 
 
 func createInfo(placeholder):
@@ -128,8 +131,6 @@ func removeInfo():
 	if infoPanel!=null:
 		infoPanel.queue_free()
 
-
-
 # Tries to move to the given location.
 func moveTo(delta: float, toLoc: Vector3, atDeck: Spatial):
 	if is_instance_valid(atDeck):
@@ -148,7 +149,7 @@ func findVelocity(delta: float, toLoc: Vector2, atDeck: Spatial):
 		pathDeck = atDeck
 		nextDest = null
 	# removing location from path if reached
-	var thisPart: Vector2 = partitionID(Vector2(translation.x, translation.y), GlobalObjectReferencer.shopping.TILEWIDTH)
+	var thisPart: Vector2 = partitionID(Vector2(translation.x, translation.z), GlobalObjectReferencer.shopping.TILEWIDTH)
 	if !pathLocs.empty() && pathLocs[-1] == thisPart:
 		pathLocs.pop_back()
 #		print("waypointReached")
@@ -176,7 +177,7 @@ func findVelocity(delta: float, toLoc: Vector2, atDeck: Spatial):
 #		print("noDestinations")
 		return Vector3.ZERO
 	elif atDeck != get_parent():
-		if translation.distance_squared_to(Vector3(nextDest.x, 0, nextDest.y)) < 0.25:
+		if Vector3(translation.x, 0, translation.z).distance_squared_to(Vector3(nextDest.x, 0, nextDest.y)) < 0.25:
 			assignDeck(atDeck)
 #			print("changedDecks")
 			return Vector3.ZERO
@@ -186,12 +187,10 @@ func findVelocity(delta: float, toLoc: Vector2, atDeck: Spatial):
 	if destDist == 0: # means we already are inside the tile
 #		print("sameTile")
 #		return Vector3.ZERO # opt for this one if you don't want units to keep going till they reach the center of the tile
-		var localCoordinates = partitionLocation(nextDest, GlobalObjectReferencer.shopping.TILEWIDTH)
-		return adjustVelocity(delta, Vector3(localCoordinates.x, 0, localCoordinates.y) - translation, speed)
+		return adjustVelocity(delta, Vector3(nextDest.x, 0, nextDest.y) - Vector3(translation.x, 0, translation.z), speed)
 	elif destDist < 2: # means we are so close that we can directly go towards
 #		print("adjacentTile")
-		var localCoordinates = partitionLocation(nextDest, GlobalObjectReferencer.shopping.TILEWIDTH)
-		return adjustVelocity(delta, Vector3(localCoordinates.x, 0, localCoordinates.y) - translation, speed)
+		return adjustVelocity(delta, Vector3(nextDest.x, 0, nextDest.y) - Vector3(translation.x, 0, translation.z), speed)
 	else: # means it is far away and we need to follow path
 		if !pathLocs.empty() && !toIgnore.has(pathLocs[0]):
 			toIgnore.append(pathLocs[0])
@@ -204,7 +203,8 @@ func findVelocity(delta: float, toLoc: Vector2, atDeck: Spatial):
 		if !pathLocs.empty(): # path is available
 #			print("followingPath")
 			var localCoordinates = partitionLocation(pathLocs[-1], GlobalObjectReferencer.shopping.TILEWIDTH)
-			return adjustVelocity(delta, Vector3(localCoordinates.x, 0, localCoordinates.y) - translation, speed)
+#			print("local: "+str(localCoordinates)+" for: "+str(pathLocs[-1]))
+			return adjustVelocity(delta, Vector3(localCoordinates.x, 0, localCoordinates.y) - Vector3(translation.x, 0, translation.z), speed)
 		else:
 #			print("pathIsEmpty")
 			return Vector3.ZERO # this means no path has been found
@@ -213,15 +213,12 @@ func findVelocity(delta: float, toLoc: Vector2, atDeck: Spatial):
 func adjustVelocity(delta: float, velocity: Vector3, maxSpeed: float):
 	var sqrMagnitude: float = velocity.length_squared()
 	if sqrMagnitude > pow(maxSpeed, 2):
-		print("hmm")
 		return velocity.normalized() * maxSpeed
 	else:
 		var estLength: float = pathLocs.size() * GlobalObjectReferencer.shopping.TILEWIDTH
 		if maxSpeed > pow(estLength, 2):
-			# print("huh")
 			return velocity.normalized() * estLength
 		else:
-			# print("pff")
 			return velocity.normalized() * maxSpeed
 
 # Finds path between the given parts.
@@ -247,7 +244,6 @@ func findPath(from: Vector2, to: Vector2, canCross: bool):
 				continue
 			var path: Array = paths[lowest]["path"].duplicate(true)
 			path.append(part)
-			get_parent().markTile(part)
 			paths[part] = {"path": path, "dist": paths[lowest]["dist"] + 1}
 			open[part] = null
 			if part == to:
