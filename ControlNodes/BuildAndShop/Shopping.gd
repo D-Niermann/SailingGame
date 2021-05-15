@@ -341,14 +341,15 @@ func tiles4(targetPosition: Vector3, targetRotation: Vector2, targetDimensions: 
 	var offset = Vector3(1 - fmod(targetDimensions.x, 2), 0, 1 - fmod(targetDimensions.z, 2)) * TILEWIDTH * 0.5
 	targetPosition += offset
 	# finding the top leftmost partition
-	#var partition: Vector3 = (targetCoordinates / TILEWIDTH).floor()
+	var partition: Vector3 = (targetPosition / TILEWIDTH).floor()
 	# offsetting and appending as many tiles as dimensions
 	for x in range(targetDimensions.x):
 		for z in range(targetDimensions.z):
 			#occupation.append(partition + Vector3(x, 0, z))
-			var tempValue: Vector2 = Vector2(targetPosition.x, targetPosition.z) + Vector2(x, z) * TILEWIDTH
-			tempValue = Vector2(stepify(tempValue.x, 0.1), stepify(tempValue.y, 0.1))
-			occupation.append(tempValue)
+			occupation.append(Vector2(partition.x, partition.z) + Vector2(x, z))
+			#var tempValue: Vector2 = Vector2(targetPosition.x, targetPosition.z) + Vector2(x, z) * TILEWIDTH
+			#tempValue = Vector2(stepify(tempValue.x, 0.1), stepify(tempValue.y, 0.1))
+			#occupation.append(tempValue)
 	return occupation
 
 

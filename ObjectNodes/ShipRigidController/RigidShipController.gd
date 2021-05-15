@@ -8,6 +8,8 @@ RigidBody Needs a linear damping of approx 5!
 
 """
 
+var stairs: Array = [Vector2(-1.5, 0.0)]
+
 export(bool) var isPlayer = false
 export(bool) var isUnsinkable = false
 export var impulse_factor = 3.0 # overall impulse stength, all impulses should be multiplied by this
