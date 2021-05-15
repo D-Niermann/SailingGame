@@ -52,6 +52,7 @@ var itemAssignmentsAndInventory = { # keeps track of all items based on these as
 }
 
 const HUMAN: PackedScene = preload("res://ObjectNodes/Human/Human.tscn")
+var currentlyPathfinding = null
 
 func _ready():
 	## base variable init
@@ -79,6 +80,7 @@ func _ready():
 
 	
 func _physics_process(delta):
+	currentlyPathfinding = null
 	updateMen()
 	checkAndAssignJobTasks() 
 	checkAndAssignFetchTasks()
