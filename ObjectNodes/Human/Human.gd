@@ -20,7 +20,7 @@ var stati = [] #keeps track of all stati (stati = [S_Hungry, S_THIRSTY, ...])
 var targetPos = Vector3.ZERO
 var targetDeck = null # this needs to get set
 var currentDeck = 0 # I don't need that, you can remove this variable
-var bodyHeight = 0.1
+var bodyHeight = 0.3
 var itemFetchTime = 2
 # var currentTaskGroup = null
 var isHuman = true # flag for shopping script to see if this kin body is human
@@ -230,7 +230,7 @@ func findPath(from: Vector2, to: Vector2, canCross: bool):
 	var paths: Dictionary = {from: {"path": [from], "dist": 0}}
 	var open: Dictionary = {from: null}
 	var close: Dictionary = {}
-	var limit: int = 100
+	var limit: int = 300
 	while limit > 0 && !open.empty():
 		var lowest: Vector2
 		var value: int = -1
@@ -256,7 +256,7 @@ func findPath(from: Vector2, to: Vector2, canCross: bool):
 				break
 		limit -= 1
 	if temp == null:
-		print("failedToFindPath")
+		print("failedToFindPath to: ",to)
 		return []
 		var lowest: Vector2
 		var value: int = -1
