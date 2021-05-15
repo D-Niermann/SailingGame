@@ -95,6 +95,7 @@ margin_left = 149.487
 margin_top = 118.422
 margin_right = 208.487
 margin_bottom = 151.422
+text = "000"
 __meta__ = {
 "_edit_use_anchors_": false
 }

@@ -6,6 +6,7 @@ var frac: float = 0.0
 var updatePeriodForEconomy: float = 64.0
 
 const PROXMARK: PackedScene = preload("res://ControlNodes/Indicators/mark.tscn")
+const CELLSIZE: float = 16.0 # width of each cell
 const PARTSIZE: float = 64.0 # width of each partition
 const EXTENDED: bool = false # if the grid is 3D, or 2D
 const CANCROSS: bool = true # if moving crosswise is possible
@@ -18,7 +19,7 @@ var items: Dictionary = {} # {Vector3(0, 0, 0): ["example"]} # arrays of partiti
 var live: Dictionary = {} # partitions that are live/spawned already
 var data: Dictionary = {} # {"example": {"preset": "example", "xform": Transform.IDENTITY}} # names and properties of every single scene in the world
 var refs: Dictionary = {} # names, references, and loaders
-
+var occd: Dictionary = {} # occupied cells and occupying unit
 var wars: Dictionary = {
 	"spanish": ["french"],
 	"french": ["spanish"]
@@ -48,31 +49,17 @@ var NPC01: PackedScene = preload("res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn"
 func _ready():
 	viewport = get_node("ViewportContainer/Viewport")
 	# camera = viewport.get_node("GameCamera")
-	
 	indicators = get_node("Interface/Indicators")
 	var topographTexture: Texture = load("res://SceneNodes/OpenWorldManager/topograph.png")
-
 	var dominionsTexture: Texture = load("res://SceneNodes/OpenWorldManager/dominions.png")
 	topograph = topographTexture.get_data()
 	dominions = dominionsTexture.get_data()
 	GlobalObjectReferencer.viewport = get_tree().get_root().get_viewport() # set the viewport in global refs (viewport has no script attached so it needs to be set here)
 	Utility.topograph = topograph # map for loading islands and also for pathfinding
 	Utility.dominions = dominions # map for goalfinding and pathfinding, shows regions
-	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-	# spawn("example", Utility.partitionLocation(Vector3(1, 0, 0), PARTSIZE, false))
-	# spawn("example", Utility.partitionLocation(Vector3(2, 0, 0), PARTSIZE, false))
-	# spawn("example", Utility.partitionLocation(Vector3(3, 0, 0), PARTSIZE, false))
-	# spawn("example", Utility.partitionLocation(Vector3(4, 0, 0), PARTSIZE, false))
-	# spawn("example", Utility.partitionLocation(Vector3(5, 0, 0), PARTSIZE, false))
-#	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-#	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-#	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-#	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-#	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-#	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-#	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-#	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
-#	spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), PARTSIZE, false))
+	# spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), CELLSIZE, false))
+	# spawn("example", Utility.partitionLocation(Vector3(1, 0, 0), CELLSIZE, false))
+	# spawn("example", Utility.partitionLocation(Vector3(0, 0, 1), CELLSIZE, false))
 	if Utility.lastSlot != null:
 		loadGame(Utility.lastSlot)
 	else:
@@ -193,6 +180,13 @@ func _physics_process(delta):
 			var holo = runAI(unit, part, sidesOrganized, inProx, delta)
 			# maintaining consistency, we update all necessary data after the behavior, so things don't fall apart
 			var info: Dictionary = data[unit]
+			var newCell = Utility.partitionID(info["xform"].origin, CELLSIZE, EXTENDED) # new cell of this unit
+			var cell = info.get("cell")
+			if cell != newCell:
+				if cell != null && occd.get(cell) == unit:
+					occd.erase(cell)
+				occd[newCell] = unit
+				info["cell"] = newCell
 			var newPart = Utility.partitionID(info["xform"].origin, PARTSIZE, EXTENDED) # new partition of this unit
 			if newPart != part: # if partition has changed, we update and load/unload if necessary
 				units[part].erase(unit)
@@ -203,10 +197,10 @@ func _physics_process(delta):
 				units[newPart].append(unit)
 			if live.has(newPart): # if new partition is live but unit is not spawned, we spawn it
 				if holo == null:
-					print("spawned")
+					# print("spawned")
 					var pre = presets[info["preset"]].get("PRE")
 					if pre != null:
-						print("using preloaded NPC")
+						# print("using preloaded NPC")
 						holo = get(pre).instance()
 					else:
 						holo = load(presets[info["preset"]]["RES"]).instance()
@@ -280,52 +274,54 @@ func insertPart(part):
 func removePart(part):
 	if walls.has(part):
 		for wall in walls[part]:
-			#var holo = viewport.get_node_or_null(wall)
 			if refs.has(wall):
 				var holo = refs[wall]["holo"]
-			#if holo != null:
 				holo.queue_free()
 				refs.erase(wall)
 	if units.has(part):
 		for unit in units[part]:
-			#var holo = viewport.get_node_or_null(unit)
 			if refs.has(unit):
 				var holo = refs[unit]["holo"]
-			#if holo != null:
 				holo.queue_free()
 				refs.erase(unit)
 	if items.has(part):
 		for item in items[part]:
-			#var holo = viewport.get_node_or_null(item)
 			if refs.has(item):
 				var holo = refs[item]["holo"]
-			#if holo != null:
 				holo.queue_free()
 				refs.erase(item)
 
 
 # Spawns node from data, or creates new from preset. Everytime you create/spawn something that should persist as data, use this.
 func spawn(key: String, at: Vector3):
-	var target: Vector3 = Utility.partitionID(at, PARTSIZE, EXTENDED)
+	var atPart: Vector3 = Utility.partitionID(at, PARTSIZE, EXTENDED)
+	var atCell: Vector3 = Utility.partitionID(at, CELLSIZE, EXTENDED)
 	var info = data.get(key)
 	# if exists, reposition
 	if info != null:
-		var current = Utility.partitionID(info["xform"].origin, PARTSIZE, EXTENDED)
+		var fromPart = Utility.partitionID(info["xform"].origin, PARTSIZE, EXTENDED)
+		var fromCell = Utility.partitionID(info["xform"].origin, CELLSIZE, EXTENDED)
 		info["xform"].origin = at
+		# if cells are different, switch
+		if atCell != fromCell:
+			if occd.get(fromCell) == key:
+				occd.erase(fromCell)
+			info["cell"] = atCell
+			occd[atCell] = key
 		# if parts are different, switch
-		if target != current:
+		if atPart != fromPart:
 			var preset: Dictionary = presets[info["preset"]]
 			var type: String = preset["CON"]
 			var list: Dictionary = get(type)
-			if list.has(current):
-				list[current].erase(key)
-				if list[current].empty():
-					list.erase(current)
-			if !list.has(target):
-				list[target] = []
-			list[target].append(key)
+			if list.has(fromPart):
+				list[fromPart].erase(key)
+				if list[fromPart].empty():
+					list.erase(fromPart)
+			if !list.has(atPart):
+				list[atPart] = []
+			list[atPart].append(key)
 		# if part is live, summon
-		if live.has(target):
+		if live.has(atPart):
 			var holo = viewport.get_node_or_null(key)
 			if holo == null:
 				var preset: Dictionary = presets[info["preset"]]
@@ -338,7 +334,7 @@ func spawn(key: String, at: Vector3):
 				holo.name = key
 			holo.global_transform = info["xform"]
 			refs[key] = {"holo": holo}
-		elif live.has(current):
+		elif live.has(fromPart):
 			var holo = viewport.get_node_or_null(key)
 			if holo != null:
 				holo.queue_free()
@@ -358,15 +354,18 @@ func spawn(key: String, at: Vector3):
 						info[entry] = preset[entry]
 			info["xform"] = Transform.IDENTITY
 			info["xform"].origin = at
+			info["cell"] = atCell
 			data[unique] = info
+			# place in cell
+			occd[atCell] = unique
 			# place in part
 			var type: String = preset["CON"]
 			var list: Dictionary = get(type)
-			if !list.has(target):
-				list[target] = []
-			list[target].append(unique)
+			if !list.has(atPart):
+				list[atPart] = []
+			list[atPart].append(unique)
 			# if part is live, summon
-			if live.has(target):
+			if live.has(atPart):
 				var holo = null
 				var pre = preset.get("PRE")
 				if pre != null:
@@ -606,25 +605,44 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 				info["goal"] = null
 			
 		
+	# find destination cell location
+	if dest == null:
+		dest = part
+	var diff = dest - part
+	var cell = Utility.partitionID(info["xform"].origin, CELLSIZE, EXTENDED)
+	dest = Utility.partitionLocation(cell, CELLSIZE, EXTENDED)
+	if !occd.has(cell + diff) || occd.get(cell + diff) == unit:
+		var locationOfDestinationCell = Utility.partitionLocation(cell + diff, CELLSIZE, EXTENDED)
+		dest = locationOfDestinationCell
+	else:
+		var overlaps: Array = Utility.findOverlapping(Utility.findAdjacent(cell, CANCROSS, EXTENDED), Utility.findAdjacent(cell + diff, CANCROSS, EXTENDED))
+		for overlap in overlaps:
+			var locationOfOverlappingCell = Utility.partitionLocation(overlap, CELLSIZE, EXTENDED)
+			var partOfOverlappingCell = Utility.partitionID(locationOfOverlappingCell, PARTSIZE, EXTENDED)
+			if Utility.isOccupied(partOfOverlappingCell):
+				continue
+			var occupiedBy = occd.get(overlap)
+			if occupiedBy != null && occupiedBy != unit:
+				continue
+			dest = locationOfOverlappingCell
+			break
+		
 	if holo != null: # runs when unit is live
 		var results: Dictionary
 		var controller = holo.get_node_or_null("AIController")
-		if dest == null:
-			dest = part
 		if controller != null:
 			var temp: Vector3 = Utility.partitionLocation(dest, PARTSIZE, false)
 			results = controller.update(Vector2(temp.x, temp.z), inProx)
 		info["xform"] = holo.global_transform # at the end, update transform
 	else: # runs when unit is offscreen
 		# move transform
-		var direction = Vector3.ZERO
-		if dest != null:
-			direction = (dest - part).normalized()
-		# update transform
+		var squaredLimit = pow(preset["SPEED"] / info["weight"], 2)
+		var direction: Vector3 = dest - info["xform"].origin
+		if direction.length_squared() > squaredLimit:
+			direction = direction.normalized() * squaredLimit
 		if direction != Vector3.ZERO:
 			info["xform"].origin += direction * delta * boost * preset["SPEED"] / info["weight"]
 			info["xform"] = info["xform"].looking_at(info["xform"].origin + direction * 1000, Vector3.UP)
-		#print(info["xform"].origin)
 	return holo
 
 

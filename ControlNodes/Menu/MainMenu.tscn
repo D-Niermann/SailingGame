@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Fonts/LCALLIG.TTF" type="DynamicFontData" id=1]
 [ext_resource path="res://ControlNodes/Menu/MainMenu.gd" type="Script" id=2]
@@ -6,10 +6,14 @@
 [ext_resource path="res://ControlNodes/Music/scenes/MainMenuMusicMixer.tscn" type="PackedScene" id=4]
 
 [sub_resource type="DynamicFont" id=1]
-size = 40
+size = 50
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=2]
+size = 40
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
 size = 20
 font_data = ExtResource( 1 )
 
@@ -63,14 +67,25 @@ __meta__ = {
 [node name="Menu" type="ColorRect" parent="Interface"]
 anchor_right = 0.179
 anchor_bottom = 1.0
+margin_right = 87.28
+margin_bottom = 0.00012207
 color = Color( 0, 0, 0, 0.490196 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="Control" parent="Interface/Menu"]
+[node name="TitleLabel" type="Label" parent="Interface/Menu"]
 anchor_right = 1.0
-anchor_bottom = 0.4
+anchor_bottom = 1.0
+margin_bottom = -630.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 0.607843, 0, 1 )
+text = "The Captains Commands"
+align = 1
+valign = 1
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -84,7 +99,7 @@ __meta__ = {
 }
 
 [node name="Continue" type="TextureButton" parent="Interface/Menu/List"]
-margin_right = 300.0
+margin_right = 388.0
 margin_bottom = 60.0
 rect_min_size = Vector2( 0, 60 )
 size_flags_horizontal = 3
@@ -94,7 +109,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Continue"
 align = 1
 valign = 1
@@ -104,7 +119,7 @@ __meta__ = {
 
 [node name="NewGame" type="TextureButton" parent="Interface/Menu/List"]
 margin_top = 64.0
-margin_right = 300.0
+margin_right = 388.0
 margin_bottom = 124.0
 rect_min_size = Vector2( 0, 60 )
 size_flags_horizontal = 3
@@ -114,7 +129,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "New Game"
 align = 1
 valign = 1
@@ -124,7 +139,7 @@ __meta__ = {
 
 [node name="Options" type="TextureButton" parent="Interface/Menu/List"]
 margin_top = 128.0
-margin_right = 300.0
+margin_right = 388.0
 margin_bottom = 188.0
 rect_min_size = Vector2( 0, 60 )
 size_flags_horizontal = 3
@@ -134,7 +149,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Options"
 align = 1
 valign = 1
@@ -144,7 +159,7 @@ __meta__ = {
 
 [node name="Credits" type="TextureButton" parent="Interface/Menu/List"]
 margin_top = 192.0
-margin_right = 300.0
+margin_right = 388.0
 margin_bottom = 252.0
 rect_min_size = Vector2( 0, 60 )
 size_flags_horizontal = 3
@@ -154,7 +169,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Credits"
 align = 1
 valign = 1
@@ -164,7 +179,7 @@ __meta__ = {
 
 [node name="QuitGame" type="TextureButton" parent="Interface/Menu/List"]
 margin_top = 256.0
-margin_right = 300.0
+margin_right = 388.0
 margin_bottom = 376.0
 rect_min_size = Vector2( 0, 120 )
 size_flags_horizontal = 3
@@ -174,7 +189,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 size_flags_horizontal = 3
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 text = "Quit Game"
 align = 1
 valign = 1
@@ -186,7 +201,7 @@ __meta__ = {
 anchor_top = 0.95
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 3 )
 text = "VersionX_"
 align = 2
 valign = 2
@@ -209,6 +224,7 @@ __meta__ = {
 [node name="Container" type="GridContainer" parent="Interface/Continue"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 87.0
 mouse_filter = 0
 columns = 2
 __meta__ = {

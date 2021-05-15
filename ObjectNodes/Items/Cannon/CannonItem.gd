@@ -5,20 +5,20 @@ extends "res://ObjectNodes/Items/BaseItem.gd"
 ### Paramters
 export var BallScene: PackedScene # scene object of ball
 
-export(float) var force          = 0.6 # for trajectory prediction: force of ball
-export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
-export(float) var recoil_impulse = 0.3 # when firing to the ship
-export var isTestCannon          = false # if cannon is fired when aiming and left clicking, (to test trajectory, without firing the whole broadside), can be set as a gameplay elemetn in th info panel
-var    drag                      = 0.05 # for trajectory prediction: drag of ball
-var    rand_max_delay            = 1.0 # max delay in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
-var    reload_time_sec           = 10 # reload time in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
-var    cam_shake                 = 0.1 # the amount of camera shake added to camera when shooting
-const  rotateSpeed               = 0.002 # max rotation speed of cannons (up/down rotation is scaled down )
-const  maxRotateAngle            = 20 # in degree,                                           left right rotation
-var    maxUpAngle                = 10 # angle distance in degreee from original rotation that is allowed
-var    minUpAngle                = -5 # angle distance in degreee from original rotation that is allowed
-const  unprecision               = 4 # in units,                                             how max unprecise a connon is (random)
-var    markerMoveSpeed           = 0.05 # how fast markes of trajectory move
+export(float) var force              = 0.6 # for trajectory prediction: force of ball
+export(float) var fire_delay_sec     = 0.1 # fire delay after pressing fire button
+export(float) var recoil_impulse     = 0.3 # when firing to the ship
+export(bool)  var isTestCannon       = false # if cannon is fired when aiming and left clicking, (to test trajectory, without firing the whole broadside), can be set as a gameplay elemetn in th info panel
+export(float) var    drag            = 0.05 # for trajectory prediction: drag of ball
+export(float) var    rand_max_delay  = 1.0 # max delay in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
+export(float) var    reload_time_sec = 10 # reload time in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
+export(float) var    cam_shake       = 0.1 # the amount of camera shake added to camera when shooting
+export(float) var    rotateSpeed     = 0.002 # max rotation speed of cannons (up/down rotation is scaled down )
+export(float) var    maxRotateAngle  = 20 # in degree,                                           left right rotation
+export(float) var    maxUpAngle      = 10 # angle distance in degreee from original rotation that is allowed
+export(float) var    minUpAngle      = -5 # angle distance in degreee from original rotation that is allowed
+export(float) var    unprecision     = 4 # in units,                                             how max unprecise a connon is (random)
+export(float) var    markerMoveSpeed = 0.05 # how fast markes of trajectory move
 
 
 ### 
@@ -46,6 +46,10 @@ var forward2d = Vector2(1,0)
 var trajectoryPoints : Array
 var org_forward
 var reloadTimer : Timer
+
+
+
+
 func _ready():
 
 	marker = $TrajectoryMarkerGroup.get_children()
@@ -94,7 +98,8 @@ func _process(delta):
 	forward = transform.basis.x.normalized()
 
 	if playerAimCannons and isActive and GlobalObjectReferencer.crewManager.items[id].crewScore>0:
-		aimTo(GlobalObjectReferencer.ocean.waterMousePos)
+		if GlobalObjectReferencer.crewManager.getInventoryCount(id, "Gunpowder")>0 and GlobalObjectReferencer.crewManager.getInventoryCount(id, "Cannonballs")>0: # if enough in inventory
+			aimTo(GlobalObjectReferencer.ocean.waterMousePos)
 	
 	# if infoPanel!=null:
 	# 	isActive = infoPanel.isActive
@@ -124,8 +129,6 @@ func aimTo(global_position : Vector3):
 
 func giveDmg(damage):
 	.giveDmg(damage)
-	if infoPanel!=null:
-		infoPanel.updateHealth(currentHealth)
 
 func _unhandled_input(event):
 	# Receives key input
@@ -163,15 +166,15 @@ func predictTrajectory():
 		point = fakeBullet.transform.origin
 		trajectoryPoints[i] = point
 		if GlobalObjectReferencer.ocean!=null:
-			waterHeight = GlobalObjectReferencer.ocean.getWaterHeight(to_global(point))
+			waterHeight = GlobalObjectReferencer.ocean.getWaterHeight(to_global(point))-0.4 # small negative offset because for some reason markers appear to be floating above water 
 		if to_global(point).y>waterHeight:
 		
 			marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*markerMoveSpeed
 			if i>1:
 				if reloaded:
-					marker[i].material_override.albedo_color = Color(1,1,1,0.5)
+					marker[i].modulate = Color(1,1,1,0.5)
 				else:
-					marker[i].material_override.albedo_color = Color(0.6,0.2,0.2,0.5)
+					marker[i].modulate = Color(0.6,0.2,0.2,0.5)
 				marker[i].visible = true
 			fakeBullet.transform.origin += Vector3(1,0,0)*force*5.2/(1+i*0.05)
 			fakeBullet.global_transform.origin += Vector3(0,-1,0)*0.015*i 
@@ -195,13 +198,17 @@ func predictTrajectory():
 		for i in range(last_i, lineSize):
 			trajectoryPoints[i] = preciseWaterPoint
 			marker[i].translation += (trajectoryPoints[i] - marker[i].translation)*markerMoveSpeed
+			if reloaded:
+				marker[i].modulate = Color(1,1,1,0.5)
+			else:
+				marker[i].modulate = Color(0.6,0.2,0.2,0.5)
 			marker[i].visible = true
 
 
 	if reloaded:
-		waterHitMarker.material_override.albedo_color = Color(1,1,1,0.5)
+		waterHitMarker.modulate = Color(1,1,1,0.5)
 	else:
-		waterHitMarker.material_override.albedo_color = Color(0.6,0.2,0.2,0.5)
+		waterHitMarker.modulate = Color(0.6,0.2,0.2,0.5)
 	waterHitMarker.visible = true
 	waterHitMarker.translation += (trajectoryPoints[lineSize-1] - waterHitMarker.translation)*markerMoveSpeed
 
@@ -218,21 +225,24 @@ func clearTrajectory():
 
 func fireBall():
 	if GlobalObjectReferencer.crewManager.items[id].crewScore>0 and reloaded and isActive and canShoot:
-		reloaded = false
-		# yield(get_tree().create_timer(fire_delay_sec),"timeout")
-		yield(get_tree().create_timer(fire_delay_sec+rand_range(0,rand_max_delay)),"timeout")
-		doParticles()
-		GlobalObjectReferencer.camera.shake_val += cam_shake/clamp(GlobalObjectReferencer.camera.global_transform.origin.distance_to(global_transform.origin)*0.02,1,99999)
-		GlobalObjectReferencer.playerShip.applyCannonImpulse(translation, transform.basis.z.normalized()*recoil_impulse)
-		playAudio()
-		var ball = BallScene.instance()
-		get_tree().get_root().add_child(ball)
-		ball.set_name("Ball")
-		ball.transform.origin = self.global_transform.origin+ self.global_transform.basis.x*1 # + foward to give ball a forward offset to get behind own walls
-		ball.dir = global_transform.basis.x
-		ball.velocity = force
-		reloadTimer.set_wait_time(reload_time_sec/GlobalObjectReferencer.crewManager.items[id].crewScore) 
-		reloadTimer.start()
+		if GlobalObjectReferencer.crewManager.getInventoryCount(id, "Gunpowder")>0 and GlobalObjectReferencer.crewManager.getInventoryCount(id, "Cannonballs")>0: # if inventory is noit empty
+			reloaded = false
+			# yield(get_tree().create_timer(fire_delay_sec),"timeout")
+			yield(get_tree().create_timer(fire_delay_sec+rand_range(0,rand_max_delay)),"timeout")
+			doParticles()
+			GlobalObjectReferencer.camera.shake_val += cam_shake/clamp(GlobalObjectReferencer.camera.global_transform.origin.distance_to(global_transform.origin)*0.02,1,99999)
+			GlobalObjectReferencer.playerShip.applyCannonImpulse(translation, transform.basis.z.normalized()*recoil_impulse)
+			playAudio()
+			var ball = BallScene.instance()
+			get_tree().get_root().add_child(ball)
+			ball.set_name("Ball")
+			ball.transform.origin = self.global_transform.origin+ self.global_transform.basis.x*1 # + foward to give ball a forward offset to get behind own walls
+			ball.dir = global_transform.basis.x
+			ball.velocity = force
+			reloadTimer.set_wait_time(reload_time_sec/GlobalObjectReferencer.crewManager.items[id].crewScore) 
+			reloadTimer.start()
+			GlobalObjectReferencer.crewManager.consumeGood(Economy.IG_GEAR,id,"Gunpowder", true)
+			GlobalObjectReferencer.crewManager.consumeGood(Economy.IG_GEAR,id,"Cannonballs", true)
 
 
 ## TODO: change these funtions into 1 or 2 functions

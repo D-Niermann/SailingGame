@@ -25,7 +25,7 @@ const TG_NAVIGATION = "tgNavigation"
 const TG_UTILITY = "tgUtility"
 const TG_RELAX = "tgRelax"
 
-var targetCrewCount = {TG_NAVIGATION : 0, TG_WEAPONS: 0, TG_UTILITY : 5} # tells the manager how many men to assign to what group, this var gets changed by player input
+var targetCrewCount = {TG_NAVIGATION : 0, TG_WEAPONS: 0, TG_UTILITY : 0} # tells the manager how many men to assign to what group, this var gets changed by player input
 
 var decks # ref list of all decks on player ship
 # var humanNodes # list of all humans on ship (refs) needed? -> check currentAssignments
@@ -44,11 +44,11 @@ var currentAssignments = {TG_RELAX:       {"idle": {}, "busy": []}, # refs to hu
 var items = {} # {itemID: {"itemRef": ref, "jobs": {jobID1 : {manID : ID, isReady: false}, jobID2 : {}, ...}}} # to quicly find man with manID, check the item.jobID description - it has the TG and prio in it
 
 var itemAssignmentsAndInventory = { # keeps track of all items based on these assignments and also whats stored in their inventory
-		IG_GUNPOWDER: {},      # ID: {position : Vec3, inventory : {"blocked" : {}, "free" : {}}}
-		IG_AMMO     : {},      # ID: {position : Vec3, inventory : {"blocked" : {}, "free" : {}}}
-		IG_FOOD     : {},      # ID: {position : Vec3, inventory : {"blocked" : {}, "free" : {}}}
-		IG_UTILITY  : {},      # ID: {position : Vec3, inventory : {"blocked" : {}, "free" : {}}}
-		IG_GEAR     : {},      # ID: {position : Vec3, inventory : {"blocked" : {}, "free" : {}}}
+		IG_GUNPOWDER: {},      # ID: {position : Vec3, inventory : {"goodName1" : {}, "goodName2" : {}}}
+		IG_AMMO     : {},      # ID: {position : Vec3, inventory : {"goodName1" : {}, "goodName2" : {}}}
+		IG_FOOD     : {},      # ID: {position : Vec3, inventory : {"goodName1" : {}, "goodName2" : {}}}
+		IG_UTILITY  : {},      # ID: {position : Vec3, inventory : {"goodName1" : {}, "goodName2" : {}}}
+		IG_GEAR     : {},      # ID: {position : Vec3, inventory : {"goodName1" : {}, "goodName2" : {}}}
 }
 
 const HUMAN: PackedScene = preload("res://ObjectNodes/Human/Human.tscn")
@@ -74,7 +74,7 @@ func _ready():
 	for i in range(len(humanNodes)):
 		currentAssignments[TG_UTILITY]["idle"][humanNodes[i].id] = humanNodes[i]
 		humanNodes[i].assignDeck(decks[0])
-	print(currentAssignments)
+	# print(currentAssignments)
 
 
 	
@@ -120,7 +120,7 @@ func checkAndAssignFetchTasks():
 			task = fetchTasks[p][i]
 
 			if task.storageItemID!= null and not items.has(task.storageItemID): # if storage item is gone, queue new task and remove old one
-				requestGood(task.goodName, items[task.targetItemID].itemRef, task.storageIG, task.targetIG, task.priority)
+				requestGood(task.goodName, items[task.targetItemID].itemRef, task.storageIG, task.priority)
 				fetchTasks[p].remove(i)
 				return
  
@@ -130,6 +130,14 @@ func checkAndAssignFetchTasks():
 				if itemFound:
 					var manFound =  findAndAssignBestMen(task)
 					if manFound == true:
+						## reduce item count of the found resource barel
+						consumeGood(task.storageIG, task.storageItemID, task.goodName)
+						## if inventory of barrel empty, request new items with low priority (this will more or less equally distribute goods in barrels)
+						## IDea: track total ammout of each item on the ship and use that number for if check if its high enought to make new barrel request
+						# if (task.storageIG == Economy.IG_GUNPOWDER or task.storageIG == Economy.IG_AMMO) and getInventoryCount(task.storageItemID, task.goodName)==0:
+							# for _i in range(Economy.getCapacity(items[task.storageItemID].databaseName)[task.goodName]/4):
+							# 	print("Warning [Buggy]: Barrel makes request because its empty!")
+							# 	requestGood(task.goodName, items[task.storageItemID].itemRef, task.storageIG, numberOfPriorities-1)
 						## remove task if man was found
 						fetchTasks[p].remove(i)
 						## break here to save CPU (only one fetch task per frame gets assigned this way)
@@ -143,11 +151,12 @@ func checkAndAssignFetchTasks():
 func searchAndAddNearStorageItem(task):
 	var storageItemRef = null
 	var minDist = 9999999
-	## search for nearest barrel of item group and add it to task
+	## search for nearest barrel of item group 
 	for id in (itemAssignmentsAndInventory[task.storageIG]):
-		if (task.targetItemPos-items[id].itemRef.translation).length()<minDist and itemAssignmentsAndInventory[task.storageIG][id].inventory[task.goodName]>0: # TODO: put real range check here and also check if that item has enough goods in the inventory["free"] list
+		if (task.targetItemPos-items[id].itemRef.translation).length()<minDist and itemAssignmentsAndInventory[task.storageIG][id].inventory[task.goodName]>0: 
 			minDist = (task.targetItemPos-items[id].itemRef.translation).length()
 			storageItemRef = items[id].itemRef
+	# add the found item to task  
 	if storageItemRef != null:
 		task["storageItemID"] = storageItemRef.id 
 		task["storageItemPos"] = storageItemRef.transform.origin
@@ -177,7 +186,7 @@ func updateMen():
 			## man needs to be removed from TG into relaxed
 			## first pick idle man, then the ones with highest priorityNumber
 			for manID in currentAssignments[TG]["idle"]:
-				print("force idle into relax: ",manID)
+				# print("force idle into relax: ",manID)
 				forceManintoRelaxed(TG, "idle", currentAssignments[TG]["idle"][manID])
 				return
 			for prio in range(numberOfPriorities-1,-1,-1):
@@ -216,13 +225,13 @@ func updateMen():
 				if manRef.currentTask.type == JOB_TASK: 
 					## if manRef is not assigned to his item yet, check if he can be
 					if manRef.itemID!=null && items[manRef.itemID].jobs[manRef.jobID].isReady==false:
-						if (manRef.translation-manRef.targetPos).length()<manRef.bodyHeight*5: # if human is within his body height close to item
-							# manRef.targetItem.assignManToItem(manID, {"taskGroup": TG, "priority": prio}) # give item and infoDict so that later the item can also tell CrewManager where to find id
+						if (manRef.translation-manRef.targetPos).length()<manRef.bodyHeight*2: # if human is within his body height close to item
 							## set the manRef of the item to "is ready"
 							items[manRef.itemID].jobs[manRef.jobID].isReady = true
+							## set the crew rating to this item
 							items[manRef.itemID].crewScore = getCrewScore(manRef.itemID)
 				
-				## check buys man with fetch task (put this into one function like checkManFetchTaskComplete(manRef))
+				## check busy man with fetch task (put this into one function like checkManFetchTaskComplete(manRef))
 				elif manRef.currentTask.type == FETCH_TASK:
 					checkManFetchTaskComplete(manRef)
 					
@@ -232,7 +241,7 @@ func checkManFetchTaskComplete(manRef):
 	Checks if man manRef is close to his target item, if so proceeds to next item. checks if items still are defined, if not clears man from task and so on
 	"""
 	var currTask = manRef.currentTask
-	if items.has(currTask.targetItemID) && (items.has(currTask.storageItemID) || manRef.itemID == currTask.targetItemID) : # TODO*: make if sentence better (check behaviour when barrel is removed)
+	if items.has(currTask.targetItemID) && (items.has(currTask.storageItemID) || manRef.itemID == currTask.targetItemID) :
 		## if man is near barrel
 		if manRef.itemID!=null && (manRef.translation-manRef.targetPos).length()<manRef.bodyHeight*2:
 			if manRef.itemID == currTask.storageItemID:
@@ -240,15 +249,15 @@ func checkManFetchTaskComplete(manRef):
 				manRef.proceedFetchTask()
 			else:
 				## man has already collected good and now gives good to targetItem
-				itemAssignmentsAndInventory[currTask.targetIG][manRef.itemID].inventory[currTask.goodName] += 1 # give good to target item
+				itemAssignmentsAndInventory[Economy.getIG(items[currTask.targetItemID].databaseName)][manRef.itemID].inventory[currTask.goodName] += 1 # give good to target item
 				print("giving item to: ",items[manRef.itemID].itemRef.name, currTask.goodName)
 				fromBusyToIdle(manRef.id, currTask.taskGroup, currTask.priority)
 	elif not items.has(currTask.storageItemID):
 		## if the barrel is removed queue a new request from the targetitem
-		print("only barrel is missing") # TODO*: if structure needs to be better, now they walk to target item if barrel is missing but never clear their task
+		print("only barrel is missing") 
 		if manRef.itemID == currTask.storageItemID:
 			## if target was the barrel that is missing, free the man and make new request
-			requestGood(currTask.goodName, items[currTask.targetItemID].itemRef, currTask.storageIG, currTask.targetIG, currTask.priority)
+			requestGood(currTask.goodName, items[currTask.targetItemID].itemRef, currTask.storageIG, currTask.priority)
 			fromBusyToIdle(manRef.id, currTask.taskGroup, currTask.priority)
 	else:
 		# target item not there anymore, delete task
@@ -272,7 +281,7 @@ func requestCrew(itemID, jobID, taskGroup, targetPosition : Vector3, priority : 
 
 
 
-func requestGood(name : String, targetItemRef, storageItemGroup, targetItemGroup, priority : int):
+func requestGood(name : String, targetItemRef, storageItemGroup, priority : int):
 	"""
 	When a cannon or something requests goods like gunpowder and cannonballs, this function gets called.
 	Only requests one item at a time, since man can only carry one
@@ -287,8 +296,8 @@ func requestGood(name : String, targetItemRef, storageItemGroup, targetItemGroup
 		## if an storage item has been found	
 		## append task that has target item and storage item id and position in it
 	fetchTasks[priority].append({"type" : FETCH_TASK, "id": IDGenerator.getID(),
-								"taskGroup": TG_UTILITY, "goodName": name, "storageIG" : storageItemGroup, "targetIG" : targetItemGroup,
-								"targetItemID": targetItemRef.id, "targetItemPos" : targetItemRef.transform.origin,
+								"taskGroup": TG_UTILITY, "goodName": name, "storageIG" : storageItemGroup,
+								"targetItemID": targetItemRef.id, "targetItemPos" : targetItemRef.transform.origin, # TODO: this could changed to having id and pos as input arguemnts, so no itemRef is needed as argument
 								"storageItemID" : null, "storageItemPos" : null, # is set when actually searching for the storage item
 								"priority": priority})
 
@@ -300,7 +309,7 @@ func requestAllGoods(itemRef):
 	for good in capacity:
 		for i in range(capacity[good]):
 			var prio = clamp(i,0,numberOfPriorities-1) # TODO : think aboput hot to do priorities here (wall leak objects needs items more than cannons), for now, first item request is always high rpio then it gets lower
-			requestGood(good, itemRef, Economy.consumables[good].IG, IG_GEAR,  prio) 
+			requestGood(good, itemRef, Economy.consumables[good].GG,  prio) 
 
 func findAndAssignBestMen(task):
 	"""
@@ -319,8 +328,7 @@ func findAndAssignBestMen(task):
 				fromIdleToBusy(foundMen, task)
 				_assignManToItem(foundMen, task)
 			elif task.type == FETCH_TASK:
-				## for fetch tasks, just assign human to task and block goods so that no other human tries to get these (just already subtract the goods count on the barrel)
-				itemAssignmentsAndInventory[task.storageIG][task.storageItemID].inventory[task.goodName] -= 1
+				## for fetch tasks, just assign human to task
 				fromIdleToBusy(foundMen, task)
 				foundMen.giveFetchTask(task)
 			return true
@@ -379,9 +387,9 @@ func fromBusyToBusy(manRef, task, oldTask):
 	requestCrew(
 		oldTask.itemID, # id of item
 		oldTask.jobID, # id of the item specific job
-		Economy.getJobs(items[oldTask.itemID].databaseName)[oldTask.jobID].TG,  # taskgroup
-		Economy.getJobs(items[oldTask.itemID].databaseName)[oldTask.jobID].posOffset + items[oldTask.itemID].itemRef.transform.origin,  # position
-		Economy.getJobs(items[oldTask.itemID].databaseName)[oldTask.jobID].priority)
+		oldTask.taskGroup,  # taskgroup
+		oldTask.position,  # position
+		oldTask.priority)
 
 	currentAssignments[task.taskGroup]["busy"][oldTask.priority].erase(manRef.id)
 	_assignManToItem(manRef, task)
@@ -416,12 +424,12 @@ func forceManintoRelaxed(taskGroup, state, manRef):
 	elif state == "busy":
 		## directly call new crew request
 		var t = manRef.currentTask
-		requestCrew(
-			t.itemID, # id of item
-			t.jobID, # id of the item specific job
-			Economy.getJobs(items[t.itemID].databaseName)[t.jobID].TG,  # taskgroup
-			Economy.getJobs(items[t.itemID].databaseName)[t.jobID].posOffset + items[t.itemID].itemRef.transform.origin,  # position
-			Economy.getJobs(items[t.itemID].databaseName)[t.jobID].priority)
+		if t.type == JOB_TASK:
+			requestCrew(t.itemID, t.jobID, t.taskGroup,  t.position,  t.priority)
+		elif t.type == FETCH_TASK:
+			## append good again so that it is not lost when often unassigning man and make new request
+			itemAssignmentsAndInventory[t.storageIG][t.storageItemID].inventory[t.goodName] += 1
+			requestGood(t.goodName, items[t.targetItemID].itemRef, t.storageIG, t.priority)
 		## man worked on item
 		currentAssignments[taskGroup][state][t.priority].erase(manRef.id)
 		_unassignManFromItem(manRef)
@@ -437,15 +445,17 @@ func registerItem(itemRef):
 
 			## add item to items dict and itemASsignment dict
 			items[itemRef.id] = {"crewScore": 0, "itemRef" : itemRef, "databaseName" : itemRef.databaseName, "jobs": {}} 
-			itemAssignmentsAndInventory[IG][itemRef.id] = {"position" : itemRef.translation, "inventory": {}} # TODO: make sub lists with "free" and "blocked" or directly subtract goods if task is assigned?
+			itemAssignmentsAndInventory[IG][itemRef.id] = {"position" : itemRef.translation, "inventory": {}}
 			## add item names to inventory based on economy capacity dict
 			for key in Economy.getCapacity(itemRef.databaseName):
 				itemAssignmentsAndInventory[IG][itemRef.id].inventory[key] = 0
 
 			## fill inventory for debuggin
 			# TODO: make inventory empty again
-			if itemRef.databaseName=="GunpowderBarrel":
+			if itemRef.databaseName=="Gunpowder Barrel":
 				itemAssignmentsAndInventory[IG][itemRef.id].inventory["Gunpowder"] = Economy.getCapacity(itemRef.databaseName)["Gunpowder"]
+			if itemRef.databaseName=="Ammo Barrel":
+				itemAssignmentsAndInventory[IG][itemRef.id].inventory["Cannonballs"] = Economy.getCapacity(itemRef.databaseName)["Cannonballs"]
 			
 			# request goods
 			if IG == IG_GEAR:
@@ -460,7 +470,7 @@ func registerItem(itemRef):
 					itemRef.id, # id of item
 					jobID, # id of the item specific job
 					Economy.getJobs(itemRef.databaseName)[jobID].TG,  # taskgroup
-					Economy.getJobs(itemRef.databaseName)[jobID].posOffset + itemRef.transform.origin,  # position
+					Economy.getJobs(itemRef.databaseName)[jobID].posOffset.rotated(itemRef.transform.basis.y,itemRef.rotation.y)  + itemRef.transform.origin,  # position
 					Economy.getJobs(itemRef.databaseName)[jobID].priority) # prio
 		else:
 			print("warning: name not found in economy and thus not  added to crew manager: ",itemRef.databaseName)
@@ -487,6 +497,27 @@ func unregisterItem(itemRef):
 		print(itemAssignmentsAndInventory)
 
 
+func consumeGood(itemGroup : String, itemID, goodName : String, requestNew = false) -> bool:
+	"""
+	Reduces goods in ItemAssignmentAndInventory dictionary
+	returns true if good was consumed and false if not (inventory was empty)
+	if requestNew is true, the consumed good is directly requested again
+	"""
+	var amount : int = itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName]
+	if amount>0:
+		itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName] -= 1
+		if requestNew:
+			requestGood(goodName,items[itemID].itemRef,Economy.getGG(goodName),clamp(amount-1,0,numberOfPriorities-1)) 
+		return true
+	return false
+
+func setCrewCount(taskGroup, value):
+	"""
+	sets the amount to the value, has to manage that no more than the max number of man are allowed to be set?
+	TODO : Maybe for that also just limit how far up the crew sliders can go
+	"""
+	GlobalObjectReferencer.crewManager.targetCrewCount[taskGroup] = value
+
 func getCrewScore(itemID) -> float:
 	"""
 	called by item to get to know how much crew is assigned and ready on that item
@@ -500,3 +531,9 @@ func getCrewScore(itemID) -> float:
 			score += 1
 	score = score / len(items[itemID].jobs)
 	return score
+
+func getInventoryCount(id, goodName) -> int:
+	"""
+	returns the inventory count  of the given item (returning only the count to secure that inventory is not modified)
+	"""
+	return itemAssignmentsAndInventory[Economy.getIG(items[id].databaseName)][id].inventory[goodName]

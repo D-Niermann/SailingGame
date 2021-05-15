@@ -17,14 +17,14 @@ uniform sampler2D detail_normal_map : hint_normal;
 uniform sampler2D water_highlight_map : hint_albedo;
 
 uniform float gerstner_height = 0.22;
-uniform float gerstner_normal = 0.18;
+uniform float gerstner_normal = 0.2;
 uniform float gerstner_stretch = 0.9;
 uniform float gerstner_tiling = 0.2;
 uniform float gerstner_2_height = 3.24;
-uniform float gerstner_2_normal = 0.4;
-uniform float gerstner_2_stretch = 0.4;
+uniform float gerstner_2_normal = 0.6;
+uniform float gerstner_2_stretch = 0.1;
 uniform float gerstner_2_tiling = 0.03;
-uniform float gerstner_distance_fadeout = 0.03;
+uniform float gerstner_distance_fadeout = 0.04;
 uniform vec2 gerstner_speed = vec2(0.00, 0.0);
 uniform vec2 gerstner_2_speed = vec2(0.0, 0.0);
 uniform float time_offset = 0;
@@ -34,13 +34,13 @@ uniform float time = 0;
 
 uniform float normal_base_intensity = 0.7;
 uniform float normal_peak_intensity = 1.5;
-uniform float normal_dist_fadeout = 0.015;
-uniform float detail_normal_intensity = 0.05;
+uniform float normal_dist_fadeout = 0.06;
+uniform float detail_normal_intensity = 0.03;
 uniform float detail_normal_tiling = 10.0;
 uniform float detail_normal_speed = 12.0;
 
 uniform float foam_ramp = 0.2;
-uniform float foam_amount = 7.0;
+uniform float foam_amount = 1.0;
 uniform int foam_tiling = 8;
 uniform float foam_gerstner = 5.0;
 uniform float bubble_ramp = 1.0;
@@ -53,7 +53,7 @@ uniform float underwater_tex_border = 4.0;
 uniform float underwater_texture = 0.14;
 uniform float underwater_color = 0.8;
 uniform int underwater_tiling = 2;
-uniform float beach_alpha_fadeout = 0.05;
+uniform float beach_alpha_fadeout = 0.245;
 uniform float beach_normal_fadeout = 0.3;
 uniform float beach_foam_depth = 2.0;
 uniform float beach_foam_distortion = 3.74;
@@ -63,7 +63,7 @@ uniform float swimthings_intensity = 0.8;
 uniform int swimthings_tiling = 3;
 uniform float flow_blend_timing = 1.0;
 uniform float flow_blend_stretch = 0.35;
-uniform float water_color_depth = 1.0;
+uniform float water_color_depth = 0.1;
 uniform float sss_strength = 7.0;
 
 float get_height(sampler2D tex, vec2 uv, float offset) {
@@ -249,8 +249,8 @@ void fragment() {
 	
 	ALBEDO = clamp(albedo_output, vec3(0.0, 0.0, 0.0), vec3(1.0, 1.0, 1.0));
 	NORMALMAP = clamp(normal_output, vec3(0.0, 0.0, 0.0), vec3(1.0, 1.0, 1.0));
-	SPECULAR = 0.6;
-	ROUGHNESS = 0.08;
+	SPECULAR = 0.0;
+	ROUGHNESS = 0.0;
 	METALLIC = 0.0;
 	ALPHA = alpha_output;
 }

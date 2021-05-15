@@ -14,7 +14,6 @@ var list = null
 var filter = null
 var seller = null
 var selected = null
-var connected = null
 var indicator = null
 var viewport: Viewport
 
@@ -25,11 +24,11 @@ var highlight = null
 var hologram = null
 var resource = null
 var parent = null
-var coords = null
-var angle = 0.0
-var rot = 0.0
-var size = Vector3.ONE # in terms of tile size given above, each component must be an integer
-var rotSize = Vector3.ONE
+var pos = null
+var rot: Vector2
+var tempRot: Vector2
+var dim = Vector3.ONE # in terms of tile size given above, each component must be an integer
+var rotDim = Vector3.ONE
 var switch: bool = true
 
 var leftClick: bool = false
@@ -42,8 +41,9 @@ var scrollDown: bool = false
 func _ready():
 	GlobalObjectReferencer.shopping = self
 	seller = get_node("Shop/Sell")
-	connected = "bananaTown"
 	indicator = get_node("Indicator")
+	indicator.visible = false
+	indicator.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	tabs = get_node("Shop/Tabs/Container")
 	list = get_node("Shop/List/Container")
 	viewport = get_tree().get_root().get_node("GameWorld/ViewportContainer/Viewport")
@@ -75,15 +75,6 @@ func _physics_process(delta):
 		closeShop()
 	if open != null && player.global_transform.origin.distance_squared_to(Economy.malls[open]["loci"]) > distanceLimit:
 		closeShop()
-	# if connected != null:
-	# 	if open == null:
-	# 		indicator.visible = true
-	# 	else:
-	# 		indicator.visible = false
-	# else:
-	# 	indicator.visible = false
-	# 	if open != null:
-	# 		closeShop()
 	if selected != null && (rightClick || switch == false):
 		selected = null
 	if open == null || selected == null:
@@ -110,46 +101,72 @@ func _physics_process(delta):
 	var hit: Dictionary = GlobalObjectReferencer.cursor.hit
 	var newHighlight = null
 	if is_instance_valid(hologram):
-		if scrollUp:
-			rot += PI * 0.5
-			rotSize = Vector3(rotSize.z, size.y, rotSize.x)
-		elif scrollDown:
-			rot -= PI * 0.5
-			rotSize = Vector3(rotSize.z, size.y, rotSize.x)
+		if scrollUp || scrollDown:
+			if scrollUp:
+				rotate(false)
+			elif scrollDown:
+				rotate(true)
+			if tempRot.y == 0:
+				rotDim = Vector3(dim.z, dim.y, dim.x)
+			else:
+				rotDim = dim
 		var canPlace = false
-		if !hit.empty() && (STACKED || hit.collider == target):
-			var offset = Vector3(fmod(rotSize.x, 2), 0, fmod(rotSize.z, 2)) * TILEWIDTH * 0.5 + TILEWIDTH * Vector3.UP * (size.y/2)
+		# orienting hologram over hit
+		if !hit.empty() && hit.collider is Spatial:
+			var offset = Vector3(fmod(rotDim.x, 2), 0, fmod(rotDim.z, 2)) * TILEWIDTH * 0.5 + TILEWIDTH * Vector3.UP * (dim.y/2)
 			var partition: Vector3 = (target.global_transform.xform_inv(hit.position) / TILEWIDTH).floor()
 			hologram.global_transform.origin = target.global_transform.xform(partition * TILEWIDTH + offset)
-			hologram.global_transform.basis = target.global_transform.basis.rotated(upward, rot)
-			var collision: KinematicCollision = hologram.move_and_collide(Vector3(0,0.01,0), false, false, true)
-			if !collision:
+			lookAtLocal(hologram, target, tempRot, upward)
+		# checking if hit is target and if item can be placed
+		if !hit.empty() && (STACKED || hit.collider == target):
+#			var offset = Vector3(fmod(rotDim.x, 2), 0, fmod(rotDim.z, 2)) * TILEWIDTH * 0.5 + TILEWIDTH * Vector3.UP * (dim.y/2)
+#			var partition: Vector3 = (target.global_transform.xform_inv(hit.position) / TILEWIDTH).floor()
+#			hologram.global_transform.origin = target.global_transform.xform(partition * TILEWIDTH + offset)
+#			lookAtLocal(hologram, target, tempRot, upward)
+			var tempCoords = target.to_local(hologram.global_transform.origin)
+			tempCoords = Vector3(stepify(tempCoords.x, 0.1), stepify(tempCoords.y, 0.1), stepify(tempCoords.z, 0.1))
+			#var tempName: String = Utility.resName(hologram.name) # keeping this as backup for now
+			var tempName: String = hologram.databaseName
+			var occupation: Array = tiles4(tempCoords, tempRot, Economy.getSize(tempName))
+#			print(occupation)
+			if target.checkIfFree(occupation):
 				canPlace = true
-#				print("canPlace")
+			#	print("canPlace")
+			# collision based check, in case it comes useful later
+			#var collision: KinematicCollision = hologram.move_and_collide(Vector3(0,0.01,0), false, false, true)
+			#if !collision:
+			#	canPlace = true
+			#	print("canPlace")
+		# returning item to its old place
 		if rightClick:
 			if parent != null:
+#				print("returnedTo: "+str(pos))
 				placeOrDestroyHologram()
 		elif canPlace:
 			var sprite = hologram.get_node("Sprite3D")
-			sprite.modulate = Color(0.0, 1.0, 0.0, 0.5)
+			sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
+			# placing item
 			if leftClick:
 				parent = target
-				coords = parent.to_local(hologram.global_transform.origin)
-				angle = rot
+				pos = parent.to_local(hologram.global_transform.origin)
+				pos = Vector3(stepify(pos.x, 0.1), stepify(pos.y, 0.1), stepify(pos.z, 0.1))
+#				print("placedAt: "+str(pos))
+				rot = tempRot
 				placeOrDestroyHologram()
 		else:
 			var sprite = hologram.get_node("Sprite3D")
 			sprite.modulate = Color(1.0, 0.0, 0.0, 0.5)
-	elif !hit.empty() && hit.collider.get("movable") != null: # this branch is where we try to pick item up
+	# checking if item can be picked up
+	elif !hit.empty() && hit.collider.get("movable") != null:
 		if open != null && hit.collider.get("movable") == true:
 			var temp = hit.collider.get_parent()
 			if temp != null && temp == target:
+				# picking item up
 				if leftClick:
 					resource = null
 					hologram = hit.collider
-					hologram.onRemove()
 					var mall: Dictionary = Economy.malls[open]
-					var itemName = Utility.resName(hologram.name)
+					var itemName: String = hologram.databaseName
 					var itemPrice = Economy.getPrice(itemName, open)
 					if itemPrice <= mall["money"] && !mall["black"].has(itemName) && mall["white"].has(Economy.goods[itemName]["type"]):
 						seller.text = str(itemPrice) + CURRENCY
@@ -157,11 +174,18 @@ func _physics_process(delta):
 					else:
 						seller.disabled = true
 					parent = temp
-					print("pickedFromParent: "+str(parent.name))
-					coords = parent.to_local(hologram.global_transform.origin)
-					angle = -Utility.signedAngle(parent.global_transform.basis.x.normalized(), hologram.global_transform.basis.x.normalized(), parent.global_transform.basis.y.normalized())
+#					print("pickedFromParent: "+str(parent.name))
+					pos = parent.to_local(hologram.global_transform.origin)
+					pos = Vector3(stepify(pos.x, 0.1), stepify(pos.y, 0.1), stepify(pos.z, 0.1))
+					var currentRot = hologram.transform.basis.z * -1
+					rot = Vector2(currentRot.x, currentRot.z).round()
+					tempRot = rot
 					setSize()
-					rot = angle
+#					print("pickedFrom: "+str(pos))
+					var occupation: Array = tiles4(pos, rot, Economy.getSize(itemName))
+#					print("occupation: "+str(occupation))
+					hologram.onRemove()
+					target.freeTiles(occupation)
 					if is_instance_valid(hologram.get_parent()):
 						hologram.get_parent().remove_child(hologram)
 						viewport.add_child(hologram)
@@ -170,6 +194,7 @@ func _physics_process(delta):
 	if is_instance_valid(highlight):
 		var sprite = highlight.get_node("Sprite3D")
 		if sprite!=null:
+			pass
 			sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		highlight = null
 	if is_instance_valid(newHighlight):
@@ -177,7 +202,8 @@ func _physics_process(delta):
 	if is_instance_valid(highlight):
 		var sprite = highlight.get_node("Sprite3D")
 		if sprite!=null:
-			sprite.modulate = Color(1.0, 1.0, 0.0, 1.0)
+			pass
+			# sprite.modulate = Color(1.0, 1.0, 0.0, 1.0)
 	leftClick = false
 	rightClick = false
 	scrollUp = false
@@ -195,22 +221,21 @@ func hologramFromResource(path: String):
 	hologram = load(path).instance()
 	viewport.add_child(hologram)
 	parent = null
-	coords = null
-	angle = 0.0
-	var itemName: String = Utility.resName(hologram.name)
-	size = Economy.getSize(itemName)
-	if size is Vector2:
-		size = Vector3(size.x, 1.0, size.y)
+	pos = null
+	var itemName: String = hologram.databaseName
+	dim = Economy.getSize(itemName)
+	if dim is Vector2:
+		dim = Vector3(dim.x, 1.0, dim.y)
 	hologram.global_transform.basis = target.global_transform.basis
-	rotSize = size
-	rot = 0.0
+	rotDim = dim
+	tempRot = Vector2(0, -1)
 	var shape = hologram.get_node("CollisionShape").shape
 	if shape is BoxShape:
-		shape.extents = Vector3(size.x, size.y, size.z) * 0.5 * TILEWIDTH - Vector3.ONE * 0.01
+		shape.extents = Vector3(dim.x, dim.y, dim.z) * 0.5 * TILEWIDTH - Vector3.ONE * 0.01
 	var gridMesh = hologram.get_node_or_null("GridShowMesh")
 	if gridMesh != null:
 		gridMesh.visible = true
-		gridMesh.scale = Vector3(size.x, size.y, size.z) * TILEWIDTH - Vector3.ONE * 0.005
+		gridMesh.scale = Vector3(dim.x, dim.y, dim.z) * TILEWIDTH - Vector3.ONE * 0.005
 
 
 # Destroys any hologram or resource.
@@ -229,60 +254,103 @@ func placeOrDestroyHologram():
 			var duplicate = load(resource).instance()
 			if duplicate.get_parent() != parent:
 				parent.add_child(duplicate)
-			duplicate.global_transform.origin = parent.to_global(coords)
-			duplicate.global_transform.basis = parent.global_transform.basis.rotated(parent.global_transform.basis.y.normalized(), angle)
+			duplicate.global_transform.origin = parent.to_global(pos)
+			lookAtLocal(duplicate, parent, rot, parent.global_transform.basis.y)
 			parent = null
+			var itemName: String = selected.get_node("Name").text
+			var occupation: Array = tiles4(pos, rot, Economy.getSize(itemName))
+#			print("occupation: "+str(occupation))
 			duplicate.onPlacement()
+			target.occupyTiles(occupation, duplicate.id)
 			purchase(duplicate)
 		else:
 			resource = null
 			if hologram != null:
 				hologram.queue_free()
 				hologram = null
-			coords = null
-			angle = null
-			size = null
-			rot = null
-			rotSize = null
+			pos = null
 		return
 	elif parent != null:
 		if !is_instance_valid(hologram.get_parent()) || hologram.get_parent() != parent:
 			if is_instance_valid(hologram.get_parent()):
 				hologram.get_parent().remove_child(hologram)
 			parent.add_child(hologram)
-		hologram.global_transform.origin = parent.to_global(coords)
-		hologram.global_transform.basis = parent.global_transform.basis.rotated(parent.global_transform.basis.y.normalized(), angle)
+		hologram.global_transform.origin = parent.to_global(pos)
+		lookAtLocal(hologram, parent, rot, parent.global_transform.basis.y)
 		var sprite = hologram.get_node("Sprite3D")
 		sprite.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		var itemName: String = hologram.databaseName
+		var occupation: Array = tiles4(pos, rot, Economy.getSize(itemName))
+#		print("occupation: "+str(occupation))
 		hologram.onPlacement()
+		target.occupyTiles(occupation, hologram.id)
 	elif hologram != null:
 		hologram.queue_free()
 		hologram = null
 	hologram = null
 	parent = null
-	coords = null
-	angle = null
-	size = null
-	rot = null
-	rotSize = null
+	pos = null
+
+
+# Rotates the given spatial towards the given local direction according to the given reference spatial.
+func lookAtLocal(subject: Spatial, reference: Spatial, direction: Vector2, upward: Vector3):
+	if direction == Vector2(0, -1):
+		subject.look_at(subject.global_transform.origin + reference.global_transform.basis.z * -999, upward)
+	elif direction == Vector2(0, 1):
+		subject.look_at(subject.global_transform.origin + reference.global_transform.basis.z * 999, upward)
+	elif direction == Vector2(1, 0):
+		subject.look_at(subject.global_transform.origin + reference.global_transform.basis.x * 999, upward)
+	elif direction == Vector2(-1, 0):
+		subject.look_at(subject.global_transform.origin + reference.global_transform.basis.x * -999, upward)
+
+
+# Rotates the selected item.
+func rotate(clockwise: bool):
+	if clockwise:
+		tempRot = (tempRot.rotated(PI * 0.5)).round()
+	else:
+		tempRot = (tempRot.rotated(PI * -0.5)).round()
 
 
 # Sets size and rotated size for the selected item.
 func setSize():
-	var itemName: String = Utility.resName(hologram.name)
-	size = Economy.getSize(itemName)
-	if size is Vector2:
-		size = Vector3(size.x, 1.0, size.y)
-	var temp = -Utility.signedAngle(parent.global_transform.basis.x.normalized(), hologram.global_transform.basis.x.normalized(), parent.global_transform.basis.y.normalized())
-	var tempToo: Vector2 = Vector2(size.x, size.z).rotated(temp).round().abs()
-	rotSize = Vector3(tempToo.x, 1.0, tempToo.y)
+	var itemName: String = hologram.databaseName
+	dim = Economy.getSize(itemName)
+	if dim is Vector2:
+		dim = Vector3(dim.x, 1.0, dim.y)
+	rotDim = dim
+	if rot.y == 0:
+		rotDim = Vector3(rotDim.z, rotDim.y, rotDim.x)
 	var shape = hologram.get_node("CollisionShape").shape
 	if shape is BoxShape:
-		shape.extents = Vector3(size.x, size.y, size.z) * 0.5 * TILEWIDTH - Vector3.ONE * 0.01
+		shape.extents = Vector3(dim.x, dim.y, dim.z) * 0.5 * TILEWIDTH - Vector3.ONE * 0.01
 	var gridMesh = hologram.get_node_or_null("GridShowMesh")
 	if gridMesh != null:
 		gridMesh.visible = true
-		gridMesh.scale = Vector3(size.x, size.y, size.z) * TILEWIDTH - Vector3.ONE * 0.005
+		gridMesh.scale = Vector3(dim.x, dim.y, dim.z) * TILEWIDTH - Vector3.ONE * 0.005
+
+
+# Returns what tiles the given orientation would occupy.
+func tiles4(targetPosition: Vector3, targetRotation: Vector2, targetDimensions: Vector3):
+	var occupation: Array = []
+	# rotating dimensions if needed
+	if targetRotation.y == 0:
+		targetDimensions = Vector3(targetDimensions.z, targetDimensions.y, targetDimensions.x)
+	# finding the coordinates for the top leftmost partition
+	targetPosition -= (targetDimensions * 0.5).floor() * TILEWIDTH
+	var offset = Vector3(1 - fmod(targetDimensions.x, 2), 0, 1 - fmod(targetDimensions.z, 2)) * TILEWIDTH * 0.5
+	targetPosition += offset
+	# finding the top leftmost partition
+	var partition: Vector3 = (targetPosition / TILEWIDTH).floor()
+	# offsetting and appending as many tiles as dimensions
+	for x in range(targetDimensions.x):
+		for z in range(targetDimensions.z):
+			#occupation.append(partition + Vector3(x, 0, z))
+			occupation.append(Vector2(partition.x, partition.z) + Vector2(x, z))
+			#var tempValue: Vector2 = Vector2(targetPosition.x, targetPosition.z) + Vector2(x, z) * TILEWIDTH
+			#tempValue = Vector2(stepify(tempValue.x, 0.1), stepify(tempValue.y, 0.1))
+			#occupation.append(tempValue)
+	return occupation
 
 
 # Updates the shopping line for the open shopping screen.
@@ -434,6 +502,8 @@ func openShop(shop: String):
 	get_node("Shop").visible = true
 	get_tree().get_root().get_node("GameWorld/ViewportContainer/Viewport/GameCamera").selectDeck(selectedDeckNumber)
 	open = shop
+	indicator.visible = true
+	indicator.mouse_filter = Control.MOUSE_FILTER_STOP
 
 
 # Closes any open shop.
@@ -500,7 +570,7 @@ func purchase(node: Node):
 func sell():
 	if hologram != null:
 		if resource == null:
-			var itemName: String = Utility.resName(hologram.name)
+			var itemName: String = hologram.databaseName
 			var mall: Dictionary = Economy.malls[open]
 			var itemPrice = Economy.getPrice(itemName, open)
 			if itemPrice <= mall["money"] && !mall["black"].has(itemName) && mall["white"].has(Economy.goods[itemName]["type"]):
@@ -510,9 +580,7 @@ func sell():
 				destroyHologram()
 				updateList()
 
-
 func _on_indicator():
-	if open==null: #if shop is closed
-		openShop(connected) # connects=name of shop, defined in _ready() for now.
-	else:
-		closeShop()
+	closeShop()
+	indicator.visible = false
+	indicator.mouse_filter = Control.MOUSE_FILTER_IGNORE

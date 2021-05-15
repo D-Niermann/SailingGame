@@ -16,7 +16,7 @@ __meta__ = {
 
 [node name="Panel" type="Panel" parent="."]
 margin_right = 200.0
-margin_bottom = 168.0
+margin_bottom = 196.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -30,20 +30,30 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="text1" type="RichTextLabel" parent="Panel"]
-margin_top = 66.0373
+[node name="HealthLabel2" type="RichTextLabel" parent="Panel"]
+margin_top = 75.8357
 margin_right = 83.0
-margin_bottom = 99.0373
-text = "Health"
+margin_bottom = 108.836
+text = "Health:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthLabel" type="RichTextLabel" parent="Panel"]
+margin_left = 150.0
+margin_top = 75.7984
+margin_right = 200.0
+margin_bottom = 108.798
+text = "100"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="isActive" type="RichTextLabel" parent="Panel"]
 margin_left = 42.1766
-margin_top = 32.6663
+margin_top = 24.6434
 margin_right = 125.176
-margin_bottom = 65.6663
+margin_bottom = 57.6434
 text = "Active"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -51,105 +61,120 @@ __meta__ = {
 
 [node name="ActiveToggle" type="CheckButton" parent="Panel"]
 margin_left = 123.114
-margin_top = 33.0
+margin_top = 24.9771
 margin_right = 173.114
-margin_bottom = 64.0
+margin_bottom = 55.9771
 pressed = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HealthLabel" type="RichTextLabel" parent="Panel"]
-margin_left = 150.0
-margin_top = 66.0
-margin_right = 200.0
-margin_bottom = 99.0
-text = "100"
+[node name="testCannonLabel" type="RichTextLabel" parent="Panel"]
+margin_left = 17.0
+margin_top = 50.0
+margin_right = 134.0
+margin_bottom = 83.0
+text = "Test-Cannon"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Health2" type="RichTextLabel" parent="Panel"]
-margin_left = 150.0
-margin_top = 99.0
-margin_right = 200.0
-margin_bottom = 132.0
-text = "0.2 s"
+[node name="IsTestCannon" type="CheckButton" parent="Panel"]
+margin_left = 146.0
+margin_top = 50.0
+margin_right = 196.0
+margin_bottom = 81.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="text2" type="RichTextLabel" parent="Panel"]
-margin_top = 98.6663
-margin_right = 71.0
-margin_bottom = 131.666
-text = "Delay"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="MaxUsers" type="RichTextLabel" parent="Panel"]
-margin_top = 131.666
-margin_right = 71.0
-margin_bottom = 164.666
-text = "Crew"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HSlider" type="HSlider" parent="Panel"]
+[node name="DelaySlider" type="HSlider" parent="Panel"]
 margin_left = 77.25
-margin_top = 107.152
-margin_right = 141.25
-margin_bottom = 123.152
+margin_top = 108.798
+margin_right = 150.25
+margin_bottom = 124.798
+max_value = 5.0
+step = 0.1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CheckBox" type="CheckBox" parent="Panel"]
-margin_left = 119.083
-margin_top = 131.666
-margin_right = 143.083
-margin_bottom = 162.666
+[node name="SliderVal" type="RichTextLabel" parent="Panel/DelaySlider"]
+margin_left = 73.0
+margin_top = -9.76112
+margin_right = 118.0
+margin_bottom = 23.2389
+text = "1.5"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CheckBox2" type="CheckBox" parent="Panel"]
-margin_left = 71.0
-margin_top = 131.666
-margin_right = 95.0
-margin_bottom = 162.666
-pressed = true
+[node name="SliderLabel" type="RichTextLabel" parent="Panel/DelaySlider"]
+margin_left = -77.25
+margin_top = -9.76112
+margin_right = -6.25
+margin_bottom = 23.2386
+text = "Delay:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CheckBox3" type="CheckBox" parent="Panel"]
-margin_left = 103.173
-margin_top = 131.666
-margin_right = 127.173
-margin_bottom = 162.666
+[node name="CrewRating" type="RichTextLabel" parent="Panel"]
+margin_left = 150.0
+margin_top = 127.5
+margin_right = 195.0
+margin_bottom = 160.5
+text = "00"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CheckBox4" type="CheckBox" parent="Panel"]
-margin_left = 87.2218
-margin_top = 131.666
-margin_right = 111.222
-margin_bottom = 162.666
-pressed = true
+[node name="CreRatLabel" type="RichTextLabel" parent="Panel"]
+margin_top = 130.0
+margin_right = 125.0
+margin_bottom = 163.0
+text = "Crew Rating:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-position = Vector2( 16, 192 )
-color = Color( 0.160784, 0.176471, 0.235294, 1 )
+[node name="GunpowderCount" type="RichTextLabel" parent="Panel"]
+margin_left = 112.0
+margin_top = 157.102
+margin_right = 146.0
+margin_bottom = 190.102
+text = "00"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BallsCount" type="RichTextLabel" parent="Panel"]
+margin_left = 156.872
+margin_top = 157.102
+margin_right = 190.872
+margin_bottom = 190.102
+text = "00"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InventoryLabel" type="RichTextLabel" parent="Panel"]
+margin_top = 157.102
+margin_right = 112.0
+margin_bottom = 190.102
+text = "Inventory:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="Panel"]
+position = Vector2( 15.6031, 219.683 )
+color = Color( 0.0980392, 0.0823529, 0.0705882, 1 )
 polygon = PoolVector2Array( -16, -24, 83.9805, -0.0918427, 184, -24 )
 __meta__ = {
 "_editor_description_": ""
 }
 
 [connection signal="toggled" from="Panel/ActiveToggle" to="." method="_on_ActiveToggle_toggled"]
+[connection signal="toggled" from="Panel/IsTestCannon" to="." method="_on_isTestCannon_toggled"]
+[connection signal="value_changed" from="Panel/DelaySlider" to="." method="_on_HSlider_value_changed"]

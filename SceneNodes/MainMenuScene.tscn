@@ -24,17 +24,17 @@ wind_strength = 0.432
 [node name="Island" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0375, 0.73449, 26.6531 )
 
-[node name="ShipRigid" parent="." instance=ExtResource( 12 )]
-transform = Transform( 0.958913, 0, 0.283698, 0, 1, 0, -0.283698, 0, 0.958913, -0.0612279, 1.32279, 3.7542 )
-
-[node name="DefaultModel (DeckOrder important!)" parent="ShipRigid" instance=ExtResource( 11 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.40132, 2.36116, 1.19209e-07 )
-
 [node name="ShipRigid2" parent="." instance=ExtResource( 12 )]
 transform = Transform( 0.731875, 0, -0.193971, 0, 1, 0, 0.193971, 0, 0.731875, 12.8645, 1.32279, -1.57686 )
 
 [node name="DefaultModel (DeckOrder important!)" parent="ShipRigid2" instance=ExtResource( 11 )]
-transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 2.40132, 2.36116, 1.19209e-07 )
+transform = Transform( 2.98023e-08, 0, -1.12081, 0, 1.12081, 0, 1.12081, 0, 2.98023e-08, 1.96804, 2.36116, 0 )
+
+[node name="ShipRigid3" parent="." instance=ExtResource( 12 )]
+transform = Transform( 0.719697, 0, 0.235164, 0, 1, 0, -0.235164, 0, 0.719697, -0.552592, 1.32279, 4.58873 )
+
+[node name="DefaultModel (DeckOrder important!)" parent="ShipRigid3" instance=ExtResource( 11 )]
+transform = Transform( 2.98023e-08, 0, -1.12081, 0, 1.12081, 0, 1.12081, 0, 2.98023e-08, 1.96804, 2.36116, 0 )
 
 [node name="Sky" parent="." instance=ExtResource( 8 )]
 

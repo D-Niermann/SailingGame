@@ -15,7 +15,7 @@ func link(itemRef):
 	Links this info box to the clicked item. Sets this states to the items vars.
 	"""
 	myItem = itemRef
-	$Panel/Title.text = myItem.name
+	# $Panel/Title.text = myItem.name
 	
 func _process(delta):
 	healthLabel.text = str(round(myItem.currentHealth))

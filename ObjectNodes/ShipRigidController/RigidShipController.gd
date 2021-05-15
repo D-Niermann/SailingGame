@@ -8,6 +8,8 @@ RigidBody Needs a linear damping of approx 5!
 
 """
 
+var stairs: Array = [Vector2(-1.5, 0.0)]
+
 export(bool) var isPlayer = false
 export(bool) var isUnsinkable = false
 export var impulse_factor = 3.0 # overall impulse stength, all impulses should be multiplied by this
@@ -217,3 +219,14 @@ func calcCenterOfMass():
 	centerOfMass = avPos
 	# print("CoM: ",centerOfMass)
 	# print("NumItems: ",len(itemNodes))
+
+func onHover(isHovering):
+	if isHovering:
+		print("hovering")
+
+func createInfo(placeholder):
+	print("show info")
+
+
+func removeInfo():
+	print("remove info")

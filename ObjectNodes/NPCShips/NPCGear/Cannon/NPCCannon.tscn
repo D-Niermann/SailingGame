@@ -1,130 +1,22 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://ObjectNodes/NPCShips/NPCGear/Cannon/NPCCannon.gd" type="Script" id=1]
 [ext_resource path="res://ObjectNodes/GeneralCannonAssets/CannonBall.tscn" type="PackedScene" id=2]
-[ext_resource path="res://addons/kenney_particle_pack/smoke_07.png" type="Texture" id=4]
+[ext_resource path="res://ObjectNodes/NPCShips/NPCGear/Cannon/SmokeMat.tres" type="Material" id=3]
+[ext_resource path="res://ObjectNodes/NPCShips/NPCGear/Cannon/SmokeParticle.tres" type="Material" id=4]
 [ext_resource path="res://ObjectNodes/Items/Cannon/cannon.png" type="Texture" id=5]
 [ext_resource path="res://ObjectNodes/GeneralCannonAssets/Sounds/Cannon6.wav" type="AudioStream" id=6]
 [ext_resource path="res://ObjectNodes/GeneralCannonAssets/Sounds/Cannon7.wav" type="AudioStream" id=7]
-[ext_resource path="res://addons/kenney_particle_pack/smoke_02.png" type="Texture" id=8]
+[ext_resource path="res://ObjectNodes/NPCShips/NPCGear/Cannon/Flashparticle.tres" type="Material" id=8]
 [ext_resource path="res://ObjectNodes/GeneralCannonAssets/Sounds/Cannon4.wav" type="AudioStream" id=11]
 [ext_resource path="res://ObjectNodes/GeneralCannonAssets/Sounds/Cannon5.wav" type="AudioStream" id=12]
-[ext_resource path="res://materials/Black.tres" type="Material" id=13]
 
-[sub_resource type="CubeMesh" id=1]
-size = Vector3( 0.2, 0.2, 0.2 )
-
-[sub_resource type="SpatialMaterial" id=2]
-render_priority = 1
-flags_transparent = true
-flags_unshaded = true
-flags_vertex_lighting = true
-flags_no_depth_test = true
-flags_do_not_receive_shadows = true
-vertex_color_use_as_albedo = true
-params_billboard_mode = 3
-particles_anim_h_frames = 1
-particles_anim_v_frames = 1
-particles_anim_loop = false
-albedo_color = Color( 1, 1, 1, 0.392157 )
-albedo_texture = ExtResource( 4 )
-
-[sub_resource type="Gradient" id=3]
-offsets = PoolRealArray( 0, 0.0404313, 0.726087, 1 )
-colors = PoolColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0.0304779, 1, 1, 1, 0 )
-
-[sub_resource type="GradientTexture" id=4]
-gradient = SubResource( 3 )
-
-[sub_resource type="Curve" id=5]
-min_value = 1.0
-max_value = 150.0
-_data = [ Vector2( 0, 117.322 ), 0.0, 0.0, 0, 0, Vector2( 0.209486, 1 ), 0.0, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=6]
-curve = SubResource( 5 )
-
-[sub_resource type="Curve" id=7]
-_data = [ Vector2( 0, 0.209091 ), 0.0, 0.975758, 0, 0, Vector2( 0.0197628, 0.490909 ), 1.56071, 1.61, 0, 0, Vector2( 0.980237, 0.945454 ), 0.0, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=8]
-curve = SubResource( 7 )
-
-[sub_resource type="ParticlesMaterial" id=9]
-lifetime_randomness = 0.22
-spread = 2.0
-gravity = Vector3( 0, 1, -0.5 )
-initial_velocity = 30.0
-initial_velocity_random = 0.52
-damping_random = 0.31
-damping_curve = SubResource( 6 )
-angle = 456.6
-angle_random = 1.0
-scale = 0.2
-scale_random = 1.0
-scale_curve = SubResource( 8 )
-color_ramp = SubResource( 4 )
-
-[sub_resource type="QuadMesh" id=10]
+[sub_resource type="QuadMesh" id=1]
 size = Vector2( 5, 5 )
 
-[sub_resource type="SpatialMaterial" id=11]
-render_priority = 1
-flags_transparent = true
-flags_unshaded = true
-flags_do_not_receive_shadows = true
-vertex_color_use_as_albedo = true
-params_billboard_mode = 3
-particles_anim_h_frames = 1
-particles_anim_v_frames = 1
-particles_anim_loop = false
-albedo_color = Color( 1, 1, 1, 0.392157 )
-albedo_texture = ExtResource( 8 )
-
-[sub_resource type="Gradient" id=12]
-offsets = PoolRealArray( 0, 0.0404313, 0.726087, 1 )
-colors = PoolColorArray( 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0.0304779, 1, 1, 1, 0 )
-
-[sub_resource type="GradientTexture" id=13]
-gradient = SubResource( 12 )
-
-[sub_resource type="Curve" id=14]
-min_value = 1.0
-max_value = 150.0
-_data = [ Vector2( 0, 117.322 ), 0.0, 0.0, 0, 0, Vector2( 0.209486, 1 ), 0.0, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=15]
-curve = SubResource( 14 )
-
-[sub_resource type="Curve" id=16]
-_data = [ Vector2( 0, 0.209091 ), 0.0, 0.975758, 0, 0, Vector2( 0.0197628, 0.490909 ), 1.56071, 1.61, 0, 0, Vector2( 0.980237, 0.945454 ), 0.0, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=17]
-curve = SubResource( 16 )
-
-[sub_resource type="ParticlesMaterial" id=18]
-lifetime_randomness = 0.22
-spread = 10.0
-gravity = Vector3( 0, 3, -2 )
-initial_velocity = 5.0
-initial_velocity_random = 0.83
-damping_curve = SubResource( 15 )
-angle = 263.7
-angle_random = 1.0
-scale = 0.05
-scale_random = 1.0
-scale_curve = SubResource( 17 )
-color_ramp = SubResource( 13 )
-hue_variation = 0.21
-hue_variation_random = 0.33
-
-[sub_resource type="BoxShape" id=19]
-extents = Vector3( 0.179145, 0.128, 0.135657 )
-
-[node name="NPCCannonLarge" type="KinematicBody"]
-collision_layer = 16385
-collision_mask = 16385
+[node name="NPCCannonLarge" type="Spatial"]
 script = ExtResource( 1 )
+databaseName = "Large Cannon"
 BallScene = ExtResource( 2 )
 force = 0.5
 
@@ -132,19 +24,15 @@ force = 0.5
 transform = Transform( -4.70073e-08, 0, -0.257923, 0, 0.166714, 0, 0.288529, 0, -4.2021e-08, 0.139893, 0.0154406, -0.0031288 )
 axis = 1
 shaded = true
+alpha_cut = 2
 texture = ExtResource( 5 )
 __meta__ = {
 "_editor_description_": "e"
 }
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-cast_shadow = 3
-mesh = SubResource( 1 )
-material/0 = ExtResource( 13 )
-
 [node name="Particles" type="Particles" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0211141, 0, 0.00772725 )
-material_override = SubResource( 2 )
+material_override = ExtResource( 3 )
 cast_shadow = 0
 emitting = false
 amount = 15
@@ -154,15 +42,15 @@ explosiveness = 0.99
 randomness = 0.5
 visibility_aabb = AABB( -26.595, -18.2865, -23.5084, 52.288, 38.3009, 48.6808 )
 local_coords = false
-process_material = SubResource( 9 )
-draw_pass_1 = SubResource( 10 )
+process_material = ExtResource( 4 )
+draw_pass_1 = SubResource( 1 )
 __meta__ = {
 "_editor_description_": ""
 }
 
 [node name="ParticlesFlash" type="Particles" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.641374, 0, 0.00772725 )
-material_override = SubResource( 11 )
+material_override = ExtResource( 3 )
 cast_shadow = 0
 emitting = false
 amount = 10
@@ -172,14 +60,11 @@ explosiveness = 0.8
 randomness = 0.46
 visibility_aabb = AABB( -7.1719, -6.42507, -3.29174, 13.4418, 14.5781, 8.24748 )
 local_coords = false
-process_material = SubResource( 18 )
-draw_pass_1 = SubResource( 10 )
+process_material = ExtResource( 8 )
+draw_pass_1 = SubResource( 1 )
 __meta__ = {
 "_editor_description_": ""
 }
-
-[node name="CollisionShape" type="CollisionShape" parent="."]
-shape = SubResource( 19 )
 
 [node name="Audio1" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 7 )

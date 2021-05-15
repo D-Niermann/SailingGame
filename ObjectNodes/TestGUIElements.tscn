@@ -1,15 +1,17 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://_OLDnodes/ui.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/mockupGUI.png" type="Texture" id=2]
 [ext_resource path="res://Sprites/wheel.png" type="Texture" id=3]
 [ext_resource path="res://icon.png" type="Texture" id=4]
+[ext_resource path="res://ControlNodes/ExampleTheme.tres" type="Theme" id=5]
 
 [node name="ui" type="Control"]
-margin_left = 7.0
-margin_top = 8.66742
-margin_right = 274.0
-margin_bottom = 156.667
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 275.0
+margin_bottom = 156.0
+theme = ExtResource( 5 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -61,18 +63,23 @@ __meta__ = {
 }
 
 [node name="LabelWind" type="Label" parent="."]
-margin_right = 121.0
-margin_bottom = 22.0
+margin_left = 1.0
+margin_top = 7.33258
+margin_right = 122.0
+margin_bottom = 29.3326
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "WIND SPEED"
+text = "Wind Speed
+"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="wind_speed" type="HSlider" parent="."]
 anchor_right = 1.0
-margin_top = 18.7704
-margin_bottom = 34.7704
+margin_left = 1.0
+margin_top = 31.3326
+margin_right = 1.0
+margin_bottom = 47.3326
 min_value = 0.4
 max_value = 1.3
 step = 0.01
@@ -82,9 +89,10 @@ __meta__ = {
 }
 
 [node name="LabelTime" type="Label" parent="."]
-margin_top = 40.9535
-margin_right = 121.0
-margin_bottom = 62.9535
+margin_left = 1.0
+margin_top = 47.3326
+margin_right = 122.0
+margin_bottom = 70.3326
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Time of Day"
 __meta__ = {
@@ -93,35 +101,78 @@ __meta__ = {
 
 [node name="Time" type="HSlider" parent="."]
 anchor_right = 1.0
-margin_left = 1.88776
-margin_top = 58.9821
-margin_right = 1.88776
-margin_bottom = 74.9821
+margin_left = 1.0
+margin_top = 71.3326
+margin_right = 1.0
+margin_bottom = 87.3326
 max_value = 1000.0
 value = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CrewLabel1" type="Label" parent="."]
-margin_left = 0.667419
-margin_top = 91.6773
-margin_right = 121.667
-margin_bottom = 113.677
+[node name="Weapons" type="Label" parent="."]
+anchor_top = -1.031e-07
+anchor_bottom = -1.031e-07
+margin_top = 112.0
+margin_right = 121.0
+margin_bottom = 135.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "CrewWeapons"
+text = "Weapons"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CrewSlider1" type="HSlider" parent="."]
+[node name="WeaponsSlider" type="HSlider" parent="Weapons"]
 anchor_right = 1.0
-margin_left = 2.55518
-margin_top = 109.706
-margin_right = 2.55518
-margin_bottom = 125.706
+margin_left = 8.0
+margin_top = 24.0
+margin_right = 117.0
+margin_bottom = 40.0
 max_value = 20.0
-value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Navigation" type="Label" parent="."]
+margin_top = 208.0
+margin_right = 121.0
+margin_bottom = 257.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Navigation
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NavigationSlider" type="HSlider" parent="Navigation"]
+anchor_right = 1.0
+margin_left = 8.0
+margin_top = 24.0
+margin_right = 117.0
+margin_bottom = 40.0
+max_value = 20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Utility" type="Label" parent="."]
+margin_top = 160.0
+margin_right = 121.0
+margin_bottom = 183.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Utility"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UtilitySlider" type="HSlider" parent="Utility"]
+anchor_right = 1.0
+margin_left = 8.0
+margin_top = 24.0
+margin_right = 117.0
+margin_bottom = 40.0
+max_value = 20.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -184,7 +235,9 @@ __meta__ = {
 
 [connection signal="value_changed" from="wind_speed" to="." method="_on_wind_speed_value_changed"]
 [connection signal="value_changed" from="Time" to="." method="_on_sun_glare_value_changed"]
-[connection signal="value_changed" from="CrewSlider1" to="." method="_on_CrewSlider1_value_changed"]
+[connection signal="value_changed" from="Weapons/WeaponsSlider" to="." method="_on_WeaponSlider_value_changed"]
+[connection signal="value_changed" from="Navigation/NavigationSlider" to="." method="_on_NavSlider_value_changed"]
+[connection signal="value_changed" from="Utility/UtilitySlider" to="." method="_on_UtilsSlider_value_changed"]
 [connection signal="toggled" from="LabelAI/CheckButton" to="." method="_on_CheckButton_toggled"]
 [connection signal="value_changed" from="water_style" to="." method="_on_water_style_value_changed"]
 [connection signal="value_changed" from="subsurface_scattering" to="." method="_on_subsurface_scattering_value_changed"]

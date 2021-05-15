@@ -10,7 +10,7 @@ var malls: Dictionary = {
 		"capacity": Vector2(0, 100),
 		"consumption": 0,
 		"grows": {"banana": 2.0},
-		"goods": {"banana": 10, "apple": INF, "CannonLarge" : 10, "WallLong" : 100, "LightSmall":5, "GunpowderBarrel" : 20},
+		"goods": {"banana": 10, "apple": INF, "Large Cannon" : 10, "WallLong" : 100, "LightSmall":5, "Gunpowder Barrel" : 20, "Ammo Barrel": 10, "Rigging":30},
 		"white": ["food", "gear"],
 		"black": ["drug"],
 		"money": 1000,
@@ -32,7 +32,7 @@ var malls: Dictionary = {
 		"capacity": Vector2(0, 100),
 		"consumption": 0,
 		"grows": {"apple": 1.0},
-		"goods": {"banana": 10, "apple": INF, "CannonLarge" : 10, "WallLong" : 100, "LightSmall":5, "GunpowderBarrel" : 20},
+		"goods": {"banana": 10, "apple": INF, "Large Cannon" : 10, "WallLong" : 100, "LightSmall":5, "Gunpowder Barrel" : 20, "Ammo Barrel": 10},
 		"white": ["food"],
 		"black": [],
 		"money": 1000,
@@ -54,38 +54,67 @@ const IG_GEAR = "igGear" # no storage items like cannons, table and so on - thes
 
 
 
-var consumables = {"Gunpowder" : {"IG": IG_GUNPOWDER},
-				   "Cannonballs" : {"IG": IG_AMMO}} # this should be named "goods", or include it into goods dict?
+var consumables = {"Gunpowder" : {"GG": IG_GUNPOWDER}, # "GG" = GoodsGroup
+				   "Cannonballs" : {"GG": IG_AMMO}} # this should be named "goods", or include it into goods dict?
 
 
-
+"""
+Gear / Item Dictionary 
+Keys: 
+type = the type used in the tabs in the shop overlay
+size = the 3d size of the colliders and thus the item
+IG = item group, used in crewManager for accessing of barrels, possible groups are defined in economy
+penetrationFactor = used for the cannon balls, how easy to get through (1 = like air, 0 = inpenetrable)
+maxHealth = max health of item
+price = price of item to buy
+weight = weight of item, no units for now
+res = the resource path of the item node
+icon = the icon path used in the shop overlay
+jobs = dictionary of jobs, fill in here if item has permanent jobs like cannons have cannoneers
+capacity = the local inventory capacity of the item, eg cannons need to have some gunpowder and balls to shoot
+"""
 var goods: Dictionary = { # TODO: RENAME INTO GEAR or ITEMS, this list is not about goods
-	"banana"     : {"type": "food", "size": Vector3(2,1, 1), "penetrationFactor": 0.9, "IG": IG_FOOD, "jobs": {}, "capacity" : {}, "maxHealth": 1, "isCannon" : false, "price": 10, "weight": 1.0, "res": "res://ControlNodes/BuildAndShop/exampleItem.tscn", "icon": "res://icon.png"},
+	"banana"     : {"type": "food", "size": Vector3(2,1, 1), "penetrationFactor": 0.9, "IG": IG_FOOD, "jobs": {}, "capacity" : {}, "maxHealth": 1, "price": 10, "weight": 1.0, "res": "res://ControlNodes/BuildAndShop/exampleItem.tscn", "icon": "res://icon.png"},
 	
-	"apple"      : {"type": "food", "size": Vector3(2,1, 1), "penetrationFactor": 0.9, "IG": IG_FOOD, "jobs": {}, "capacity" : {}, "maxHealth": 1, "isCannon" : false, "price": 10, "weight": 1.0, "res": "res://ControlNodes/BuildAndShop/exampleItem.tscn", "icon": "res://icon.png"},
+	"apple"      : {"type": "food", "size": Vector3(2,1, 1), "penetrationFactor": 0.9, "IG": IG_FOOD, "jobs": {}, "capacity" : {}, "maxHealth": 1, "price": 10, "weight": 1.0, "res": "res://ControlNodes/BuildAndShop/exampleItem.tscn", "icon": "res://icon.png"},
 	
-	"CannonLarge": {"type": "gear", "size": Vector3(3,1, 2), "penetrationFactor": 0.3, "IG" : IG_GEAR,  
-					"jobs": {"Gunner1": {"posOffset":Vector3(0,0,0.1), "TG": TG_WEAPONS, "priority" : 0}, 
-							"Gunner2": {"posOffset":Vector3(0,0,-0.1), "TG": TG_WEAPONS, "priority" : 1}},
-					"capacity" : {"Gunpowder": 10, "Cannonballs" : 1}, 
-					"maxHealth": 60, "isCannon" : true, "price": 10, "weight": 10.0, "res": "res://ObjectNodes/Items/Cannon/CannonItem.tscn", "icon": "res://ObjectNodes/Items/Cannon/cannon.png"},
+	"Large Cannon": {"type": "gear", "size": Vector3(3,1, 3), "penetrationFactor": 0.3, "IG" : IG_GEAR,  
+					"jobs": {"Gunner1": {"posOffset":Vector3(-0.2,0,0), "TG": TG_WEAPONS, "priority" : 0}, 
+							"Gunner2": {"posOffset":Vector3(0,0,0.2), "TG": TG_WEAPONS, "priority" : 1},
+							"Gunner3": {"posOffset":Vector3(0,0,-0.2), "TG": TG_WEAPONS, "priority" : 2},
+						},
+					"capacity" : {"Gunpowder": 10, "Cannonballs" : 5}, 
+					"maxHealth": 60, "price": 10, "weight": 10.0, "res": "res://ObjectNodes/Items/Cannon/CannonItem.tscn", "icon": "res://ObjectNodes/Items/Cannon/cannon.png"},
 	
-	"GunpowderBarrel": {"type": "gear", "size": Vector3(1,1, 1), "penetrationFactor": 0.3, "IG" : IG_GUNPOWDER,  
+	"Gunpowder Barrel": {"type": "gear", "size": Vector3(1,1, 1), "penetrationFactor": 0.3, "IG" : IG_GUNPOWDER,  
 						"jobs": {},
-						"capacity" : {"Gunpowder": 100}, 
-						"maxHealth": 60, "isCannon" : true, "price": 5, "weight": 1.0, "res": "res://ObjectNodes/Items/Barrels/GunpowderBarrel/GunpowderBarrel.tscn", "icon": "res://ObjectNodes/Items/Barrels/GunpowderBarrel/barrel.png"},
+						"capacity" : {"Gunpowder": 20}, 
+						"maxHealth": 50, "price": 5, "weight": 1.0, "res": "res://ObjectNodes/Items/Barrels/GunpowderBarrel/GunpowderBarrel.tscn", "icon": "res://ObjectNodes/Items/Barrels/GunpowderBarrel/barrel.png"},
 
-	"WallLong"   : {"type": "gear", "size": Vector3(1,2, 3), "penetrationFactor": 0.6, "IG" : IG_GEAR, "jobs": {},  "capacity" : {}, "maxHealth": 50, "isCannon" : false, "price": 1, "weight": 1.0, "res": "res://ObjectNodes/Items/Walls/WallLong.tscn", "icon": "res://ObjectNodes/Items/Walls/Sprites/Wall.png"},
+	"Ammo Barrel": {"type": "gear", "size": Vector3(1,1, 1), "penetrationFactor": 0.3, "IG" : IG_AMMO,  
+						"jobs": {},
+						"capacity" : {"Cannonballs": 10}, 
+						"maxHealth": 30, "price": 5, "weight": 1.0, "res": "res://ObjectNodes/Items/Barrels/AmmoBarrel/AmmoBarrel.tscn", "icon": "res://ObjectNodes/Items/Barrels/AmmoBarrel/AmmoBarrel.png"},
+
+	"Rigging": {"type": "gear", "size": Vector3(2,1, 1), "penetrationFactor": 0.3, "IG" : IG_GEAR,  
+						"jobs": {
+							"Navigator1" : {"posOffset" : Vector3(0.1,0,0.0), "TG":TG_NAVIGATION, "priority" : 0},
+							"Navigator2" : {"posOffset" : Vector3(-0.1,0,0.0), "TG":TG_NAVIGATION, "priority" : 1},
+						},
+						"capacity" : {}, 
+						"maxHealth": 30, "price": 5, "weight": 1.0, "res": "res://ObjectNodes/Items/RiggingItem/Rigging.tscn", "icon": "res://ObjectNodes/Items/RiggingItem/RiggingSprite.png"},
+
+	"WallLong"   : {"type": "gear", "size": Vector3(1,2, 3), "penetrationFactor": 0.6, "IG" : IG_GEAR, "jobs": {},  "capacity" : {}, "maxHealth": 50, "price": 1, "weight": 1.0, "res": "res://ObjectNodes/Items/Walls/WallLong.tscn", "icon": "res://ObjectNodes/Items/Walls/Sprites/Wall.png"},
 
 	## TODO: set up  parameters for these three items
-	"OuterHullWall"   : {"type": "gear", "size": Vector3(1,2, 3), "penetrationFactor": 0.6, "IG" : IG_GEAR, "jobs": {}, "capacity" : {}, "maxHealth": 50, "isCannon" : false, "price": 1, "weight": 1.0, "res": " ", "icon": " "},
-	"OuterHullWall3m"   : {"type": "gear", "size": Vector3(1,2, 3), "penetrationFactor": 0.6, "IG" : IG_GEAR, "jobs": {}, "capacity" : {}, "maxHealth": 50, "isCannon" : false, "price": 1, "weight": 1.0, "res": " ", "icon": " "},
+	"OuterHullWall"   : {"type": "gear", "size": Vector3(1,2, 3), "penetrationFactor": 0.6, "IG" : IG_GEAR, "jobs": {}, "capacity" : {}, "maxHealth": 50, "price": 1, "weight": 1.0, "res": " ", "icon": " "},
+	"OuterHullWall3m"   : {"type": "gear", "size": Vector3(1,2, 3), "penetrationFactor": 0.6, "IG" : IG_GEAR, "jobs": {}, "capacity" : {}, "maxHealth": 50, "price": 1, "weight": 1.0, "res": " ", "icon": " "},
 	
-	"LightSmall" : {"type": "gear", "size": Vector3(1,1, 1), "penetrationFactor": 0.9, "IG" : IG_GEAR, "jobs": {}, "capacity" : {}, "maxHealth": 3, "isCannon" : false, "price": 1, "weight": 1.0, "res": "res://ObjectNodes/Items/Lights/Light1.tscn", "icon": "res://ObjectNodes/Items/Walls/Sprites/Wall.png"}
+	"LightSmall" : {"type": "gear", "size": Vector3(1,1, 1), "penetrationFactor": 0.9, "IG" : IG_GEAR, "jobs": {}, "capacity" : {}, "maxHealth": 3, "price": 1, "weight": 1.0, "res": "res://ObjectNodes/Items/Lights/Light1.tscn", "icon": "res://ObjectNodes/Items/Walls/Sprites/Wall.png"}
 }
 # var types: Dictionary = { ## this could be auto generated?
 # 	"food": ["banana", "apple"],
-# 	"gear": ["CannonLarge", "WallLong", "LightSmall"]
+# 	"gear": ["Large Cannon", "WallLong", "LightSmall"]
 # }
 var cases: Dictionary = {
 	"storm": {
@@ -161,7 +190,10 @@ func getJobs(of: String):
 func getIG(of: String):
 	""" returns item group of given item name """
 	return goods[of]["IG"]
-
+	
+func getGG(of: String):
+	""" returns goods group of given consumable name """
+	return consumables[of]["GG"]
 
 func getCapacity(of: String):
 	""" returns capacity of given item name """

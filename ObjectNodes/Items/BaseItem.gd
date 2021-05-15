@@ -16,7 +16,6 @@ export var InfoPanel: PackedScene # scene object of cannons info ui panel
 var penetrationFactor = 0.5 # penetration factor used for bullets, 0-1, 1 = like air, 0 = inpenetrable
 var maxHealth = 1
 var damageMultiplier = 10 # multiple base damage by this value, just so that the maxHealth values can be bigger integers
-var isCannon = false # used for AI
 var weight = 2.0 
 
 ## crew and task stuff
@@ -25,7 +24,7 @@ var weight = 2.0
 # var assignedMen = {} # IDs and data of all men assigned to this item, if specific refernce to human is needed, call the crewManager with the mans ID -> cannot control human directly. values are infoDictionaries  {taskGropup :xxx, priority: yyy}
 
 ## 
-var gridMesh # green/red mesh that displays the hitbox of gear
+# var gridMesh # green/red mesh that displays the hitbox of gear
 var pAudio # audio player thats emitting when item is placed
 var itemPlaceParticle # dynamically loaded particles 
 var currentHealth = maxHealth
@@ -42,7 +41,7 @@ func _ready():
 	id = IDGenerator.getID()
 	## TODO: this gets also called when item is picked in shop
 	# print("BaseItem ready()")
-	gridMesh = get_node("GridShowMesh")
+	# gridMesh = get_node("GridShowMesh")
 	pAudio = $PlaceAudio
 	# weight = Economy.goods[Utility.resName(self.name)]["weight"]
 	# print("Weight:",weight)
@@ -71,8 +70,8 @@ func onPlacement():
 	"""
 	# fetchMyShip() # obsolete cause this is player item, use globalObjectReferencer
 	registerItem()
-	if gridMesh!=null:
-		gridMesh.visible = false # make the grid item invisible again
+	# if gridMesh!=null:
+		# gridMesh.visible = false # make the grid item invisible again
 	itemPlaceParticle.emitting = true
 	# play Audio
 	if pAudio!=null:
@@ -83,7 +82,7 @@ func onPlacement():
 
 func onHover(is_hovered: bool):
 	"""
-	Gets called when while shopping or building the mouse is hovering over item.
+	Gets called when the mouse is hovering over item.
 	"""
 	var sprite = get_node("Sprite3D")
 	if is_hovered:
@@ -132,7 +131,6 @@ func fetchDictParams(name : String):
 	# TODO: if values in dictionary are constant, dont save them in this item, just use the dictionary entries (saves Ram)
 	if Economy.goods.has(name):
 		weight = Economy.goods[name].weight
-		isCannon = Economy.goods[name].isCannon
 		penetrationFactor = Economy.goods[name].penetrationFactor
 		maxHealth = Economy.goods[name].maxHealth
 		# the only important one

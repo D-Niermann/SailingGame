@@ -4,6 +4,7 @@ extends Control
 const SELECT: Texture = preload("res://ControlNodes/Images/cursor.png")
 const ATTACK: Texture = preload("res://ControlNodes/Images/attackCursor.png")
 const BUILD: Texture = preload("res://ControlNodes/Images/shoppingCursor.png")
+const HAND: Texture = preload("res://ControlNodes/Images/cursorHand.png")
 
 # these are some other variables
 var camera: Camera # used for raycasting and such
@@ -66,12 +67,16 @@ func _physics_process(delta):
 	# doing some other stuff, depending on if hit is a shop or item or whatnot
 	if hit.empty():
 		Input.set_default_cursor_shape(0)
+		if leftClick:
+			if is_instance_valid(selected):
+				selected.removeInfo()
+				selected = null
 	elif Economy.malls.has(hit.collider.name) && GlobalObjectReferencer.playerShip.linear_velocity.length_squared() < GlobalObjectReferencer.shopping.speedLimit && GlobalObjectReferencer.playerShip.global_transform.origin.distance_squared_to(Economy.malls[hit.collider.name]["loci"]) < GlobalObjectReferencer.shopping.distanceLimit: # opens shop, if hit's a shop
 		Input.set_default_cursor_shape(2)
 		if leftClick:
 			GlobalObjectReferencer.shopping.openShop(hit.collider.name)
 	elif hit.collider.has_method("createInfo"):
-		Input.set_default_cursor_shape(0)
+		Input.set_default_cursor_shape(3)
 		if leftClick && GlobalObjectReferencer.shopping.open == null:
 			if is_instance_valid(selected):
 				selected.removeInfo()
@@ -146,21 +151,31 @@ func scaleCursor(screenSize: Vector2):
 	curDim = min(curDim, SELECT.get_width())
 	var midPix: Vector2 = Vector2(curDim * 0.5, curDim * 0.5)
 	midPix = midPix.floor()
+
 	var selectData: Image = SELECT.get_data()
 	selectData.resize(curDim, curDim)
 	var selectCopy: ImageTexture = ImageTexture.new()
 	selectCopy.create_from_image(selectData)
+	
 	var attackData: Image = ATTACK.get_data()
 	attackData.resize(curDim, curDim)
 	var attackCopy: ImageTexture = ImageTexture.new()
 	attackCopy.create_from_image(attackData)
+	
 	var buildData: Image = BUILD.get_data()
 	buildData.resize(curDim, curDim)
 	var buildCopy: ImageTexture = ImageTexture.new()
 	buildCopy.create_from_image(buildData)
+	
+	var handData: Image = HAND.get_data()
+	handData.resize(curDim, curDim)
+	var handCopy: ImageTexture = ImageTexture.new()
+	handCopy.create_from_image(handData)
+
 	Input.set_custom_mouse_cursor(selectCopy, 0)
 	Input.set_custom_mouse_cursor(attackCopy, 1, midPix)
 	Input.set_custom_mouse_cursor(buildCopy, 2)
+	Input.set_custom_mouse_cursor(handCopy, 3)
 
 
 # Changes the selected deck number to the given integer.
