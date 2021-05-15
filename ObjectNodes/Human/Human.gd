@@ -29,6 +29,7 @@ var infoPanel
 var id
 var currentTask
 
+var requestedForPathfinding: bool
 var pathDeck = null # used by navigator, don't change manually
 var pathLocs: Array = [] # used by navigator, don't change manually
 var nextDest = null # used by navigator, don't change manually
@@ -38,7 +39,8 @@ var speed: float = 1 # maximum speed per second for this unit's movement
 func _ready():
 	targetPos = Vector3(0, 0, 0) # remove this line later, this is for test purpose
 	targetDeck = get_tree().get_nodes_in_group("PlayerDeck")[0] # remove this line later, this is for test purpose
-
+	
+	requestedForPathfinding= false
 	targetPos.x += rand_range(-0.3,0.3)
 	targetPos.z += rand_range(-0.3,0.3)
 	id = IDGenerator.getID()
@@ -132,12 +134,12 @@ func removeInfo():
 # Tries to move to the given location.
 func moveTo(delta: float, toLoc: Vector3, atDeck: Spatial):
 	if is_instance_valid(atDeck):
-		var velocity: Vector3 = findVelocity(delta, Vector2(toLoc.x, toLoc.z), atDeck)
+		var velocity: Vector3 = findVelocity(Vector2(toLoc.x, toLoc.z), atDeck)
 		translation += velocity * delta
 		translation.y = 0
 
 # Tries to find velocity to reach the given location.
-func findVelocity(delta: float, toLoc: Vector2, atDeck: Spatial):
+func findVelocity(toLoc: Vector2, atDeck: Spatial):
 	# aborting operation if deck is not found
 	if !is_instance_valid(atDeck):
 		return Vector3.ZERO
@@ -183,38 +185,42 @@ func findVelocity(delta: float, toLoc: Vector2, atDeck: Spatial):
 #	print("thisPart: "+str(thisPart)+" destPart: "+str(destPart))
 	var destDist = chebyshevDistance(thisPart, destPart)
 	if destDist == 0: # means we already are inside the tile
-#		print("sameTile")
+		print("sameTile")
 #		return Vector3.ZERO # opt for this one if you don't want units to keep going till they reach the center of the tile
-		return adjustVelocity(delta, Vector3(nextDest.x, 0, nextDest.y) - Vector3(translation.x, 0, translation.z), speed)
+		return adjustVelocity(Vector3(nextDest.x, 0, nextDest.y) - Vector3(translation.x, 0, translation.z), speed)
 	elif destDist < 2: # means we are so close that we can directly go towards
 #		print("adjacentTile")
-		return adjustVelocity(delta, Vector3(nextDest.x, 0, nextDest.y) - Vector3(translation.x, 0, translation.z), speed)
+		return adjustVelocity(Vector3(nextDest.x, 0, nextDest.y) - Vector3(translation.x, 0, translation.z), speed)
 	else: # means it is far away and we need to follow path
 		if !is_instance_valid(pathDeck) || pathDeck != atDeck || pathLocs.empty() || chebyshevDistance(thisPart, pathLocs[-1]) > 1 || isOccupied(pathLocs[-1]):
-			if GlobalObjectReferencer.crewManager.currentlyPathfinding == null:
-				GlobalObjectReferencer.crewManager.currentlyPathfinding = self
-				pathLocs = findPath(thisPart, destPart, true)
-#				print("pathfinding...")
+			if !requestedForPathfinding:
+				GlobalObjectReferencer.crewManager.requestsToPathfind.append({"who": self, "from": thisPart, "to": destPart})
+				requestedForPathfinding = true
+#			pathLocs = findPath(thisPart, destPart, true)
+#			print("pathfinding...")
 		if !pathLocs.empty(): # path is available
 #			print("followingPath")
 			var localCoordinates = partitionLocation(pathLocs[-1], GlobalObjectReferencer.shopping.TILEWIDTH)
 #			print("local: "+str(localCoordinates)+" for: "+str(pathLocs[-1]))
-			return adjustVelocity(delta, Vector3(localCoordinates.x, 0, localCoordinates.y) - Vector3(translation.x, 0, translation.z), speed)
+			return adjustVelocity(Vector3(localCoordinates.x, 0, localCoordinates.y) - Vector3(translation.x, 0, translation.z), speed)
 		else:
 #			print("pathIsEmpty")
 			return Vector3.ZERO # this means no path has been found
 
 # Clamps length of the given velocity according to the given maximum speed.
-func adjustVelocity(delta: float, velocity: Vector3, maxSpeed: float):
+func adjustVelocity(velocity: Vector3, maxSpeed: float):
 	var sqrMagnitude: float = velocity.length_squared()
 	if sqrMagnitude > pow(maxSpeed, 2):
 		return velocity.normalized() * maxSpeed
 	else:
 		var estLength: float = pathLocs.size() * GlobalObjectReferencer.shopping.TILEWIDTH
-		if maxSpeed > pow(estLength, 2):
-			return velocity.normalized() * estLength
+		if estLength > 0:
+			if maxSpeed > pow(estLength, 2):
+				return velocity.normalized() * estLength
+			else:
+				return velocity.normalized() * maxSpeed
 		else:
-			return velocity.normalized() * maxSpeed
+			return velocity
 
 # Finds path between the given parts.
 func findPath(from: Vector2, to: Vector2, canCross: bool):
