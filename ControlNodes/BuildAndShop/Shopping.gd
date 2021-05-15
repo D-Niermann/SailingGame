@@ -261,7 +261,7 @@ func placeOrDestroyHologram():
 			var occupation: Array = tiles4(pos, rot, Economy.getSize(itemName))
 #			print("occupation: "+str(occupation))
 			duplicate.onPlacement()
-			target.occupyTiles(occupation)
+			target.occupyTiles(occupation, duplicate.id)
 			purchase(duplicate)
 		else:
 			resource = null
@@ -283,7 +283,7 @@ func placeOrDestroyHologram():
 		var occupation: Array = tiles4(pos, rot, Economy.getSize(itemName))
 #		print("occupation: "+str(occupation))
 		hologram.onPlacement()
-		target.occupyTiles(occupation)
+		target.occupyTiles(occupation, hologram.id)
 	elif hologram != null:
 		hologram.queue_free()
 		hologram = null
