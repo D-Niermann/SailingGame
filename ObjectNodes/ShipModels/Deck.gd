@@ -14,7 +14,7 @@ var markerManager
 var collider = null
 var isTileOccupied = {} # dictionary of keys vec2 positions contains boolen if the current thing is occupied or not
 var positionMarkers = {} # dict of all sprites key is positions of tile
-var lastCheckedXY = [] # save of the last checked positions
+var lastMarkedXY = [] # save of the last checked positions
 var toBeCleared = {} # dict of last marked tiles and how to turn them back to the prev marking color
 var canBePlaced:bool = false ## if the checked item can be palced, used for markings 
 
@@ -65,14 +65,14 @@ func _process(delta):
 		else:
 			positionMarkers[pos].modulate = C_FREE
 	toBeCleared = {}
-	for pos in lastCheckedXY:
+	for pos in lastMarkedXY:
 		if positionMarkers.has(pos):
 			toBeCleared[pos] = isTileOccupied[pos]
 			if canBePlaced:
 				positionMarkers[pos].modulate = C_MARKED
 			else:
 				positionMarkers[pos].modulate = C_BLOCKED
-	lastCheckedXY = []
+	lastMarkedXY = []
 
 	if is_instance_valid(GlobalObjectReferencer.shopping):
 		if GlobalObjectReferencer.shopping.open != null:
@@ -89,16 +89,17 @@ func checkIfFree(array)-> bool:
 	given an array of vector2 positions, checks if all the tiles are free
 	"""
 	canBePlaced = true
-	lastCheckedXY = array
 	for pos in array:
+		markTile(pos)
 		if !isTileOccupied.has(pos):
 			canBePlaced = false
-			return false
 		else:
 			if isTileOccupied[pos]:
 				canBePlaced = false
-				return false
 	return canBePlaced
+
+func markTile(pos:Vector2):
+	lastMarkedXY.append(pos)
 
 func occupyTiles(array):
 	"""

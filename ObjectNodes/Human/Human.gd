@@ -37,6 +37,9 @@ var speed: float = 1 # maximum speed per second for this unit's movement
 
 
 func _ready():
+	targetPos = Vector3(0, 0, 0) # remove this line later, this is for test purpose
+	targetDeck = get_tree().get_nodes_in_group("PlayerDeck")[0] # remove this line later, this is for test purpose
+
 	targetPos.x += rand_range(-0.3,0.3)
 	targetPos.z += rand_range(-0.3,0.3)
 	id = IDGenerator.getID()
@@ -94,8 +97,6 @@ func walkTowards(targetPos : Vector3): # this function is not needed anymore
 
 func _process(delta):
 #	walkTowards(targetPos) # this is not needed anymore
-	targetPos = Vector3(0, 0, 0) # remove this line later, this is for test purpose
-	targetDeck = get_tree().get_nodes_in_group("PlayerDeck")[1] # remove this line later, this is for test purpose
 	moveTo(delta, targetPos, targetDeck)
 
 
@@ -217,10 +218,10 @@ func adjustVelocity(delta: float, velocity: Vector3, maxSpeed: float):
 	else:
 		var estLength: float = pathLocs.size() * GlobalObjectReferencer.shopping.TILEWIDTH
 		if maxSpeed > pow(estLength, 2):
-			print("huh")
+			# print("huh")
 			return velocity.normalized() * estLength
 		else:
-			print("pff")
+			# print("pff")
 			return velocity.normalized() * maxSpeed
 
 # Finds path between the given parts.
@@ -246,6 +247,7 @@ func findPath(from: Vector2, to: Vector2, canCross: bool):
 				continue
 			var path: Array = paths[lowest]["path"].duplicate(true)
 			path.append(part)
+			get_parent().markTile(part)
 			paths[part] = {"path": path, "dist": paths[lowest]["dist"] + 1}
 			open[part] = null
 			if part == to:
