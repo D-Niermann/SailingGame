@@ -6,7 +6,6 @@ It stores the tiles on which items can be placed, this is also accessed via the 
 It requires a collision box which defines where items can be placed.
 User needs to assign the dimensions of the deck in the editor.
 
-TODO: onready check where tiles are: maybe mirror along the long axis of ship to guarantee symmetry
 """
 export var Marker: PackedScene 
 var markerManager 
@@ -29,7 +28,7 @@ const TILEWIDTH = 0.2
 func _ready():
 	## register at GOR
 	GlobalObjectReferencer.playerDecks.append(self)
-	
+
 	collider = $CollChecker
 	markerManager = $BuildMarkerManager
 

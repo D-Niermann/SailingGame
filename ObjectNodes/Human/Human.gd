@@ -184,7 +184,7 @@ func findVelocity(toLoc: Vector2, atDeck: Spatial):
 #		print("noDestinations")
 		return Vector3.ZERO
 	elif atDeck != get_parent():
-		if Vector3(translation.x, 0, translation.z).distance_squared_to(Vector3(nextDest.x, 0, nextDest.y)) < 0.25:
+		if Vector3(translation.x, 0, translation.z).distance_squared_to(Vector3(nextDest.x, 0, nextDest.y)) < 0.05:
 			assignDeck(atDeck)
 #			print("changedDecks")
 			return Vector3.ZERO

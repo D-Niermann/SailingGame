@@ -234,7 +234,7 @@ func updateMen():
 				if manRef.currentTask.type == JOB_TASK: 
 					## if manRef is not assigned to his item yet, check if he can be
 					if manRef.itemID!=null && items[manRef.itemID].jobs[manRef.jobID].isReady==false:
-						if (manRef.translation-manRef.targetPos).length()<manRef.bodyHeight*2: # if human is within his body height close to item
+						if (manRef.translation-manRef.targetPos).length()<manRef.bodyHeight: # if human is within his body height close to item
 							## set the manRef of the item to "is ready"
 							items[manRef.itemID].jobs[manRef.jobID].isReady = true
 							## set the crew rating to this item
