@@ -34,6 +34,7 @@ var pathDeck = null # used by navigator, don't change manually
 var pathLocs: Array = [] # used by navigator, don't change manually
 var nextDest = null # used by navigator, don't change manually
 var speed: float = 0.6 # maximum speed per second for this unit's movement
+var thisPart: Vector2
 
 
 func _ready():
@@ -103,6 +104,7 @@ func walkTowards(targetPos : Vector3): # this function is not needed anymore
 
 func _process(delta):
 #	walkTowards(targetPos) # this is not needed anymore
+	thisPart = partitionID(Vector2(translation.x, translation.z), GlobalObjectReferencer.shopping.TILEWIDTH)
 	if (translation-targetPos).length()>0.05 or currentDeckRef!=targetDeckRef:
 		moveTo(delta, targetPos, targetDeckRef)
 	# this part below is for debugging, you can comment it out
@@ -156,7 +158,7 @@ func findVelocity(toLoc: Vector2, atDeck: Spatial):
 		pathDeck = atDeck
 		nextDest = null
 	# removing location from path if reached
-	var thisPart: Vector2 = partitionID(Vector2(translation.x, translation.z), GlobalObjectReferencer.shopping.TILEWIDTH)
+	#var thisPart: Vector2 = partitionID(Vector2(translation.x, translation.z), GlobalObjectReferencer.shopping.TILEWIDTH)
 	if !pathLocs.empty() && pathLocs[-1] == thisPart:
 		pathLocs.pop_back()
 #		print("waypointReached")
@@ -296,6 +298,8 @@ func canPass(from: Vector2, to: Vector2, canCross: bool):
 
 # Checks if the given part is occupied.
 func isOccupied(partition: Vector2):
+	if partition == thisPart:
+		return false
 	if !get_parent().isTileOccupied.has(partition) || (get_parent().isTileOccupied[partition] != null && get_parent().isTileOccupied[partition] != itemID):
 		return true
 	return false
