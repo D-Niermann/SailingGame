@@ -27,7 +27,9 @@ const TILEWIDTH = 0.2
 
 
 func _ready():
-
+	## register at GOR
+	GlobalObjectReferencer.playerDecks.append(self)
+	
 	collider = $CollChecker
 	markerManager = $BuildMarkerManager
 

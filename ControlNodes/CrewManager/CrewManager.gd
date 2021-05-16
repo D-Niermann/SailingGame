@@ -168,6 +168,7 @@ func searchAndAddNearStorageItem(task):
 	if storageItemRef != null:
 		task["storageItemID"] = storageItemRef.id 
 		task["storageItemPos"] = storageItemRef.transform.origin
+		task["storageItemDeck"] = storageItemRef.get_parent() # TODO: inlcude deck search
 		return true
 	return false
 
@@ -251,7 +252,7 @@ func checkManFetchTaskComplete(manRef):
 	var currTask = manRef.currentTask
 	if items.has(currTask.targetItemID) && (items.has(currTask.storageItemID) || manRef.itemID == currTask.targetItemID) :
 		## if man is near barrel
-		if manRef.itemID!=null && (manRef.translation-manRef.targetPos).length()<manRef.bodyHeight*2:
+		if manRef.itemID!=null && (manRef.translation-manRef.targetPos).length()<manRef.bodyHeight:
 			if manRef.itemID == currTask.storageItemID:
 				## set the next position and stuff from the fetch task
 				manRef.proceedFetchTask()
@@ -276,7 +277,7 @@ func checkManFetchTaskComplete(manRef):
 
 
 
-func requestCrew(itemID, jobID, taskGroup, targetPosition : Vector3, priority : int):
+func requestCrew(itemID, jobID, taskGroup, targetPosition : Vector3, targetDeckRef, priority : int):
 	"""
 	When a cannon or something requests crew of type taskgroup, this function gets called.
 	itemID: id to the item that requested the crew
@@ -285,7 +286,7 @@ func requestCrew(itemID, jobID, taskGroup, targetPosition : Vector3, priority : 
 	taskGroup: from which task group
 	"""
 	# add the request to tasks array already in the correct order (prio)
-	tasks[priority].append({"type" : JOB_TASK, "id": IDGenerator.getID(), "itemID": itemID, "jobID": jobID, "position": targetPosition, "taskGroup": taskGroup, "priority": priority})
+	tasks[priority].append({"type" : JOB_TASK, "id": IDGenerator.getID(), "itemID": itemID, "jobID": jobID, "position": targetPosition, "targetDeckRef" : targetDeckRef, "taskGroup": taskGroup, "priority": priority})
 
 
 
@@ -305,8 +306,8 @@ func requestGood(name : String, targetItemRef, storageItemGroup, priority : int)
 		## append task that has target item and storage item id and position in it
 	fetchTasks[priority].append({"type" : FETCH_TASK, "id": IDGenerator.getID(),
 								"taskGroup": TG_UTILITY, "goodName": name, "storageIG" : storageItemGroup,
-								"targetItemID": targetItemRef.id, "targetItemPos" : targetItemRef.transform.origin, # TODO: this could changed to having id and pos as input arguemnts, so no itemRef is needed as argument
-								"storageItemID" : null, "storageItemPos" : null, # is set when actually searching for the storage item
+								"targetItemID": targetItemRef.id, "targetItemPos" : targetItemRef.transform.origin, "targetItemDeck" : targetItemRef.get_parent(),
+								"storageItemID" : null, "storageItemPos" : null, "storageItemDeck" : null, # is set when actually searching for the storage item
 								"priority": priority})
 
 func requestAllGoods(itemRef):
@@ -397,6 +398,7 @@ func fromBusyToBusy(manRef, task, oldTask):
 		oldTask.jobID, # id of the item specific job
 		oldTask.taskGroup,  # taskgroup
 		oldTask.position,  # position
+		oldTask.targetDeckRef,
 		oldTask.priority)
 
 	currentAssignments[task.taskGroup]["busy"][oldTask.priority].erase(manRef.id)
@@ -433,7 +435,7 @@ func forceManintoRelaxed(taskGroup, state, manRef):
 		## directly call new crew request
 		var t = manRef.currentTask
 		if t.type == JOB_TASK:
-			requestCrew(t.itemID, t.jobID, t.taskGroup,  t.position,  t.priority)
+			requestCrew(t.itemID, t.jobID, t.taskGroup,  t.position, t.targetDeckRef,  t.priority)
 		elif t.type == FETCH_TASK:
 			## append good again so that it is not lost when often unassigning man and make new request
 			itemAssignmentsAndInventory[t.storageIG][t.storageItemID].inventory[t.goodName] += 1
@@ -479,6 +481,7 @@ func registerItem(itemRef):
 					jobID, # id of the item specific job
 					Economy.getJobs(itemRef.databaseName)[jobID].TG,  # taskgroup
 					Economy.getJobs(itemRef.databaseName)[jobID].posOffset.rotated(itemRef.transform.basis.y,itemRef.rotation.y)  + itemRef.transform.origin,  # position
+					itemRef.get_parent(), # deck reference
 					Economy.getJobs(itemRef.databaseName)[jobID].priority) # prio
 		else:
 			print("warning: name not found in economy and thus not  added to crew manager: ",itemRef.databaseName)

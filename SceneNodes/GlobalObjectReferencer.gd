@@ -14,5 +14,5 @@ var viewport    = null # ref to viewport, set in terminal.gd
 var crewManager = null # ref to CrewMaanager, (ssumes it will be a singleton so dont copy on NPC ships)
 var shopping    = null
 var cursor      = null
-
+var playerDecks = [] # here the decks can register themselfs
 ## .. add more stuff here

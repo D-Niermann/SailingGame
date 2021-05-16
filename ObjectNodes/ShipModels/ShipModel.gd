@@ -1,6 +1,6 @@
 extends Spatial
 
-export var stairPositions = [Vector3(0.0,0.0,0.0)]
+export var stairPositions = [Vector3(-1.0,0.0,0.0)]
 
 
 func _ready():

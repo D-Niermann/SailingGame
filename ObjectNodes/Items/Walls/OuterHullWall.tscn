@@ -23,7 +23,7 @@ InfoPanel = ExtResource( 4 )
 shape = SubResource( 1 )
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform( 0.372507, 0, 0, 0, 0.277496, 0, 0, 0, 0.384634, 0.132, -0.15, 0.005 )
+transform = Transform( 0.372507, 0, 0, 0, 0.277496, 0, 0, 0, 0.384634, 0.132, -0.100292, 0.005 )
 axis = 1
 shaded = true
 texture = ExtResource( 1 )

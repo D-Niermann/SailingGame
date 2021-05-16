@@ -18,8 +18,8 @@ var itemID = null # ref to the curernt item the human is working
 var jobID = null # ref to the curernt item the human is working
 var stati = [] #keeps track of all stati (stati = [S_Hungry, S_THIRSTY, ...]) 
 var targetPos = Vector3.ZERO
-var targetDeck = null # this needs to get set
-var currentDeck = 0 # I don't need that, you can remove this variable
+var targetDeckRef = null # this needs to get set
+var currentDeckRef = null
 var bodyHeight = 0.3
 var itemFetchTime = 2
 # var currentTaskGroup = null
@@ -33,12 +33,13 @@ var requestedForPathfinding: bool
 var pathDeck = null # used by navigator, don't change manually
 var pathLocs: Array = [] # used by navigator, don't change manually
 var nextDest = null # used by navigator, don't change manually
-var speed: float = 1 # maximum speed per second for this unit's movement
+var speed: float = 0.6 # maximum speed per second for this unit's movement
 
 
 func _ready():
-	targetPos = Vector3(0, 0, 0) # remove this line later, this is for test purpose
-	targetDeck = get_tree().get_nodes_in_group("PlayerDeck")[0] # remove this line later, this is for test purpose
+	currentDeckRef = get_parent()
+	targetPos = Vector3(-0, 0, 0) # remove this line later, this is for test purpose
+	targetDeckRef = get_tree().get_nodes_in_group("PlayerDeck")[1] # remove this line later, this is for test purpose
 	
 	requestedForPathfinding= false
 	targetPos.x += rand_range(-0.3,0.3)
@@ -53,6 +54,7 @@ func _ready():
 func assignDeck(deckRef):
 	get_parent().remove_child(self)
 	deckRef.add_child(self)
+	currentDeckRef = get_parent()
 
 func giveGoToTask(task):
 	"""
@@ -60,6 +62,7 @@ func giveGoToTask(task):
 	"""
 	currentTask = task
 	targetPos = task.position
+	targetDeckRef = task.targetDeckRef
 	self.itemID = task.itemID # the current target item ,  mark itemID for crew manager so he can check if close to item
 	self.jobID = task.jobID 
 	# currentTaskGroup = TG
@@ -67,6 +70,7 @@ func giveGoToTask(task):
 func giveFetchTask(task):
 	currentTask = task
 	targetPos = task.storageItemPos
+	targetDeckRef = task.storageItemDeck
 	self.itemID = task.storageItemID # the current target item , mark itemID for crew manager so he can check if close to item
 	self.jobID = null
 
@@ -75,6 +79,7 @@ func proceedFetchTask():
 	# yield(get_tree().create_timer(itemFetchTime),"timeout")
 	self.itemID = currentTask.targetItemID
 	targetPos = currentTask.targetItemPos
+	targetDeckRef = currentTask.targetItemDeck
 
 
 func removeTask():
@@ -82,6 +87,7 @@ func removeTask():
 	self.itemID = null
 	currentTask = null
 	self.jobID = null
+	targetDeckRef = get_tree().get_nodes_in_group("PlayerDeck")[0]
 	targetPos = Vector3.ZERO
 	targetPos.x += rand_range(-0.6,0.6)
 	targetPos.z += rand_range(-0.6,0.6)
@@ -97,10 +103,11 @@ func walkTowards(targetPos : Vector3): # this function is not needed anymore
 
 func _process(delta):
 #	walkTowards(targetPos) # this is not needed anymore
-	moveTo(delta, targetPos, targetDeck)
+	if (translation-targetPos).length()>0.05 or currentDeckRef!=targetDeckRef:
+		moveTo(delta, targetPos, targetDeckRef)
 	# this part below is for debugging, you can comment it out
-	for tile in pathLocs:
-		get_parent().markTile(tile)
+	# for tile in pathLocs:
+	# 	get_parent().markTile(tile)
 
 
 func createInfo(placeholder):
@@ -185,7 +192,7 @@ func findVelocity(toLoc: Vector2, atDeck: Spatial):
 #	print("thisPart: "+str(thisPart)+" destPart: "+str(destPart))
 	var destDist = chebyshevDistance(thisPart, destPart)
 	if destDist == 0: # means we already are inside the tile
-		print("sameTile")
+		# print("sameTile")
 #		return Vector3.ZERO # opt for this one if you don't want units to keep going till they reach the center of the tile
 		return adjustVelocity(Vector3(nextDest.x, 0, nextDest.y) - Vector3(translation.x, 0, translation.z), speed)
 	elif destDist < 2: # means we are so close that we can directly go towards

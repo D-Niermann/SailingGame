@@ -24,12 +24,12 @@ params_alpha_scissor_threshold = 0.4
 albedo_color = Color( 0.203922, 0.203922, 0.203922, 1 )
 albedo_texture = ExtResource( 6 )
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=3]
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.85
 albedo_texture = ExtResource( 1 )
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="SpatialMaterial" id=4]
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.75
 albedo_texture = ExtResource( 3 )
@@ -130,7 +130,7 @@ __meta__ = {
 
 [node name="Deck" type="Sprite3D" parent="Deck1"]
 transform = Transform( 1.04162, 0, 0, 0, 1, 0, 0, 0, 1.04162, 0, 0, 0 )
-material_override = SubResource( 4 )
+material_override = SubResource( 3 )
 pixel_size = 0.008
 axis = 1
 shaded = true
@@ -195,7 +195,7 @@ __meta__ = {
 
 [node name="Deck" type="Sprite3D" parent="Deck2"]
 transform = Transform( 0.318932, 0, 0, 0, 0.754314, 0, 0, 0, 0.318932, -1.332, 0, 0.095 )
-material_override = SubResource( 6 )
+material_override = SubResource( 4 )
 pixel_size = 0.02
 axis = 1
 shaded = true
@@ -251,7 +251,7 @@ transform = Transform( 7.54979e-08, 0, -1, 0, 1, 0, 1, 0, 7.54979e-08, -1.75234,
 fire_delay_sec = 0.2
 
 [node name="hull" parent="." instance=ExtResource( 10 )]
-transform = Transform( -9.38627e-08, 0, 2.14733, 0, 2.14733, 0, -2.14733, 0, -9.38627e-08, 0.12827, -0.68985, 1.30181 )
+transform = Transform( -9.38628e-08, 0, 1.93828, 0, 2.14733, 0, -2.14733, 0, -8.4725e-08, 0.177401, -0.68985, 1.30181 )
 
 [node name="TopDeck2" parent="." instance=ExtResource( 11 )]
 transform = Transform( -9.81164e-08, 0, 2.24464, 0, 8.46485, 0, -2.24464, 0, -9.81164e-08, 0.168089, -0.392205, 1.27095 )
