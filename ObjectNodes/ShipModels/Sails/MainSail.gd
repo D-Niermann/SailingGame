@@ -37,12 +37,14 @@ func _process(delta):
 	## calc wind force (TODO: For now just use wind angle)
 	windForce = calcWindForce()
 	rotateSpeed = calcRotateSpeed()
-	if doPrint: 
-		print("a: ", angleToShip)
+	# if doPrint: 
+	# 	print("a: ", angleToShip)
 
 func lateReady():
 	## register to player item
 	myShip = GlobalObjectReferencer.playerShip
+	## register to ship
+	myShip.sailRefs.append(self)
 
 func calcRotateSpeed():
 	"""

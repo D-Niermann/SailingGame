@@ -17,6 +17,7 @@ export var impulse_factor = 3.0 # overall impulse stength, all impulses should b
 var model # ref to ship model
 var turnForce : float # current turn force for left right steer
 var sails # current sail state (0,1) 1=full sails
+var sailRefs = [] # aray of all sails on this ship (they append themselfs)
 var itemNodes = {} # ref to all items in ships model (used for center of mass)
 var turnCommandPressed = false
 var waterLevel = 1 # 1 = default, how much water the ship has taken, used in boyance calculation, if near impulse_factor, its start to sink
@@ -39,7 +40,7 @@ var right
 # parameters 
 # sailing and wind stuff
 var wind_dir = Vector2(0,1) # TODO: make real wind direction vector in the ocean env
-export var speed_mod = 5.2 # speed modifier, more = more max speed, could be changed because of higher load mass
+export var speed_mod = 0.6 # speed modifier, more = more max speed, could be changed because of higher load mass
 export var reverse_speed_factor = -0.2 # factor on how much sailing against the wind will reverse the speed direction (0 for still stand, 0.05 for pretty heavy reverse, negative values for allowing sailing against wind)
 export var crossWindForce = 0.01 # force that attacks the ship up on the sails, tilting it with the wind
 export var maxTurnForce = 0.7 # max turn force of the whole ship
@@ -97,7 +98,7 @@ func _physics_process(delta):
 	## turn impulse
 	apply_impulse(transform.basis.xform(hBack.translation),right*turnForce*impulse_factor*delta)
 	## sail speed impulse
-	apply_central_impulse(forward*calcWindForce()*delta*impulse_factor/waterLevel)
+	apply_central_impulse(forward*calSailForce()*delta*impulse_factor/waterLevel)
 	# sail wind attack to tilt the ship a bit if cross wind
 	apply_impulse(mainSailForce.translation, Vector3(0,0,-1)*crossWindForce*sails*delta*impulse_factor)
 
@@ -147,14 +148,16 @@ func applyCannonImpulse(from : Vector3, direction : Vector3):
 
 
 
-func calcWindForce():
+func calSailForce():
 	"""
-	Using an accurate formular to get the wind force on sail, based on angle to wind.
-	Directly with the wind (angle=0) is a bit slower than at a steep angle with the wind.
+	Iterating over all sails, adding their sail force 
 	"""
-	var angle_to_wind = wind_dir.angle_to(Vector2(forward.x,forward.z))
-	var deg = abs(rad2deg(angle_to_wind))/180
-	return sails*speed_mod*(pow(deg,2) - 0.8*pow(deg,3))-(reverse_speed_factor*speed_mod*sails)
+	var force = 0
+	for i in range(len(sailRefs)):
+		force += sailRefs[i].windForce
+	print(force)
+	return force
+	
 		
 func fillWater(amount):
 	"""

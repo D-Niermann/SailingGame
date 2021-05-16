@@ -28,7 +28,7 @@ top_radius = 0.2
 bottom_radius = 0.3
 height = 9.042
 
-[sub_resource type="SpatialMaterial" id=10]
+[sub_resource type="SpatialMaterial" id=2]
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.85
 albedo_texture = ExtResource( 1 )
@@ -51,12 +51,12 @@ shader_param/uv_offset_scale = 1.0
 shader_param/isBuilding = true
 shader_param/texture_albedo = ExtResource( 1 )
 
-[sub_resource type="SpatialMaterial" id=2]
+[sub_resource type="SpatialMaterial" id=7]
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.85
 albedo_texture = ExtResource( 1 )
 
-[sub_resource type="ShaderMaterial" id=7]
+[sub_resource type="ShaderMaterial" id=8]
 render_priority = -1
 shader = ExtResource( 19 )
 shader_param/uv_offset_scale = 1.0
@@ -80,13 +80,13 @@ mesh = SubResource( 1 )
 material/0 = null
 
 [node name="Sail" parent="Sails/FrontMast" instance=ExtResource( 11 )]
-transform = Transform( 0.571788, 0, 1.09139, 0, 1, 0, -0.820401, 0, 0.760656, -0.00546896, 1.30163, -0.0268193 )
+transform = Transform( 0.774116, 0, -0.842145, 0, 1, 0, 0.633043, 0, 1.02982, -0.00546896, 1.30163, -0.0268193 )
 
 [node name="Sail2" parent="Sails/FrontMast" instance=ExtResource( 11 )]
-transform = Transform( 0.488983, 0, 0.983764, 0, 1, 0, -0.739501, 0, 0.650498, 0.0204445, 2.41285, 0.0168079 )
+transform = Transform( 0.699807, 0, -0.724054, 0, 1, 0, 0.544276, 0, 0.930959, 0.0204445, 2.41285, 0.0168079 )
 
 [node name="Sail3" parent="Sails/FrontMast" instance=ExtResource( 11 )]
-transform = Transform( 0.411603, 0, 0.692983, 0, 1, 0, -0.520918, 0, 0.54756, -0.0194438, 3.09757, -0.00397754 )
+transform = Transform( 0.487805, 0, -0.599111, 0, 1, 0, 0.450354, 0, 0.648932, -0.0194438, 3.09757, -0.00397754 )
 
 [node name="SailWithShader" parent="Sails/FrontMast" instance=ExtResource( 8 )]
 transform = Transform( -0.0915128, 0.0496673, -1.09578, -0.0395173, 0.372194, 0.150224, 1.10483, 0.0174265, -0.0853899, 2.41773, 0.640092, 0.41461 )
@@ -139,7 +139,7 @@ yRange = [ -2, 2 ]
 
 [node name="Deck" type="Sprite3D" parent="Deck1"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.207, 0, 0 )
-material_override = SubResource( 10 )
+material_override = SubResource( 2 )
 pixel_size = 0.0037
 axis = 1
 shaded = true
@@ -277,7 +277,7 @@ yRange = [ -2, 2 ]
 
 [node name="Deck2" type="Sprite3D" parent="Deck2"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.207, 0.018985, 0 )
-material_override = SubResource( 2 )
+material_override = SubResource( 7 )
 pixel_size = 0.0037
 axis = 1
 shaded = true
@@ -305,7 +305,7 @@ yRange = [ -2, 2 ]
 
 [node name="DeckWithShader" type="Sprite3D" parent="Deck2/BuildMarkerManager"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.207, -0.022, 0 )
-material_override = SubResource( 7 )
+material_override = SubResource( 8 )
 pixel_size = 0.0037
 axis = 1
 shaded = true
