@@ -33,11 +33,12 @@ var requestedForPathfinding: bool
 var pathDeck = null # used by navigator, don't change manually
 var pathLocs: Array = [] # used by navigator, don't change manually
 var nextDest = null # used by navigator, don't change manually
-var speed: float = 0.6 # maximum speed per second for this unit's movement
-var thisPart: Vector2
-var isPathComplete: bool
-var isStandingStill: bool
-var isStuck: bool
+var lastDest = null # used by navigator, don't change manually
+var speed: float = 1
+var thisPart: Vector2 # used by navigator, don't change manually
+var isPathComplete: bool # used by navigator, don't change manually
+var isStandingStill: bool # used by navigator, don't change manually
+var isStuck: bool # used by navigator, don't change manually
 var canFollowIncompletePath: bool = true
 
 
@@ -167,9 +168,10 @@ func findVelocity(toLoc: Vector2, atDeck: Spatial):
 	if !is_instance_valid(atDeck):
 		return Vector3.ZERO
 	# cleaning path if target deck has changed
-	if pathDeck != atDeck || (!canFollowIncompletePath && nextDest != null && !pathLocs.empty() && pathLocs[0] != partitionID(nextDest, GlobalObjectReferencer.shopping.TILEWIDTH)):
+	if pathDeck != atDeck || lastDest != toLoc || (!canFollowIncompletePath && nextDest != null && !pathLocs.empty() && pathLocs[0] != partitionID(nextDest, GlobalObjectReferencer.shopping.TILEWIDTH)):
 		pathLocs.clear()
 		pathDeck = atDeck
+		lastDest = toLoc
 		nextDest = null
 	# removing location from path if reached
 	#var thisPart: Vector2 = partitionID(Vector2(translation.x, translation.z), GlobalObjectReferencer.shopping.TILEWIDTH)
