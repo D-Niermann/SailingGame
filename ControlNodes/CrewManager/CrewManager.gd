@@ -37,7 +37,7 @@ var fetchTasks = []
 var numberOfPriorities = 5 # how large the tasks list will be
 
 var currentAssignments = {TG_RELAX:       {"idle": {}, "busy": []}, # refs to humans, stored by ID , idle means idle for new work busy means already on item or heading to it
-						  TG_WEAPONS:     {"idle": {}, "busy": []}, # make these lists only filled with IDs and then create a separate dict for all crew members refs to access via ID
+						  TG_WEAPONS:     {"idle": {}, "busy": []}, # TODO: ? make these lists only filled with IDs and then create a separate dict for all crew members refs to access via ID
 						  TG_UTILITY:     {"idle": {}, "busy": []}, # "busy" : [{} , {}, {}, ...] priority ordered dicts
 						  TG_NAVIGATION:  {"idle": {}, "busy": []}} # these assignments in the busy tab also have the priority herarchy so that code can quickly infer on what priority the man currently is, or if he is idle
 
@@ -531,7 +531,7 @@ func setCrewCount(taskGroup, value):
 
 func getCrewScore(itemID) -> float:
 	"""
-	called by item to get to know how much crew is assigned and ready on that item
+	called to get to know how much crew is assigned and ready on that item
 	maybe later modify it by crews experience
 	Returns a score between 0 and 1 - 0 = no crew on item
 	"""

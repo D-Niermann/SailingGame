@@ -79,17 +79,18 @@ transform = Transform( 0.427862, 0, 0, 0, 0.394264, 0, 0, 0, 0.427862, 0, 1.6569
 mesh = SubResource( 1 )
 material/0 = null
 
-[node name="Flag3DScene2" parent="Sails/FrontMast" instance=ExtResource( 11 )]
-transform = Transform( 0.85201, 0, 0.696451, 0, 1, 0, -0.523525, 0, 1.13344, 0.366559, 1.30163, -0.189389 )
+[node name="Sail" parent="Sails/FrontMast" instance=ExtResource( 11 )]
+transform = Transform( 0.571788, 0, 1.09139, 0, 1, 0, -0.820401, 0, 0.760656, -0.00546896, 1.30163, -0.0268193 )
 
-[node name="Flag3DScene3" parent="Sails/FrontMast" instance=ExtResource( 11 )]
-transform = Transform( 0.781091, 0, 0.557881, 0, 1, 0, -0.419361, 0, 1.03909, 0.360548, 2.42487, -0.128512 )
+[node name="Sail2" parent="Sails/FrontMast" instance=ExtResource( 11 )]
+transform = Transform( 0.488983, 0, 0.983764, 0, 1, 0, -0.739501, 0, 0.650498, 0.0204445, 2.41285, 0.0168079 )
 
-[node name="Flag3DScene4" parent="Sails/FrontMast" instance=ExtResource( 11 )]
-transform = Transform( 0.584934, 0, 0.417779, 0, 1, 0, -0.314046, 0, 0.778144, 0.246604, 3.09757, -0.175889 )
+[node name="Sail3" parent="Sails/FrontMast" instance=ExtResource( 11 )]
+transform = Transform( 0.411603, 0, 0.692983, 0, 1, 0, -0.520918, 0, 0.54756, -0.0194438, 3.09757, -0.00397754 )
 
 [node name="SailWithShader" parent="Sails/FrontMast" instance=ExtResource( 8 )]
 transform = Transform( -0.0915128, 0.0496673, -1.09578, -0.0395173, 0.372194, 0.150224, 1.10483, 0.0174265, -0.0853899, 2.41773, 0.640092, 0.41461 )
+canRotate = false
 
 [node name="Flag3DScene" parent="Sails/FrontMast" instance=ExtResource( 2 )]
 transform = Transform( -0.192357, 0.0720457, 0.266918, 0, 0.244662, -0.11483, -0.283321, -0.0489145, -0.18122, 0.0070411, 3.24533, -0.00361058 )
@@ -102,14 +103,15 @@ transform = Transform( 0.427862, 0, 0, 0, 0.394264, 0, 0, 0, 0.427862, 0, 1.6569
 mesh = SubResource( 1 )
 material/0 = null
 
-[node name="Flag3DScene5" parent="Sails/Main" instance=ExtResource( 11 )]
-transform = Transform( 0.584934, 0, 0.417779, 0, 0.808259, 0, -0.314047, 0, 0.778144, 0.264281, 2.81001, -0.0808478 )
+[node name="Sail" parent="Sails/Main" instance=ExtResource( 11 )]
+transform = Transform( 0.491102, 0, -0.594326, 0, 0.808259, 0, 0.446758, 0, 0.653317, 0.0109169, 2.81001, 0.0489766 )
 
-[node name="Flag3DScene6" parent="Sails/Main" instance=ExtResource( 11 )]
-transform = Transform( 0.792771, 0, 0.583654, 0, 0.808259, 0, -0.438735, 0, 1.05463, 0.386149, 2.39785, -0.163037 )
+[node name="Sail2" parent="Sails/Main" instance=ExtResource( 11 )]
+transform = Transform( 0.677951, 0, -0.799689, 0, 0.808259, 0, 0.60113, 0, 0.901884, -0.0630555, 2.39785, -0.00655635 )
+doPrint = true
 
-[node name="Flag3DScene7" parent="Sails/Main" instance=ExtResource( 11 )]
-transform = Transform( 0.979762, 0, 0.668528, 0, 0.808259, 0, -0.502535, 0, 1.30339, 0.442565, 1.28554, -0.163604 )
+[node name="Sail3" parent="Sails/Main" instance=ExtResource( 11 )]
+transform = Transform( 0.800445, 0, -1.00592, 0, 0.808259, 0, 0.75615, 0, 1.06484, -0.00663948, 1.28554, -0.00712335 )
 
 [node name="Flag3DScene" parent="Sails/Main" instance=ExtResource( 2 )]
 transform = Transform( -0.234354, -0.0498574, 0.262651, 0, 0.220353, 0.102888, -0.274044, 0.0426366, -0.224611, 0.00421143, 3.29494, -0.00418377 )
@@ -125,7 +127,6 @@ texture = ExtResource( 13 )
 "PlayerDeck",
 ]]
 transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.0687942, 0 )
-visible = false
 collision_layer = 524289
 collision_mask = 524289
 script = ExtResource( 18 )

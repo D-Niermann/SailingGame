@@ -17,7 +17,7 @@ export var impulse_factor = 3.0 # overall impulse stength, all impulses should b
 var model # ref to ship model
 var turnForce : float # current turn force for left right steer
 var sails # current sail state (0,1) 1=full sails
-var itemNodes = [] # ref to all items in ships model (used for center of mass)
+var itemNodes = {} # ref to all items in ships model (used for center of mass)
 var turnCommandPressed = false
 var waterLevel = 1 # 1 = default, how much water the ship has taken, used in boyance calculation, if near impulse_factor, its start to sink
 
@@ -72,7 +72,7 @@ func registerItem(node):
 	Adds Item to array containing all items that are on ship.
 	Handles other stuff that needs to be handled when new item is placed
 	"""
-	itemNodes.append(node)
+	itemNodes[node.id] = node
 	if isPlayer:
 		calcCenterOfMass()
 	# print("registered "+node.name)
@@ -81,10 +81,7 @@ func unregisterItem(node):
 	"""
 	un-register item node from itemNodes array
 	"""
-	for i in range(len(itemNodes)):
-		if itemNodes[i].name==node.name:
-			itemNodes.remove(i)
-			break
+	itemNodes.erase(node.id)
 
 func _physics_process(delta):
 	sails = clamp(sails,-0.01, 1)
@@ -213,8 +210,8 @@ func calcCenterOfMass():
 	"""
 	var avPos = Vector3.ZERO
 	var weightFactor = 20  # the bigger this number the less the avPos is affected by items placed (basically the ships default weight)
-	for i in range(len(itemNodes)):
-		avPos += (to_local(itemNodes[i].global_transform.origin))* itemNodes[i].weight/weightFactor
+	for id in itemNodes:
+		avPos += (to_local(itemNodes[id].global_transform.origin))* itemNodes[id].weight/weightFactor
 	avPos*=1.0/len(itemNodes)
 	centerOfMass = avPos
 	# print("CoM: ",centerOfMass)
