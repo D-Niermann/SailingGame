@@ -56,7 +56,8 @@ func _ready():
 				if is_instance_valid(coll2):
 					marker.modulate = C_BLOCKED
 #					isTileOccupied[Vector2(x,y)] = true
-					isTileOccupied[convertedCoordinates] = true
+#					isTileOccupied[convertedCoordinates] = true
+					isTileOccupied[convertedCoordinates] = -1
 
 func _process(delta):
 
