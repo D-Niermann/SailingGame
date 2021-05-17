@@ -33,8 +33,13 @@ var requestedForPathfinding: bool
 var pathDeck = null # used by navigator, don't change manually
 var pathLocs: Array = [] # used by navigator, don't change manually
 var nextDest = null # used by navigator, don't change manually
-var speed: float = 0.6 # maximum speed per second for this unit's movement
-var thisPart: Vector2
+var lastDest = null # used by navigator, don't change manually
+var speed: float = 1
+var thisPart: Vector2 # used by navigator, don't change manually
+var isPathComplete: bool # used by navigator, don't change manually
+var isStandingStill: bool # used by navigator, don't change manually
+var isStuck: bool # used by navigator, don't change manually
+var canFollowIncompletePath: bool = true
 
 
 func _ready():
@@ -107,6 +112,12 @@ func _process(delta):
 	thisPart = partitionID(Vector2(translation.x, translation.z), GlobalObjectReferencer.shopping.TILEWIDTH)
 	if (translation-targetPos).length()>0.05 or currentDeckRef!=targetDeckRef:
 		moveTo(delta, targetPos, targetDeckRef)
+	else:
+		isStandingStill = true
+	if !isPathComplete && isStandingStill:
+		isStuck = true
+	else:
+		isStuck = false
 	# this part below is for debugging, you can comment it out
 	# for tile in pathLocs:
 	# 	get_parent().markTile(tile)
@@ -146,6 +157,10 @@ func moveTo(delta: float, toLoc: Vector3, atDeck: Spatial):
 		var velocity: Vector3 = findVelocity(Vector2(toLoc.x, toLoc.z), atDeck)
 		translation += velocity * delta
 		translation.y = 0
+		if velocity != Vector3.ZERO:
+			isStandingStill = false
+		else:
+			isStandingStill = true
 
 # Tries to find velocity to reach the given location.
 func findVelocity(toLoc: Vector2, atDeck: Spatial):
@@ -153,9 +168,10 @@ func findVelocity(toLoc: Vector2, atDeck: Spatial):
 	if !is_instance_valid(atDeck):
 		return Vector3.ZERO
 	# cleaning path if target deck has changed
-	if pathDeck != atDeck || (nextDest != null && !pathLocs.empty() && pathLocs[0] != partitionID(nextDest, GlobalObjectReferencer.shopping.TILEWIDTH)):
+	if pathDeck != atDeck || lastDest != toLoc || (!canFollowIncompletePath && nextDest != null && !pathLocs.empty() && pathLocs[0] != partitionID(nextDest, GlobalObjectReferencer.shopping.TILEWIDTH)):
 		pathLocs.clear()
 		pathDeck = atDeck
+		lastDest = toLoc
 		nextDest = null
 	# removing location from path if reached
 	#var thisPart: Vector2 = partitionID(Vector2(translation.x, translation.z), GlobalObjectReferencer.shopping.TILEWIDTH)
@@ -233,6 +249,7 @@ func adjustVelocity(velocity: Vector3, maxSpeed: float):
 
 # Finds path between the given parts.
 func findPath(from: Vector2, to: Vector2, canCross: bool):
+	isPathComplete = true
 	var temp = null
 	var paths: Dictionary = {from: {"path": [from], "dist": 0}}
 	var open: Dictionary = {from: null}
@@ -262,16 +279,19 @@ func findPath(from: Vector2, to: Vector2, canCross: bool):
 				break
 		limit -= 1
 	if temp == null:
-		print("failedToFindPath to: ",to)
-		return []
+#		print("incompletePath")
+		isPathComplete = false
 		var lowest: Vector2
 		var value: int = -1
 		for part in close.keys():
-			var score: int = paths[part]["dist"] + chebyshevDistance(part, to)
+			var score: int = chebyshevDistance(part, to)
 			if value < 0 || score < value:
 				value = score
 				lowest = part
-		temp = paths[lowest]["path"]
+		if value != -1:
+			temp = paths[lowest]["path"]
+	if temp == null:
+		return []
 	temp.invert()
 	return temp
 
