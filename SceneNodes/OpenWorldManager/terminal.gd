@@ -41,6 +41,7 @@ var ISLAND01: PackedScene = preload("res://SceneNodes/Islands/Island1.tscn")
 var ISLAND02: PackedScene = preload("res://SceneNodes/Islands/Island2.tscn")
 var ISLAND03: PackedScene = preload("res://SceneNodes/Islands/Island3.tscn")
 var presets: Dictionary = { # constants are not copied over the instance, this is where we summon stuff from, and also check some constant variables from
+	"border": {"CON": "walls", "RES": "res://SceneNodes/Borders/skullAndBones.tscn"},
 	"example": {"CON": "units", "PRE": "NPC01", "RES": "res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn", "SPEED": 1, "weight": 1, "side": "pirates", "type": "wanderer", "pack": [], "gold": 100, "mode": "sell"}
 }
 var NPC01: PackedScene = preload("res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn")
@@ -294,11 +295,13 @@ func removePart(part):
 
 # Spawns node from data, or creates new from preset. Everytime you create/spawn something that should persist as data, use this.
 func spawn(key: String, at: Vector3):
+	var result = null
 	var atPart: Vector3 = Utility.partitionID(at, PARTSIZE, EXTENDED)
 	var atCell: Vector3 = Utility.partitionID(at, CELLSIZE, EXTENDED)
 	var info = data.get(key)
 	# if exists, reposition
 	if info != null:
+		result = key
 		var fromPart = Utility.partitionID(info["xform"].origin, PARTSIZE, EXTENDED)
 		var fromCell = Utility.partitionID(info["xform"].origin, CELLSIZE, EXTENDED)
 		info["xform"].origin = at
@@ -322,7 +325,7 @@ func spawn(key: String, at: Vector3):
 			list[atPart].append(key)
 		# if part is live, summon
 		if live.has(atPart):
-			var holo = viewport.get_node_or_null(key)
+			var holo = refs.get(key)
 			if holo == null:
 				var preset: Dictionary = presets[info["preset"]]
 				var pre = preset.get("PRE")
@@ -335,7 +338,7 @@ func spawn(key: String, at: Vector3):
 			holo.global_transform = info["xform"]
 			refs[key] = {"holo": holo}
 		elif live.has(fromPart):
-			var holo = viewport.get_node_or_null(key)
+			var holo = refs.get(key)
 			if holo != null:
 				holo.queue_free()
 				refs.erase(key)
@@ -344,6 +347,7 @@ func spawn(key: String, at: Vector3):
 		var preset = presets.get(key)
 		if preset != null:
 			var unique: String = findName(key)
+			result = unique
 			info = {}
 			info["preset"] = key
 			for entry in preset.keys():
@@ -376,6 +380,7 @@ func spawn(key: String, at: Vector3):
 				holo.name = unique
 				holo.global_transform.origin = at
 				refs[unique] = {"holo": holo}
+	return result
 
 
 # Finds unique name to be used in data for a given preset name. Simply checks database and tries to make up a unique name for a new entity.
@@ -738,3 +743,47 @@ func saveGame(slot: String):
 	image.flip_y()
 	image.resize(image.get_width() * 0.125, image.get_height() * 0.125)
 	image.save_png("user://" + slot + ".png")
+
+
+# Creates border signs and adds to data for their corresponding partitions.
+func createBorderSigns():
+	var width = topograph.get_width()
+	var height = topograph.get_height()
+	print(width)
+	print(height)
+	for x in range(-1, width + 1):
+		for y in [-1, height]:
+			var result = spawn("border", Utility.partitionLocation(Vector3(x, 0, y), PARTSIZE, false))
+			var info = data.get(result)
+			if y == -1:
+				if x == -1:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(1, 0, 1), Vector3.UP)
+				elif x == width:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(-1, 0, 1), Vector3.UP)
+				else:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(0, 0, 1), Vector3.UP)
+			elif y == height:
+				if x == -1:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(1, 0, -1), Vector3.UP)
+				elif x == width:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(-1, 0, -1), Vector3.UP)
+				else:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(0, 0, -1), Vector3.UP)
+	for y in range(-1, height + 1):
+		for x in [-1, width]:
+			var result = spawn("border", Utility.partitionLocation(Vector3(x, 0, y), PARTSIZE, false))
+			var info = data.get(result)
+			if x == -1:
+				if y == -1:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(1, 0, 1), Vector3.UP)
+				elif y == height:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(1, 0, -1), Vector3.UP)
+				else:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(1, 0, 0), Vector3.UP)
+			elif x == width:
+				if y == -1:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(-1, 0, 1), Vector3.UP)
+				elif y == height:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(-1, 0, -1), Vector3.UP)
+				else:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(-1, 0, 0), Vector3.UP)
