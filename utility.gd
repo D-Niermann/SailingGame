@@ -39,15 +39,17 @@ func findPath(from: Vector3, to: Vector3, canCross: bool, extended: bool, filter
 				break
 		limit -= 1
 	if temp == null:
-		return null
 		var lowest: Vector3
 		var value: int = -1
 		for part in close.keys():
-			var score: int = paths[part]["dist"] + chebyshevDistance(part, to)
+			var score: int = chebyshevDistance(part, to)
 			if value < 0 || score < value:
 				value = score
 				lowest = part
-		temp = paths[lowest]["path"]
+		if value != -1:
+			temp = paths[lowest]["path"]
+	if temp == null:
+		return []
 	temp.invert()
 	return temp
 
