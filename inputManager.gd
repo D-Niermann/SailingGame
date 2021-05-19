@@ -8,6 +8,11 @@ var leftClick: bool = false
 var rightClick: bool = false
 
 
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	GlobalObjectReferencer.inputManager = self
+
+
 # Catches only the input which has not been handled yet.
 func _unhandled_input(event):
 	if event.is_action_pressed("leftClick") && !event.is_echo():
