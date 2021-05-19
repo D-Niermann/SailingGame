@@ -69,6 +69,8 @@ func _ready():
 		while file.file_exists("user://" + str(suggestion) + ".png"):
 			suggestion += 1
 		Utility.lastSlot = suggestion
+		createBorderSigns()
+	createBorderSigns() # remove this line later, as signs should only be created on a new game
 
 
 # Called every physics frame. 'delta' is the elapsed time since the previous frame.
@@ -76,6 +78,13 @@ func _physics_process(delta):
 	# cleaning offscreen indicators
 	for child in indicators.get_children():
 		child.queue_free()
+	# warning for getting out of the playable area
+	var playerPart: Vector3 = Utility.partitionID(GlobalObjectReferencer.playerShip.global_transform.origin, PARTSIZE, false)
+	var clampedPart: Vector2 = Vector2(clamp(playerPart.x, 0, topograph.get_width() - 1), clamp(playerPart.z, 0, topograph.get_height() - 1))
+	var partDifference: Vector2 = clampedPart - Vector2(playerPart.x, playerPart.z)
+	if partDifference != Vector2.ZERO:
+		print("warning, turn towards: "+str(partDifference))
+		pass
 	# randomizing number generator for further use
 	randomize()
 	# advancing time
