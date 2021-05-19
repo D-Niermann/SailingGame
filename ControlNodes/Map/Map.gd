@@ -25,6 +25,9 @@ func _physics_process(delta):
 		child.queue_free()
 	for key in data.keys():
 		var unit = data[key]
+		var type = unit.get("type")
+		if type == null:
+			continue
 		var location = unit["xform"].origin
 		container.rect_size.x = container.rect_size.y
 		container.margin_left = container.rect_size.x * -0.5
@@ -32,7 +35,6 @@ func _physics_process(delta):
 		var inRectPartSize = container.rect_size / mapSize
 		var projected = inRectPartSize * Vector2(location.x, location.z) / partSize
 		var indicator: Polygon2D = INDICATOR.instance()
-		var type = unit["type"]
 		if type != "trading":
 			indicator.rotate(PI * 0.5)
 		var side = unit["side"]
