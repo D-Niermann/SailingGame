@@ -235,7 +235,7 @@ func insertPart(part):
 			if pre != null:
 				holo = get(pre).instance()
 			else:
-				holo = load(presets["RES"]).instance()
+				holo = load(preset["RES"]).instance()
 			viewport.add_child(holo)
 			holo.name = wall
 			holo.global_transform = info["xform"]
@@ -249,7 +249,7 @@ func insertPart(part):
 			if pre != null:
 				holo = get(pre).instance()
 			else:
-				holo = load(presets["RES"]).instance()
+				holo = load(preset["RES"]).instance()
 			viewport.add_child(holo)
 			holo.name = unit
 			holo.global_transform = info["xform"]
@@ -263,7 +263,7 @@ func insertPart(part):
 			if pre != null:
 				holo = get(pre).instance()
 			else:
-				holo = load(presets["RES"]).instance()
+				holo = load(preset["RES"]).instance()
 			viewport.add_child(holo)
 			holo.name = item
 			holo.global_transform = info["xform"]
