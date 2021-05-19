@@ -41,7 +41,7 @@ var ISLAND01: PackedScene = preload("res://SceneNodes/Islands/Island1.tscn")
 var ISLAND02: PackedScene = preload("res://SceneNodes/Islands/Island2.tscn")
 var ISLAND03: PackedScene = preload("res://SceneNodes/Islands/Island3.tscn")
 var presets: Dictionary = { # constants are not copied over the instance, this is where we summon stuff from, and also check some constant variables from
-	"example": {"CON": "units", "PRE": "NPC01", "RES": "res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn", "SPEED": 1, "weight": 1, "side": "spanish", "type": "trade", "pack": [], "gold": 100, "mode": "sell"}
+	"example": {"CON": "units", "PRE": "NPC01", "RES": "res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn", "SPEED": 1, "weight": 1, "side": "pirates", "type": "wanderer", "pack": [], "gold": 100, "mode": "sell"}
 }
 var NPC01: PackedScene = preload("res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn")
 
@@ -428,15 +428,15 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 				leastDangerousPart = partition
 			if value.y > 0 && value.y < weakestEnemyValue:
 				weakestEnemyPart = partition
-		if type == "trade": # if enemy is stronger than allies, flee
-			if total.y > total.x:
-				dest = leastDangerousPart
-		elif type == "pirate": # if enemy is weaker than allies, fight
+		if side == "pirates": # if enemy is weaker than allies, fight
 			if total.y != 0:
 				if total.x / total.y > 1.1:
 					dest = weakestEnemyPart
 				else:
 					dest = leastDangerousPart
+		elif type == "trade": # if enemy is stronger than allies, flee
+			if total.y > total.x:
+				dest = leastDangerousPart
 		elif type == "military": # if enemy is weaker than allies, fight
 			if total.y != 0:
 				if total.x / total.y > 0.9:
@@ -464,6 +464,7 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 			if goal == null: # finds goal if doesn't have one
 				# print("goalfinding")
 				dominions.lock()
+				topograph.lock()
 				if type == "trade": # go to the closest shop with the highest profit for the current cargo hold
 					var targetShop = null
 					var targetPart = null
@@ -487,7 +488,7 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 							targetPart = mallPart
 					info["goal"] = targetPart
 					info["shop"] = targetShop
-				elif type == "pirate": # patrol to hunt trade ships, for this go to a random trading route partition
+				elif type == "interceptor": # patrol to hunt trade ships, for this go to a random trading route partition
 					var malls: Array = Economy.malls.keys()
 					malls.shuffle()
 					var mallTwoPart = null
@@ -512,6 +513,11 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 					var path = Utility.findPath(mallOnePart, mallTwoPart, true, false, [])
 					if path != null:
 						info["goal"] = path[floor((path.size() - 1) * 0.5)]
+				elif type == "wanderer": # patrol to hunt trade ships, for this go to a totally random partition
+					var randomPart = Vector2(floor(rand_range(0, topograph.get_width() - 1)), floor(rand_range(0, topograph.get_height() - 1)))
+					var randomPixel: Color = topograph.get_pixel(randomPart.x, randomPart.y)
+					if randomPixel == Color.black:
+						info["goal"] = Vector3(randomPart.x, 0, randomPart.y)
 				elif type == "military": # patrol to hunt enemy and pirate ships, for this go to a random trading spot partition
 					var malls: Array = Economy.malls.keys()
 					malls.shuffle()
@@ -526,14 +532,15 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 							info["goal"] = mallPart
 							break
 				dominions.unlock()
+				topograph.unlock()
 			elif goal != part: # needs path if is not at goal
 				var path = info.get("path")
 				if path == null: # finds path if doesn't have one
-					# print("pathfinding")
 					var filter: Array = []
 					if wars.has(side):
 						filter = wars[side].duplicate()
 					info["path"] = Utility.findPath(part, goal, true, false, filter)
+#					print("pathfinding: "+str(info["path"].size())+" to: "+str(goal)+" from: "+str(part))
 #				elif path[0] != goal: # changes goal if can't reach
 #					pass
 				else: # follows path
@@ -595,9 +602,12 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 					info["mode"] = "sell"
 					# wait for short time
 					info["wait"] = 180
-				elif type == "pirate":
+				elif type == "interceptor":
 					# wait for long time
 					info["wait"] = 600
+				elif type == "wanderer":
+					# wait for a bit
+					info["wait"] = 1
 				elif type == "military":
 					# repair (if ally port)
 					# wait for some time
