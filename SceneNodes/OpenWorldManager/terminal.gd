@@ -151,9 +151,14 @@ func _physics_process(delta):
 		# getting the array of the units in proximity, that is units in this and adjacent partitions, also calculating power of each faction inside
 		adjacent = Utility.findAdjacent(part, CANCROSS, EXTENDED)
 		adjacent.append(part)
+		var occupied: Array = []
 		var sides: Dictionary = {}
 		var inProx: Dictionary = {}
+		topograph.lock()
 		for partition in adjacent:
+			if partition.x < 0 || partition.x >= topograph.get_width() || partition.z < 0 || partition.z >= topograph.get_height() || topograph.get_pixel(partition.x, partition.z) != Color.black:
+				var occupiedPartitionLocation: Vector3 = Utility.partitionLocation(partition, PARTSIZE, false)
+				occupied.append(Vector2(occupiedPartitionLocation.x, occupiedPartitionLocation.z))
 			sides[partition] = {}
 			if units.has(partition):
 				for unit in units[partition]:
@@ -162,6 +167,7 @@ func _physics_process(delta):
 					if !sides[partition].has(side):
 						sides[partition][side] = 0
 					sides[partition][side] += 1 # this "1" can be replaced with scoring of power of that ship
+		topograph.unlock()
 		var sidesSpread: Dictionary = sides.duplicate(true)
 		for partition in sides.keys():
 			for partitionTwo in sides.keys():
@@ -187,7 +193,7 @@ func _physics_process(delta):
 						sidesOrganized[side][partition].y += value
 		# iterating units
 		for unit in units[part]: # for each unit in this part, note that, the inProx array above will be same for all units in this part, so can be used by any
-			var holo = runAI(unit, part, sidesOrganized, inProx, delta)
+			var holo = runAI(unit, part, sidesOrganized, inProx, occupied, delta)
 			# maintaining consistency, we update all necessary data after the behavior, so things don't fall apart
 			var info: Dictionary = data[unit]
 			var newCell = Utility.partitionID(info["xform"].origin, CELLSIZE, EXTENDED) # new cell of this unit
@@ -402,7 +408,7 @@ func findName(key: String):
 
 
 # Runs artificial intelligence for the given unit.
-func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, delta: float):
+func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, islands: Array, delta: float):
 #	If I was a ship:
 #	- I'd have a class like pirate, trade, military; and a faction like spanish, french, whatnot
 #	- I'd have an end goal depending on my class or faction or current cargo or health
@@ -656,7 +662,7 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 		var controller = holo.get_node_or_null("AIController")
 		if controller != null:
 			var temp: Vector3 = Utility.partitionLocation(dest, PARTSIZE, false)
-			results = controller.update(Vector2(temp.x, temp.z), inProx)
+			results = controller.update(Vector2(temp.x, temp.z), inProx, islands)
 		info["xform"] = holo.global_transform # at the end, update transform
 	else: # runs when unit is offscreen
 		# move transform
