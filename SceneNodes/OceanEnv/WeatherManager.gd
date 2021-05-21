@@ -8,17 +8,18 @@ const daysPerSeason = 10 #days per season
 #Day/Time/Seasons
 var time : float
 var day : int
-enum season{
-	summer=0,
-	spring=1,
-	autumn=2,
-	winter=3 
+var season = {
+	0 : "summer",
+	1 : "spring",
+	2 : "autumn",
+	3 : "winter" 
 }
 var currentSeason : String
+var seasonId : int
 
 #Sun/Sunlight/Wind
-var lightDirection = Vector2(0, 0)
-var windDirection = Vector2(0, 0)
+var lightDirection : Vector2
+var windDirection : Vector2
 var shadowIntensity : float
 
 #Storms NOT YET IMPLEMENTED
@@ -35,7 +36,7 @@ var stormTime
 
 func _process(delta):
 	time_and_day(delta)
-	sun_position()
+	lightDirection = sun_position()
 
 func _is_storm_day():
 	stormRng.randf()
@@ -58,25 +59,15 @@ func time_and_day(delta):
 		stormTime = _storm_time()
 	day = int(time / dayTime)
 # warning-ignore:integer_division
-	var i = (day / daysPerSeason) % 4
-	currentSeason = season[i]
+	seasonId = (day / daysPerSeason) % 4
+	currentSeason = season[seasonId]
 
-func _seasonal_sun_position(): #light orientation due to season NOT COMPLETE
-	var sunMaxHeight
-	var sunYRotation
-	return Vector2(sunMaxHeight, sunYRotation)
-
-func _time_sun_position(): #light orientation due to time of day
+func sun_position(): #light orientation due to time of day
 	var currentTime = time - (day*dayTime)
 # warning-ignore:integer_division
-	var sunPath = 360/dayTime
-	var seasonalSunPosition = _seasonal_sun_position()
-	var sunX = fmod(sunPath * currentTime, seasonalSunPosition.x)
-	var sunY = seasonalSunPosition.y
+	var sunX = -80.0 * sin(PI*dayTime*currentTime)
+	var sunY = -45 - 90 * (currentTime/(dayTime/4)) * (seasonId-2)/abs(seasonId-2)
 	return Vector2(sunX, sunY)
-
-func sun_position():
-	pass
 
 func night_shadow_intensity(sunAngle): # for indirect light and shadows
 	var sunImpact = 1.0-(abs(90.0-sunAngle)/90.0)
