@@ -71,8 +71,8 @@ func escapeVector(islandsInRange: Array):
 	for island in islandsInRange:
 		count += 1
 		var escapeDirection: Vector2 = (island - thisProjection)
-		escapeDirection / min(1, escapeDirection.length() - 64) # 64 is PARTSIZE
-	return Vector3(totalVector.x, 0, totalVector.y) / count
+		escapeDirection / max(1, escapeDirection.length() - 64) # 64 is PARTSIZE
+	return Vector3(totalVector.x, 0, totalVector.y) / max(1, count)
 	
 func aimCannons():
 	for i in range(len(myShip.itemNodes)): # needs to iterate all the time because cannons can be destroyed
