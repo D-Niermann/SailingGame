@@ -154,8 +154,8 @@ func _physics_process(delta):
 	setSunLight()
 
 func setSunLight():
-	
-	sunLight.global_transform.basis = org_basis.rotated(sunLight.global_transform.basis.x, deg2rad((fmod((timeOfDay/dayDuration_sec),1)*360)))
+	pass
+	# sunLight.global_transform.basis = org_basis.rotated(sunLight.global_transform.basis.x, deg2rad((fmod((timeOfDay/dayDuration_sec),1)*360)))
 
 func getMousePosition() -> Vector3:
 	from = camera.project_ray_origin(viewport.get_mouse_position())

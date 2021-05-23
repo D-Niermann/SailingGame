@@ -155,7 +155,7 @@ func calSailForce():
 	var force = 0
 	for i in range(len(sailRefs)):
 		force += sailRefs[i].windForce
-	print(force)
+	# print(force)
 	return force
 	
 		

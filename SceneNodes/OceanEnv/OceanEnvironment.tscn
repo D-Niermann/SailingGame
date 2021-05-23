@@ -25,6 +25,7 @@ script = ExtResource( 3 )
 wind_strength = 1.0
 
 [node name="render_targets" type="Spatial" parent="."]
+visible = false
 
 [node name="vector_map_buffer" type="Viewport" parent="render_targets"]
 size = Vector2( 1024, 1024 )
@@ -59,13 +60,13 @@ collision_mask = 1024
 shape = SubResource( 2 )
 
 [node name="MeshInstance" type="MeshInstance" parent="waterplane"]
-transform = Transform( -4.79179, 0.646761, 2.27327, -4.61234, -0.744494, -1.16782, 0.887574, -0.377119, 6.20414, -0.735821, -1.91036, -3.10803 )
+transform = Transform( -4.79179, 0.646761, 2.27327, -4.61234, -0.744494, -1.16782, 0.887574, -0.377119, 6.20414, -0.735821, 5.71239, -3.10803 )
 visible = false
 mesh = SubResource( 3 )
 material/0 = ExtResource( 8 )
 
 [node name="SunLight" type="DirectionalLight" parent="."]
-transform = Transform( 1, 0, 0, 0, -0.566219, 0.824255, 0, -0.824255, -0.566219, 0, 8.64, 0 )
+transform = Transform( 0.965713, -0.206903, 0.156809, -0.259611, -0.769647, 0.583305, 0, -0.604015, -0.796973, 0.156864, 8.64, 0 )
 light_energy = 1.5
 light_specular = 1.0
 shadow_enabled = true

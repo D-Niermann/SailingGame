@@ -26,17 +26,17 @@ func _process(delta):
 	if is_instance_valid(myShip):
 		$Sail.material_override.set_shader_param("sail_in", 1-myShip.sails)
 	
-	windAngle = Utility.signedAngle(global_transform.basis.x, windDir, transform.basis.y.normalized())/PI
-	angleToShip = myShip.forward.angle_to(global_transform.basis.x)
+		windAngle = Utility.signedAngle(global_transform.basis.x, windDir, transform.basis.y.normalized())/PI
+		angleToShip = myShip.forward.angle_to(global_transform.basis.x)
 
-	## rotate towards wind direction
-	if canRotate:
-		
-		rotate(transform.basis.y.normalized(), clamp(-windAngle*baseRotSpeed * rotateSpeed,-maxRotSpeed,maxRotSpeed))
+		## rotate towards wind direction
+		if canRotate:
+			
+			rotate(transform.basis.y.normalized(), clamp(-windAngle*baseRotSpeed * rotateSpeed,-maxRotSpeed,maxRotSpeed))
 
-	## calc wind force (TODO: For now just use wind angle)
-	windForce = calcWindForce()
-	rotateSpeed = calcRotateSpeed()
+		## calc wind force (TODO: For now just use wind angle)
+		windForce = calcWindForce()
+		rotateSpeed = calcRotateSpeed()
 	# if doPrint: 
 	# 	print("a: ", angleToShip)
 
@@ -44,7 +44,8 @@ func lateReady():
 	## register to player item
 	myShip = GlobalObjectReferencer.playerShip
 	## register to ship
-	myShip.sailRefs.append(self)
+	if is_instance_valid(myShip):
+		myShip.sailRefs.append(self)
 
 func calcRotateSpeed():
 	"""
