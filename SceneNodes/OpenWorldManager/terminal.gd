@@ -41,7 +41,8 @@ var ISLAND01: PackedScene = preload("res://SceneNodes/Islands/Island1.tscn")
 var ISLAND02: PackedScene = preload("res://SceneNodes/Islands/Island2.tscn")
 var ISLAND03: PackedScene = preload("res://SceneNodes/Islands/Island3.tscn")
 var presets: Dictionary = { # constants are not copied over the instance, this is where we summon stuff from, and also check some constant variables from
-	"example": {"CON": "units", "PRE": "NPC01", "RES": "res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn", "SPEED": 1, "weight": 1, "side": "spanish", "type": "trade", "pack": [], "gold": 100, "mode": "sell"}
+	"border": {"CON": "walls", "RES": "res://SceneNodes/Borders/skullAndBones.tscn"},
+	"example": {"CON": "units", "PRE": "NPC01", "RES": "res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn", "SPEED": 1, "weight": 1, "side": "pirates", "type": "wanderer", "pack": [], "gold": 100, "mode": "sell"}
 }
 var NPC01: PackedScene = preload("res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn")
 
@@ -68,6 +69,8 @@ func _ready():
 		while file.file_exists("user://" + str(suggestion) + ".png"):
 			suggestion += 1
 		Utility.lastSlot = suggestion
+		createBorderSigns()
+	createBorderSigns() # remove this line later, as signs should only be created on a new game
 
 
 # Called every physics frame. 'delta' is the elapsed time since the previous frame.
@@ -75,6 +78,13 @@ func _physics_process(delta):
 	# cleaning offscreen indicators
 	for child in indicators.get_children():
 		child.queue_free()
+	# warning for getting out of the playable area
+	var playerPart: Vector3 = Utility.partitionID(GlobalObjectReferencer.playerShip.global_transform.origin, PARTSIZE, false)
+	var clampedPart: Vector2 = Vector2(clamp(playerPart.x, 0, topograph.get_width() - 1), clamp(playerPart.z, 0, topograph.get_height() - 1))
+	var partDifference: Vector2 = clampedPart - Vector2(playerPart.x, playerPart.z)
+	if partDifference != Vector2.ZERO:
+		print("warning, turn towards: "+str(partDifference))
+		pass
 	# randomizing number generator for further use
 	randomize()
 	# advancing time
@@ -141,9 +151,14 @@ func _physics_process(delta):
 		# getting the array of the units in proximity, that is units in this and adjacent partitions, also calculating power of each faction inside
 		adjacent = Utility.findAdjacent(part, CANCROSS, EXTENDED)
 		adjacent.append(part)
+		var occupied: Array = []
 		var sides: Dictionary = {}
 		var inProx: Dictionary = {}
+		topograph.lock()
 		for partition in adjacent:
+			if partition.x < 0 || partition.x >= topograph.get_width() || partition.z < 0 || partition.z >= topograph.get_height() || topograph.get_pixel(partition.x, partition.z) != Color.black:
+				var occupiedPartitionLocation: Vector3 = Utility.partitionLocation(partition, PARTSIZE, false)
+				occupied.append(Vector2(occupiedPartitionLocation.x, occupiedPartitionLocation.z))
 			sides[partition] = {}
 			if units.has(partition):
 				for unit in units[partition]:
@@ -152,6 +167,7 @@ func _physics_process(delta):
 					if !sides[partition].has(side):
 						sides[partition][side] = 0
 					sides[partition][side] += 1 # this "1" can be replaced with scoring of power of that ship
+		topograph.unlock()
 		var sidesSpread: Dictionary = sides.duplicate(true)
 		for partition in sides.keys():
 			for partitionTwo in sides.keys():
@@ -177,7 +193,7 @@ func _physics_process(delta):
 						sidesOrganized[side][partition].y += value
 		# iterating units
 		for unit in units[part]: # for each unit in this part, note that, the inProx array above will be same for all units in this part, so can be used by any
-			var holo = runAI(unit, part, sidesOrganized, inProx, delta)
+			var holo = runAI(unit, part, sidesOrganized, inProx, occupied, delta)
 			# maintaining consistency, we update all necessary data after the behavior, so things don't fall apart
 			var info: Dictionary = data[unit]
 			var newCell = Utility.partitionID(info["xform"].origin, CELLSIZE, EXTENDED) # new cell of this unit
@@ -235,7 +251,7 @@ func insertPart(part):
 			if pre != null:
 				holo = get(pre).instance()
 			else:
-				holo = load(presets["RES"]).instance()
+				holo = load(preset["RES"]).instance()
 			viewport.add_child(holo)
 			holo.name = wall
 			holo.global_transform = info["xform"]
@@ -249,7 +265,7 @@ func insertPart(part):
 			if pre != null:
 				holo = get(pre).instance()
 			else:
-				holo = load(presets["RES"]).instance()
+				holo = load(preset["RES"]).instance()
 			viewport.add_child(holo)
 			holo.name = unit
 			holo.global_transform = info["xform"]
@@ -263,7 +279,7 @@ func insertPart(part):
 			if pre != null:
 				holo = get(pre).instance()
 			else:
-				holo = load(presets["RES"]).instance()
+				holo = load(preset["RES"]).instance()
 			viewport.add_child(holo)
 			holo.name = item
 			holo.global_transform = info["xform"]
@@ -294,11 +310,13 @@ func removePart(part):
 
 # Spawns node from data, or creates new from preset. Everytime you create/spawn something that should persist as data, use this.
 func spawn(key: String, at: Vector3):
+	var result = null
 	var atPart: Vector3 = Utility.partitionID(at, PARTSIZE, EXTENDED)
 	var atCell: Vector3 = Utility.partitionID(at, CELLSIZE, EXTENDED)
 	var info = data.get(key)
 	# if exists, reposition
 	if info != null:
+		result = key
 		var fromPart = Utility.partitionID(info["xform"].origin, PARTSIZE, EXTENDED)
 		var fromCell = Utility.partitionID(info["xform"].origin, CELLSIZE, EXTENDED)
 		info["xform"].origin = at
@@ -322,7 +340,7 @@ func spawn(key: String, at: Vector3):
 			list[atPart].append(key)
 		# if part is live, summon
 		if live.has(atPart):
-			var holo = viewport.get_node_or_null(key)
+			var holo = refs.get(key)
 			if holo == null:
 				var preset: Dictionary = presets[info["preset"]]
 				var pre = preset.get("PRE")
@@ -335,7 +353,7 @@ func spawn(key: String, at: Vector3):
 			holo.global_transform = info["xform"]
 			refs[key] = {"holo": holo}
 		elif live.has(fromPart):
-			var holo = viewport.get_node_or_null(key)
+			var holo = refs.get(key)
 			if holo != null:
 				holo.queue_free()
 				refs.erase(key)
@@ -344,6 +362,7 @@ func spawn(key: String, at: Vector3):
 		var preset = presets.get(key)
 		if preset != null:
 			var unique: String = findName(key)
+			result = unique
 			info = {}
 			info["preset"] = key
 			for entry in preset.keys():
@@ -376,6 +395,7 @@ func spawn(key: String, at: Vector3):
 				holo.name = unique
 				holo.global_transform.origin = at
 				refs[unique] = {"holo": holo}
+	return result
 
 
 # Finds unique name to be used in data for a given preset name. Simply checks database and tries to make up a unique name for a new entity.
@@ -388,7 +408,7 @@ func findName(key: String):
 
 
 # Runs artificial intelligence for the given unit.
-func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, delta: float):
+func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, islands: Array, delta: float):
 #	If I was a ship:
 #	- I'd have a class like pirate, trade, military; and a faction like spanish, french, whatnot
 #	- I'd have an end goal depending on my class or faction or current cargo or health
@@ -428,15 +448,15 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 				leastDangerousPart = partition
 			if value.y > 0 && value.y < weakestEnemyValue:
 				weakestEnemyPart = partition
-		if type == "trade": # if enemy is stronger than allies, flee
-			if total.y > total.x:
-				dest = leastDangerousPart
-		elif type == "pirate": # if enemy is weaker than allies, fight
+		if side == "pirates": # if enemy is weaker than allies, fight
 			if total.y != 0:
 				if total.x / total.y > 1.1:
 					dest = weakestEnemyPart
 				else:
 					dest = leastDangerousPart
+		elif type == "trade": # if enemy is stronger than allies, flee
+			if total.y > total.x:
+				dest = leastDangerousPart
 		elif type == "military": # if enemy is weaker than allies, fight
 			if total.y != 0:
 				if total.x / total.y > 0.9:
@@ -464,6 +484,7 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 			if goal == null: # finds goal if doesn't have one
 				# print("goalfinding")
 				dominions.lock()
+				topograph.lock()
 				if type == "trade": # go to the closest shop with the highest profit for the current cargo hold
 					var targetShop = null
 					var targetPart = null
@@ -487,7 +508,7 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 							targetPart = mallPart
 					info["goal"] = targetPart
 					info["shop"] = targetShop
-				elif type == "pirate": # patrol to hunt trade ships, for this go to a random trading route partition
+				elif type == "interceptor": # patrol to hunt trade ships, for this go to a random trading route partition
 					var malls: Array = Economy.malls.keys()
 					malls.shuffle()
 					var mallTwoPart = null
@@ -512,6 +533,11 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 					var path = Utility.findPath(mallOnePart, mallTwoPart, true, false, [])
 					if path != null:
 						info["goal"] = path[floor((path.size() - 1) * 0.5)]
+				elif type == "wanderer": # patrol to hunt trade ships, for this go to a totally random partition
+					var randomPart = Vector2(floor(rand_range(0, topograph.get_width() - 1)), floor(rand_range(0, topograph.get_height() - 1)))
+					var randomPixel: Color = topograph.get_pixel(randomPart.x, randomPart.y)
+					if randomPixel == Color.black:
+						info["goal"] = Vector3(randomPart.x, 0, randomPart.y)
 				elif type == "military": # patrol to hunt enemy and pirate ships, for this go to a random trading spot partition
 					var malls: Array = Economy.malls.keys()
 					malls.shuffle()
@@ -526,14 +552,15 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 							info["goal"] = mallPart
 							break
 				dominions.unlock()
+				topograph.unlock()
 			elif goal != part: # needs path if is not at goal
 				var path = info.get("path")
 				if path == null: # finds path if doesn't have one
-					# print("pathfinding")
 					var filter: Array = []
 					if wars.has(side):
 						filter = wars[side].duplicate()
 					info["path"] = Utility.findPath(part, goal, true, false, filter)
+#					print("pathfinding: "+str(info["path"].size())+" to: "+str(goal)+" from: "+str(part))
 #				elif path[0] != goal: # changes goal if can't reach
 #					pass
 				else: # follows path
@@ -595,9 +622,12 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 					info["mode"] = "sell"
 					# wait for short time
 					info["wait"] = 180
-				elif type == "pirate":
+				elif type == "interceptor":
 					# wait for long time
 					info["wait"] = 600
+				elif type == "wanderer":
+					# wait for a bit
+					info["wait"] = 1
 				elif type == "military":
 					# repair (if ally port)
 					# wait for some time
@@ -632,7 +662,7 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, d
 		var controller = holo.get_node_or_null("AIController")
 		if controller != null:
 			var temp: Vector3 = Utility.partitionLocation(dest, PARTSIZE, false)
-			results = controller.update(Vector2(temp.x, temp.z), inProx)
+			results = controller.update(Vector2(temp.x, temp.z), inProx, islands)
 		info["xform"] = holo.global_transform # at the end, update transform
 	else: # runs when unit is offscreen
 		# move transform
@@ -728,3 +758,47 @@ func saveGame(slot: String):
 	image.flip_y()
 	image.resize(image.get_width() * 0.125, image.get_height() * 0.125)
 	image.save_png("user://" + slot + ".png")
+
+
+# Creates border signs and adds to data for their corresponding partitions.
+func createBorderSigns():
+	var width = topograph.get_width()
+	var height = topograph.get_height()
+	print(width)
+	print(height)
+	for x in range(-1, width + 1):
+		for y in [-1, height]:
+			var result = spawn("border", Utility.partitionLocation(Vector3(x, 0, y), PARTSIZE, false))
+			var info = data.get(result)
+			if y == -1:
+				if x == -1:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(1, 0, 1), Vector3.UP)
+				elif x == width:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(-1, 0, 1), Vector3.UP)
+				else:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(0, 0, 1), Vector3.UP)
+			elif y == height:
+				if x == -1:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(1, 0, -1), Vector3.UP)
+				elif x == width:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(-1, 0, -1), Vector3.UP)
+				else:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(0, 0, -1), Vector3.UP)
+	for y in range(-1, height + 1):
+		for x in [-1, width]:
+			var result = spawn("border", Utility.partitionLocation(Vector3(x, 0, y), PARTSIZE, false))
+			var info = data.get(result)
+			if x == -1:
+				if y == -1:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(1, 0, 1), Vector3.UP)
+				elif y == height:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(1, 0, -1), Vector3.UP)
+				else:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(1, 0, 0), Vector3.UP)
+			elif x == width:
+				if y == -1:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(-1, 0, 1), Vector3.UP)
+				elif y == height:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(-1, 0, -1), Vector3.UP)
+				else:
+					info["xform"] = info["xform"].looking_at(info["xform"].origin + Vector3(-1, 0, 0), Vector3.UP)

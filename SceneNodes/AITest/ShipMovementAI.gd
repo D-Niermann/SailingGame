@@ -44,9 +44,9 @@ func _ready():
 
 func _physics_process(delta):
 	if !useTerminal and isActive:
-		update(Vector2(0,0),{})
+		update(Vector2(0,0),{},[])
 
-func update(destination: Vector2, objectsInRange : Dictionary):
+func update(destination: Vector2, objectsInRange : Dictionary, islandsInRange : Array):
 	# TODO: performance: maybe dont do this every time, only a few times a second?
 	up = (global_transform.basis.y).normalized()
 	forward = -(global_transform.basis.z).normalized()
@@ -63,6 +63,16 @@ func update(destination: Vector2, objectsInRange : Dictionary):
 	turnShip() # control the ship so that it follows the direciton of this spatial 
 	return {}
 
+# Calculates escape vector to not get into islands or get out of the playable area.
+func escapeVector(islandsInRange: Array):
+	var totalVector: Vector2 = Vector2.ZERO
+	var thisProjection: Vector2 = Vector2(myShip.global_transform.origin.x, myShip.global_transform.origin.z)
+	var count: int = 0
+	for island in islandsInRange:
+		count += 1
+		var escapeDirection: Vector2 = (island - thisProjection)
+		escapeDirection / max(1, escapeDirection.length() - 64) # 64 is PARTSIZE
+	return Vector3(totalVector.x, 0, totalVector.y) / max(1, count)
 	
 func aimCannons():
 	for i in range(len(myShip.itemNodes)): # needs to iterate all the time because cannons can be destroyed
