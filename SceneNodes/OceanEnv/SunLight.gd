@@ -8,6 +8,8 @@ var maxDist = 2.0 # distance the light is moved
 var speed = 0.001 # the bigger the faster a day / noght cicle will be
 var threshold = 5 # threshold dist for when to recalcualte the directional_shadow_max_distance
 var nightSpeedMod = 4 # night is this times faster than day
+var speedMod = 1 # for UI controls
+
 
 ## vars
 var lastheight = 0
@@ -24,7 +26,7 @@ func _process(delta):
 	up = global_transform.basis.y
 	self.light_color = Color(1,1,1)
 
-	translation.z += speed
+	translation.z += speed * speedMod
 	if translation.z>=maxDist and isDay:
 		isDay = false
 		translation.y = -20
