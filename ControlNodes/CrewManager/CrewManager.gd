@@ -51,6 +51,8 @@ var itemAssignmentsAndInventory = { # keeps track of all items based on these as
 		IG_GEAR     : {},      # ID: {position : Vec3, inventory : {"goodName1" : {}, "goodName2" : {}}}
 }
 
+var goodCountAndCapacity = {} # goodName : {amount: 0, capacity:0} (number of goods that are on the player ship and how much player can store)
+
 const HUMAN: PackedScene = preload("res://ObjectNodes/Human/Human.tscn")
 var requestsToPathfind: Array = []
 
@@ -75,7 +77,11 @@ func _ready():
 	for i in range(len(humanNodes)):
 		currentAssignments[TG_UTILITY]["idle"][humanNodes[i].id] = humanNodes[i]
 		humanNodes[i].assignDeck(decks[0])
-	# print(currentAssignments)
+	
+		
+	## init the goodCount keys
+	for goodkey in Economy.consumables:
+		goodCountAndCapacity[goodkey] = {"amount": 0, "capacity": 0}
 
 
 
@@ -95,7 +101,7 @@ func checkAndLetPathfinding():
 
 func checkAndAssignJobTasks():
 	"""
-	Go through all open tasks and assign men if possible.
+	Go through all open job tasks and assign men if possible.
 	"""
 	var task
 	# get a tasks beginning from prio 0 and the oldest task i that prio
@@ -171,6 +177,7 @@ func searchAndAddNearStorageItem(task):
 		task["storageItemDeck"] = storageItemRef.get_parent() # TODO: inlcude deck search
 		return true
 	return false
+
 
 func updateMen():
 	"""
@@ -296,14 +303,6 @@ func requestGood(name : String, targetItemRef, storageItemGroup, priority : int)
 	Only requests one item at a time, since man can only carry one
 	creates task and adds it to task list
 	"""
-
-
-	# if not is_instance_valid(storageItemRef):
-	# 	## TODO: handle event that no storage item of the needed group is there (make UI popup and so on)
-	# 	print("Warn: No storage Barrels found for type: ", storageItemGroup)
-	# else:
-		## if an storage item has been found	
-		## append task that has target item and storage item id and position in it
 	fetchTasks[priority].append({"type" : FETCH_TASK, "id": IDGenerator.getID(),
 								"taskGroup": TG_UTILITY, "goodName": name, "storageIG" : storageItemGroup,
 								"targetItemID": targetItemRef.id, "targetItemPos" : targetItemRef.transform.origin, "targetItemDeck" : targetItemRef.get_parent(),
@@ -459,13 +458,15 @@ func registerItem(itemRef):
 			## add item names to inventory based on economy capacity dict
 			for key in Economy.getCapacity(itemRef.databaseName):
 				itemAssignmentsAndInventory[IG][itemRef.id].inventory[key] = 0
+				goodCountAndCapacity[key].capacity += Economy.getCapacity(itemRef.databaseName)[key]
+			print("capacities: " , goodCountAndCapacity)
 
 			## fill inventory for debuggin
-			# TODO: make inventory empty again
-			if itemRef.databaseName=="Gunpowder Barrel":
-				itemAssignmentsAndInventory[IG][itemRef.id].inventory["Gunpowder"] = Economy.getCapacity(itemRef.databaseName)["Gunpowder"]
-			if itemRef.databaseName=="Ammo Barrel":
-				itemAssignmentsAndInventory[IG][itemRef.id].inventory["Cannonballs"] = Economy.getCapacity(itemRef.databaseName)["Cannonballs"]
+			# TODO: delete this part
+			# if itemRef.databaseName=="Gunpowder Barrel":
+			# 	itemAssignmentsAndInventory[IG][itemRef.id].inventory["Gunpowder"] = Economy.getCapacity(itemRef.databaseName)["Gunpowder"]
+			# if itemRef.databaseName=="Ammo Barrel":
+			# 	itemAssignmentsAndInventory[IG][itemRef.id].inventory["Cannonballs"] = Economy.getCapacity(itemRef.databaseName)["Cannonballs"]
 			
 			# request goods
 			if IG == IG_GEAR:
@@ -502,11 +503,23 @@ func unregisterItem(itemRef):
 				fromBusyToIdle(items[itemRef.id].jobs[jobID].manID, taskGroup, priority)
 			items[itemRef.id].jobs[jobID] = {"manID" : null, "isReady" : false}
 			
-		# remove item from items list and assignment list
+		## reduce ships capacity
+		for goodName in Economy.getCapacity(itemRef.databaseName):
+			goodCountAndCapacity[goodName].capacity -= Economy.getCapacity(itemRef.databaseName)[goodName]
+		print("capa: ", goodCountAndCapacity)
+
+		## remove item from items list and assignment list
 		items.erase(itemRef.id)
 		itemAssignmentsAndInventory[Economy.getIG(itemRef.databaseName)].erase(itemRef.id)
 		print(itemAssignmentsAndInventory)
 
+func getCapacity(goodName : String):
+	return goodCountAndCapacity[goodName].capacity
+
+func addGood(itemGroup : String, itemID, goodName : String) -> bool:
+	itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName] += 1
+	goodCountAndCapacity[goodName].amount += 1
+	return false
 
 func consumeGood(itemGroup : String, itemID, goodName : String, requestNew = false) -> bool:
 	"""
@@ -517,10 +530,26 @@ func consumeGood(itemGroup : String, itemID, goodName : String, requestNew = fal
 	var amount : int = itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName]
 	if amount>0:
 		itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName] -= 1
+		goodCountAndCapacity[goodName].amount -= 1
+
 		if requestNew:
 			requestGood(goodName,items[itemID].itemRef,Economy.getGG(goodName),clamp(amount-1,0,numberOfPriorities-1)) 
 		return true
 	return false
+
+func tradeGood(amount : int, goodName : String) -> void:
+	"""
+	This funciton is called when player is shopping for goods and makes a trade.
+	Amount can be positive (buying) or negative (selling) 
+	goodName is one of the names in the economy consumables list.
+	THis function adds or removes the goods distributed evenly amongst all gear on ship, if buying or selling. 
+	"""
+	var goodGroup = Economy.consumables[goodName].GG
+	## count how many items of that group are on ship
+	var numberOfItems = 0
+	# for i in range(len(itemAssignmentsAndInventory[goodGroup]))
+	## add or remove the goods
+	goodCountAndCapacity[goodName].amount += amount
 
 func setCrewCount(taskGroup, value):
 	"""
