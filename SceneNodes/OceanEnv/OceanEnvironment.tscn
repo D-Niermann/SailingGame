@@ -67,7 +67,7 @@ material/0 = ExtResource( 8 )
 
 [node name="SunLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.965713, -0.206903, 0.156809, -0.259611, -0.769647, 0.583305, 0, -0.604015, -0.796973, 0.156864, 8.64, 0 )
-light_energy = 1.5
+light_energy = 3.0
 light_specular = 1.0
 shadow_enabled = true
 directional_shadow_mode = 0

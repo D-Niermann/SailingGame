@@ -59,7 +59,7 @@ func changeColor():
 		self.light_color.r = 1+sunAngle/4
 		self.light_color.g = 1-sunAngle/2
 		self.light_color.b = 1-sunAngle
-		self.light_energy = 1.3*(1-sunAngle)
+		self.light_energy = 1.6*(1-sunAngle)
 		self.shadow_color.r = sunAngle
 		self.shadow_color.g = sunAngle
 		self.shadow_color.b = sunAngle
