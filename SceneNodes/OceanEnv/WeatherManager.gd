@@ -1,13 +1,16 @@
-extends Spatial
+extends Node
 
 #Vars
-#Constants
+#Constants and nodes
 const dayTime = 60 * 5 #time per day(+ night) in seconds
 const daysPerSeason = 10 #days per season
+onready var sun = get_node("../SunLight")
  
 #Day/Time/Seasons
-var time : float
-var day : int
+var time = 0 #Time since game start
+var day = 0
+var sunX : float
+var sunY : float
 var season = {
 	0 : "summer",
 	1 : "spring",
@@ -18,8 +21,8 @@ var currentSeason : String
 var seasonId : int
 
 #Sun/Sunlight/Wind
-var lightDirection : Vector2
-var windDirection : Vector2
+var lightDirection : Vector3
+var windDirection : Vector2 # NOT YET IMPLEMENTED
 var shadowIntensity : float
 
 #Storms NOT YET IMPLEMENTED
@@ -31,12 +34,15 @@ enum storm {
 }
 var stormState : String
 var stormRng = RandomNumberGenerator.new()
-var stormTime
+var startTime : float
+var endTime : float
 
 
+#Functions
 func _process(delta):
 	time_and_day(delta)
-	lightDirection = sun_position()
+	light_orientation()
+	night_shadow_intensity(PI/2-sunX)
 
 func _is_storm_day():
 	stormRng.randf()
@@ -46,30 +52,26 @@ func _is_storm_day():
 		return false
 
 func _storm_time():
-	var start_time = stormRng.randf_range(0, dayTime)
+	startTime = stormRng.randf_range(0, dayTime)
 # warning-ignore:integer_division
 # warning-ignore:integer_division
-	var end_time = start_time + stormRng.randf_range(dayTime/10, dayTime/5)
-	return [start_time, end_time]
+	endTime = startTime + stormRng.randf_range(dayTime/10, dayTime/2)
+	return [startTime, endTime]
 
 func time_and_day(delta):
 	time += delta
-	if day != int(time / dayTime) and _is_storm_day():
-		stormRng.randomize()
-		stormTime = _storm_time()
+#	if day != int(time / dayTime) and _is_storm_day():
+#		stormRng.randomize()
+#		_storm_time() #Implementing/To be implemented
 	day = int(time / dayTime)
-# warning-ignore:integer_division
 	seasonId = (day / daysPerSeason) % 4
 	currentSeason = season[seasonId]
 
-func sun_position(): #light orientation due to time of day
-	var currentTime = time - (day*dayTime)
-# warning-ignore:integer_division
-	var sunX = -80.0 * sin(PI*dayTime*currentTime)
-	var sunY = -45 - 90 * (currentTime/(dayTime/4)) * (seasonId-2)/abs(seasonId-2)
-	return Vector2(sunX, sunY)
+func light_orientation(): #light orientation (angle)
+	sunX = -80 * sin(2*PI/dayTime*time)
+	sunY = 100 * cos(2*PI/dayTime*time) - 140 # 90*...-135 for correct model, this looks better I think
+	sun.set_rotation(Vector3(deg2rad(sunX), deg2rad(sunY), 0))
 
-func night_shadow_intensity(sunAngle): # for indirect light and shadows
-	var sunImpact = 1.0-(abs(90.0-sunAngle)/90.0)
-	shadowIntensity = sunImpact
-	return shadowIntensity
+func night_shadow_intensity(sunAngle): # for indirect light and shadows as the day ends
+	shadowIntensity = 1.0-(abs(90.0-sunAngle)/90.0)
+	sun.light_energy = shadowIntensity
