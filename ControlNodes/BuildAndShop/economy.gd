@@ -2,7 +2,7 @@ extends Node
 
 
 # Declare member variables here.
-var money: float = 10000
+var money: float = 10
 const dropPower: float = 0.125 # bigger values make changes in price due to abundance of an item more drastical
 const minCurrency: float = 1.0 # smallest possible money unit, like one cent
 var malls: Dictionary = {
@@ -53,9 +53,18 @@ const IG_UTILITY = "igUtils" # barrels for repairs, stores woods planks, ropes, 
 const IG_GEAR = "igGear" # no storage items like cannons, table and so on - these typically make the requests and have fixed jobs
 
 
-
-var consumables = {"Gunpowder" : {"GG": IG_GUNPOWDER}, # "GG" = GoodsGroup
-				   "Cannonballs" : {"GG": IG_AMMO}} # this should be named "goods", or include it into goods dict?
+var cmalls: Dictionary = {
+	"bananaConsumables": {
+		"goods": ["Gunpowder", "Cannonballs"],
+		"money": 1000,
+		"part": Vector3(0, 0, 9),
+		"loci": Vector3(168.255,0,83.662)
+	}
+}
+var consumables = {
+	"Gunpowder" : {"GG": IG_GUNPOWDER, "type": "weapon", "price": 10, "weight": 1.0, "icon": "res://icon.png"}, # "GG" = GoodsGroup
+	"Cannonballs" : {"GG": IG_AMMO, "type": "weapon", "price": 10, "weight": 1.0, "icon": "res://icon.png"} # this should be named "goods", or include it into goods dict?
+}
 
 
 """
