@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Fonts/LCALLIG.TTF" type="DynamicFontData" id=1]
 [ext_resource path="res://ControlNodes/BuildAndShop/ItemShop.gd" type="Script" id=2]
@@ -18,6 +18,10 @@ font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 48
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=15]
+size = 32
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=5]
@@ -164,6 +168,98 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Sliders" type="Control" parent="Info/Left/Content"]
+anchor_left = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.75
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Food" type="Label" parent="Info/Left/Content/Sliders"]
+anchor_right = 1.0
+anchor_bottom = 0.125
+custom_fonts/font = SubResource( 15 )
+text = "Food:"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BarF" type="TextureProgress" parent="Info/Left/Content/Sliders"]
+anchor_top = 0.125
+anchor_right = 1.0
+anchor_bottom = 0.25
+value = 100.0
+texture_progress = ExtResource( 3 )
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Materials" type="Label" parent="Info/Left/Content/Sliders"]
+anchor_top = 0.25
+anchor_right = 1.0
+anchor_bottom = 0.375
+custom_fonts/font = SubResource( 15 )
+text = "Materials:"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BarM" type="TextureProgress" parent="Info/Left/Content/Sliders"]
+anchor_top = 0.375
+anchor_right = 1.0
+anchor_bottom = 0.5
+value = 75.0
+texture_progress = ExtResource( 3 )
+nine_patch_stretch = true
+
+[node name="Weapons" type="Label" parent="Info/Left/Content/Sliders"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.625
+custom_fonts/font = SubResource( 15 )
+text = "Weapons:"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BarW" type="TextureProgress" parent="Info/Left/Content/Sliders"]
+anchor_top = 0.625
+anchor_right = 1.0
+anchor_bottom = 0.75
+value = 50.0
+texture_progress = ExtResource( 3 )
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Gunpowder" type="Label" parent="Info/Left/Content/Sliders"]
+anchor_top = 0.75
+anchor_right = 1.0
+anchor_bottom = 0.875
+custom_fonts/font = SubResource( 15 )
+text = "Gunpowder:"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BarG" type="TextureProgress" parent="Info/Left/Content/Sliders"]
+anchor_top = 0.875
+anchor_right = 1.0
+anchor_bottom = 1.0
+value = 25.0
+texture_progress = ExtResource( 3 )
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Credits" type="Control" parent="Info/Left/Content"]
 anchor_left = 0.1
 anchor_top = 0.8
@@ -264,7 +360,7 @@ anchor_bottom = 1.0
 custom_fonts/font = SubResource( 9 )
 text = "Sell All"
 
-[node name="Amount" type="Control" parent="Info/Middle/Content/Upper"]
+[node name="Cargo" type="Control" parent="Info/Middle/Content/Upper"]
 anchor_left = 0.333
 anchor_right = 0.666
 anchor_bottom = 1.0
@@ -272,15 +368,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="Label" parent="Info/Middle/Content/Upper/Amount"]
+[node name="Title" type="Label" parent="Info/Middle/Content/Upper/Cargo"]
 anchor_right = 1.0
 anchor_bottom = 0.333
 custom_fonts/font = SubResource( 7 )
-text = "Amount"
+text = "Cargo"
 align = 1
 valign = 1
 
-[node name="Label" type="Label" parent="Info/Middle/Content/Upper/Amount"]
+[node name="Label" type="Label" parent="Info/Middle/Content/Upper/Cargo"]
 anchor_top = 0.333
 anchor_right = 1.0
 anchor_bottom = 0.666
@@ -354,10 +450,33 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="BalanceTitle" type="Label" parent="Info/Middle/Content/Lower"]
+[node name="AmountTitle" type="Label" parent="Info/Middle/Content/Lower"]
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.2
+grow_horizontal = 0
+custom_fonts/font = SubResource( 13 )
+text = "Amount: "
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AmountValue" type="Label" parent="Info/Middle/Content/Lower"]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.2
+custom_fonts/font = SubResource( 13 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BalanceTitle" type="Label" parent="Info/Middle/Content/Lower"]
+anchor_left = 0.5
+anchor_top = 0.2
+anchor_right = 0.5
+anchor_bottom = 0.4
 grow_horizontal = 0
 custom_fonts/font = SubResource( 13 )
 text = "Balance: "
@@ -368,56 +487,9 @@ __meta__ = {
 
 [node name="BalanceValue" type="Label" parent="Info/Middle/Content/Lower"]
 anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.2
-custom_fonts/font = SubResource( 13 )
-text = "0"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="WeightTitle" type="Label" parent="Info/Middle/Content/Lower"]
-anchor_left = 0.5
 anchor_top = 0.2
 anchor_right = 0.5
 anchor_bottom = 0.4
-grow_horizontal = 0
-custom_fonts/font = SubResource( 13 )
-text = "Weight: "
-align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="WeightValue" type="Label" parent="Info/Middle/Content/Lower"]
-anchor_left = 0.5
-anchor_top = 0.2
-anchor_right = 0.5
-anchor_bottom = 0.4
-custom_fonts/font = SubResource( 13 )
-text = "0"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="CapacityTitle" type="Label" parent="Info/Middle/Content/Lower"]
-anchor_left = 0.5
-anchor_top = 0.4
-anchor_right = 0.5
-anchor_bottom = 0.6
-grow_horizontal = 0
-custom_fonts/font = SubResource( 13 )
-text = "Capacity: "
-align = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="CapacityValue" type="Label" parent="Info/Middle/Content/Lower"]
-anchor_left = 0.5
-anchor_top = 0.4
-anchor_right = 0.5
-anchor_bottom = 0.6
 custom_fonts/font = SubResource( 13 )
 text = "0"
 __meta__ = {
