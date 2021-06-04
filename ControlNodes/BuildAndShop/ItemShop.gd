@@ -11,6 +11,7 @@ var items: HBoxContainer
 var count: Label
 var counter = 0
 var balance: Label
+var difference: Label
 var credits: Label
 var trade: Button
 
@@ -20,8 +21,9 @@ func _ready():
 	trade = $Info/Middle/Content/Lower/Trade
 	types = $Menu/Types
 	items = $Menu/Items/Scroller/Container
-	count = $Info/Middle/Content/Upper/Amount/Label
+	count = $Info/Middle/Content/Upper/Cargo/Label
 	balance = $Info/Middle/Content/Lower/BalanceValue
+	difference = $Info/Middle/Content/Lower/AmountValue
 	credits = $Info/Left/Content/Credits/Label
 	$Menu/Types/Food.connect("pressed", self, "_on_press_type", ["food"])
 	$Menu/Types/Materials.connect("pressed", self, "_on_press_type", ["material"])
@@ -97,8 +99,8 @@ func _on_press_item(pressed: String):
 
 func _on_press_swap(pressed):
 	if item != null:
-		#counter = clamp(counter + pressed, 0, 10) # remove this later, and activate what's below instead, this one is for testing
-		counter = clamp(counter + pressed, 0, GlobalObjectReferencer.crewManager.getCapacity(item))
+		counter = clamp(counter + pressed, 0, 10) # remove this later, and activate what's below instead, this one is for testing
+		#counter = clamp(counter + pressed, 0, GlobalObjectReferencer.crewManager.getCapacity(item))
 		refreshTemporary()
 
 
@@ -106,8 +108,8 @@ func _on_press_trade():
 	if item != null:
 		var amount = counter - GlobalObjectReferencer.crewManager.getAmount(item)
 		if amount != 0:
-			var difference = (counter - GlobalObjectReferencer.crewManager.getAmount(item)) * Economy.consumables[item].price
-			Economy.money -= difference
+			var diff = (counter - GlobalObjectReferencer.crewManager.getAmount(item)) * Economy.consumables[item].price
+			Economy.money -= diff
 			GlobalObjectReferencer.crewManager.tradeGood(amount, item)
 			counter = GlobalObjectReferencer.crewManager.getAmount(item)
 			refreshTemporary()
@@ -118,9 +120,14 @@ func refreshTemporary():
 	credits.text = str(Economy.money)
 	if item != null:
 		count.text = str(counter) + " / " + str(GlobalObjectReferencer.crewManager.getCapacity(item))
-		var difference = (counter - GlobalObjectReferencer.crewManager.getAmount(item)) * Economy.consumables[item].price
-		balance.text = str(int(difference * -1))
-		if Economy.money < difference:
+		var diff = (counter - GlobalObjectReferencer.crewManager.getAmount(item))
+		difference.text = str(int(diff))
+		diff *= Economy.consumables[item].price
+		balance.text = str(int(diff * -1))
+		if difference.text == "0":
+			trade.disabled = true
+			balance.add_color_override("font_color", Color(1,1,1,1))
+		elif Economy.money < diff:
 			trade.disabled = true
 			balance.add_color_override("font_color", Color(1,0,0,1))
 		else:
