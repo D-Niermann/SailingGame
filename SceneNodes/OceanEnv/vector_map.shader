@@ -118,7 +118,7 @@ void fragment() {
 	// creation of vector map based on the buffer
 	vec2 flow_pixel = vec2(0.5, 0.5);
 	flow_pixel += get_forward(TEXTURE, uv_shifted, forward_offset / 1024.0, forward_fadeoff);
-	flow_pixel += get_curl(TEXTURE, uv_shifted, curl_offset / 1024.0) * curl_strength;
+//	flow_pixel += get_curl(TEXTURE, uv_shifted, curl_offset / 1024.0) * curl_strength;
 	flow_pixel = flow_pixel * (1.0 - blur_strength) + get_average(TEXTURE, uv_shifted, blur_offset / 1024.0) * blur_strength;
 	
 	// texture input flow direction (RED, GREEN), flow strength (BLUE)

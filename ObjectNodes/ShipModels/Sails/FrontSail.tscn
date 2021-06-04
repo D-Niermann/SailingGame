@@ -87,7 +87,7 @@ __meta__ = {
 }
 
 [node name="Sail" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, -1.06581e-14, 0, 1.06581e-14, 1, 0.180005, 0, 0 )
+transform = Transform( 0.997332, -1.05879e-22, -0.0729945, -7.77983e-16, 1, -1.06297e-14, 0.0729945, 1.06581e-14, 0.997332, 0.497404, -8.27735e-17, 0.00776625 )
 material_override = SubResource( 4 )
 mesh = SubResource( 5 )
 skeleton = NodePath("")

@@ -7,9 +7,9 @@
 shader = ExtResource( 2 )
 shader_param/forward_offset = 1.5
 shader_param/forward_fadeoff = 0.001
-shader_param/flow_strength = 1
-shader_param/flow_randomize = 0.2
-shader_param/flow_random_speed = 0.5
+shader_param/flow_strength = 1.0
+shader_param/flow_randomize = 0.1
+shader_param/flow_random_speed = 0.2
 shader_param/blur_strength = 0.02
 shader_param/blur_offset = 1.0
 shader_param/curl_strength = 0.6

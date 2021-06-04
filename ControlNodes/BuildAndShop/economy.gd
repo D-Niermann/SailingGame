@@ -2,7 +2,7 @@ extends Node
 
 
 # Declare member variables here.
-var money: float = 10
+var money: float = 1000
 const dropPower: float = 0.125 # bigger values make changes in price due to abundance of an item more drastical
 const minCurrency: float = 1.0 # smallest possible money unit, like one cent
 var malls: Dictionary = {

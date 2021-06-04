@@ -516,6 +516,9 @@ func unregisterItem(itemRef):
 func getCapacity(goodName : String):
 	return goodCountAndCapacity[goodName].capacity
 
+func getAmount(goodName : String):
+	return goodCountAndCapacity[goodName].amount
+
 func addGood(itemGroup : String, itemID, goodName : String) -> bool:
 	itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName] += 1
 	goodCountAndCapacity[goodName].amount += 1

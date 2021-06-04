@@ -55,8 +55,8 @@ func calcRotateSpeed():
 
 	TODO: make a global variable somwhere (crewmanager) that kepps track of number of man on rigging items
 	"""
-	var n = len(GlobalObjectReferencer.crewManager.currentAssignments[Economy.TG_NAVIGATION].busy[1])
-	var m = len(GlobalObjectReferencer.crewManager.currentAssignments[Economy.TG_NAVIGATION].busy[2])
+	var n = len(GlobalObjectReferencer.crewManager.currentAssignments[Economy.TG_NAVIGATION].busy[1]) # number of man in navigation prio 1
+	var m = len(GlobalObjectReferencer.crewManager.currentAssignments[Economy.TG_NAVIGATION].busy[2]) # number of man in navigation prio 2
 
 	return clamp((n+m)/maxManRequired,0,1)
 
