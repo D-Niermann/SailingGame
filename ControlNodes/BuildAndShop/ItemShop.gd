@@ -33,9 +33,9 @@ func _ready():
 	barM = $Info/Left/Content/Sliders/BarM
 	barW = $Info/Left/Content/Sliders/BarW
 	barG = $Info/Left/Content/Sliders/BarG
-	$Menu/Types/Food.connect("pressed", self, "_on_press_type", ["food"])
-	$Menu/Types/Materials.connect("pressed", self, "_on_press_type", ["material"])
-	$Menu/Types/Weapons.connect("pressed", self, "_on_press_type", ["weapon"])
+	$Menu/Types/Food.connect("pressed", self, "_on_press_type", ["igFood"])
+	$Menu/Types/Materials.connect("pressed", self, "_on_press_type", ["igUtils"])
+	$Menu/Types/Weapons.connect("pressed", self, "_on_press_type", ["igAmmo"])
 	$Info/Middle/Content/Upper/Buy/One.connect("pressed", self, "_on_press_swap", [1])
 	$Info/Middle/Content/Upper/Buy/More.connect("pressed", self, "_on_press_swap", [10])
 	$Info/Middle/Content/Upper/Buy/All.connect("pressed", self, "_on_press_swap", [INF])
@@ -70,12 +70,12 @@ func refreshInventory():
 	var goods: Array = Economy.cmalls[open].goods
 	for good in goods:
 		var info = Economy.consumables[good]
-		if info.type != type:
+		if info.type != type && (info.type != "igGunpowder" || type != "igAmmo"):
 			continue
 		var newItem: Button = ITEM.instance()
 		items.add_child(newItem)
 		newItem.get_node("Name").text = good
-		newItem.get_node("Amount").text = str(GlobalObjectReferencer.crewManager.getAmount(good)) + " / " + str(GlobalObjectReferencer.crewManager.getCapacity(good))
+		newItem.get_node("Amount").text = str(GlobalObjectReferencer.crewManager.getAmount(good)) + " / " + str(GlobalObjectReferencer.crewManager.getCapacity(info.type))
 		if info.icon != null:
 			newItem.get_node("Icon").texture = load(info.icon)
 		newItem.connect("pressed", self, "_on_press_item", [good])
@@ -127,7 +127,8 @@ func _on_press_trade():
 func refreshTemporary():
 	credits.text = str(Economy.money)
 	if item != null:
-		count.text = str(counter) + " / " + str(GlobalObjectReferencer.crewManager.getCapacity(item))
+		var info = Economy.consumables[item]
+		count.text = str(counter) + " / " + str(GlobalObjectReferencer.crewManager.getCapacity(info.type))
 		var diff = (counter - GlobalObjectReferencer.crewManager.getAmount(item))
 		difference.text = str(int(diff))
 		diff *= Economy.consumables[item].price
