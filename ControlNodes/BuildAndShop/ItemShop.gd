@@ -14,6 +14,10 @@ var balance: Label
 var difference: Label
 var credits: Label
 var trade: Button
+var barF: TextureProgress
+var barM: TextureProgress
+var barW: TextureProgress
+var barG: TextureProgress
 
 
 # Called when the node enters the scene tree for the first time.
@@ -25,6 +29,10 @@ func _ready():
 	balance = $Info/Middle/Content/Lower/BalanceValue
 	difference = $Info/Middle/Content/Lower/AmountValue
 	credits = $Info/Left/Content/Credits/Label
+	barF = $Info/Left/Content/Sliders/BarF
+	barM = $Info/Left/Content/Sliders/BarM
+	barW = $Info/Left/Content/Sliders/BarW
+	barG = $Info/Left/Content/Sliders/BarG
 	$Menu/Types/Food.connect("pressed", self, "_on_press_type", ["food"])
 	$Menu/Types/Materials.connect("pressed", self, "_on_press_type", ["material"])
 	$Menu/Types/Weapons.connect("pressed", self, "_on_press_type", ["weapon"])
@@ -138,3 +146,16 @@ func refreshTemporary():
 		balance.text = "0"
 		trade.disabled = true
 		balance.add_color_override("font_color", Color(1,1,1,1))
+	# Setting sliders here
+	barF.max_value = GlobalObjectReferencer.crewManager.getCapacity("igFood")
+	barF.value = GlobalObjectReferencer.crewManager.getGroupAmount("igFood")
+	barM.max_value = GlobalObjectReferencer.crewManager.getCapacity("igUtils")
+	barM.value = GlobalObjectReferencer.crewManager.getGroupAmount("igUtils")
+	barW.max_value = GlobalObjectReferencer.crewManager.getCapacity("igAmmo")
+	barW.value = GlobalObjectReferencer.crewManager.getGroupAmount("igAmmo")
+	barG.max_value = GlobalObjectReferencer.crewManager.getCapacity("igGunpowder")
+	barG.value = GlobalObjectReferencer.crewManager.getGroupAmount("igGunpowder")
+
+
+func _on_Exit_pressed():
+	closeShop()
