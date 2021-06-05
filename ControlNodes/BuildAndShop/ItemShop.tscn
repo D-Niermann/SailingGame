@@ -20,20 +20,16 @@ font_data = ExtResource( 1 )
 size = 48
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=15]
-size = 32
-font_data = ExtResource( 1 )
-
 [sub_resource type="DynamicFont" id=5]
-size = 64
+size = 32
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=6]
-size = 48
+size = 64
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=7]
-size = 32
+size = 48
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=8]
@@ -45,22 +41,26 @@ size = 32
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=10]
-size = 64
-font_data = ExtResource( 1 )
-
-[sub_resource type="DynamicFont" id=11]
 size = 32
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=12]
+[sub_resource type="DynamicFont" id=11]
 size = 64
 font_data = ExtResource( 1 )
 
+[sub_resource type="DynamicFont" id=12]
+size = 32
+font_data = ExtResource( 1 )
+
 [sub_resource type="DynamicFont" id=13]
-size = 48
+size = 64
 font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=14]
+size = 48
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=15]
 size = 48
 font_data = ExtResource( 1 )
 
@@ -179,7 +179,7 @@ __meta__ = {
 [node name="Food" type="Label" parent="Info/Left/Content/Sliders"]
 anchor_right = 1.0
 anchor_bottom = 0.125
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 5 )
 text = "Food:"
 valign = 1
 __meta__ = {
@@ -201,7 +201,7 @@ __meta__ = {
 anchor_top = 0.25
 anchor_right = 1.0
 anchor_bottom = 0.375
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 5 )
 text = "Materials:"
 valign = 1
 __meta__ = {
@@ -220,7 +220,7 @@ nine_patch_stretch = true
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.625
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 5 )
 text = "Weapons:"
 valign = 1
 __meta__ = {
@@ -242,7 +242,7 @@ __meta__ = {
 anchor_top = 0.75
 anchor_right = 1.0
 anchor_bottom = 0.875
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 5 )
 text = "Gunpowder:"
 valign = 1
 __meta__ = {
@@ -281,7 +281,7 @@ __meta__ = {
 anchor_left = 0.333
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 6 )
 text = "empty"
 align = 1
 valign = 1
@@ -297,7 +297,7 @@ anchor_bottom = 1.0
 [node name="Title" type="Label" parent="Info/Middle"]
 anchor_right = 1.0
 anchor_bottom = 0.2
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 text = "Name"
 align = 1
 valign = 1
@@ -324,7 +324,7 @@ __meta__ = {
 [node name="Title" type="Label" parent="Info/Middle/Content/Upper/Sell"]
 anchor_right = 1.0
 anchor_bottom = 0.333
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "Sell"
 align = 1
 valign = 1
@@ -336,7 +336,7 @@ __meta__ = {
 anchor_top = 0.333
 anchor_right = 0.5
 anchor_bottom = 0.666
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 text = "-10"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -347,7 +347,7 @@ anchor_left = 0.5
 anchor_top = 0.333
 anchor_right = 1.0
 anchor_bottom = 0.666
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 text = "-1"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -357,7 +357,7 @@ __meta__ = {
 anchor_top = 0.666
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 text = "Sell All"
 
 [node name="Cargo" type="Control" parent="Info/Middle/Content/Upper"]
@@ -371,7 +371,7 @@ __meta__ = {
 [node name="Title" type="Label" parent="Info/Middle/Content/Upper/Cargo"]
 anchor_right = 1.0
 anchor_bottom = 0.333
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "Cargo"
 align = 1
 valign = 1
@@ -380,8 +380,7 @@ valign = 1
 anchor_top = 0.333
 anchor_right = 1.0
 anchor_bottom = 0.666
-custom_fonts/font = SubResource( 10 )
-text = "asd"
+custom_fonts/font = SubResource( 11 )
 align = 1
 valign = 1
 __meta__ = {
@@ -396,7 +395,7 @@ anchor_bottom = 1.0
 [node name="Title" type="Label" parent="Info/Middle/Content/Upper/Buy"]
 anchor_right = 1.0
 anchor_bottom = 0.333
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 text = "Buy"
 align = 1
 valign = 1
@@ -405,7 +404,7 @@ valign = 1
 anchor_top = 0.333
 anchor_right = 0.5
 anchor_bottom = 0.666
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 text = "+1"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -418,7 +417,7 @@ anchor_right = 1.0
 anchor_bottom = 0.666
 margin_left = -3.05176e-05
 margin_right = -3.05176e-05
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 9 )
 text = "+10"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -428,7 +427,7 @@ __meta__ = {
 anchor_top = 0.666
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
 text = "Buy All"
 
 [node name="Lower" type="Control" parent="Info/Middle/Content"]
@@ -444,7 +443,7 @@ anchor_left = 0.3
 anchor_top = 0.7
 anchor_right = 0.7
 anchor_bottom = 1.0
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = SubResource( 13 )
 text = "Trade"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -455,7 +454,7 @@ anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.2
 grow_horizontal = 0
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 14 )
 text = "Amount: "
 align = 2
 __meta__ = {
@@ -466,7 +465,7 @@ __meta__ = {
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.2
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 14 )
 text = "0"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -478,7 +477,7 @@ anchor_top = 0.2
 anchor_right = 0.5
 anchor_bottom = 0.4
 grow_horizontal = 0
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 14 )
 text = "Balance: "
 align = 2
 __meta__ = {
@@ -490,7 +489,7 @@ anchor_left = 0.5
 anchor_top = 0.2
 anchor_right = 0.5
 anchor_bottom = 0.4
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 14 )
 text = "0"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -504,7 +503,7 @@ anchor_bottom = 1.0
 [node name="Title" type="Label" parent="Info/Right"]
 anchor_right = 1.0
 anchor_bottom = 0.2
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 15 )
 text = "Information"
 align = 1
 valign = 1
@@ -516,3 +515,17 @@ __meta__ = {
 anchor_top = 0.2
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="Exit" type="Button" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+icon = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Exit" to="." method="_on_Exit_pressed"]
