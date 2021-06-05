@@ -149,12 +149,28 @@ func refreshTemporary():
 	# Setting sliders here
 	barF.max_value = GlobalObjectReferencer.crewManager.getCapacity("igFood")
 	barF.value = GlobalObjectReferencer.crewManager.getGroupAmount("igFood")
+	if GlobalObjectReferencer.crewManager.getCapacity("igFood") == 0:
+		barF.modulate = Color(0.5, 0.5, 0.5, 1)
+	else:
+		barF.modulate = Color(1, 1, 1, 1)
 	barM.max_value = GlobalObjectReferencer.crewManager.getCapacity("igUtils")
 	barM.value = GlobalObjectReferencer.crewManager.getGroupAmount("igUtils")
+	if GlobalObjectReferencer.crewManager.getCapacity("igFood") == 0:
+		barM.modulate = Color(0.5, 0.5, 0.5, 1)
+	else:
+		barM.modulate = Color(1, 1, 1, 1)
 	barW.max_value = GlobalObjectReferencer.crewManager.getCapacity("igAmmo")
 	barW.value = GlobalObjectReferencer.crewManager.getGroupAmount("igAmmo")
+	if GlobalObjectReferencer.crewManager.getCapacity("igFood") == 0:
+		barW.modulate = Color(0.5, 0.5, 0.5, 1)
+	else:
+		barW.modulate = Color(1, 1, 1, 1)
 	barG.max_value = GlobalObjectReferencer.crewManager.getCapacity("igGunpowder")
 	barG.value = GlobalObjectReferencer.crewManager.getGroupAmount("igGunpowder")
+	if GlobalObjectReferencer.crewManager.getCapacity("igFood") == 0:
+		barG.modulate = Color(0.5, 0.5, 0.5, 1)
+	else:
+		barG.modulate = Color(1, 1, 1, 1)
 
 
 func _on_Exit_pressed():
