@@ -51,7 +51,13 @@ var itemAssignmentsAndInventory = { # keeps track of all items based on these as
 		IG_GEAR     : {},      # ID: {position : Vec3, inventory : {"goodName1" : {}, "goodName2" : {}}}
 }
 
-var goodCountAndCapacity = {} # goodName : {amount: 0, capacity:0} (number of goods that are on the player ship and how much player can store)
+var goodCapacity = {IG_GUNPOWDER : 0, # (how much can be stored on ship)
+					IG_AMMO : 0 ,
+					IG_FOOD : 0 ,
+					IG_UTILITY : 0,
+					IG_GEAR : 0}
+var goodCount = {} # goodName : 0 (how much of one good the player ship has)
+
 
 const HUMAN: PackedScene = preload("res://ObjectNodes/Human/Human.tscn")
 var requestsToPathfind: Array = []
@@ -81,7 +87,7 @@ func _ready():
 		
 	## init the goodCount keys
 	for goodkey in Economy.consumables:
-		goodCountAndCapacity[goodkey] = {"amount": 0, "capacity": 0}
+		goodCount[goodkey] = 0
 
 
 
@@ -458,8 +464,8 @@ func registerItem(itemRef):
 			## add item names to inventory based on economy capacity dict
 			for key in Economy.getCapacity(itemRef.databaseName):
 				itemAssignmentsAndInventory[IG][itemRef.id].inventory[key] = 0
-				goodCountAndCapacity[key].capacity += Economy.getCapacity(itemRef.databaseName)[key]
-			print("capacities: " , goodCountAndCapacity)
+				goodCapacity[Economy.getGG(key)] += Economy.getCapacity(itemRef.databaseName)[key]
+			print("capacities: " , goodCapacity)
 
 			## fill inventory for debuggin
 			# TODO: delete this part
@@ -505,23 +511,23 @@ func unregisterItem(itemRef):
 			
 		## reduce ships capacity
 		for goodName in Economy.getCapacity(itemRef.databaseName):
-			goodCountAndCapacity[goodName].capacity -= Economy.getCapacity(itemRef.databaseName)[goodName]
-		print("capa: ", goodCountAndCapacity)
+			goodCapacity[Economy.getGG(goodName)] -= Economy.getCapacity(itemRef.databaseName)[goodName]
+		print("capa: ", goodCapacity)
 
 		## remove item from items list and assignment list
 		items.erase(itemRef.id)
 		itemAssignmentsAndInventory[Economy.getIG(itemRef.databaseName)].erase(itemRef.id)
 		print(itemAssignmentsAndInventory)
 
-func getCapacity(goodName : String):
-	return goodCountAndCapacity[goodName].capacity
+func getCapacity(GG_Name : String):
+	return goodCapacity[GG_Name]
 
 func getAmount(goodName : String):
-	return goodCountAndCapacity[goodName].amount
+	return goodCount[goodName]
 
 func addGood(itemGroup : String, itemID, goodName : String) -> bool:
 	itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName] += 1
-	goodCountAndCapacity[goodName].amount += 1
+	goodCount[goodName] += 1
 	return false
 
 func consumeGood(itemGroup : String, itemID, goodName : String, requestNew = false) -> bool:
@@ -533,7 +539,7 @@ func consumeGood(itemGroup : String, itemID, goodName : String, requestNew = fal
 	var amount : int = itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName]
 	if amount>0:
 		itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName] -= 1
-		goodCountAndCapacity[goodName].amount -= 1
+		goodCount[goodName] -= 1
 
 		if requestNew:
 			requestGood(goodName,items[itemID].itemRef,Economy.getGG(goodName),clamp(amount-1,0,numberOfPriorities-1)) 
@@ -552,7 +558,7 @@ func tradeGood(amount : int, goodName : String) -> void:
 	var numberOfItems = 0
 	# for i in range(len(itemAssignmentsAndInventory[goodGroup]))
 	## add or remove the goods
-	goodCountAndCapacity[goodName].amount += amount
+	goodCount[goodName] += amount
 
 func setCrewCount(taskGroup, value):
 	"""
