@@ -56,6 +56,11 @@ var goodCapacity = {IG_GUNPOWDER : 0, # (how much can be stored on ship)
 					IG_FOOD : 0 ,
 					IG_UTILITY : 0,
 					IG_GEAR : 0}
+var goodGroupCount = {IG_GUNPOWDER : 0,  # GGGroup : 0 how many goods are per group on player ship
+					IG_AMMO : 0 ,
+					IG_FOOD : 0 ,
+					IG_UTILITY : 0,
+					IG_GEAR : 0} 
 var goodCount = {} # goodName : 0 (how much of one good the player ship has)
 
 
@@ -520,14 +525,28 @@ func unregisterItem(itemRef):
 		print(itemAssignmentsAndInventory)
 
 func getCapacity(GG_Name : String):
+	"""
+	return the capacity of the player ship per good group
+	"""
 	return goodCapacity[GG_Name]
 
+func getGroupAmount(GG_Name : String):
+	"""
+	return the amount of all goods within the given good group
+	"""
+	return goodGroupCount[GG_Name]
+
+
 func getAmount(goodName : String):
+	"""
+	Returns the amount of the item / good that the player ship holds  
+	"""
 	return goodCount[goodName]
 
 func addGood(itemGroup : String, itemID, goodName : String) -> bool:
 	itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName] += 1
 	goodCount[goodName] += 1
+	goodGroupCount[Economy.getGG(goodName)] += 1
 	return false
 
 func consumeGood(itemGroup : String, itemID, goodName : String, requestNew = false) -> bool:
@@ -540,6 +559,7 @@ func consumeGood(itemGroup : String, itemID, goodName : String, requestNew = fal
 	if amount>0:
 		itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName] -= 1
 		goodCount[goodName] -= 1
+		goodGroupCount[Economy.getGG(goodName)] -= 1
 
 		if requestNew:
 			requestGood(goodName,items[itemID].itemRef,Economy.getGG(goodName),clamp(amount-1,0,numberOfPriorities-1)) 
@@ -553,7 +573,7 @@ func tradeGood(amount : int, goodName : String) -> void:
 	goodName is one of the names in the economy consumables list.
 	THis function adds or removes the goods distributed evenly amongst all gear on ship, if buying or selling. 
 	"""
-	var goodGroup = Economy.consumables[goodName].GG
+	var goodGroup = Economy.getGG(goodName)
 	## count how many items of that group are on ship
 	var numberOfItems = 0
 	# for i in range(len(itemAssignmentsAndInventory[goodGroup]))
