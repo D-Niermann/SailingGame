@@ -301,6 +301,9 @@ custom_fonts/font = SubResource( 7 )
 text = "Name"
 align = 1
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Content" type="Control" parent="Info/Middle"]
 anchor_top = 0.2

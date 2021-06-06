@@ -544,9 +544,13 @@ func getAmount(goodName : String):
 	return goodCount[goodName]
 
 func addGood(itemGroup : String, itemID, goodName : String) -> bool:
-	itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName] += 1
-	goodCount[goodName] += 1
-	goodGroupCount[Economy.getGG(goodName)] += 1
+	## check if inventory still has space
+	if getInventoryCount(itemID, goodName) < Economy.getCapacity(items[itemID].databaseName)[goodName]:
+		## if so, add item to inventory and increase global ship counts
+		itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName] += 1
+		goodCount[goodName] += 1
+		goodGroupCount[Economy.getGG(goodName)] += 1
+		return true
 	return false
 
 func consumeGood(itemGroup : String, itemID, goodName : String, requestNew = false) -> bool:
@@ -555,7 +559,7 @@ func consumeGood(itemGroup : String, itemID, goodName : String, requestNew = fal
 	returns true if good was consumed and false if not (inventory was empty)
 	if requestNew is true, the consumed good is directly requested again
 	"""
-	var amount : int = itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName]
+	var amount : int = getInventoryCount(itemID, goodName)
 	if amount>0:
 		itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName] -= 1
 		goodCount[goodName] -= 1
@@ -569,16 +573,46 @@ func consumeGood(itemGroup : String, itemID, goodName : String, requestNew = fal
 func tradeGood(amount : int, goodName : String) -> void:
 	"""
 	This funciton is called when player is shopping for goods and makes a trade.
-	Amount can be positive (buying) or negative (selling) 
+	Amount can be positive (buying, adding to ship) or negative (selling, removing from ship) 
 	goodName is one of the names in the economy consumables list.
 	THis function adds or removes the goods distributed evenly amongst all gear on ship, if buying or selling. 
 	"""
 	var goodGroup = Economy.getGG(goodName)
+	var kind = "buy"
+	if amount < 0:
+		kind = "sell"
+	amount = abs(amount)
+
 	## count how many items of that group are on ship
-	var numberOfItems = 0
-	# for i in range(len(itemAssignmentsAndInventory[goodGroup]))
-	## add or remove the goods
-	goodCount[goodName] += amount
+	var numberOfItems = len(itemAssignmentsAndInventory[goodGroup]) 
+	print("Trading count: ", amount)
+	print("Group : ", goodGroup)
+	print("Number of Containers for selected group: ", numberOfItems)
+	## calc how much each container should get
+	var amountPerContainer = floor(amount / numberOfItems)
+	var rest = fmod(amount, numberOfItems)
+	print("Amount per container: ", amountPerContainer)
+	print("rest: ", rest)
+
+	if kind == "buy":
+		for itemID in itemAssignmentsAndInventory[goodGroup]:
+			for _i in range(amountPerContainer):
+				if not addGood(goodGroup, itemID, goodName):
+					rest += 1 # if good could not be added the rest count is increased
+			for _i in range(rest):
+				if addGood(goodGroup, itemID, goodName):
+					rest-=1
+	elif kind == "sell":
+		for itemID in itemAssignmentsAndInventory[goodGroup]:
+			for _i in range(amountPerContainer):
+				if not consumeGood(goodGroup, itemID, goodName):
+					rest += 1 # if good could not be added the rest count is increased
+			for _i in range(rest):
+				if consumeGood(goodGroup, itemID, goodName):
+					rest-=1
+
+
+
 
 func setCrewCount(taskGroup, value):
 	"""
@@ -601,8 +635,8 @@ func getCrewScore(itemID) -> float:
 	score = score / len(items[itemID].jobs)
 	return score
 
-func getInventoryCount(id, goodName) -> int:
+func getInventoryCount(itemID, goodName) -> int:
 	"""
 	returns the inventory count  of the given item (returning only the count to secure that inventory is not modified)
 	"""
-	return itemAssignmentsAndInventory[Economy.getIG(items[id].databaseName)][id].inventory[goodName]
+	return itemAssignmentsAndInventory[Economy.getIG(items[itemID].databaseName)][itemID].inventory[goodName]

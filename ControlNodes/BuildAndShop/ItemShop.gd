@@ -33,9 +33,9 @@ func _ready():
 	barM = $Info/Left/Content/Sliders/BarM
 	barW = $Info/Left/Content/Sliders/BarW
 	barG = $Info/Left/Content/Sliders/BarG
-	$Menu/Types/Food.connect("pressed", self, "_on_press_type", ["igFood"])
-	$Menu/Types/Materials.connect("pressed", self, "_on_press_type", ["igUtils"])
-	$Menu/Types/Weapons.connect("pressed", self, "_on_press_type", ["igAmmo"])
+	$Menu/Types/Food.connect("pressed", self, "_on_press_type", [Economy.IG_FOOD])
+	$Menu/Types/Materials.connect("pressed", self, "_on_press_type", [Economy.IG_UTILITY])
+	$Menu/Types/Weapons.connect("pressed", self, "_on_press_type", [Economy.IG_AMMO])
 	$Info/Middle/Content/Upper/Buy/One.connect("pressed", self, "_on_press_swap", [1])
 	$Info/Middle/Content/Upper/Buy/More.connect("pressed", self, "_on_press_swap", [10])
 	$Info/Middle/Content/Upper/Buy/All.connect("pressed", self, "_on_press_swap", [INF])
@@ -70,12 +70,12 @@ func refreshInventory():
 	var goods: Array = Economy.cmalls[open].goods
 	for good in goods:
 		var info = Economy.consumables[good]
-		if info.type != type && (info.type != "igGunpowder" || type != "igAmmo"):
+		if info.GG != type && (info.GG != Economy.IG_GUNPOWDER || type != "igAmmo"):
 			continue
 		var newItem: Button = ITEM.instance()
 		items.add_child(newItem)
 		newItem.get_node("Name").text = good
-		newItem.get_node("Amount").text = str(GlobalObjectReferencer.crewManager.getAmount(good)) + " / " + str(GlobalObjectReferencer.crewManager.getCapacity(info.type))
+		newItem.get_node("Amount").text = str(GlobalObjectReferencer.crewManager.getAmount(good)) + " / " + str(GlobalObjectReferencer.crewManager.getCapacity(info.GG))
 		if info.icon != null:
 			newItem.get_node("Icon").texture = load(info.icon)
 		newItem.connect("pressed", self, "_on_press_item", [good])
@@ -107,8 +107,8 @@ func _on_press_item(pressed: String):
 
 func _on_press_swap(pressed):
 	if item != null:
-		counter = clamp(counter + pressed, 0, 10) # remove this later, and activate what's below instead, this one is for testing
-		#counter = clamp(counter + pressed, 0, GlobalObjectReferencer.crewManager.getCapacity(item))
+		# counter = clamp(counter + pressed, 0, 10) # remove this later, and activate what's below instead, this one is for testing
+		counter = clamp(counter + pressed, 0, GlobalObjectReferencer.crewManager.getCapacity(Economy.getGG(item)))
 		refreshTemporary()
 
 
@@ -128,7 +128,7 @@ func refreshTemporary():
 	credits.text = str(Economy.money)
 	if item != null:
 		var info = Economy.consumables[item]
-		count.text = str(counter) + " / " + str(GlobalObjectReferencer.crewManager.getCapacity(info.type))
+		count.text = str(counter) + " / " + str(GlobalObjectReferencer.crewManager.getCapacity(info.GG))
 		var diff = (counter - GlobalObjectReferencer.crewManager.getAmount(item))
 		difference.text = str(int(diff))
 		diff *= Economy.consumables[item].price
@@ -148,27 +148,27 @@ func refreshTemporary():
 		trade.disabled = true
 		balance.add_color_override("font_color", Color(1,1,1,1))
 	# Setting sliders here
-	barF.max_value = GlobalObjectReferencer.crewManager.getCapacity("igFood")
-	barF.value = GlobalObjectReferencer.crewManager.getGroupAmount("igFood")
-	if GlobalObjectReferencer.crewManager.getCapacity("igFood") == 0:
+	barF.max_value = GlobalObjectReferencer.crewManager.getCapacity(Economy.IG_FOOD)
+	barF.value = GlobalObjectReferencer.crewManager.getGroupAmount(Economy.IG_FOOD)
+	if GlobalObjectReferencer.crewManager.getCapacity(Economy.IG_FOOD) == 0:
 		barF.modulate = Color(0.5, 0.5, 0.5, 1)
 	else:
 		barF.modulate = Color(1, 1, 1, 1)
-	barM.max_value = GlobalObjectReferencer.crewManager.getCapacity("igUtils")
-	barM.value = GlobalObjectReferencer.crewManager.getGroupAmount("igUtils")
-	if GlobalObjectReferencer.crewManager.getCapacity("igFood") == 0:
+	barM.max_value = GlobalObjectReferencer.crewManager.getCapacity(Economy.IG_UTILITY)
+	barM.value = GlobalObjectReferencer.crewManager.getGroupAmount(Economy.IG_UTILITY)
+	if GlobalObjectReferencer.crewManager.getCapacity(Economy.IG_FOOD) == 0:
 		barM.modulate = Color(0.5, 0.5, 0.5, 1)
 	else:
 		barM.modulate = Color(1, 1, 1, 1)
-	barW.max_value = GlobalObjectReferencer.crewManager.getCapacity("igAmmo")
-	barW.value = GlobalObjectReferencer.crewManager.getGroupAmount("igAmmo")
-	if GlobalObjectReferencer.crewManager.getCapacity("igFood") == 0:
+	barW.max_value = GlobalObjectReferencer.crewManager.getCapacity(Economy.IG_AMMO)
+	barW.value = GlobalObjectReferencer.crewManager.getGroupAmount(Economy.IG_AMMO)
+	if GlobalObjectReferencer.crewManager.getCapacity(Economy.IG_FOOD) == 0:
 		barW.modulate = Color(0.5, 0.5, 0.5, 1)
 	else:
 		barW.modulate = Color(1, 1, 1, 1)
-	barG.max_value = GlobalObjectReferencer.crewManager.getCapacity("igGunpowder")
-	barG.value = GlobalObjectReferencer.crewManager.getGroupAmount("igGunpowder")
-	if GlobalObjectReferencer.crewManager.getCapacity("igFood") == 0:
+	barG.max_value = GlobalObjectReferencer.crewManager.getCapacity(Economy.IG_GUNPOWDER)
+	barG.value = GlobalObjectReferencer.crewManager.getGroupAmount(Economy.IG_GUNPOWDER)
+	if GlobalObjectReferencer.crewManager.getCapacity(Economy.IG_FOOD) == 0:
 		barG.modulate = Color(0.5, 0.5, 0.5, 1)
 	else:
 		barG.modulate = Color(1, 1, 1, 1)

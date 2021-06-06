@@ -2,7 +2,7 @@ extends Node
 
 
 # Declare member variables here.
-var money: float = 10
+var money: float = 1000
 const dropPower: float = 0.125 # bigger values make changes in price due to abundance of an item more drastical
 const minCurrency: float = 1.0 # smallest possible money unit, like one cent
 var malls: Dictionary = {
@@ -62,8 +62,8 @@ var cmalls: Dictionary = {
 	}
 }
 var consumables = {
-	"Gunpowder" : {"GG": IG_GUNPOWDER, "type": "igGunpowder", "price": 10, "weight": 1.0, "icon": "res://icon.png"}, # "GG" = GoodsGroup
-	"Cannonballs" : {"GG": IG_AMMO, "type": "igAmmo", "price": 10, "weight": 1.0, "icon": "res://icon.png"} # this should be named "goods", or include it into goods dict?
+	"Gunpowder" : {"GG": IG_GUNPOWDER, "price": 10, "weight": 1.0, "icon": "res://icon.png"}, # "GG" = GoodsGroup
+	"Cannonballs" : {"GG": IG_AMMO, "price": 10, "weight": 1.0, "icon": "res://icon.png"} # this should be named "goods", or include it into goods dict?
 }
 
 
