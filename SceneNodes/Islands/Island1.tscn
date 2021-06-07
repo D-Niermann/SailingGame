@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://SceneNodes/Islands/Images/treeLayer.png" type="Texture" id=1]
 [ext_resource path="res://SceneNodes/Islands/Images/Shipyard-23x16-Base-Map-Day.png" type="Texture" id=2]
 [ext_resource path="res://SceneNodes/Islands/Images/tiledTextue.png" type="Texture" id=3]
 [ext_resource path="res://SceneNodes/Islands/Images/groundLayer (2).png" type="Texture" id=4]
 [ext_resource path="res://SceneNodes/Islands/Buildings/ShopHouse.tscn" type="PackedScene" id=5]
+[ext_resource path="res://SceneNodes/Islands/Buildings/GoodsHouse.tscn" type="PackedScene" id=6]
 [ext_resource path="res://SceneNodes/Islands/Images/rockLayer.png" type="Texture" id=7]
 [ext_resource path="res://SceneNodes/Islands/Images/onGroundLayer.png" type="Texture" id=8]
 
@@ -66,7 +67,10 @@ alpha_cut = 2
 texture = ExtResource( 4 )
 
 [node name="bananaTown" parent="TerrainHolder" instance=ExtResource( 5 )]
-transform = Transform( -1.17972, 0, -0.336697, 0, 1, 0, 0.336697, 0, -1.17972, 64.4382, 2.96102, -3.62073 )
+transform = Transform( -1.75752, 0, -0.501604, 0, 1, 0, 0.501604, 0, -1.75752, 64.9849, 2.96102, -2.99496 )
+
+[node name="bananaConsumables" parent="TerrainHolder" instance=ExtResource( 6 )]
+transform = Transform( 1.22045, 0, 0.970897, 0, 1.20608, 0, -0.970897, 0, 1.22045, 73.8962, 3.00413, -1.7268 )
 
 [node name="Haven" type="Sprite3D" parent="TerrainHolder"]
 transform = Transform( -1.14709, 0, -0.311657, 0, 1, 0, 0.311657, 0, -1.14709, 60.7965, 2.67844, -4.06957 )

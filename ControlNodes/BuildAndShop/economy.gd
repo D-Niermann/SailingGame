@@ -2,7 +2,7 @@ extends Node
 
 
 # Declare member variables here.
-var money: float = 1000
+var money: float = 100000
 const dropPower: float = 0.125 # bigger values make changes in price due to abundance of an item more drastical
 const minCurrency: float = 1.0 # smallest possible money unit, like one cent
 var malls: Dictionary = {
@@ -10,7 +10,7 @@ var malls: Dictionary = {
 		"capacity": Vector2(0, 100),
 		"consumption": 0,
 		"grows": {"banana": 2.0},
-		"goods": {"banana": 10, "apple": INF, "Large Cannon" : 10, "WallLong" : 100, "LightSmall":5, "Gunpowder Barrel" : 20, "Ammo Barrel": 10, "Rigging":30},
+		"goods": {"banana": 10, "apple": INF, "Large Cannon" : 100, "WallLong" : 100, "LightSmall":5, "Gunpowder Barrel" : 200, "Ammo Barrel": 100, "Rigging":30},
 		"white": ["food", "gear"],
 		"black": ["drug"],
 		"money": 1000,
