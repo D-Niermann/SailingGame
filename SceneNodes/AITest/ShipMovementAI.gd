@@ -75,11 +75,11 @@ func escapeVector(islandsInRange: Array):
 	return Vector3(totalVector.x, 0, totalVector.y) / max(1, count)
 	
 func aimCannons():
-	for i in range(len(myShip.itemNodes)): # needs to iterate all the time because cannons can be destroyed
-		if myShip.itemNodes[i].has_method("aimTo"):
-			myShip.itemNodes[i].aimTo(enemy.global_transform.origin)
-			if abs(myShip.itemNodes[i].aimDiffAngle)<aimPrecision:
-				myShip.itemNodes[i].fireBall()
+	for id in myShip.itemNodes: # needs to iterate all the time because cannons can be destroyed
+		if myShip.itemNodes[id].has_method("aimTo"):
+			myShip.itemNodes[id].aimTo(enemy.global_transform.origin)
+			if abs(myShip.itemNodes[id].aimDiffAngle)<aimPrecision:
+				myShip.itemNodes[id].fireBall()
 
 func calcTargetSails():
 	if distToEnemy<optimalDistance+10:

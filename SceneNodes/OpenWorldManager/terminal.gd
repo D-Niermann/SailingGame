@@ -42,7 +42,7 @@ var ISLAND02: PackedScene = preload("res://SceneNodes/Islands/Island2.tscn")
 var ISLAND03: PackedScene = preload("res://SceneNodes/Islands/Island3.tscn")
 var presets: Dictionary = { # constants are not copied over the instance, this is where we summon stuff from, and also check some constant variables from
 	"border": {"CON": "walls", "RES": "res://SceneNodes/Borders/skullAndBones.tscn"},
-	"example": {"CON": "units", "PRE": "NPC01", "RES": "res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn", "SPEED": 1, "weight": 1, "side": "pirates", "type": "wanderer", "pack": [], "gold": 100, "mode": "sell"}
+	"exampleNPC": {"CON": "units", "PRE": "NPC01", "RES": "res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn", "SPEED": 1, "weight": 1, "side": "pirates", "type": "wanderer", "pack": [], "gold": 100, "mode": "sell"}
 }
 var NPC01: PackedScene = preload("res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn")
 
@@ -58,9 +58,9 @@ func _ready():
 	GlobalObjectReferencer.viewport = get_tree().get_root().get_viewport() # set the viewport in global refs (viewport has no script attached so it needs to be set here)
 	Utility.topograph = topograph # map for loading islands and also for pathfinding
 	Utility.dominions = dominions # map for goalfinding and pathfinding, shows regions
-	# spawn("example", Utility.partitionLocation(Vector3(0, 0, 0), CELLSIZE, false))
-	# spawn("example", Utility.partitionLocation(Vector3(1, 0, 0), CELLSIZE, false))
-	# spawn("example", Utility.partitionLocation(Vector3(0, 0, 1), CELLSIZE, false))
+	spawn("exampleNPC", Utility.partitionLocation(Vector3(0, 0, 0), CELLSIZE, false))
+	spawn("exampleNPC", Utility.partitionLocation(Vector3(1, 0, 0), CELLSIZE, false))
+	spawn("exampleNPC", Utility.partitionLocation(Vector3(0, 0, 1), CELLSIZE, false))
 	if Utility.lastSlot != null:
 		loadGame(Utility.lastSlot)
 	else:

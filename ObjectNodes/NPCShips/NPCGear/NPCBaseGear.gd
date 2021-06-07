@@ -26,6 +26,7 @@ var myShip # obj ship that this is on
 var gridMesh # green/red mesh that displays the hitbox of items
 var pAudio # audio player thats emitting when item is placed
 var currentHealth = maxHealth
+var id 
 
 func _ready():
 	## TODO: this gets also called when item is picked in shop
@@ -39,6 +40,7 @@ func _ready():
 	# itemPlaceParticle.one_shot = true
 	# itemPlaceParticle.emitting = false
 	# add_child(itemPlaceParticle)
+	id = IDGenerator.getID()
 	fetchMyShip()
 	if myShip!=null: #if actually on ship
 		myShip.registerItem(self)

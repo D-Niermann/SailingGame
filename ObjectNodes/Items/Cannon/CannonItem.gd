@@ -18,7 +18,7 @@ export(float) var    maxRotateAngle  = 20 # in degree,                          
 export(float) var    maxUpAngle      = 10 # angle distance in degreee from original rotation that is allowed
 export(float) var    minUpAngle      = -5 # angle distance in degreee from original rotation that is allowed
 export(float) var    unprecision     = 4 # in units,                                             how max unprecise a connon is (random)
-export(float) var    markerMoveSpeed = 0.05 # how fast markes of trajectory move
+export(float) var    markerMoveSpeed = 0.02 # how fast markes of trajectory move
 
 
 ### 

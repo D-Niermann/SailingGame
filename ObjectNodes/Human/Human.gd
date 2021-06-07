@@ -21,7 +21,8 @@ var targetPos = Vector3.ZERO
 var targetDeckRef = null # this needs to get set
 var currentDeckRef = null
 var bodyHeight = 0.3
-var itemFetchTime = 2
+var speed: float = 0.5 # max walking speed
+
 # var currentTaskGroup = null
 var isHuman = true # flag for shopping script to see if this kin body is human
 var infoPanel
@@ -34,7 +35,6 @@ var pathDeck = null # used by navigator, don't change manually
 var pathLocs: Array = [] # used by navigator, don't change manually
 var nextDest = null # used by navigator, don't change manually
 var lastDest = null # used by navigator, don't change manually
-var speed: float = 1
 var thisPart: Vector2 # used by navigator, don't change manually
 var isPathComplete: bool # used by navigator, don't change manually
 var isStandingStill: bool # used by navigator, don't change manually

@@ -42,7 +42,7 @@ func _ready():
 	## TODO: this gets also called when item is picked in shop
 	# print("BaseItem ready()")
 	# gridMesh = get_node("GridShowMesh")
-	pAudio = $PlaceAudio
+	pAudio = get_node_or_null("PlaceAudio")
 	# weight = Economy.goods[Utility.resName(self.name)]["weight"]
 	# print("Weight:",weight)
 	

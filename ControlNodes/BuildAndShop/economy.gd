@@ -93,7 +93,7 @@ var goods: Dictionary = { # TODO: RENAME INTO GEAR or ITEMS, this list is not ab
 							"Gunner3": {"posOffset":Vector3(0,0,-0.2), "TG": TG_WEAPONS, "priority" : 2},
 						},
 					"capacity" : {"Gunpowder": 10, "Cannonballs" : 5}, 
-					"maxHealth": 60, "price": 10, "weight": 10.0, "res": "res://ObjectNodes/Items/Cannon/CannonItem.tscn", "icon": "res://ObjectNodes/Items/Cannon/cannon.png"},
+					"maxHealth": 60, "price": 10, "weight": 10.0, "res": "res://ObjectNodes/Items/Cannon/CannonItem.tscn", "icon": "res://ObjectNodes/Items/Cannon/Cannon.png"},
 	
 	"Gunpowder Barrel": {"type": "gear", "size": Vector3(1,1, 1), "penetrationFactor": 0.3, "IG" : IG_GUNPOWDER,  
 						"jobs": {},
@@ -196,9 +196,9 @@ func getJobs(of: String):
 	return goods[of]["jobs"]
 
 	
-func getIG(of: String):
+func getIG(itemName: String):
 	""" returns item group of given item name """
-	return goods[of]["IG"]
+	return goods[itemName]["IG"]
 	
 func getGG(of: String):
 	""" returns goods group of given consumable name """

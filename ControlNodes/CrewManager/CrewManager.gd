@@ -469,7 +469,8 @@ func registerItem(itemRef):
 			## add item names to inventory based on economy capacity dict
 			for key in Economy.getCapacity(itemRef.databaseName):
 				itemAssignmentsAndInventory[IG][itemRef.id].inventory[key] = 0
-				goodCapacity[Economy.getGG(key)] += Economy.getCapacity(itemRef.databaseName)[key]
+				if IG!=IG_GEAR:
+					goodCapacity[Economy.getGG(key)] += Economy.getCapacity(itemRef.databaseName)[key]
 			print("capacities: " , goodCapacity)
 
 			## fill inventory for debuggin
@@ -515,9 +516,10 @@ func unregisterItem(itemRef):
 			items[itemRef.id].jobs[jobID] = {"manID" : null, "isReady" : false}
 			
 		## reduce ships capacity
-		for goodName in Economy.getCapacity(itemRef.databaseName):
-			goodCapacity[Economy.getGG(goodName)] -= Economy.getCapacity(itemRef.databaseName)[goodName]
-		print("capa: ", goodCapacity)
+		if Economy.getIG(itemRef.databaseName)!=IG_GEAR:
+			for goodName in Economy.getCapacity(itemRef.databaseName):
+				goodCapacity[Economy.getGG(goodName)] -= Economy.getCapacity(itemRef.databaseName)[goodName]
+			print("capa: ", goodCapacity)
 
 		## remove item from items list and assignment list
 		items.erase(itemRef.id)
