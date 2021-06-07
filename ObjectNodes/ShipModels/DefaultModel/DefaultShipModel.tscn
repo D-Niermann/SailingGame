@@ -81,17 +81,16 @@ mesh = SubResource( 1 )
 material/0 = null
 
 [node name="Sail" parent="Sails/FrontMast" instance=ExtResource( 11 )]
-transform = Transform( 0.774116, 0, -0.842145, 0, 1, 0, 0.633043, 0, 1.02982, -0.00546896, 1.30163, -0.0268193 )
+transform = Transform( 0.996369, 0, 0.113261, 0, 1, 0, -0.0851384, 0, 1.32548, -0.00546896, 1.30163, -0.0268193 )
 
 [node name="Sail2" parent="Sails/FrontMast" instance=ExtResource( 11 )]
-transform = Transform( 0.699807, 0, -0.724054, 0, 1, 0, 0.544276, 0, 0.930959, 0.0204445, 2.41285, 0.0168079 )
+transform = Transform( 0.881219, 0, 0.129111, 0, 1, 0, -0.0970532, 0, 1.17229, 0.0204445, 2.41285, 0.0168079 )
 
 [node name="Sail3" parent="Sails/FrontMast" instance=ExtResource( 11 )]
-transform = Transform( 0.487805, 0, -0.599111, 0, 1, 0, 0.450354, 0, 0.648932, -0.0194438, 3.09757, -0.00397754 )
+transform = Transform( 0.663696, 0, 0.0222723, 0, 1, 0, -0.0167422, 0, 0.882922, -0.0194438, 3.09757, -0.00397754 )
 
 [node name="SailWithShader" parent="Sails/FrontMast" instance=ExtResource( 8 )]
-transform = Transform( 0.0367462, 0.0496673, -1.09898, -0.0567464, 0.372194, 0.144598, 1.10726, 0.0174265, 0.0438822, 2.40674, 0.657061, 0.0835082 )
-canRotate = false
+transform = Transform( 0.0367462, 0.0496673, -1.09898, -0.0567464, 0.372194, 0.144598, 1.10726, 0.0174265, 0.0438822, 2.41271, 0.657061, 0.0802589 )
 
 [node name="Flag3DScene" parent="Sails/FrontMast" instance=ExtResource( 2 )]
 transform = Transform( -0.192357, 0.0720457, 0.266918, 0, 0.244662, -0.11483, -0.283321, -0.0489145, -0.18122, 0.0070411, 3.24533, -0.00361058 )
@@ -105,14 +104,13 @@ mesh = SubResource( 1 )
 material/0 = null
 
 [node name="Sail" parent="Sails/Main" instance=ExtResource( 11 )]
-transform = Transform( 0.491102, 0, -0.594326, 0, 0.808259, 0, 0.446758, 0, 0.653317, 0.0109169, 2.81001, 0.0489766 )
+transform = Transform( 0.6635, 0, 0.0309781, 0, 0.808259, 0, -0.0232864, 0, 0.882659, 0.0109169, 2.81001, 0.0489766 )
 
 [node name="Sail2" parent="Sails/Main" instance=ExtResource( 11 )]
-transform = Transform( 0.677951, 0, -0.799689, 0, 0.808259, 0, 0.60113, 0, 0.901884, -0.0630555, 2.39785, -0.00655635 )
-doPrint = true
+transform = Transform( 0.903083, 0, -0.0979056, 0, 0.808259, 0, 0.0735961, 0, 1.20138, -0.0630555, 2.39785, -0.00655635 )
 
 [node name="Sail3" parent="Sails/Main" instance=ExtResource( 11 )]
-transform = Transform( 0.800445, 0, -1.00592, 0, 0.808259, 0, 0.75615, 0, 1.06484, -0.00663948, 1.28554, -0.00712335 )
+transform = Transform( 1.10098, 0, 0.023852, 0, 0.808259, 0, -0.0179296, 0, 1.46465, -0.00663948, 1.28554, -0.00712335 )
 
 [node name="Flag3DScene" parent="Sails/Main" instance=ExtResource( 2 )]
 transform = Transform( -0.234354, -0.0498574, 0.262651, 0, 0.220353, 0.102888, -0.274044, 0.0426366, -0.224611, 0.00421143, 3.29494, -0.00418377 )
@@ -125,7 +123,10 @@ alpha_cut = 2
 texture = ExtResource( 13 )
 
 [node name="Spanker" parent="Sails/Main" instance=ExtResource( 21 )]
-transform = Transform( 0.279615, 0, 1.45819, 0, 0.612944, 0, -1.45819, 0, 0.279615, -0.0833466, 0.764952, 0.0231148 )
+transform = Transform( 0.0346432, 0, 1.48435, 0, 0.612944, 0, -1.48435, 0, 0.0346432, -0.0833466, 0.764952, 0.0231148 )
+doPrint = true
+isParallelSail = true
+maxManRequired = 1.0
 
 [node name="Deck1" type="KinematicBody" parent="." groups=[
 "PlayerDeck",

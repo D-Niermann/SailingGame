@@ -1,7 +1,9 @@
 extends Spatial
 
-export var canRotate = true
+export var rotateAllowed = true
 export var doPrint = false
+export var rotateAngleMax = 30
+export var isParallelSail = false
 export var maxManRequired = 10.0 # needs to be float for division
 var maxRotSpeed = 0.001 + rand_range(-0.0004, 0.0004) ## TODO: based on number of man on navigation gear
 var windDir = Vector3(0,0,-1) ## wind direction, TODO fetch from real wind manager
@@ -13,7 +15,7 @@ var windForce = 0.0
 var windAngle = 0.0
 var angleToShip = 0.0
 var rotateSpeed = 0.0 # depending on how many man are on the rigging gear, [0,1] -> 1 = maxSpeed
-
+var rotateStep 
 func _ready():
 	rand_time_offset = rand_range(0,2) # if max rand number is around PI, the difference in the shaders is not that big, set to inf and diff is also maximum possible
 	$Sail.material_override.set_shader_param("time_offset", rand_time_offset)
@@ -27,18 +29,19 @@ func _process(delta):
 		$Sail.material_override.set_shader_param("sail_in", 1-myShip.sails)
 	
 		windAngle = Utility.signedAngle(global_transform.basis.x, windDir, transform.basis.y.normalized())/PI
-		angleToShip = myShip.forward.angle_to(global_transform.basis.x)
-
+		angleToShip = Utility.signedAngle(myShip.forward , global_transform.basis.x, myShip.up)
+		if isParallelSail:
+			angleToShip+=PI/2
 		## rotate towards wind direction
-		if canRotate:
-			
-			rotate(transform.basis.y.normalized(), clamp(-windAngle*baseRotSpeed * rotateSpeed,-maxRotSpeed,maxRotSpeed))
-
+		rotateStep = clamp(-windAngle*baseRotSpeed * rotateSpeed,-maxRotSpeed,maxRotSpeed)
+		if rotateAllowed and abs(angleToShip-rotateStep*20)<(rotateAngleMax*PI/180):
+			rotate(transform.basis.y.normalized(), rotateStep)
 		## calc wind force (TODO: For now just use wind angle)
 		windForce = calcWindForce()
 		rotateSpeed = calcRotateSpeed()
-	# if doPrint: 
-	# 	print("a: ", angleToShip)
+	if doPrint: 
+		print("a: ", angleToShip*180/PI)
+		print("step: ", rotateStep)
 
 func lateReady():
 	## register to player item

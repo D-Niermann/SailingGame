@@ -362,7 +362,7 @@ anchor_top = 0.666
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = SubResource( 10 )
-text = "Sell All"
+text = "Empty"
 
 [node name="Cargo" type="Control" parent="Info/Middle/Content/Upper"]
 anchor_left = 0.333
@@ -432,7 +432,7 @@ anchor_top = 0.666
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_fonts/font = SubResource( 12 )
-text = "Buy All"
+text = "Max"
 
 [node name="Lower" type="Control" parent="Info/Middle/Content"]
 anchor_top = 0.45
