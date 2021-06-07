@@ -43,7 +43,8 @@ func _ready():
 	$Info/Middle/Content/Upper/Sell/More.connect("pressed", self, "_on_press_swap", [-10])
 	$Info/Middle/Content/Upper/Sell/All.connect("pressed", self, "_on_press_swap", [-INF])
 	$Info/Middle/Content/Lower/Trade.connect("pressed", self, "_on_press_trade")
-	openShop("bananaConsumables") # remove this line later on, this is for testing purposes only
+	GlobalObjectReferencer.itemShop = self
+	#openShop("bananaConsumables") # remove this line later on, this is for testing purposes only
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -57,6 +58,7 @@ func openShop(name: String):
 	if Economy.cmalls.has(name):
 		open = name
 		visible = true
+		mouse_filter = MOUSE_FILTER_STOP
 		refreshInventory()
 		refreshTemporary()
 
@@ -86,6 +88,7 @@ func closeShop():
 	if open != null:
 		open = null
 		visible = false
+		mouse_filter = MOUSE_FILTER_IGNORE
 		refreshInventory()
 		refreshTemporary()
 

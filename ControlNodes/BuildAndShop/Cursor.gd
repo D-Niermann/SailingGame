@@ -58,7 +58,10 @@ func _physics_process(delta):
 		size = tempSize
 		scaleCursor(size)
 	# raycasts to set the dictionary called hit
-	scan()
+	if GlobalObjectReferencer.itemShop.open == null:
+		scan()
+	else:
+		hit.clear()
 	# defining new potential hovering object to change highlighted object
 	var newHovering = null
 	# getting new hovering object if available
@@ -75,6 +78,10 @@ func _physics_process(delta):
 		Input.set_default_cursor_shape(2)
 		if leftClick:
 			GlobalObjectReferencer.shopping.openShop(hit.collider.name)
+	elif Economy.cmalls.has(hit.collider.name) && GlobalObjectReferencer.playerShip.linear_velocity.length_squared() < GlobalObjectReferencer.shopping.speedLimit && GlobalObjectReferencer.playerShip.global_transform.origin.distance_squared_to(Economy.cmalls[hit.collider.name]["loci"]) < GlobalObjectReferencer.shopping.distanceLimit: # opens shop, if hit's a shop
+		Input.set_default_cursor_shape(2)
+		if leftClick:
+			GlobalObjectReferencer.itemShop.openShop(hit.collider.name)
 	elif hit.collider.has_method("createInfo"):
 		Input.set_default_cursor_shape(3)
 		if leftClick && GlobalObjectReferencer.shopping.open == null:
