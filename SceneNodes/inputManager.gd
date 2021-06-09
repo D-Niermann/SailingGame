@@ -1,6 +1,8 @@
 extends Node
 
-
+"""
+Here, the player inputs get decided. All Items and the Ship and UI stuff should access vars from here to decide what to do.
+"""
 var aiming: bool = false
 var firing: bool = false
 
@@ -8,8 +10,8 @@ var leftClick: bool = false
 var rightClick: bool = false
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
+	## register to object references
 	GlobalObjectReferencer.inputManager = self
 
 
