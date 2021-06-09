@@ -12,7 +12,7 @@ var calledLateReady = false
 var myShip = null
 var baseRotSpeed = 0.1 
 var windForce = 0.0
-var windAngle = 0.0
+var windProportion = 0.0
 var angleToShip = 0.0
 var rotateSpeed = 0.0 # depending on how many man are on the rigging gear, [0,1] -> 1 = maxSpeed
 var rotateStep 
@@ -22,26 +22,29 @@ func _ready():
 	$Sail.material_override.set_shader_param("sail_in", 1.0)
 
 func _process(delta):
+	## register to my ship
 	if not calledLateReady:
 		lateReady()
 		calledLateReady = true
+
+	## process
 	if is_instance_valid(myShip):
-		$Sail.material_override.set_shader_param("sail_in", 1-myShip.sails)
+		$Sail.material_override.set_shader_param("sail_in",  1-(1-abs(windProportion))*(myShip.sails))
 	
-		windAngle = Utility.signedAngle(global_transform.basis.x, windDir, transform.basis.y.normalized())/PI
+		windProportion = Utility.signedAngle(global_transform.basis.x, windDir, transform.basis.y.normalized())/PI
 		angleToShip = Utility.signedAngle(myShip.forward , global_transform.basis.x, myShip.up)
 		if isParallelSail:
 			angleToShip+=PI/2
 		## rotate towards wind direction
-		rotateStep = clamp(-windAngle*baseRotSpeed * rotateSpeed,-maxRotSpeed,maxRotSpeed)
+		rotateStep = clamp(-windProportion*baseRotSpeed * rotateSpeed,-maxRotSpeed,maxRotSpeed)
 		if rotateAllowed and abs(angleToShip-rotateStep*20)<(rotateAngleMax*PI/180):
 			rotate(transform.basis.y.normalized(), rotateStep)
 		## calc wind force (TODO: For now just use wind angle)
 		windForce = calcWindForce()
 		rotateSpeed = calcRotateSpeed()
-	if doPrint: 
-		print("a: ", angleToShip*180/PI)
-		print("step: ", rotateStep)
+	# if doPrint: 
+	# 	print("a: ", angleToShip*180/PI)
+	# 	print("step: ", rotateStep)
 
 func lateReady():
 	## register to player item
@@ -69,5 +72,5 @@ func calcWindForce():
 	Using an accurate formular to get the wind force on sail, based on angle to wind.
 	Directly with the wind (angle=0) is a bit slower than at a steep angle with the wind.
 	"""
-	var deg = 1-abs(windAngle)
+	var deg = 1-abs(windProportion)
 	return myShip.sails*myShip.speed_mod*(pow(deg,2) - 0.8*pow(deg,3))-(myShip.reverse_speed_factor*myShip.speed_mod*myShip.sails)
