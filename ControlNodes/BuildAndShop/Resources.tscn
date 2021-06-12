@@ -1,0 +1,118 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+[ext_resource path="res://ControlNodes/BuildAndShop/Resources.gd" type="Script" id=2]
+[ext_resource path="res://Fonts/LCALLIG.TTF" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 3 )
+
+[node name="Resources" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="."]
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.05
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Food" type="Control" parent="Control"]
+anchor_left = 0.1
+anchor_right = 0.1
+anchor_bottom = 1.0
+hint_tooltip = "Food"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Control/Food"]
+anchor_bottom = 1.0
+grow_horizontal = 0
+texture = ExtResource( 1 )
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Control/Food"]
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 1 )
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ammo" type="Control" parent="Control"]
+anchor_left = 0.3
+anchor_right = 0.3
+anchor_bottom = 1.0
+hint_tooltip = "Ammunition"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Control/Ammo"]
+anchor_bottom = 1.0
+grow_horizontal = 0
+texture = ExtResource( 1 )
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Control/Ammo"]
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 1 )
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Powder" type="Control" parent="Control"]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+hint_tooltip = "Gunpowder"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Control/Powder"]
+anchor_bottom = 1.0
+grow_horizontal = 0
+texture = ExtResource( 1 )
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Control/Powder"]
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 1 )
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Materials" type="Control" parent="Control"]
+anchor_left = 0.7
+anchor_right = 0.7
+anchor_bottom = 1.0
+hint_tooltip = "Materials"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Control/Materials"]
+anchor_bottom = 1.0
+grow_horizontal = 0
+texture = ExtResource( 1 )
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="Control/Materials"]
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 1 )
+valign = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
