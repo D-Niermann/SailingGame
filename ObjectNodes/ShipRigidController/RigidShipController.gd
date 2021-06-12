@@ -10,10 +10,22 @@ RigidBody Needs a linear damping of approx 5!
 
 var stairs: Array = [Vector2(-1.5, 0.0)]
 
+# parameters 
+# sailing and wind stuff
+var wind_dir = Vector2(0,1) # TODO: make real wind direction vector in the ocean env
+export var speed_mod = 0.6 # speed modifier, more = more max speed, could be changed because of higher load mass
+export var reverse_speed_factor = -0.2 # factor on how much sailing against the wind will reverse the speed direction (0 for still stand, 0.05 for pretty heavy reverse, negative values for allowing sailing against wind)
+export var crossWindForce = 0.01 # force that attacks the ship up on the sails, tilting it with the wind
+export var maxTurnForce = 0.7 # max turn fomaxSailSetSpeed*clamprce of the whole shi,0,1p
+export var sailsManNeeded = 20.0
+export var maxSailSetSpeed = 0.01
+
 export(bool) var isPlayer = false
 export(bool) var isUnsinkable = false
 export var impulse_factor = 3.0 # overall impulse stength, all impulses should be multiplied by this
 
+
+### vars
 var model # ref to ship model
 var turnForce : float # current turn force for left right steer
 var sails # current sail state (0,1) 1=full sails
@@ -37,14 +49,6 @@ var forward
 var right
 
 
-# parameters 
-# sailing and wind stuff
-var wind_dir = Vector2(0,1) # TODO: make real wind direction vector in the ocean env
-export var speed_mod = 0.6 # speed modifier, more = more max speed, could be changed because of higher load mass
-export var reverse_speed_factor = -0.2 # factor on how much sailing against the wind will reverse the speed direction (0 for still stand, 0.05 for pretty heavy reverse, negative values for allowing sailing against wind)
-export var crossWindForce = 0.01 # force that attacks the ship up on the sails, tilting it with the wind
-export var maxTurnForce = 0.7 # max turn force of the whole ship
-# Called when the node enters the scene tree for the first time.
 func _ready():
 
 	hFront = $HFront
@@ -85,7 +89,12 @@ func unregisterItem(node):
 	itemNodes.erase(node.id)
 
 func _physics_process(delta):
+	if isPlayer:
+		turnForce = InputManager.rudderPositoin
+	if isPlayer:
+		sails += sign(InputManager.sailsTarget-sails)*maxSailSetSpeed*clamp(GlobalObjectReferencer.crewManager.sumRigging/sailsManNeeded,0,1)
 	sails = clamp(sails,-0.01, 1)
+
 	turnForce = clamp(turnForce,-maxTurnForce,maxTurnForce)	
 
 	up = transform.basis.y
@@ -102,27 +111,7 @@ func _physics_process(delta):
 	# sail wind attack to tilt the ship a bit if cross wind
 	apply_impulse(mainSailForce.translation, Vector3(0,0,-1)*crossWindForce*sails*delta*impulse_factor)
 
-	if !turnCommandPressed:# reset turn force slowly
-		turnForce *= 0.99
 
-func _input(event):
-	if isPlayer:
-		if Input.is_action_pressed("turnLeft"):
-			turnCommandPressed = true
-			turnForce -= 0.005
-		if Input.is_action_pressed("turnRight"):
-			turnCommandPressed = true
-			turnForce += 0.005
-		if Input.is_action_just_released("turnLeft"):
-			turnCommandPressed = false
-		if Input.is_action_just_released("turnRight"):
-			turnCommandPressed = false
-
-
-		if Input.is_action_pressed("sailsUp"):
-			sails += 0.01
-		if Input.is_action_pressed("sailsDown"):
-			sails -= 0.01
 		
 func applyPosBuoyancy(obj : Spatial, delta, factor :float = 1.0):
 	"""

@@ -4,7 +4,7 @@ export var rotateAllowed = true
 export var doPrint = false
 export var rotateAngleMax = 30
 export var isParallelSail = false
-export var maxManRequired = 10.0 # needs to be float for division
+export var maxManRequired = 30.0 # needs to be float for division
 var maxRotSpeed = 0.001 + rand_range(-0.0004, 0.0004) ## TODO: based on number of man on navigation gear
 var windDir = Vector3(0,0,-1) ## wind direction, TODO fetch from real wind manager
 var rand_time_offset = 0.0
@@ -61,10 +61,7 @@ func calcRotateSpeed():
 
 	TODO: make a global variable somwhere (crewmanager) that kepps track of number of man on rigging items
 	"""
-	var n = len(GlobalObjectReferencer.crewManager.currentAssignments[Economy.TG_NAVIGATION].busy[1]) # number of man in navigation prio 1
-	var m = len(GlobalObjectReferencer.crewManager.currentAssignments[Economy.TG_NAVIGATION].busy[2]) # number of man in navigation prio 2
-
-	return clamp((n+m)/maxManRequired,0,1)
+	return clamp(GlobalObjectReferencer.crewManager.sumRigging/maxManRequired,0,1)
 
 
 func calcWindForce():

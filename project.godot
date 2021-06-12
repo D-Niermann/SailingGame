@@ -52,6 +52,7 @@ IDGenerator="*res://ControlNodes/CrewManager/IDGenerator.gd"
 Utility="*res://utility.gd"
 Economy="*res://ControlNodes/BuildAndShop/economy.gd"
 GlobalObjectReferencer="*res://SceneNodes/GlobalObjectReferencer.gd"
+InputManager="*res://ControlNodes/inputManager.gd"
 
 [debug]
 

@@ -64,6 +64,8 @@ var goodGroupCount = {IG_GUNPOWDER : 0,  # GGGroup : 0 how many goods are per gr
 var goodCount = {} # goodName : 0 (how much of one good the player ship has)
 
 
+var sumRigging = 0 # how many man are ready on rigging items
+
 const HUMAN: PackedScene = preload("res://ObjectNodes/Human/Human.tscn")
 var requestsToPathfind: Array = []
 
@@ -253,16 +255,21 @@ func updateMen():
 					## if manRef is not assigned to his item yet, check if he can be
 					if manRef.itemID!=null && items[manRef.itemID].jobs[manRef.jobID].isReady==false:
 						if (manRef.translation-manRef.targetPos).length()<manRef.bodyHeight: # if human is within his body height close to item
-							## set the manRef of the item to "is ready"
-							items[manRef.itemID].jobs[manRef.jobID].isReady = true
-							## set the crew rating to this item
-							items[manRef.itemID].crewScore = getCrewScore(manRef.itemID)
-				
+							setJobToReady(manRef.itemID, manRef.jobID)
+							
 				## check busy man with fetch task (put this into one function like checkManFetchTaskComplete(manRef))
 				elif manRef.currentTask.type == FETCH_TASK:
 					checkManFetchTaskComplete(manRef)
-					
-						
+		
+func setJobToReady(itemID, jobID):
+	## set the isReady flag to true
+	items[itemID].jobs[jobID].isReady = true
+	## set the crew rating to this item
+	items[itemID].crewScore = getCrewScore(itemID)
+	## update accumulated data
+	if "Rigging" in jobID:
+		sumRigging += 1
+
 func checkManFetchTaskComplete(manRef):
 	"""
 	Checks if man manRef is close to his target item, if so proceeds to next item. checks if items still are defined, if not clears man from task and so on
@@ -380,6 +387,9 @@ func _unassignManFromItem(manRef):
 			items[manRef.itemID].jobs[jobID].manID = null
 			items[manRef.itemID].jobs[jobID].isReady = false
 			items[manRef.itemID].crewScore = getCrewScore(manRef.itemID)
+			## update summed values
+			if "Rigging" in jobID:
+				sumRigging -= 1
 	manRef.removeTask()
 	
 	
@@ -425,7 +435,7 @@ func fromBusyToIdle(manID : int, tg, priority):
 	also when men gets disconnected from item, item needs to request new one
 	"""
 	var manRef = currentAssignments[tg]["busy"][priority][manID]
-	manRef.removeTask()
+	_unassignManFromItem(manRef)
 	# add to idle
 	currentAssignments[tg]["idle"][manID] = manRef
 	## remove from busy

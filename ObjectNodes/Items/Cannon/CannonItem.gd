@@ -35,7 +35,7 @@ var reloaded = true # if cannon is ready to fire or not
 var aimPosition # the position the cannons will aim to (needs to be local)
 var particles
 var particles_flash
-var playerAimCannons # flag thats true if the player uses input to aim
+# var playerAimCannons # flag thats true if the player uses input to aim
 var isActive = true # flag that tells if this is active or not (deactived cannons dont aim or shoot)
 var waterHitMarker
 var fakeBullet # spatial used for trajectory planning
@@ -65,6 +65,8 @@ func _ready():
 	reloadTimer.set_wait_time(reload_time_sec)
 	reloadTimer.set_one_shot(true) # Make sure it loops
 
+	InputManager.connect("onFireCannons", self, "onFireCannon")
+	InputManager.connect("playerFireTest", self, "onPlayerFireTest")
 
 	fireSounds.push_back(get_node("Audio1"))
 	fireSounds.push_back(get_node("Audio2"))
@@ -97,10 +99,11 @@ func _process(delta):
 	
 	forward = transform.basis.x.normalized()
 
-	if playerAimCannons and isActive and GlobalObjectReferencer.crewManager.items[id].crewScore>0:
+	## check if aiming
+	if InputManager.playerAimCannons and isActive and GlobalObjectReferencer.crewManager.items[id].crewScore>0:
 		if GlobalObjectReferencer.crewManager.getInventoryCount(id, "Gunpowder")>0 and GlobalObjectReferencer.crewManager.getInventoryCount(id, "Cannonballs")>0: # if enough in inventory
 			aimTo(GlobalObjectReferencer.ocean.waterMousePos)
-	
+			
 	# if infoPanel!=null:
 	# 	isActive = infoPanel.isActive
 
@@ -130,17 +133,17 @@ func aimTo(global_position : Vector3):
 func giveDmg(damage):
 	.giveDmg(damage)
 
-func _unhandled_input(event):
+# func _unhandled_input(event):
 	# Receives key input
-	if event.is_action_pressed("FireCannons"):
-		playerAimCannons = true
-	if event.is_action_released("FireCannons"):
-		playerAimCannons = false
-		clearTrajectory()
-		fireBall()
-	if playerAimCannons:
-		if event.is_action_released("testFire") and isTestCannon:
-			fireBall()
+	# if event.is_action_pressed("FireCannons"):
+	# 	playerAimCannons = true
+	# if event.is_action_released("FireCannons"):
+	# 	playerAimCannons = false
+	# 	clearTrajectory()
+	# 	fireBall()
+	# if playerAimCannons:
+	# 	if event.is_action_released("testFire") and isTestCannon:
+	# 		fireBall()
 		
 	# if event.is_action_released("RotateCannonLeft"):
 	# 	rotateLeft()
@@ -293,6 +296,13 @@ func playAudio():
 func _on_reloadTimer_timeout():
 	reloaded = true
 
+
+func onFireCannon():
+	clearTrajectory()
+	fireBall()
+
+func onPlayerFireTest():
+	fireBall()
 
 func createInfo(placeholder):
 	if InfoPanel!=null:

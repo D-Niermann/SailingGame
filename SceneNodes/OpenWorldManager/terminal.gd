@@ -227,7 +227,7 @@ func _physics_process(delta):
 			elif holo != null: # if new partition is not live, we kill holo, but it keeps living in the database
 				holo.queue_free()
 				refs.erase(unit)
-				print("destroyed")
+				print("terminal : destroyed")
 			if holo != null && live.has(newPart): # creating offscreen indicator
 				var pos = GlobalObjectReferencer.camera.unproject_position(holo.global_transform.origin)
 				var facing = -1 * GlobalObjectReferencer.camera.global_transform.basis.z.normalized()
