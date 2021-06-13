@@ -13,12 +13,12 @@ var stairs: Array = [Vector2(-1.5, 0.0)]
 # parameters 
 # sailing and wind stuff
 var wind_dir = Vector2(0,1) # TODO: make real wind direction vector in the ocean env
-export var speed_mod = 0.6 # speed modifier, more = more max speed, could be changed because of higher load mass
+export var speed_mod = 0.2 # speed modifier, more = more max speed, could be changed because of higher load mass
 export var reverse_speed_factor = -0.2 # factor on how much sailing against the wind will reverse the speed direction (0 for still stand, 0.05 for pretty heavy reverse, negative values for allowing sailing against wind)
 export var crossWindForce = 0.01 # force that attacks the ship up on the sails, tilting it with the wind
-export var maxTurnForce = 0.7 # max turn fomaxSailSetSpeed*clamprce of the whole shi,0,1p
-export var sailsManNeeded = 20.0
-export var maxSailSetSpeed = 0.01
+export var maxTurnForce = 0.05 # max turn fomaxSailSetSpeed*clamprce of the whole shi,0,1p
+export var sailsManNeeded = 40.0
+export var maxSailSetSpeed = 0.002
 
 export(bool) var isPlayer = false
 export(bool) var isUnsinkable = false
@@ -32,7 +32,8 @@ var sails # current sail state (0,1) 1=full sails
 var sailRefs = [] # aray of all sails on this ship (they append themselfs)
 var itemNodes = {} # ref to all items in ships model (used for center of mass)
 var turnCommandPressed = false
-var waterLevel = 1 # 1 = default, how much water the ship has taken, used in boyance calculation, if near impulse_factor, its start to sink
+var waterLevel = 1.0 # 1 = default, how much water the ship has taken, used in boyance calculation, if near impulse_factor, its start to sink
+var speed = 0.0 #keeps track of the ships speed
 
 # force spatials
 var hLeft # positions where boynacy attacks
@@ -89,8 +90,10 @@ func unregisterItem(node):
 	itemNodes.erase(node.id)
 
 func _physics_process(delta):
+	speed = sqrt(pow(linear_velocity.x,2)+pow(linear_velocity.z,2))
+
 	if isPlayer:
-		turnForce = InputManager.rudderPositoin
+		turnForce = InputManager.rudderPos 
 	if isPlayer:
 		sails += sign(InputManager.sailsTarget-sails)*maxSailSetSpeed*clamp(GlobalObjectReferencer.crewManager.sumRigging/sailsManNeeded,0,1)
 	sails = clamp(sails,-0.01, 1)
@@ -105,7 +108,7 @@ func _physics_process(delta):
 	applyPosBuoyancy(hLeft, delta, 0.1) # less force because the roll is otherwise too strong
 	applyPosBuoyancy(hRight, delta, 0.1) # less force because the roll is otherwise too strong
 	## turn impulse
-	apply_impulse(transform.basis.xform(hBack.translation),right*turnForce*impulse_factor*delta)
+	apply_impulse(transform.basis.xform(hBack.translation),right*turnForce*(0.1+speed)*impulse_factor*delta)
 	## sail speed impulse
 	apply_central_impulse(forward*calSailForce()*delta*impulse_factor/waterLevel)
 	# sail wind attack to tilt the ship a bit if cross wind

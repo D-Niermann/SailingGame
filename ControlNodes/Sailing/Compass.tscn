@@ -1,17 +1,24 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://ControlNodes/Sailing/Compass.gd" type="Script" id=1]
 [ext_resource path="res://ControlNodes/Sailing/wheel.png" type="Texture" id=2]
 [ext_resource path="res://ControlNodes/Sailing/rightMeter256.png" type="Texture" id=3]
 [ext_resource path="res://ControlNodes/Sailing/leftMeter256.png" type="Texture" id=4]
 [ext_resource path="res://ControlNodes/Sailing/arrow.png" type="Texture" id=5]
+[ext_resource path="res://ControlNodes/Sailing/rightMeter256BG.png" type="Texture" id=6]
+[ext_resource path="res://ControlNodes/Sailing/leftMeter256BG.png" type="Texture" id=7]
 
 [node name="Compass" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 756.838
+margin_right = -1394.0
+margin_bottom = -27.1624
 mouse_filter = 2
 script = ExtResource( 1 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -28,6 +35,7 @@ __meta__ = {
 }
 
 [node name="Wheel" type="TextureRect" parent="Control"]
+modulate = Color( 0.529412, 0.580392, 0.643137, 1 )
 anchor_top = 1.0
 anchor_bottom = 1.0
 grow_vertical = 0
@@ -42,8 +50,11 @@ __meta__ = {
 grow_vertical = 0
 max_value = 1.0
 step = 0.01
+value = 0.61
+texture_under = ExtResource( 7 )
 texture_progress = ExtResource( 4 )
 fill_mode = 4
+tint_progress = Color( 1, 0.823529, 0.34902, 1 )
 radial_initial_angle = 210.0
 radial_fill_degrees = 120.0
 __meta__ = {
@@ -52,15 +63,21 @@ __meta__ = {
 
 [node name="BarR" type="TextureProgress" parent="Control"]
 grow_vertical = 0
-max_value = 1.0
+max_value = 5.0
 step = 0.01
+value = 0.67
+texture_under = ExtResource( 6 )
 texture_progress = ExtResource( 3 )
 fill_mode = 5
+tint_progress = Color( 0.584314, 0.631373, 0.796078, 1 )
 radial_initial_angle = 150.0
 radial_fill_degrees = 120.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Arrow" type="TextureRect" parent="Control"]
-modulate = Color( 1, 0, 0, 1 )
+[node name="WindSpeedArrow" type="TextureRect" parent="Control"]
+modulate = Color( 0.0705882, 0.501961, 0.772549, 1 )
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_top = -256.0
@@ -69,6 +86,21 @@ grow_vertical = 0
 rect_pivot_offset = Vector2( 128, 129.5 )
 texture = ExtResource( 5 )
 stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SailArrow" type="TextureRect" parent="Control"]
+modulate = Color( 0.603922, 0.215686, 0.215686, 1 )
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -256.0
+margin_right = 256.0
+grow_vertical = 0
+rect_pivot_offset = Vector2( 128, 129.5 )
+texture = ExtResource( 5 )
+stretch_mode = 5
+flip_h = true
 __meta__ = {
 "_edit_use_anchors_": false
 }

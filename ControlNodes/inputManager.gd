@@ -5,11 +5,11 @@ AutoLoaded
 Here, the player inputs get decided. All Items and the Ship and UI stuff should access vars from here to decide what to do.
 """
 
-var sailStep = 0.01
-var rudderStep = 0.01
+var sailStep = 0.02
+var rudderStep = 0.007
 
 var playerAimCannons : bool  = false # true while player is aiming cannons
-var rudderPositoin = 0 # -1,1 : -1 == left max, 1 == right max
+var rudderPos = 0 # -1,1 : -1 == left max, 1 == right max
 var sailsTarget = 0 # 1 == max , how far out the sails should be
 var turnCommandPressed  = false
 
@@ -48,12 +48,12 @@ func _unhandled_input(event):
 		## ship control
 		if Input.is_action_pressed("turnLeft"):
 			turnCommandPressed = true
-			if rudderPositoin > -1:
-				rudderPositoin -= rudderStep
+			if rudderPos > -1:
+				rudderPos -= rudderStep
 		if Input.is_action_pressed("turnRight"):
 			turnCommandPressed = true
-			if rudderPositoin < 1:
-				rudderPositoin += rudderStep
+			if rudderPos < 1:
+				rudderPos += rudderStep
 		if Input.is_action_just_released("turnLeft"):
 			turnCommandPressed = false
 		if Input.is_action_just_released("turnRight"):
@@ -79,5 +79,5 @@ func reset():
 	leftClick = false
 	rightClick = false
 	if not turnCommandPressed:
-		rudderPositoin *= 0.99
+		rudderPos *= 0.99
 
