@@ -505,9 +505,12 @@ func openShop(shop: String):
 	indicator.visible = true
 	indicator.mouse_filter = Control.MOUSE_FILTER_STOP
 
+	GlobalObjectReferencer.navGUI.visible = false
+
 
 # Closes any open shop.
 func closeShop():
+	GlobalObjectReferencer.navGUI.visible = true
 	GlobalObjectReferencer.cursor.selectedDeckNumber = -1
 	var theButton: TextureButton = get_parent().get_node("Decks").get_child(0).get_node("TextureButton")
 	theButton.pressed = false

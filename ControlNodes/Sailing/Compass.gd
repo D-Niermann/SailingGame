@@ -10,6 +10,7 @@ var sailArrow: TextureRect
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	GlobalObjectReferencer.navGUI = self
 	wheel = $Control/Wheel
 	barL = $Control/BarL
 	barR = $Control/BarR

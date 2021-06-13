@@ -16,4 +16,5 @@ var inputManager = null
 var shopping     = null
 var itemShop     = null
 var cursor       = null
+var navGUI       = null
 var playerDecks  = [] # here the decks can register themselfs

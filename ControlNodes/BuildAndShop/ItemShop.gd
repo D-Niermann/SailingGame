@@ -54,6 +54,7 @@ func _ready():
 
 # Opens the given shop.
 func openShop(name: String):
+	GlobalObjectReferencer.navGUI.visible = false
 	closeShop()
 	if Economy.cmalls.has(name):
 		open = name
@@ -86,6 +87,7 @@ func refreshInventory():
 # Closes the opened shop.
 func closeShop():
 	if open != null:
+		GlobalObjectReferencer.navGUI.visible = true
 		open = null
 		visible = false
 		mouse_filter = MOUSE_FILTER_IGNORE
