@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://ControlNodes/Sailing/Compass.gd" type="Script" id=1]
+[ext_resource path="res://ControlNodes/Sailing/wheel.png" type="Texture" id=2]
+[ext_resource path="res://ControlNodes/Sailing/rightMeter256.png" type="Texture" id=3]
+[ext_resource path="res://ControlNodes/Sailing/leftMeter256.png" type="Texture" id=4]
+[ext_resource path="res://ControlNodes/Sailing/arrow.png" type="Texture" id=5]
+
+[node name="Compass" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = -10.0
+margin_right = 10.0
+margin_bottom = -10.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Wheel" type="TextureRect" parent="Control"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+grow_vertical = 0
+rect_pivot_offset = Vector2( 128, 129.5 )
+texture = ExtResource( 2 )
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BarL" type="TextureProgress" parent="Control"]
+grow_vertical = 0
+max_value = 1.0
+step = 0.01
+texture_progress = ExtResource( 4 )
+fill_mode = 4
+radial_initial_angle = 210.0
+radial_fill_degrees = 120.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BarR" type="TextureProgress" parent="Control"]
+grow_vertical = 0
+max_value = 1.0
+step = 0.01
+texture_progress = ExtResource( 3 )
+fill_mode = 5
+radial_initial_angle = 150.0
+radial_fill_degrees = 120.0
+
+[node name="Arrow" type="TextureRect" parent="Control"]
+modulate = Color( 1, 0, 0, 1 )
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -256.0
+margin_right = 256.0
+grow_vertical = 0
+rect_pivot_offset = Vector2( 128, 129.5 )
+texture = ExtResource( 5 )
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
