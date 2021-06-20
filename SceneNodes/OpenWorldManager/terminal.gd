@@ -45,6 +45,7 @@ var presets: Dictionary = { # constants are not copied over the instance, this i
 	"exampleNPC": {"CON": "units", "PRE": "NPC01", "RES": "res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn", "SPEED": 1, "weight": 1, "side": "pirates", "type": "wanderer", "pack": [], "gold": 100, "mode": "sell"}
 }
 var NPC01: PackedScene = preload("res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn")
+var wantedUnitsPerPreset: Dictionary = {"exampleNPC": 3}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -58,9 +59,9 @@ func _ready():
 	GlobalObjectReferencer.viewport = get_tree().get_root().get_viewport() # set the viewport in global refs (viewport has no script attached so it needs to be set here)
 	Utility.topograph = topograph # map for loading islands and also for pathfinding
 	Utility.dominions = dominions # map for goalfinding and pathfinding, shows regions
-	spawn("exampleNPC", Utility.partitionLocation(Vector3(0, 0, 0), CELLSIZE, false))
-	spawn("exampleNPC", Utility.partitionLocation(Vector3(1, 0, 0), CELLSIZE, false))
-	spawn("exampleNPC", Utility.partitionLocation(Vector3(0, 0, 1), CELLSIZE, false))
+#	spawn("exampleNPC", Utility.partitionLocation(Vector3(0, 0, 0), CELLSIZE, false))
+#	spawn("exampleNPC", Utility.partitionLocation(Vector3(1, 0, 0), CELLSIZE, false))
+#	spawn("exampleNPC", Utility.partitionLocation(Vector3(0, 0, 1), CELLSIZE, false))
 	if Utility.lastSlot != null:
 		loadGame(Utility.lastSlot)
 	else:
@@ -147,6 +148,7 @@ func _physics_process(delta):
 				picked.erase(code)
 				#print("unloaded: " + str(code))
 	# running behavior
+	var unitsPerPreset: Dictionary = {}
 	for part in units.keys(): # for all partitions that include at least one unit inside
 		# getting the array of the units in proximity, that is units in this and adjacent partitions, also calculating power of each faction inside
 		adjacent = Utility.findAdjacent(part, CANCROSS, EXTENDED)
@@ -196,6 +198,10 @@ func _physics_process(delta):
 			var holo = runAI(unit, part, sidesOrganized, inProx, occupied, delta)
 			# maintaining consistency, we update all necessary data after the behavior, so things don't fall apart
 			var info: Dictionary = data[unit]
+			var preset = info["preset"]
+			if !unitsPerPreset.has(preset):
+				unitsPerPreset[preset] = 0
+			unitsPerPreset[preset] += 1
 			var newCell = Utility.partitionID(info["xform"].origin, CELLSIZE, EXTENDED) # new cell of this unit
 			var cell = info.get("cell")
 			if cell != newCell:
@@ -238,6 +244,18 @@ func _physics_process(delta):
 						var gui: Sprite = PROXMARK.instance()
 						indicators.add_child(gui)
 						gui.position = guiPosition
+	# adding more units if number of units for a preset is lower than it's set
+	for preset in wantedUnitsPerPreset.keys():
+		if !unitsPerPreset.has(preset) || unitsPerPreset[preset] < wantedUnitsPerPreset[preset]:
+			var randomTile: Vector3 = Vector3(randi() % topograph.get_width() - 1, 0, randi() % topograph.get_height() - 1)
+			topograph.lock()
+			var randomTileColor: Color = topograph.get_pixel(randomTile.x, randomTile.z)
+			topograph.unlock()
+			if randomTileColor == Color.black:
+				var randomTileCoords: Vector3 = Utility.partitionLocation(randomTile, PARTSIZE, EXTENDED)
+				var randomCell: Vector3 = Utility.partitionID(randomTileCoords, CELLSIZE, EXTENDED)
+				if !occd.has(randomCell):
+					spawn(preset, randomTileCoords)
 
 
 # Loads the given part of the world.
