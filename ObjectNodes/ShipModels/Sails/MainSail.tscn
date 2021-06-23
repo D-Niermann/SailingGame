@@ -5,16 +5,16 @@
 [ext_resource path="res://ObjectNodes/ShipModels/Sails/MainSail.gd" type="Script" id=3]
 [ext_resource path="res://ObjectNodes/ShipModels/Sails/SailNew.png" type="Texture" id=4]
 
-[sub_resource type="SpatialMaterial" id=3]
+[sub_resource type="SpatialMaterial" id=1]
 params_use_alpha_scissor = true
 params_alpha_scissor_threshold = 0.24
 albedo_texture = ExtResource( 1 )
 
-[sub_resource type="OpenSimplexNoise" id=1]
+[sub_resource type="OpenSimplexNoise" id=2]
 
-[sub_resource type="NoiseTexture" id=2]
+[sub_resource type="NoiseTexture" id=3]
 seamless = true
-noise = SubResource( 1 )
+noise = SubResource( 2 )
 
 [sub_resource type="ShaderMaterial" id=4]
 resource_local_to_scene = true
@@ -31,7 +31,7 @@ shader_param/uv_offset_scale = Vector2( -0.2, -0.1 )
 shader_param/time_scale = Vector2( 0.079, -0.033 )
 shader_param/face_distortion = 0.5
 shader_param/texture_albedo = ExtResource( 4 )
-shader_param/uv_offset_texture = SubResource( 2 )
+shader_param/uv_offset_texture = SubResource( 3 )
 
 [sub_resource type="PlaneMesh" id=5]
 size = Vector2( 1.21, 2.842 )
@@ -46,7 +46,7 @@ __meta__ = {
 
 [node name="Wood" type="Sprite3D" parent="."]
 transform = Transform( 0.1988, 0, 0, 0, -8.68984e-09, 0.1988, 0, -0.1988, -8.68984e-09, 0.0176849, 0.0347675, 0.0450505 )
-material_override = SubResource( 3 )
+material_override = SubResource( 1 )
 shaded = true
 alpha_cut = 2
 texture = ExtResource( 1 )

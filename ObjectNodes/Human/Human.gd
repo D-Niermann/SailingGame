@@ -8,26 +8,25 @@ gets controlled by crew manager, only feature is that he gets a target position 
 export var InfoPanel: PackedScene # scene object of cannons info ui panel
 
 ## stati
-const S_TIRED = "S_TIRED"  # too tired to work
-const S_DRUNK = "S_DRUNK" # too drunk to work
-const S_HUNGRY = "S_HUNGRY" # too hungry
-const S_THIRSTY = "S_THIRSTY" # too thirsty
-const S_WOUNDED = "S_WOUNDED"  # too wounded - needs to go to doctor
+var S_TIRED = false  # too tired to work if true
+var S_DRUNK = false # too drunk to work if true
+var S_HUNGRY = false # too hungry if true
+var S_THIRSTY = false # too thirsty if true
+var S_WOUNDED = false  # too wounded - needs to go to doctor if true
 
 var itemID = null # ref to the curernt item the human is working
 var jobID = null # ref to the curernt item the human is working
-var stati = [] #keeps track of all stati (stati = [S_Hungry, S_THIRSTY, ...]) 
 var targetPos = Vector3.ZERO
 var targetDeckRef = null # this needs to get set
 var currentDeckRef = null
 var bodyHeight = 0.3
 var speed: float = 0.5 # max walking speed
+var hungerIncreaseSpeed = 0.001
 
 # var currentTaskGroup = null
 var isHuman = true # flag for shopping script to see if this kin body is human
 var infoPanel
-# var isAssigned = false
-var id
+var id	# id of this human
 var currentTask
 
 var requestedForPathfinding: bool
@@ -40,6 +39,8 @@ var isPathComplete: bool # used by navigator, don't change manually
 var isStandingStill: bool # used by navigator, don't change manually
 var isStuck: bool # used by navigator, don't change manually
 var canFollowIncompletePath: bool = true
+
+var hunger = 0 # current level , if 1, human is too hungry to fulfill tasks and goes eat
 
 
 func _ready():
@@ -118,9 +119,22 @@ func _process(delta):
 		isStuck = true
 	else:
 		isStuck = false
+
+	updateStati()
+		
 	# this part below is for debugging, you can comment it out
 	# for tile in pathLocs:
 	# 	get_parent().markTile(tile)
+
+
+func updateStati():
+	hunger = clamp(hunger+hungerIncreaseSpeed,0,1)
+	if hunger >= 1-hungerIncreaseSpeed:
+		S_HUNGRY = true
+	else:
+		S_HUNGRY = false
+
+
 
 
 func createInfo(placeholder):

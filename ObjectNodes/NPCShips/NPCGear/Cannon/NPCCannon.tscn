@@ -1,10 +1,10 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://ObjectNodes/NPCShips/NPCGear/Cannon/NPCCannon.gd" type="Script" id=1]
 [ext_resource path="res://ObjectNodes/GeneralCannonAssets/CannonBall.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ObjectNodes/NPCShips/NPCGear/Cannon/SmokeMat.tres" type="Material" id=3]
 [ext_resource path="res://ObjectNodes/NPCShips/NPCGear/Cannon/SmokeParticle.tres" type="Material" id=4]
-[ext_resource path="res://ObjectNodes/Items/Cannon/Cannon.png" type="Texture" id=5]
+[ext_resource path="res://ObjectNodes/Items/Cannon/cannon2.png" type="Texture" id=5]
 [ext_resource path="res://ObjectNodes/GeneralCannonAssets/Sounds/Cannon6.wav" type="AudioStream" id=6]
 [ext_resource path="res://ObjectNodes/GeneralCannonAssets/Sounds/Cannon7.wav" type="AudioStream" id=7]
 [ext_resource path="res://ObjectNodes/NPCShips/NPCGear/Cannon/Flashparticle.tres" type="Material" id=8]
@@ -14,14 +14,19 @@
 [sub_resource type="QuadMesh" id=1]
 size = Vector2( 5, 5 )
 
+[sub_resource type="CubeMesh" id=2]
+
 [node name="NPCCannonLarge" type="Spatial"]
 script = ExtResource( 1 )
 databaseName = "Large Cannon"
 BallScene = ExtResource( 2 )
 force = 0.5
+fire_delay_sec = 1.0
+recoil_impulse = 0.1
+rand_max_delay = 2.0
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform( -4.70073e-08, 0, -0.257923, 0, 0.166714, 0, 0.288529, 0, -4.2021e-08, 0.139893, 0.0154406, -0.0031288 )
+transform = Transform( -3.53994e-08, 0, -0.194232, 0, 0.125546, 0, 0.21728, 0, -3.16444e-08, -0.0253963, 0.0154406, -0.00312883 )
 axis = 1
 shaded = true
 alpha_cut = 2
@@ -69,7 +74,7 @@ __meta__ = {
 [node name="Audio1" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 7 )
 unit_db = 15.0
-unit_size = 6.0
+unit_size = 13.0
 max_db = 6.0
 pitch_scale = 0.81
 max_distance = 250.0
@@ -78,7 +83,7 @@ doppler_tracking = 2
 [node name="Audio2" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 12 )
 unit_db = 15.0
-unit_size = 5.0
+unit_size = 13.0
 max_db = 6.0
 pitch_scale = 0.83
 max_distance = 250.0
@@ -87,7 +92,7 @@ doppler_tracking = 2
 [node name="Audio3" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 11 )
 unit_db = 15.0
-unit_size = 5.0
+unit_size = 13.0
 max_db = 6.0
 pitch_scale = 1.16
 max_distance = 250.0
@@ -96,7 +101,7 @@ doppler_tracking = 2
 [node name="Audio4" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 11 )
 unit_db = 15.0
-unit_size = 5.0
+unit_size = 13.0
 max_db = 6.0
 pitch_scale = 0.86
 max_distance = 250.0
@@ -112,3 +117,12 @@ max_distance = 250.0
 doppler_tracking = 2
 
 [node name="FakeBullet" type="Spatial" parent="."]
+
+[node name="AimPoint" type="MeshInstance" parent="."]
+transform = Transform( 0.149737, 0, 0, 0, 0.149737, 0, 0, 0, 0.149737, 0.972858, 0, 0 )
+visible = false
+mesh = SubResource( 2 )
+material/0 = null
+__meta__ = {
+"_editor_description_": "display the aim when debug mode is on"
+}

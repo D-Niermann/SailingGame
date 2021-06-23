@@ -84,14 +84,13 @@ collision_mask = 983043
 linear_damp = 2.0
 angular_damp = 3.0
 script = ExtResource( 2 )
-speed_mod = 1.954
+speed_mod = 0.55
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( -9.59893e-08, 0, 1.84808, 0, 12.0756, 0, -2.19598, 0, -8.07822e-08, 0, 2.14307, 0 )
 shape = ExtResource( 3 )
 
 [node name="AIController" parent="." instance=ExtResource( 6 )]
-visible = false
 parallelWeight = 0.4
 windWeight = 0.6
 

@@ -11,7 +11,7 @@ var rand_time_offset = 0.0
 var calledLateReady = false
 var myShip = null
 var baseRotSpeed = 0.1 
-var windForce = 0.0
+var windForce = 0.0 # this val is read out by myShip to compute the total amount of wind force on the ship
 var windProportion = 0.0
 var angleToShip = 0.0
 var rotateSpeed = 0.0 # depending on how many man are on the rigging gear, [0,1] -> 1 = maxSpeed
@@ -32,7 +32,8 @@ func _process(delta):
 		$Sail.material_override.set_shader_param("sail_in",  1-(1-abs(windProportion))*(myShip.sails))
 	
 		windProportion = Utility.signedAngle(global_transform.basis.x, windDir, transform.basis.y.normalized())/PI
-		angleToShip = Utility.signedAngle(myShip.forward , global_transform.basis.x, myShip.up)
+		if myShip.forward!=null:
+			angleToShip = Utility.signedAngle(myShip.forward , global_transform.basis.x, myShip.up)
 		if isParallelSail:
 			angleToShip+=PI/2
 		## rotate towards wind direction
@@ -42,16 +43,17 @@ func _process(delta):
 		## calc wind force (TODO: For now just use wind angle)
 		windForce = calcWindForce()
 		rotateSpeed = calcRotateSpeed()
+
 	# if doPrint: 
-	# 	print("a: ", angleToShip*180/PI)
-	# 	print("step: ", rotateStep)
+		# print("sails: ", myShip.sails)
+		# print("step: ", rotateStep)
 
 func lateReady():
 	## register to player item
-	myShip = GlobalObjectReferencer.playerShip
+	## path is : mast  -   sailsgroup - shipmodel - shipRigid
+	myShip = get_parent().get_parent().get_parent().get_parent()
 	## register to ship
-	if is_instance_valid(myShip):
-		myShip.sailRefs.append(self)
+	myShip.sailRefs.append(self)
 
 func calcRotateSpeed():
 	"""
@@ -61,7 +63,10 @@ func calcRotateSpeed():
 
 	TODO: make a global variable somwhere (crewmanager) that kepps track of number of man on rigging items
 	"""
-	return clamp(GlobalObjectReferencer.crewManager.sumRigging/maxManRequired,0,1)
+	if myShip.isPlayer:
+		return clamp(GlobalObjectReferencer.crewManager.sumRigging/maxManRequired,0,1)
+	else:
+		return 1 #TODO: implement crew losses on npc ship and slow it here 
 
 
 func calcWindForce():

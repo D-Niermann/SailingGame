@@ -45,7 +45,7 @@ var presets: Dictionary = { # constants are not copied over the instance, this i
 	"exampleNPC": {"CON": "units", "PRE": "NPC01", "RES": "res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn", "SPEED": 1, "weight": 1, "side": "pirates", "type": "wanderer", "pack": [], "gold": 100, "mode": "sell"}
 }
 var NPC01: PackedScene = preload("res://ObjectNodes/NPCShips/NPC1/NPC1Ship.tscn")
-var wantedUnitsPerPreset: Dictionary = {"exampleNPC": 3}
+var wantedUnitsPerPreset: Dictionary = {"exampleNPC": 10}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -436,7 +436,7 @@ func runAI(unit: String, part: Vector3, sides: Dictionary, inProx: Dictionary, i
 #	- If I could, I'd like to keep pursuing my goal, (follow route if trading, attack enemy if pirate or military)
 #	- If my goal doesn't seem plausible, I'd create a temporary goal to follow till the conditions change (flee or fight, probably trying to flee, but also shooting whenever possible, as you have suggested once)
 	# loading information about this unit
-	var boost = 100 # speed boost for debugging purposes
+	var boost = 1 # speed boost for debugging purposes
 	var dest = null
 	var holo = null # holo stands for physical representations of units, that is actual scenes in the world, loaded
 	var info: Dictionary = data[unit] # info stands for variables of this unit, like health and transform (xform)

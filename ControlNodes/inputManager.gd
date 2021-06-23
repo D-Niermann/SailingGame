@@ -35,29 +35,30 @@ func _unhandled_input(event):
 		rightClick = true
 
 	## if shop is closed
-	if GlobalObjectReferencer.shopping.open == null:
-		## cannon stuff
-		if event.is_action_pressed("FireCannons"):
-			playerAimCannons = true
-		if event.is_action_released("FireCannons"):
-			playerAimCannons = false
-			emit_signal("onFireCannons")
-		if event.is_action_released("testFire") and playerAimCannons:
-			emit_signal("playerFireTest")
+	if GlobalObjectReferencer.shopping != null:
+		if GlobalObjectReferencer.shopping.open == null:
+			## cannon stuff
+			if event.is_action_pressed("FireCannons"):
+				playerAimCannons = true
+			if event.is_action_released("FireCannons"):
+				playerAimCannons = false
+				emit_signal("onFireCannons")
+			if event.is_action_released("testFire") and playerAimCannons:
+				emit_signal("playerFireTest")
 
-		## ship control
-		if Input.is_action_pressed("turnLeft"):
-			turnCommandPressed = true
-			if rudderPos > -1:
-				rudderPos -= rudderStep
-		if Input.is_action_pressed("turnRight"):
-			turnCommandPressed = true
-			if rudderPos < 1:
-				rudderPos += rudderStep
-		if Input.is_action_just_released("turnLeft"):
-			turnCommandPressed = false
-		if Input.is_action_just_released("turnRight"):
-			turnCommandPressed = false
+			## ship control
+			if Input.is_action_pressed("turnLeft"):
+				turnCommandPressed = true
+				if rudderPos > -1:
+					rudderPos -= rudderStep
+			if Input.is_action_pressed("turnRight"):
+				turnCommandPressed = true
+				if rudderPos < 1:
+					rudderPos += rudderStep
+			if Input.is_action_just_released("turnLeft"):
+				turnCommandPressed = false
+			if Input.is_action_just_released("turnRight"):
+				turnCommandPressed = false
 
 
 		if Input.is_action_pressed("sailsUp"):

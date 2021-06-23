@@ -5,18 +5,19 @@ extends "res://ObjectNodes/NPCShips/NPCGear/NPCBaseGear.gd"
 export var BallScene: PackedScene # scene object of ball
 # export var InfoPanel: PackedScene # scene object of cannons info ui panel
 
-export var force          = 0.6 # for trajectory prediction: force of ball
+export var force          = 0.9 # for trajectory prediction: force of ball
 export(float) var fire_delay_sec = 0.1 # fire delay after pressing fire button
 export var recoil_impulse = 0.3 # when firing to the ship
+export var debugMode = false
+export var    rand_max_delay            = 1.4 # max delay in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
+export var    reload_time_sec           = 20 # reload time in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
 var    drag                      = 0.05 # for trajectory prediction: drag of ball
-var    rand_max_delay            = 1.4 # max delay in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
-var    reload_time_sec           = 20 # reload time in seconds # TODO: all these contant parameters could be set in item dictionary to save RAM
 var    cam_shake                 = 0.1 # the amount of camera shake added to camera when shooting
-const  rotateSpeed               = 0.004 # max rotation speed of cannons (up/down rotation is scaled down )
-const  maxRotateAngle            = 20 # in degree,                                           left right rotation
+var  rotateSpeed                 = 0.008 # max rotation speed of cannons (up/down rotation is scaled down )
+var  maxRotateAngle              = 20 # in degree,                                           left right rotation
 var    maxUpAngle                = 10 # angle distance in degreee from original rotation that is allowed
-var    minUpAngle                = -5 # angle distance in degreee from original rotation that is allowed
-const  unprecision               = 4 # in units,                                             how max unprecise a connon is (random)
+var    minUpAngle                = -10 # angle distance in degreee from original rotation that is allowed
+var  unprecision                 = 4 # in units,                                             how max unprecise a connon is (random)
 var    markerMoveSpeed           = 0.05 # how fast markes of trajectory move
 
 
@@ -28,7 +29,7 @@ onready var rotateMargin = rand_range(-unprecision,unprecision) # error in rotat
 onready var upDownMargin = rand_range(-unprecision,unprecision) # what difference to mouse pos units to ignore when rotating  up down
 var fireSounds : Array = [] # refs to aduio players (randomly chooses one of them when fired)
 var infoPanel = null # ref to instanced info panel
-var lineSize = 20  # length of trjactory prediction line 
+var lineSize = 40  # length of trjactory prediction line 
 var reloaded = true # if cannon is ready to fire or not
 # var camera # ref to camera (for shake)
 var aimPosition # the position the cannons will aim to (needs to be local)
@@ -45,11 +46,15 @@ var forward2d = Vector2(1,0)
 var trajectoryPoints : Array
 var org_forward
 var reloadTimer : Timer
+var last_i = 0
 
 func _ready():
 	## overwrite parent vars
 	fetchDictParams(databaseName)
 
+	if debugMode:
+		$AimPoint.visible = true
+		
 	# marker = $TrajectoryMarkerGroup.get_children()
 	fakeBullet = $FakeBullet
 	# lineSize = marker.size()
@@ -109,23 +114,30 @@ func _process(delta):
 func aimTo(global_position : Vector3):
 	aimPosition = to_local(global_position)
 	aimDiffAngle = rad2deg(forward2d.angle_to(Vector2(aimPosition.x ,aimPosition.z)))
+	var diff_x = 99999
 	if abs(aimDiffAngle) <= maxRotateAngle*2: 
 		canShoot = true
 		predictTrajectory()
 		var dist = (aimPosition).x
-		var diff_x = dist - (trajectoryPoints[lineSize-1]).x
+		diff_x = dist - (trajectoryPoints[last_i]).x
 		if diff_x>upDownMargin: 
 			rotateUpDown((diff_x+upDownMargin)*0.5, "up")
+			print("Rotate up, ",diff_x)
 		elif diff_x<-upDownMargin:
 			rotateUpDown((diff_x-upDownMargin)*0.5, "down")
+			print("Rotate down, ",diff_x)
 		if aimPosition.z<-rotateMargin:
 			rotateLeftRight((aimPosition.z-rotateMargin)*0.5, "left")
 		elif aimPosition.z>rotateMargin:
 			rotateLeftRight((aimPosition.z+rotateMargin)*0.5, "right")
 	else:
 		canShoot = false
-		# clearTrajectory()
 
+	## if the predicted trajectory is near the target ship, fire ball
+	if aimDiffAngle < 3 and diff_x < 2:
+		fireBall()
+
+		
 func giveDmg(damage):
 	.giveDmg(damage)
 	if infoPanel!=null:
@@ -164,7 +176,7 @@ func predictTrajectory():
 	fakeBullet.transform.origin = Vector3(0,0,0)
 	var point : Vector3 
 	var waterHeight = 0
-	var last_i = 0
+	
 	for i in range(lineSize):
 		point = fakeBullet.transform.origin
 		trajectoryPoints[i] = point
@@ -176,6 +188,9 @@ func predictTrajectory():
 		else:
 			last_i = i
 			break
+
+	if debugMode:
+		$AimPoint.translation = fakeBullet.transform.origin
 	# if last_i != 0: # if line ever crossed the water line (went under water)
 	# 	var aboveWater : Vector3 = (trajectoryPoints[last_i-1]) #
 	# 	var underWater : Vector3 = (trajectoryPoints[last_i])  # last point position in array (threw error once)

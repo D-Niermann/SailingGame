@@ -97,7 +97,7 @@ func _physics_process(delta):
 	if isPlayer:
 		sails += sign(InputManager.sailsTarget-sails)*maxSailSetSpeed*clamp(GlobalObjectReferencer.crewManager.sumRigging/sailsManNeeded,0,1)
 	sails = clamp(sails,-0.01, 1)
-
+	
 	turnForce = clamp(turnForce,-maxTurnForce,maxTurnForce)	
 
 	up = transform.basis.y
@@ -108,7 +108,7 @@ func _physics_process(delta):
 	applyPosBuoyancy(hLeft, delta, 0.1) # less force because the roll is otherwise too strong
 	applyPosBuoyancy(hRight, delta, 0.1) # less force because the roll is otherwise too strong
 	## turn impulse
-	apply_impulse(transform.basis.xform(hBack.translation),right*turnForce*(0.1+speed)*impulse_factor*delta)
+	apply_impulse(transform.basis.xform(hBack.translation),right*turnForce*clamp(speed,0.5,100)*impulse_factor*delta)
 	## sail speed impulse
 	apply_central_impulse(forward*calSailForce()*delta*impulse_factor/waterLevel)
 	# sail wind attack to tilt the ship a bit if cross wind

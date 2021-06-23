@@ -7,7 +7,7 @@ var isActive = true
 var statusLabel
 var myHuman
 var healthLabel
-
+var foodSlider
 
 
 func _ready():
@@ -15,7 +15,7 @@ func _ready():
 	itemLabel = $Panel/ItemLabel
 	statusLabel = $Panel/StatusLabel
 	healthLabel = $Panel/HealthLabel
-	pass
+	foodSlider = $Panel/FoodSlider
 
 func link(itemRef):
 	"""
@@ -23,7 +23,7 @@ func link(itemRef):
 	"""
 	myHuman = itemRef
 	$Panel/Title.text = str(myHuman.id)
-
+	foodSlider.value = myHuman.hunger
 	# statusLabel.pressed = myHuman.isActive
 	pass
 	
@@ -35,12 +35,11 @@ func _process(delta):
 	# 	itemLabel.text = "null"
 
 	# statusLabel.text = str(myHuman.isAssigned)
+	
+	foodSlider.value = myHuman.hunger
 
 	if is_instance_valid(positionRef):
 		self.rect_position =  positionRef.rect_position
-		# center position
-		self.rect_position.x -=  132 # half the width of panel
-		self.rect_position.y -=  220 # height of info panel
 
 
 # func _on_ActiveToggle_toggled(button_pressed):

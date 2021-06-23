@@ -78,8 +78,7 @@ func aimCannons():
 	for id in myShip.itemNodes: # needs to iterate all the time because cannons can be destroyed
 		if myShip.itemNodes[id].has_method("aimTo"):
 			myShip.itemNodes[id].aimTo(enemy.global_transform.origin)
-			if abs(myShip.itemNodes[id].aimDiffAngle)<aimPrecision:
-				myShip.itemNodes[id].fireBall()
+			## fireing ball is decided by the cannon
 
 func calcTargetSails():
 	if distToEnemy<optimalDistance+10:

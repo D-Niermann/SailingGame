@@ -179,7 +179,7 @@ func predictTrajectory():
 				else:
 					marker[i].modulate = Color(0.6,0.2,0.2,0.5)
 				marker[i].visible = true
-			fakeBullet.transform.origin += Vector3(1,0,0)*force*5.2/(1+i*0.05)
+			fakeBullet.transform.origin += Vector3(1,0,0)*force*5.2/(1+i*0.05) # propagate the calculated bullet point
 			fakeBullet.global_transform.origin += Vector3(0,-1,0)*0.015*i 
 		else:
 			last_i = i

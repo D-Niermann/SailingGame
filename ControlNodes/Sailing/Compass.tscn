@@ -35,7 +35,6 @@ __meta__ = {
 }
 
 [node name="Wheel" type="TextureRect" parent="Control"]
-modulate = Color( 0.529412, 0.580392, 0.643137, 1 )
 anchor_top = 1.0
 anchor_bottom = 1.0
 grow_vertical = 0
