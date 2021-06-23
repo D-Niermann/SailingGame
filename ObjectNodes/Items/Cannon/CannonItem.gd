@@ -19,7 +19,7 @@ export(float) var    maxUpAngle      = 10 # angle distance in degreee from origi
 export(float) var    minUpAngle      = -5 # angle distance in degreee from original rotation that is allowed
 export(float) var    unprecision     = 4 # in units,                                             how max unprecise a connon is (random)
 export(float) var    markerMoveSpeed = 0.02 # how fast markes of trajectory move
-
+export(bool) var  cheat_ShootAlways  = false
 
 ### 
 var forward : Vector3
@@ -51,6 +51,8 @@ var reloadTimer : Timer
 
 
 func _ready():
+	if cheat_ShootAlways:
+		reload_time_sec = 0.5
 
 	marker = $TrajectoryMarkerGroup.get_children()
 	fakeBullet = $FakeBullet
@@ -103,7 +105,9 @@ func _process(delta):
 	if InputManager.playerAimCannons and isActive and GlobalObjectReferencer.crewManager.items[id].crewScore>0:
 		if GlobalObjectReferencer.crewManager.getInventoryCount(id, "Gunpowder")>0 and GlobalObjectReferencer.crewManager.getInventoryCount(id, "Cannonballs")>0: # if enough in inventory
 			aimTo(GlobalObjectReferencer.ocean.waterMousePos)
-			
+		
+	if InputManager.playerAimCannons and cheat_ShootAlways:
+		aimTo(GlobalObjectReferencer.ocean.waterMousePos)
 	# if infoPanel!=null:
 	# 	isActive = infoPanel.isActive
 
@@ -227,8 +231,8 @@ func clearTrajectory():
 		trajectoryPoints[i] = point
 
 func fireBall():
-	if GlobalObjectReferencer.crewManager.items[id].crewScore>0 and reloaded and isActive and canShoot:
-		if GlobalObjectReferencer.crewManager.getInventoryCount(id, "Gunpowder")>0 and GlobalObjectReferencer.crewManager.getInventoryCount(id, "Cannonballs")>0: # if inventory is noit empty
+	if (GlobalObjectReferencer.crewManager.items[id].crewScore>0 and reloaded and isActive and canShoot) or cheat_ShootAlways:
+		if (GlobalObjectReferencer.crewManager.getInventoryCount(id, "Gunpowder")>0 and GlobalObjectReferencer.crewManager.getInventoryCount(id, "Cannonballs")>0) or cheat_ShootAlways: # if inventory is noit empty
 			reloaded = false
 			# yield(get_tree().create_timer(fire_delay_sec),"timeout")
 			yield(get_tree().create_timer(fire_delay_sec+rand_range(0,rand_max_delay)),"timeout")
@@ -242,10 +246,11 @@ func fireBall():
 			ball.transform.origin = self.global_transform.origin+ self.global_transform.basis.x*1 # + foward to give ball a forward offset to get behind own walls
 			ball.dir = global_transform.basis.x
 			ball.velocity = force
-			reloadTimer.set_wait_time(reload_time_sec/GlobalObjectReferencer.crewManager.items[id].crewScore) 
-			reloadTimer.start()
-			GlobalObjectReferencer.crewManager.consumeGood(Economy.IG_GEAR,id,"Gunpowder", true)
-			GlobalObjectReferencer.crewManager.consumeGood(Economy.IG_GEAR,id,"Cannonballs", true)
+			if not cheat_ShootAlways:
+				reloadTimer.set_wait_time(reload_time_sec/GlobalObjectReferencer.crewManager.items[id].crewScore) 
+				reloadTimer.start()
+				GlobalObjectReferencer.crewManager.consumeGood(Economy.IG_GEAR,id,"Gunpowder", true)
+				GlobalObjectReferencer.crewManager.consumeGood(Economy.IG_GEAR,id,"Cannonballs", true)
 
 
 ## TODO: change these funtions into 1 or 2 functions

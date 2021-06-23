@@ -79,8 +79,8 @@ size = Vector2( 5, 5 )
 [node name="NPCShipRigid" type="RigidBody" groups=[
 "NPCShip",
 ]]
-collision_layer = 983043
-collision_mask = 983043
+collision_layer = 2
+collision_mask = 2
 linear_damp = 2.0
 angular_damp = 3.0
 script = ExtResource( 2 )

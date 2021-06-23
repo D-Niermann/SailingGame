@@ -122,10 +122,8 @@ func aimTo(global_position : Vector3):
 		diff_x = dist - (trajectoryPoints[last_i]).x
 		if diff_x>upDownMargin: 
 			rotateUpDown((diff_x+upDownMargin)*0.5, "up")
-			print("Rotate up, ",diff_x)
 		elif diff_x<-upDownMargin:
 			rotateUpDown((diff_x-upDownMargin)*0.5, "down")
-			print("Rotate down, ",diff_x)
 		if aimPosition.z<-rotateMargin:
 			rotateLeftRight((aimPosition.z-rotateMargin)*0.5, "left")
 		elif aimPosition.z>rotateMargin:
