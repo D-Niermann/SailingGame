@@ -82,6 +82,10 @@ func _physics_process(delta):
 		Input.set_default_cursor_shape(2)
 		if leftClick:
 			GlobalObjectReferencer.itemShop.openShop(hit.collider.name)
+	elif Economy.taverns.has(hit.collider.name) && GlobalObjectReferencer.playerShip.linear_velocity.length_squared() < GlobalObjectReferencer.shopping.speedLimit && GlobalObjectReferencer.playerShip.global_transform.origin.distance_squared_to(Economy.taverns[hit.collider.name]["loci"]) < GlobalObjectReferencer.shopping.distanceLimit: # opens shop, if hit's a shop
+		Input.set_default_cursor_shape(2)
+		if leftClick:
+			GlobalObjectReferencer.tavern.openShop(hit.collider.name)
 	elif hit.collider.has_method("createInfo"):
 		Input.set_default_cursor_shape(3)
 		if leftClick && GlobalObjectReferencer.shopping.open == null:
