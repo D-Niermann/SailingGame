@@ -67,6 +67,15 @@ var consumables = {
 }
 
 
+var taverns: Dictionary = {
+	"bananaTavern": {
+		"crew": 200,
+		"part": Vector3(0, 0, 9),
+		"loci": Vector3(168.255,0,83.662)
+	}
+}
+
+
 """
 Gear / Item Dictionary 
 Keys: 

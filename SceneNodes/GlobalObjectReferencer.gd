@@ -15,6 +15,7 @@ var crewManager  = null # ref to CrewMaanager, (ssumes it will be a singleton so
 var inputManager = null
 var shopping     = null
 var itemShop     = null
+var tavern       = null
 var cursor       = null
 var navGUI       = null
 var playerDecks  = [] # here the decks can register themselfs
