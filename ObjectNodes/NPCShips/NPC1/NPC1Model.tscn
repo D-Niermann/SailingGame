@@ -224,6 +224,9 @@ transform = Transform( -9.81164e-08, 0, 2.24464, 0, 8.46485, 0, -2.24464, 0, -9.
 
 [node name="CannonBallCollider" type="StaticBody" parent="."]
 transform = Transform( 1.19247, 0, 0, 0, 4.68808, 0, 0, 0, 1.19247, 0.213641, -0.217644, 1.37729 )
+__meta__ = {
+"_editor_description_": "this collider is for bullet detection(has to be a static body and I belive in this model here so that the rigidbody (the ship) does not get flipped over when colliding with cannon ball)"
+}
 
 [node name="CollisionShape" type="CollisionShape" parent="CannonBallCollider"]
 transform = Transform( -8.06685e-08, 0, 1.84548, 0, 1.84548, 0, -1.84548, 0, -8.06685e-08, 0, 0, 0 )

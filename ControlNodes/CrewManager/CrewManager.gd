@@ -4,8 +4,12 @@ extends Node
 Assuming this will stay only on player ship and will be a singleton, (its referenced in the GLobalObjectReferencr)
 """
 
-const JOB_TASK = 0
-const FETCH_TASK = 1
+var crewAmount : int  = 0 # number of man on the player ship (managed by this crewManager)
+var decks # ref list of all decks on player ship
+
+
+const JOB_TASK = "taskType:job"
+const FETCH_TASK = "taskType:fetch"
 ## define goods groups
 # goods are stored in barrels, each barrel has a group, gunpowder, ammo, food...
 # this assignment dictionary helps quickly finding the nearest barrel for the requested good and also keeps track of what goods are inside each item
@@ -27,8 +31,6 @@ const TG_RELAX = "tgRelax"
 
 var targetCrewCount = {TG_NAVIGATION : 0, TG_WEAPONS: 0, TG_UTILITY : 0} # tells the manager how many men to assign to what group, this var gets changed by player input
 
-var decks # ref list of all decks on player ship
-# var humanNodes # list of all humans on ship (refs) needed? -> check currentAssignments
 
 # structure: tasks = [[task1, task2, ...],[task1, task2, ..], ...] with 0th eleemnt being prio 0 and so on, so new tasks are being appended to the correct list, no sorting needed
 # a task is a dict: {"id": prio_12,"itemRef": asd, "position": V(0,0,0), "taskGroup": TG_Asd, }
@@ -76,6 +78,7 @@ func _ready():
 
 	## fetch all humans ( later will get loaded in )
 	var humanNodes = get_children()
+	crewAmount = len(humanNodes)
 
 	## init all arrays that contain prio arrays
 	for i in range((numberOfPriorities)):
@@ -96,7 +99,26 @@ func _ready():
 	for goodkey in Economy.consumables:
 		goodCount[goodkey] = 0
 
+func getCrewCount() -> int:
+	"""
+	Returns the total amount of man on the ship.
+	"""
+	return crewAmount
 
+
+func hire(amount : int) -> void: 
+	"""
+	Called when player selects to hire man from the UI. Adds the amount man to crew 
+	"""
+	print("Hire: ", amount)
+	pass
+
+func fire(amount : int) -> void:
+	"""
+	Called when player selects to fire man from the UI. removes man from crew
+	"""
+	print("Fire: ", amount)
+	pass
 
 func _physics_process(delta):
 	updateMen()
@@ -631,7 +653,7 @@ func setCrewCount(taskGroup, value):
 	sets the amount to the value, has to manage that no more than the max number of man are allowed to be set?
 	TODO : Maybe for that also just limit how far up the crew sliders can go
 	"""
-	GlobalObjectReferencer.crewManager.targetCrewCount[taskGroup] = value
+	targetCrewCount[taskGroup] = value
 
 func getCrewScore(itemID) -> float:
 	"""
