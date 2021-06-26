@@ -50,7 +50,11 @@ func _process(delta):
 func jumpTo(dialogID, contentNumber: int):
 	clear()
 	if !data.has(dialogID):
+		visible = false
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
 		return
+	visible = true
+	mouse_filter = Control.MOUSE_FILTER_STOP
 	pointer = [dialogID, max(0, contentNumber)]
 	addContent()
 	if pointer[1] > data[pointer[0]]["content"].size() - 1:
@@ -77,6 +81,8 @@ func clear():
 
 # Prints choices on the user interface according to position of the pointer.
 func addChoices():
+	content.anchor_bottom = 0.5
+	choices.anchor_top = 0.5
 	for entry in data[pointer[0]]["choices"].keys():
 		var newChoice: Button = CHOICE.instance()
 		choices.add_child(newChoice)
@@ -86,6 +92,8 @@ func addChoices():
 
 # Prints content on the user interface according to position of the pointer.
 func addContent():
+	content.anchor_bottom = 1.0
+	choices.anchor_top = 1.0
 	content.bbcode_text = data[pointer[0]]["content"][pointer[1]]
 
 
