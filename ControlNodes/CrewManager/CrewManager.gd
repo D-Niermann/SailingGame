@@ -121,7 +121,7 @@ func fire(amount : int) -> void:
 	pass
 
 func _physics_process(delta):
-	updateMen()
+	checkAndUpdateMen()
 	checkAndLetPathfinding()
 	checkAndAssignJobTasks() 
 	checkAndAssignFetchTasks()
@@ -214,7 +214,7 @@ func searchAndAddNearStorageItem(task):
 	return false
 
 
-func updateMen():
+func checkAndUpdateMen():
 	"""
 	checks if men is able to stay in assigned group, maybe he is too tired or hungry. If a man is tired or hungry, force him into RELAX group, de-assign him from item that he is on.
 	Caution: if tired he goes to hammock: then do not remove him from hammock again, he will still be tired, so only check TGs that are non RELAX (?)
@@ -224,14 +224,13 @@ func updateMen():
 	var manRef
 	
 
-	## difference of the actual assigned crew and the requested crew assignments	
+	## check difference of the actual assigned crew and the requested crew assignments	
 	var diff = {} # TODO : calc only when changed targetCrewCount
 	for TG in targetCrewCount:
 		var count = 0
 		for prio in range(numberOfPriorities):
 			count+=len(currentAssignments[TG]["busy"][prio])
 		diff[TG] = targetCrewCount[TG] - (len(currentAssignments[TG]["idle"])+count)
-		
 	for TG in diff:
 		if diff[TG]<0:
 			## man needs to be removed from TG into relaxed
@@ -248,16 +247,20 @@ func updateMen():
 					return
 	
 
-	# iterate all men
+	## iterate all men
 	for TG in currentAssignments: # TODO: partioning idea: only check one TG per frame, (at the end of process(), go change the current TG to the next one)
 
 		## IDLE MAN
 		for manID in currentAssignments[TG]["idle"]:
 			## do stuff with the idle manRef, like move them randomly or make them group together
+			# player is only allowed to request as many man as are in relax idle, exept the panic button is pressed, then only allowed as many man as in relaxed
 			if TG==TG_RELAX: # move man from idle relax group inot the requested TGs (if panic button is pressed, also move from TG_RELAX, busy group!)
 				# relaxed idle man
-				# player is only allowed to request as many man as are in relax idle, exept the panic button is pressed, then only allowed as many man as in relaxed
 				manRef = currentAssignments[TG]["idle"][manID]
+				if TG != TG_RELAX:
+					if manRef.S_HUNGRY: # if man is hungry
+						forceManintoRelaxed(TG, "idle", manRef)
+						break
 				## search where to put him (where men are needed)
 				for diffTG in diff:
 					if diff[diffTG]>0: #if men are requested in that TG
@@ -270,8 +273,11 @@ func updateMen():
 		for prio in range(numberOfPriorities):
 			for manID in currentAssignments[TG]["busy"][prio]:
 				manRef = currentAssignments[TG]["busy"][prio][manID]
-				## do stuff with busy manRef (that are in TG and working in priority prio), maybe reduce their stamina faster
-					
+				## check human states and remove them from job when exhausted
+				if TG != TG_RELAX:
+					if manRef.S_HUNGRY: # if man is hungry
+						forceManintoRelaxed(TG, "busy", manRef)
+						break
 				## check busy man with job tasks (put this into one function like checkManTaskComplete(manRef))
 				if manRef.currentTask.type == JOB_TASK: 
 					## if manRef is not assigned to his item yet, check if he can be
@@ -367,10 +373,11 @@ func findAndAssignBestMen(task):
 	"""
 	var foundMen
 
-	## first check idle men in task group
+	## first check all idle men in task group
 	for id in currentAssignments[task.taskGroup]["idle"]:
-		if true: # TODO: put real check here
-			foundMen = currentAssignments[task.taskGroup]["idle"][id]
+		foundMen = currentAssignments[task.taskGroup]["idle"][id]
+		## Here the found man is checked if suitable for the current task. Down below is another if state that should be identical. TODO: Add near check, same deck check and so on
+		if not foundMen.S_HUNGRY: 
 			if task.type == JOB_TASK:
 				## assign man the new item target
 				fromIdleToBusy(foundMen, task)
@@ -385,7 +392,8 @@ func findAndAssignBestMen(task):
 	if task.type == JOB_TASK:
 		for oldPrio in range(numberOfPriorities-1,task.priority,-1): # doest go to priority, stops at priority+1
 			for id in currentAssignments[task.taskGroup]["busy"][oldPrio]:
-				if true: # TODO: put actual condition here
+				## Here the found man is checked if suitable for the current task. Above is another if state that should be identical. TODO: Add near check, same deck check and so on
+				if not foundMen.S_HUNGRY: # TODO: put actual condition here
 					foundMen = currentAssignments[task.taskGroup]["busy"][oldPrio][id]
 					fromBusyToBusy(foundMen, task, foundMen.currentTask)
 					return true
@@ -464,16 +472,16 @@ func fromBusyToIdle(manID : int, tg, priority):
 	currentAssignments[tg]["busy"][priority].erase(manID)
 
 
-func forceManintoRelaxed(taskGroup, state, manRef):
+func forceManintoRelaxed(currentTaskGroup, currentState, manRef):
 	""" 
 	Called from crew manager when man is too tired and then gets into relax TG, or if man gets unassigned by player input
 	removes man from current assignment and puts him into relaxed idle
 	"""
 	currentAssignments[TG_RELAX]["idle"][manRef.id] = manRef
-	if state == "idle":
+	if currentState == "idle":
 		## man not working on item
-		currentAssignments[taskGroup][state].erase(manRef.id)
-	elif state == "busy":
+		currentAssignments[currentTaskGroup][currentState].erase(manRef.id)
+	elif currentState == "busy":
 		## directly call new crew request
 		var t = manRef.currentTask
 		if t.type == JOB_TASK:
@@ -483,7 +491,7 @@ func forceManintoRelaxed(taskGroup, state, manRef):
 			itemAssignmentsAndInventory[t.storageIG][t.storageItemID].inventory[t.goodName] += 1
 			requestGood(t.goodName, items[t.targetItemID].itemRef, t.storageIG, t.priority)
 		## man worked on item
-		currentAssignments[taskGroup][state][t.priority].erase(manRef.id)
+		currentAssignments[currentTaskGroup][currentState][t.priority].erase(manRef.id)
 		_unassignManFromItem(manRef)
 
 

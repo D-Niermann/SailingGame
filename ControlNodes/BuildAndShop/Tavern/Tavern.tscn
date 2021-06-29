@@ -1,0 +1,380 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Fonts/LCALLIG.TTF" type="DynamicFontData" id=1]
+[ext_resource path="res://ControlNodes/BuildAndShop/Tavern/Tavern.gd" type="Script" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 64
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 48
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 32
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 64
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 64
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 48
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 48
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 90
+font_data = ExtResource( 1 )
+
+[sub_resource type="StreamTexture" id=9]
+flags = 4
+load_path = "res://.import/icon.png-487276ed1e3a0c39cad0279d744ee560.stex"
+
+[sub_resource type="DynamicFont" id=10]
+size = 48
+font_data = ExtResource( 1 )
+
+[node name="Tavern" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Left" type="Control" parent="."]
+anchor_top = 0.2
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_right = -20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="Left"]
+anchor_right = 1.0
+anchor_bottom = 0.2
+custom_fonts/font = SubResource( 1 )
+text = "Sailors"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Content" type="Control" parent="Left"]
+anchor_top = 0.2
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Upper" type="Control" parent="Left/Content"]
+anchor_right = 1.0
+anchor_bottom = 0.4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fire" type="Control" parent="Left/Content/Upper"]
+anchor_right = 0.333
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="Left/Content/Upper/Fire"]
+anchor_right = 1.0
+anchor_bottom = 0.333
+custom_fonts/font = SubResource( 2 )
+text = "Fire"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="More" type="Button" parent="Left/Content/Upper/Fire"]
+anchor_top = 0.333
+anchor_right = 0.5
+anchor_bottom = 0.666
+custom_fonts/font = SubResource( 3 )
+text = "-10"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="One" type="Button" parent="Left/Content/Upper/Fire"]
+anchor_left = 0.5
+anchor_top = 0.333
+anchor_right = 1.0
+anchor_bottom = 0.666
+custom_fonts/font = SubResource( 3 )
+text = "-1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Crew" type="Control" parent="Left/Content/Upper"]
+anchor_left = 0.333
+anchor_right = 0.666
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="Left/Content/Upper/Crew"]
+anchor_right = 1.0
+anchor_bottom = 0.333
+custom_fonts/font = SubResource( 2 )
+text = "Crew"
+align = 1
+valign = 1
+
+[node name="Label" type="Label" parent="Left/Content/Upper/Crew"]
+anchor_top = 0.333
+anchor_right = 1.0
+anchor_bottom = 0.666
+custom_fonts/font = SubResource( 4 )
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Hire" type="Control" parent="Left/Content/Upper"]
+anchor_left = 0.666
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Title" type="Label" parent="Left/Content/Upper/Hire"]
+anchor_right = 1.0
+anchor_bottom = 0.333
+custom_fonts/font = SubResource( 2 )
+text = "Hire"
+align = 1
+valign = 1
+
+[node name="One" type="Button" parent="Left/Content/Upper/Hire"]
+anchor_top = 0.333
+anchor_right = 0.5
+anchor_bottom = 0.666
+custom_fonts/font = SubResource( 3 )
+text = "+1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="More" type="Button" parent="Left/Content/Upper/Hire"]
+anchor_left = 0.5
+anchor_top = 0.333
+anchor_right = 1.0
+anchor_bottom = 0.666
+margin_left = -3.05176e-05
+margin_right = -3.05176e-05
+custom_fonts/font = SubResource( 3 )
+text = "+10"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lower" type="Control" parent="Left/Content"]
+anchor_top = 0.45
+anchor_right = 1.0
+anchor_bottom = 0.95
+margin_top = -73.4
+margin_bottom = -0.399963
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Handshake" type="Button" parent="Left/Content/Lower"]
+anchor_left = 0.3
+anchor_top = 0.7
+anchor_right = 0.7
+anchor_bottom = 1.0
+grow_horizontal = 2
+custom_fonts/font = SubResource( 5 )
+text = "Handshake"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TotalTitle" type="Label" parent="Left/Content/Lower"]
+anchor_left = 0.5
+anchor_top = 0.15
+anchor_right = 0.5
+anchor_bottom = 0.2
+grow_horizontal = 0
+custom_fonts/font = SubResource( 6 )
+text = "To Board: "
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TotalValue" type="Label" parent="Left/Content/Lower"]
+anchor_left = 0.5
+anchor_top = 0.15
+anchor_right = 0.5
+anchor_bottom = 0.2
+custom_fonts/font = SubResource( 6 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TavernTitle" type="Label" parent="Left/Content/Lower"]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.2
+grow_horizontal = 0
+custom_fonts/font = SubResource( 6 )
+text = "Tavern: "
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TavernValue" type="Label" parent="Left/Content/Lower"]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.2
+custom_fonts/font = SubResource( 6 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CostTitle" type="Label" parent="Left/Content/Lower"]
+anchor_left = 0.5
+anchor_top = 0.3
+anchor_right = 0.5
+anchor_bottom = 0.4
+grow_horizontal = 0
+custom_fonts/font = SubResource( 6 )
+text = "Cost: "
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CostValue" type="Label" parent="Left/Content/Lower"]
+anchor_left = 0.5
+anchor_top = 0.3
+anchor_right = 0.5
+anchor_bottom = 0.4
+custom_fonts/font = SubResource( 6 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CreditsTitle" type="Label" parent="Left/Content/Lower"]
+anchor_left = 0.5
+anchor_top = 0.45
+anchor_right = 0.5
+anchor_bottom = 0.6
+grow_horizontal = 0
+custom_fonts/font = SubResource( 6 )
+text = "Credits: "
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CreditsValue" type="Label" parent="Left/Content/Lower"]
+anchor_left = 0.5
+anchor_top = 0.45
+anchor_right = 0.5
+anchor_bottom = 0.6
+custom_fonts/font = SubResource( 6 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Right" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.2
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Title" type="Label" parent="Right"]
+anchor_right = 1.0
+anchor_bottom = 0.2
+custom_fonts/font = SubResource( 1 )
+text = "Rumors"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Right"]
+anchor_top = 0.2
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_right = -20.0
+margin_bottom = -20.0
+custom_fonts/normal_font = SubResource( 7 )
+bbcode_text = "	\"Rumors? What rumors? We don't know nothing about no hidden treasures. Go bother someone else, pal...\"
+	
+	\"Shhh!\" the sailor sitting next to the man whispered. \"You've almost told him we've dug it nice at the southeast corner of the open waters.\""
+text = "	\"Rumors? What rumors? We don't know nothing about no hidden treasures. Go bother someone else, pal...\"
+	
+	\"Shhh!\" the sailor sitting next to the man whispered. \"You've almost told him we've dug it nice at the southeast corner of the open waters.\""
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.2
+custom_fonts/font = SubResource( 8 )
+text = "   Tavern"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="Button" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -204.58
+margin_top = 20.0
+margin_right = -128.58
+grow_horizontal = 0
+icon = SubResource( 9 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="BalanceTitle2" type="Label" parent="Exit"]
+anchor_left = 0.5
+anchor_top = 0.2
+anchor_right = 0.5
+anchor_bottom = 0.4
+margin_left = -63.5114
+margin_top = -14.0
+margin_right = 169.489
+margin_bottom = 38.0
+grow_horizontal = 0
+custom_fonts/font = SubResource( 10 )
+text = "Exit "
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Exit" to="." method="_on_Exit_pressed"]

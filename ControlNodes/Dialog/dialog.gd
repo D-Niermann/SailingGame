@@ -36,7 +36,7 @@ var data: Dictionary = {
 func _ready():
 	content = get_node("Content")
 	choices = get_node("Scroller/Choices")
-	#jumpTo("D1", 0) #use this for demonstration
+	# jumpTo("D1", 0) #use this for demonstration
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

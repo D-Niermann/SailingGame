@@ -29,7 +29,6 @@ databaseName = "Large Cannon"
 InfoPanel = ExtResource( 14 )
 BallScene = ExtResource( 2 )
 force = 0.5
-cheat_ShootAlways = true
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform( -3.03305e-08, 0, -0.16642, 0, 0.107569, 0, 0.186168, 0, -2.71132e-08, 0.139893, 0.0516319, -0.0031288 )

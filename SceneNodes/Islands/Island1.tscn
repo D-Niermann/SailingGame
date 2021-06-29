@@ -69,6 +69,9 @@ texture = ExtResource( 4 )
 [node name="bananaTown" parent="TerrainHolder" instance=ExtResource( 5 )]
 transform = Transform( -1.75752, 0, -0.501604, 0, 1, 0, 0.501604, 0, -1.75752, 64.9849, 2.96102, -2.99496 )
 
+[node name="bananaTavern" parent="TerrainHolder" instance=ExtResource( 5 )]
+transform = Transform( -1.75828, 0, 0.498936, 0, 1, 0, -0.498936, 0, -1.75828, 59.7996, 2.96102, 5.03964 )
+
 [node name="bananaConsumables" parent="TerrainHolder" instance=ExtResource( 6 )]
 transform = Transform( 1.22045, 0, 0.970897, 0, 1.20608, 0, -0.970897, 0, 1.22045, 73.8962, 3.00413, -1.7268 )
 

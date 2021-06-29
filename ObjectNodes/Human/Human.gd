@@ -40,7 +40,7 @@ var isStandingStill: bool # used by navigator, don't change manually
 var isStuck: bool # used by navigator, don't change manually
 var canFollowIncompletePath: bool = true
 
-var hunger = 0 # current level , if 1, human is too hungry to fulfill tasks and goes eat
+var hunger = rand_range(0,1) # current level , if 1, human is too hungry to fulfill tasks and goes eat
 
 
 func _ready():
