@@ -1,0 +1,20 @@
+[gd_scene format=2]
+
+[node name="Choice" type="Button"]
+margin_right = 12.0
+margin_bottom = 20.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text" type="RichTextLabel" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
