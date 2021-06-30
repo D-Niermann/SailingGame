@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://SceneNodes/OceanEnv/OceanEnvironment.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ObjectNodes/NPCShips/NPC1/NPC1Model.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://ObjectNodes/ShipModels/DefaultModel/DefaultShipModel.tscn" type="PackedScene" id=8]
 [ext_resource path="res://ObjectNodes/ShipModels/shipTrailParticles.tscn" type="PackedScene" id=9]
 [ext_resource path="res://ObjectNodes/Items/Barrels/AmmoBarrel/AmmoBarrel.tscn" type="PackedScene" id=10]
+[ext_resource path="res://ObjectNodes/Items/Barrels/FoodCrate/FoodCrate.tscn" type="PackedScene" id=11]
 
 [sub_resource type="CubeMesh" id=1]
 size = Vector3( 2, 1, 2 )
@@ -73,3 +74,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.68029, 4.53367, 2.76082 )
 
 [node name="Spatial" parent="." instance=ExtResource( 10 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.657455, 3.63733, 17.9487 )
+
+[node name="Spatial2" parent="." instance=ExtResource( 11 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.566038, 3.75333, 18.6654 )

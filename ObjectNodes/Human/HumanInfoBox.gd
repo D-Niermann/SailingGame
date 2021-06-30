@@ -23,7 +23,7 @@ func link(itemRef):
 	"""
 	myHuman = itemRef
 	$Panel/Title.text = str(myHuman.id)
-	foodSlider.value = myHuman.hunger
+	foodSlider.value = myHuman.stamina
 	# statusLabel.pressed = myHuman.isActive
 	pass
 	
@@ -36,7 +36,7 @@ func _process(delta):
 
 	# statusLabel.text = str(myHuman.isAssigned)
 	
-	foodSlider.value = myHuman.hunger
+	foodSlider.value = myHuman.stamina
 
 	if is_instance_valid(positionRef):
 		self.rect_position =  positionRef.rect_position

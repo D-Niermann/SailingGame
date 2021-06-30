@@ -10,7 +10,7 @@ var malls: Dictionary = {
 		"capacity": Vector2(0, 100),
 		"consumption": 0,
 		"grows": {"banana": 2.0},
-		"goods": {"banana": 10, "apple": INF, "Large Cannon" : 100, "WallLong" : 100, "LightSmall":5, "Gunpowder Barrel" : 200, "Ammo Barrel": 100, "Rigging":30},
+		"goods": {"Food Storage":100, "apple": INF, "Large Cannon" : 100, "WallLong" : 100, "LightSmall":5, "Gunpowder Barrel" : 200, "Ammo Barrel": 100, "Rigging":30},
 		"white": ["food", "gear"],
 		"black": ["drug"],
 		"money": 1000,
@@ -32,7 +32,7 @@ var malls: Dictionary = {
 		"capacity": Vector2(0, 100),
 		"consumption": 0,
 		"grows": {"apple": 1.0},
-		"goods": {"banana": 10, "apple": INF, "Large Cannon" : 10, "WallLong" : 100, "LightSmall":5, "Gunpowder Barrel" : 20, "Ammo Barrel": 10},
+		"goods": {"Food Storage":100, "apple": INF, "Large Cannon" : 10, "WallLong" : 100, "LightSmall":5, "Gunpowder Barrel" : 20, "Ammo Barrel": 10},
 		"white": ["food"],
 		"black": [],
 		"money": 1000,
@@ -53,9 +53,9 @@ const IG_UTILITY = "igUtils" # barrels for repairs, stores woods planks, ropes, 
 const IG_GEAR = "igGear" # no storage items like cannons, table and so on - these typically make the requests and have fixed jobs
 
 
-var cmalls: Dictionary = {
+var cmalls: Dictionary = { # add goods stores here and consumables  that should be sold in the stores
 	"bananaConsumables": {
-		"goods": ["Gunpowder", "Cannonballs"],
+		"goods": ["Gunpowder", "Cannonballs", "Apples"],
 		"money": 1000,
 		"part": Vector3(0, 0, 9),
 		"loci": Vector3(168.255,0,83.662)
@@ -63,7 +63,8 @@ var cmalls: Dictionary = {
 }
 var consumables = {
 	"Gunpowder" : {"GG": IG_GUNPOWDER, "price": 10, "weight": 1.0, "icon": "res://icon.png"}, # "GG" = GoodsGroup
-	"Cannonballs" : {"GG": IG_AMMO, "price": 10, "weight": 1.0, "icon": "res://icon.png"} # this should be named "goods", or include it into goods dict?
+	"Cannonballs" : {"GG": IG_AMMO, "price": 10, "weight": 1.0, "icon": "res://icon.png"}, # this should be named "goods", or include it into goods dict?
+	"Apples" : {"GG": IG_FOOD, "price" : 1, "weight" : 1.0, "icon" : "res://icon.png"},
 }
 
 
@@ -92,9 +93,11 @@ jobs = dictionary of jobs, fill in here if item has permanent jobs like cannons 
 capacity = the local inventory capacity of the item, eg cannons need to have some gunpowder and balls to shoot
 """
 var goods: Dictionary = { # TODO: RENAME INTO GEAR or ITEMS, this list is not about goods
-	"banana"     : {"type": "food", "size": Vector3(2,1, 1), "penetrationFactor": 0.9, "IG": IG_FOOD, "jobs": {}, "capacity" : {}, "maxHealth": 1, "price": 10, "weight": 1.0, "res": "res://ControlNodes/BuildAndShop/exampleItem.tscn", "icon": "res://icon.png"},
+	"apple"     : {"type": "food", "size": Vector3(2,1, 1), "penetrationFactor": 0.9, "IG": IG_FOOD, "jobs": {}, "capacity" : {}, "maxHealth": 1, "price": 10, "weight": 1.0, "res": "res://ControlNodes/BuildAndShop/exampleItem.tscn", "icon": "res://icon.png"},
 	
-	"apple"      : {"type": "food", "size": Vector3(2,1, 1), "penetrationFactor": 0.9, "IG": IG_FOOD, "jobs": {}, "capacity" : {}, "maxHealth": 1, "price": 10, "weight": 1.0, "res": "res://ControlNodes/BuildAndShop/exampleItem.tscn", "icon": "res://icon.png"},
+	"Food Storage": {"type": "food", "size": Vector3(1,1, 1), "penetrationFactor": 0.9, "IG": IG_FOOD, "jobs": {}, 
+					"capacity" : {"Apples":10}, "maxHealth": 1, "price": 10, "weight": 1.0, 
+					"res": "res://ObjectNodes/Items/Barrels/FoodCrate/FoodCrate.tscn", "icon": "res://ObjectNodes/Items/Barrels/FoodCrate/foodcrate.png"},
 	
 	"Large Cannon": {"type": "gear", "size": Vector3(3,1, 3), "penetrationFactor": 0.3, "IG" : IG_GEAR,  
 					"jobs": {"Gunner1": {"posOffset":Vector3(-0.2,0,0), "TG": TG_WEAPONS, "priority" : 0}, 

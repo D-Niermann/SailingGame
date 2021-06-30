@@ -24,6 +24,8 @@
 
 3. In Econonmy, in the "malls" dictionary, select your malls where the new item should be available and add the item name and the amount
 
+4. If the new Item also contains new goods like some fruit or so, this needs to be added in the consumables dicitonary (in economy.gd) 
+
 ## In Editor again
 
 1. In the item scene node, put in your chosen item name into the databaseName field

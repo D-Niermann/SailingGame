@@ -13,6 +13,8 @@ var S_DRUNK = false # too drunk to work if true
 var S_HUNGRY = false # too hungry if true
 var S_THIRSTY = false # too thirsty if true
 var S_WOUNDED = false  # too wounded - needs to go to doctor if true
+var S_SEARCHFOOD = false # while searching for food on ship
+
 
 var itemID = null # ref to the curernt item the human is working
 var jobID = null # ref to the curernt item the human is working
@@ -40,7 +42,8 @@ var isStandingStill: bool # used by navigator, don't change manually
 var isStuck: bool # used by navigator, don't change manually
 var canFollowIncompletePath: bool = true
 
-var hunger = rand_range(0,1) # current level , if 1, human is too hungry to fulfill tasks and goes eat
+var stamina = rand_range(0,1) # current level [0,1], if 0, human is too tired to fulfill tasks and goes eat/sleep/drink and so on
+var morale = rand_range(0.9,1) # current level [0,1] , increased with low priority relax jobs like drinking rum or playing poker
 
 
 func _ready():
@@ -128,8 +131,8 @@ func _process(delta):
 
 
 func updateStati():
-	hunger = clamp(hunger+hungerIncreaseSpeed,0,1)
-	if hunger >= 1-hungerIncreaseSpeed:
+	stamina = clamp(stamina+hungerIncreaseSpeed,0,1)
+	if stamina >= 1-hungerIncreaseSpeed:
 		S_HUNGRY = true
 	else:
 		S_HUNGRY = false

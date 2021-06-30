@@ -198,6 +198,9 @@ func checkAndAssignFetchTasks():
 				return
 				
 func searchAndAddNearStorageItem(task):
+	"""
+	called when fetch task is searched, adds a suitable storage item to the given task
+	"""
 	var storageItemRef = null
 	var minDist = 9999999
 	## search for nearest barrel of item group 
@@ -223,8 +226,9 @@ func checkAndUpdateMen():
 	"""
 	var manRef
 	
-
+	#########################
 	## check difference of the actual assigned crew and the requested crew assignments	
+	#########################
 	var diff = {} # TODO : calc only when changed targetCrewCount
 	for TG in targetCrewCount:
 		var count = 0
@@ -246,21 +250,24 @@ func checkAndUpdateMen():
 					forceManintoRelaxed(TG, "busy", currentAssignments[TG]["busy"][prio][manID])
 					return
 	
-
+	#########################
 	## iterate all men
+	#########################
 	for TG in currentAssignments: # TODO: partioning idea: only check one TG per frame, (at the end of process(), go change the current TG to the next one)
-
+		
 		## IDLE MAN
 		for manID in currentAssignments[TG]["idle"]:
+			## relaxed idle man
+			manRef = currentAssignments[TG]["idle"][manID]
+			## check status of man 
+			if manRef.S_HUNGRY: # if man is hungry
+				if TG != TG_RELAX:
+					forceManintoRelaxed(TG, "idle", manRef)
+					break
 			## do stuff with the idle manRef, like move them randomly or make them group together
+					
 			# player is only allowed to request as many man as are in relax idle, exept the panic button is pressed, then only allowed as many man as in relaxed
 			if TG==TG_RELAX: # move man from idle relax group inot the requested TGs (if panic button is pressed, also move from TG_RELAX, busy group!)
-				# relaxed idle man
-				manRef = currentAssignments[TG]["idle"][manID]
-				if TG != TG_RELAX:
-					if manRef.S_HUNGRY: # if man is hungry
-						forceManintoRelaxed(TG, "idle", manRef)
-						break
 				## search where to put him (where men are needed)
 				for diffTG in diff:
 					if diff[diffTG]>0: #if men are requested in that TG
@@ -269,15 +276,27 @@ func checkAndUpdateMen():
 						## CAUTION: if would be busy, then also would need to unassign from item!
 						currentAssignments[TG]["idle"].erase(manID)
 
+
 		## BUSY MEN
 		for prio in range(numberOfPriorities):
 			for manID in currentAssignments[TG]["busy"][prio]:
 				manRef = currentAssignments[TG]["busy"][prio][manID]
 				## check human states and remove them from job when exhausted
-				if TG != TG_RELAX:
-					if manRef.S_HUNGRY: # if man is hungry
+				if manRef.S_HUNGRY: # if man is hungry
+					if TG != TG_RELAX:
 						forceManintoRelaxed(TG, "busy", manRef)
 						break
+					else: # hungry man in TG Relax busy
+						# search for food storage and assign fetch task
+						var task = {"type" : FETCH_TASK, "id": IDGenerator.getID(),
+						"taskGroup": TG_RELAX, "goodName": "Apple", "storageIG" : IG_FOOD,
+						"targetItemID": null , "targetItemPos" : null , "targetItemDeck" : null ,
+						"storageItemID" : null, "storageItemPos" : null, "storageItemDeck" : null,
+						"priority": 0}
+						manRef.S_SEARCHFOOD = true
+						var found = searchAndAddNearStorageItem(task)
+						if found: manRef.S_SEARCHFOOD = false
+
 				## check busy man with job tasks (put this into one function like checkManTaskComplete(manRef))
 				if manRef.currentTask.type == JOB_TASK: 
 					## if manRef is not assigned to his item yet, check if he can be
@@ -362,7 +381,7 @@ func requestAllGoods(itemRef):
 	var capacity = Economy.getCapacity(itemRef.databaseName)
 	for good in capacity:
 		for i in range(capacity[good]):
-			var prio = clamp(i,0,numberOfPriorities-1) # TODO : think aboput hot to do priorities here (wall leak objects needs items more than cannons), for now, first item request is always high rpio then it gets lower
+			var prio = clamp(i,0,numberOfPriorities-1) # TODO : think aboput how to do priorities here (wall leak objects needs items more than cannons), for now, first item request is always high rpio then it gets lower
 			requestGood(good, itemRef, Economy.consumables[good].GG,  prio) 
 
 func findAndAssignBestMen(task):

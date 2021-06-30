@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://ObjectNodes/Items/Barrels/FoodCrate/foodcrate.png" type="Texture" id=1]
+[ext_resource path="res://ObjectNodes/Items/Barrels/FoodCrate/FoodCrate.gd" type="Script" id=2]
+
+[sub_resource type="BoxShape" id=1]
+
+[node name="FoodCrate" type="KinematicBody"]
+script = ExtResource( 2 )
+databaseName = "Food Storage"
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( 0.147376, 0, 0, 0, 0.147376, 0, 0, 0, 0.147376, 0, 0.0473195, 0 )
+axis = 1
+shaded = true
+alpha_cut = 2
+texture = ExtResource( 1 )

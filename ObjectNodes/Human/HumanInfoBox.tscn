@@ -110,7 +110,7 @@ __meta__ = {
 margin_top = 160.0
 margin_right = 122.0
 margin_bottom = 193.0
-text = "Hunger:"
+text = "Stamina:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
