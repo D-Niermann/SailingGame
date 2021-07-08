@@ -247,7 +247,7 @@ func _physics_process(delta):
 	# adding more units if number of units for a preset is lower than it's set
 	for preset in wantedUnitsPerPreset.keys():
 		if !unitsPerPreset.has(preset) || unitsPerPreset[preset] < wantedUnitsPerPreset[preset]:
-			var randomTile: Vector3 = Vector3(randi() % topograph.get_width() - 1, 0, randi() % topograph.get_height() - 1)
+			var randomTile: Vector3 = Vector3(randi() % topograph.get_width(), 0, randi() % topograph.get_height())
 			topograph.lock()
 			var randomTileColor: Color = topograph.get_pixel(randomTile.x, randomTile.z)
 			topograph.unlock()
