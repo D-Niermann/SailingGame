@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ControlNodes/exampleNinePatchStyle.tres" type="StyleBox" id=1]
+
+[node name="Button" type="Button"]
+margin_right = 559.0
+margin_bottom = 501.0
+custom_styles/hover = ExtResource( 1 )
+custom_styles/pressed = ExtResource( 1 )
+custom_styles/focus = ExtResource( 1 )
+custom_styles/disabled = ExtResource( 1 )
+custom_styles/normal = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
