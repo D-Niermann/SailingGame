@@ -72,6 +72,7 @@ func escapeVector(islandsInRange: Array):
 		count += 1
 		var escapeDirection: Vector2 = (island - thisProjection)
 		escapeDirection / max(1, escapeDirection.length() - 64) # 64 is PARTSIZE
+		totalVector += escapeDirection
 	return Vector3(totalVector.x, 0, totalVector.y) / max(1, count)
 	
 func aimCannons():
