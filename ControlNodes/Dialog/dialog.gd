@@ -41,7 +41,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if Input.is_action_just_pressed("mouse_left"):
+	if visible && Input.is_action_just_pressed("leftClick"):
 		next()
 	pass
 
