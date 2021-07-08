@@ -121,7 +121,7 @@ func fire(amount : int) -> void:
 	pass
 
 func _physics_process(delta):
-	checkAndUpdateMen()
+	checkAndUpdateMen(delta)
 	checkAndLetPathfinding()
 	checkAndAssignJobTasks() 
 	checkAndAssignFetchTasks()
@@ -217,7 +217,7 @@ func searchAndAddNearStorageItem(task):
 	return false
 
 
-func checkAndUpdateMen():
+func checkAndUpdateMen(delta):
 	"""
 	checks if men is able to stay in assigned group, maybe he is too tired or hungry. If a man is tired or hungry, force him into RELAX group, de-assign him from item that he is on.
 	Caution: if tired he goes to hammock: then do not remove him from hammock again, he will still be tired, so only check TGs that are non RELAX (?)
@@ -286,26 +286,42 @@ func checkAndUpdateMen():
 					if TG != TG_RELAX:
 						forceManintoRelaxed(TG, "busy", manRef)
 						break
-					else: # hungry man in TG Relax busy
-						# search for food storage and assign fetch task
-						var task = {"type" : FETCH_TASK, "id": IDGenerator.getID(),
-						"taskGroup": TG_RELAX, "goodName": "Apple", "storageIG" : IG_FOOD,
-						"targetItemID": null , "targetItemPos" : null , "targetItemDeck" : null ,
-						"storageItemID" : null, "storageItemPos" : null, "storageItemDeck" : null,
-						"priority": 0}
-						manRef.S_SEARCHFOOD = true
-						var found = searchAndAddNearStorageItem(task)
-						if found: manRef.S_SEARCHFOOD = false
+					# else: # hungry man in TG Relax busy
+					# 	# search for food storage and assign fetch task
+					# 	var task = {"type" : FETCH_TASK, "id": IDGenerator.getID(),
+					# 	"taskGroup": TG_RELAX, "goodName": "Apple", "storageIG" : IG_FOOD,
+					# 	"targetItemID": null , "targetItemPos" : null , "targetItemDeck" : null ,
+					# 	"storageItemID" : null, "storageItemPos" : null, "storageItemDeck" : null,
+					# 	"priority": 0}
+					# 	manRef.S_SEARCHFOOD = true
+					# 	var found = searchAndAddNearStorageItem(task)
+					# 	if found: manRef.S_SEARCHFOOD = false
 
 				## check busy man with job tasks (put this into one function like checkManTaskComplete(manRef))
-				if manRef.currentTask.type == JOB_TASK: 
+				if manRef.currentTask!= null and manRef.currentTask.type == JOB_TASK: 
 					## if manRef is not assigned to his item yet, check if he can be
 					if manRef.itemID!=null && items[manRef.itemID].jobs[manRef.jobID].isReady==false:
 						if (manRef.translation-manRef.targetPos).length()<manRef.bodyHeight: # if human is within his body height close to item
 							setJobToReady(manRef.itemID, manRef.jobID)
-							
-				## check busy man with fetch task (put this into one function like checkManFetchTaskComplete(manRef))
-				elif manRef.currentTask.type == FETCH_TASK:
+
+					## if manRef is assigned to his item yet, do stuff with him here
+					elif manRef.itemID!=null && items[manRef.itemID].jobs[manRef.jobID].isReady==true:
+						if manRef.S_HUNGRY: # if man is hungry
+							## add up some number (*delta)  on each man to keep track on how long he is sitting on table, then if time is long enough, 
+							manRef.eatTime += delta
+							## consumeGood(someFood) and increase stamina
+							if manRef.eatTime >= manRef.timeTakesToEat:
+								var consumed = consumeGood(IG_GEAR, manRef.itemID, "Apples", true) # TODO : Make APPLES more generic, aka random? see what the table has to offer
+								if consumed : 
+									manRef.eatTime = 0
+									manRef.stamina += 0.2 # if stamina is high enough, hungry effect is gone 
+									if manRef.stamina > 0.8:
+										forceManintoRelaxed(TG, "busy", manRef)
+										break
+
+										
+				## check busy man with fetch task
+				elif manRef.currentTask!= null and manRef.currentTask.type == FETCH_TASK:
 					checkManFetchTaskComplete(manRef)
 		
 func setJobToReady(itemID, jobID):
@@ -358,7 +374,9 @@ func requestCrew(itemID, jobID, taskGroup, targetPosition : Vector3, targetDeckR
 	taskGroup: from which task group
 	"""
 	# add the request to tasks array already in the correct order (prio)
-	tasks[priority].append({"type" : JOB_TASK, "id": IDGenerator.getID(), "itemID": itemID, "jobID": jobID, "position": targetPosition, "targetDeckRef" : targetDeckRef, "taskGroup": taskGroup, "priority": priority})
+	tasks[priority].append({"type" : JOB_TASK, "id": IDGenerator.getID(),
+							"itemID": itemID, "jobID": jobID, "position": targetPosition,
+							"targetDeckRef" : targetDeckRef, "taskGroup": taskGroup, "priority": priority})
 
 
 
@@ -390,13 +408,13 @@ func findAndAssignBestMen(task):
 	searches first men that are completly idle, if none are found searches for man that do less prioritzed work 
 	returns manID
 	"""
-	var foundMen
+	var foundMen = null
 
 	## first check all idle men in task group
 	for id in currentAssignments[task.taskGroup]["idle"]:
 		foundMen = currentAssignments[task.taskGroup]["idle"][id]
 		## Here the found man is checked if suitable for the current task. Down below is another if state that should be identical. TODO: Add near check, same deck check and so on
-		if not foundMen.S_HUNGRY: 
+		if task.taskGroup != TG_RELAX and not foundMen.S_HUNGRY: 
 			if task.type == JOB_TASK:
 				## assign man the new item target
 				fromIdleToBusy(foundMen, task)
@@ -406,9 +424,16 @@ func findAndAssignBestMen(task):
 				fromIdleToBusy(foundMen, task)
 				foundMen.giveFetchTask(task)
 			return true
-
+		## for relaxed tasks, other conditions apply
+		elif task.taskGroup == TG_RELAX:
+			if foundMen.S_HUNGRY:
+				if task.type == JOB_TASK:
+					## assign man the new item target
+					fromIdleToBusy(foundMen, task)
+					_assignManToItem(foundMen, task)
+				return true
 	## if non are idle or suitable, check busy men from lower priorites, but check the lowest prio first
-	if task.type == JOB_TASK:
+	if foundMen!=null and task.taskGroup!=TG_RELAX and task.type == JOB_TASK:
 		for oldPrio in range(numberOfPriorities-1,task.priority,-1): # doest go to priority, stops at priority+1
 			for id in currentAssignments[task.taskGroup]["busy"][oldPrio]:
 				## Here the found man is checked if suitable for the current task. Above is another if state that should be identical. TODO: Add near check, same deck check and so on
@@ -503,15 +528,16 @@ func forceManintoRelaxed(currentTaskGroup, currentState, manRef):
 	elif currentState == "busy":
 		## directly call new crew request
 		var t = manRef.currentTask
-		if t.type == JOB_TASK:
-			requestCrew(t.itemID, t.jobID, t.taskGroup,  t.position, t.targetDeckRef,  t.priority)
-		elif t.type == FETCH_TASK:
-			## append good again so that it is not lost when often unassigning man and make new request
-			itemAssignmentsAndInventory[t.storageIG][t.storageItemID].inventory[t.goodName] += 1
-			requestGood(t.goodName, items[t.targetItemID].itemRef, t.storageIG, t.priority)
-		## man worked on item
-		currentAssignments[currentTaskGroup][currentState][t.priority].erase(manRef.id)
-		_unassignManFromItem(manRef)
+		if t!= null: # can be null if the process already forced into relax but player also quickly changed the assignment sliders?
+			if t.type == JOB_TASK:
+				requestCrew(t.itemID, t.jobID, t.taskGroup,  t.position, t.targetDeckRef,  t.priority)
+			elif t.type == FETCH_TASK:
+				## append good again so that it is not lost when often unassigning man and make new request
+				itemAssignmentsAndInventory[t.storageIG][t.storageItemID].inventory[t.goodName] += 1
+				requestGood(t.goodName, items[t.targetItemID].itemRef, t.storageIG, t.priority)
+			## man worked on item
+			currentAssignments[currentTaskGroup][currentState][t.priority].erase(manRef.id)
+			_unassignManFromItem(manRef)
 
 
 
@@ -698,6 +724,10 @@ func getCrewScore(itemID) -> float:
 
 func getInventoryCount(itemID, goodName) -> int:
 	"""
+	Returns -1 if item is not registered.
 	returns the inventory count  of the given item (returning only the count to secure that inventory is not modified)
 	"""
-	return itemAssignmentsAndInventory[Economy.getIG(items[itemID].databaseName)][itemID].inventory[goodName]
+	if items.has(itemID):
+		return itemAssignmentsAndInventory[Economy.getIG(items[itemID].databaseName)][itemID].inventory[goodName]
+	else:
+		return -1

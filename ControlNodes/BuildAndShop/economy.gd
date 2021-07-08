@@ -10,7 +10,10 @@ var malls: Dictionary = {
 		"capacity": Vector2(0, 100),
 		"consumption": 0,
 		"grows": {"banana": 2.0},
-		"goods": {"Food Storage":100, "apple": INF, "Large Cannon" : 100, "WallLong" : 100, "LightSmall":5, "Gunpowder Barrel" : 200, "Ammo Barrel": 100, "Rigging":30},
+		"goods": {"Food Storage":100, "apple": INF, "Large Cannon" : 100, 
+					"WallLong" : 100, "LightSmall":5, "Gunpowder Barrel" : 200, 
+					"Ammo Barrel": 100, "Rigging":30, "Eating Table" : 7,
+				},
 		"white": ["food", "gear"],
 		"black": ["drug"],
 		"money": 1000,
@@ -47,8 +50,8 @@ const TG_UTILITY = "tgUtility"
 const TG_RELAX = "tgRelax"
 
 const IG_GUNPOWDER = "igGunpowder" # gunpowder barrels
-const IG_AMMO = "igAmmo" # ammo barrels
-const IG_FOOD = "igFood" # foodbarrels
+const IG_AMMO = "igAmmo" # ammo barrels and storage
+const IG_FOOD = "igFood" # foodbarrels and storage
 const IG_UTILITY = "igUtils" # barrels for repairs, stores woods planks, ropes, tools and so on
 const IG_GEAR = "igGear" # no storage items like cannons, table and so on - these typically make the requests and have fixed jobs
 
@@ -80,7 +83,7 @@ var taverns: Dictionary = {
 """
 Gear / Item Dictionary 
 Keys: 
-type = the type used in the tabs in the shop overlay
+type = the type used in the tabs in the shop overlay (TODO: this could be removed and use IG instead?)
 size = the 3d size of the colliders and thus the item
 IG = item group, used in crewManager for accessing of barrels, possible groups are defined in economy
 penetrationFactor = used for the cannon balls, how easy to get through (1 = like air, 0 = inpenetrable)
@@ -96,7 +99,7 @@ var goods: Dictionary = { # TODO: RENAME INTO GEAR or ITEMS, this list is not ab
 	"apple"     : {"type": "food", "size": Vector3(2,1, 1), "penetrationFactor": 0.9, "IG": IG_FOOD, "jobs": {}, "capacity" : {}, "maxHealth": 1, "price": 10, "weight": 1.0, "res": "res://ControlNodes/BuildAndShop/exampleItem.tscn", "icon": "res://icon.png"},
 	
 	"Food Storage": {"type": "food", "size": Vector3(1,1, 1), "penetrationFactor": 0.9, "IG": IG_FOOD, "jobs": {}, 
-					"capacity" : {"Apples":10}, "maxHealth": 1, "price": 10, "weight": 1.0, 
+					"capacity" : {"Apples":40}, "maxHealth": 1, "price": 10, "weight": 1.0, 
 					"res": "res://ObjectNodes/Items/Barrels/FoodCrate/FoodCrate.tscn", "icon": "res://ObjectNodes/Items/Barrels/FoodCrate/foodcrate.png"},
 	
 	"Large Cannon": {"type": "gear", "size": Vector3(3,1, 3), "penetrationFactor": 0.3, "IG" : IG_GEAR,  
@@ -106,6 +109,15 @@ var goods: Dictionary = { # TODO: RENAME INTO GEAR or ITEMS, this list is not ab
 						},
 					"capacity" : {"Gunpowder": 10, "Cannonballs" : 5}, 
 					"maxHealth": 60, "price": 10, "weight": 10.0, "res": "res://ObjectNodes/Items/Cannon/CannonItem.tscn", "icon": "res://ObjectNodes/Items/Cannon/Cannon.png"},
+	
+	"Eating Table": {"type": "food", "size": Vector3(3,1, 3), "penetrationFactor": 0.3, "IG" : IG_GEAR,  
+					"jobs": {
+							"Eating1": {"posOffset":Vector3(0,0,-0.2), "TG": TG_RELAX, "priority" : 0},
+							"Eating2": {"posOffset":Vector3(0,0,0.2), "TG": TG_RELAX, "priority" : 0},
+							"Eating3": {"posOffset":Vector3(-0.2,0,0), "TG": TG_RELAX, "priority" : 0},
+						},
+					"capacity" : {"Apples": 10}, 
+					"maxHealth": 60, "price": 10, "weight": 10.0, "res": "res://ObjectNodes/Items/EatingTable/eatingTable.tscn", "icon": "res://ObjectNodes/Items/EatingTable/eatingTable.png"},
 	
 	"Gunpowder Barrel": {"type": "gear", "size": Vector3(1,1, 1), "penetrationFactor": 0.3, "IG" : IG_GUNPOWDER,  
 						"jobs": {},

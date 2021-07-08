@@ -70,8 +70,8 @@ func escapeVector(islandsInRange: Array):
 	var count: int = 0
 	for island in islandsInRange:
 		count += 1
-		var escapeDirection: Vector2 = (island - thisProjection)
-		escapeDirection / max(1, escapeDirection.length() - 64) # 64 is PARTSIZE
+		var escapeDirection: Vector2 = (island - thisProjection).normalized()
+		# escapeDirection /= max(1, escapeDirection.length() - 64) # 64 is PARTSIZE
 		totalVector += escapeDirection
 	return Vector3(totalVector.x, 0, totalVector.y) / max(1, count)
 	

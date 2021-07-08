@@ -2,7 +2,7 @@ extends KinematicBody
 class_name Human
 """
 base Script on each human. maybe other special humans like officers can inherit from this.
-gets controlled by crew manager, only feature is that he gets a target position and walks there, maybe later adding stamina and so on, but that can be done in crew manager too
+gets controlled by crew manager, only feature is that he gets a target position and walks there, path finding is impolemented here but also called from crew manager
 """
 
 export var InfoPanel: PackedScene # scene object of cannons info ui panel
@@ -23,7 +23,8 @@ var targetDeckRef = null # this needs to get set
 var currentDeckRef = null
 var bodyHeight = 0.3
 var speed: float = 0.5 # max walking speed
-var hungerIncreaseSpeed = 0.001
+var staminaDecreaseSpeed = 0.00005
+var timeTakesToEat = 1 # in seconds, how long it takes that a human consumes 1 food 
 
 # var currentTaskGroup = null
 var isHuman = true # flag for shopping script to see if this kin body is human
@@ -42,9 +43,9 @@ var isStandingStill: bool # used by navigator, don't change manually
 var isStuck: bool # used by navigator, don't change manually
 var canFollowIncompletePath: bool = true
 
-var stamina = rand_range(0,1) # current level [0,1], if 0, human is too tired to fulfill tasks and goes eat/sleep/drink and so on
+var stamina = rand_range(0.1,1) # current level [0,1], if 0, human is too tired to fulfill tasks and goes eat/sleep/drink and so on
 var morale = rand_range(0.9,1) # current level [0,1] , increased with low priority relax jobs like drinking rum or playing poker
-
+var eatTime = 0 ## keeps track on how log on eating task, gets managed and used by crewmanager
 
 func _ready():
 	currentDeckRef = get_parent()
@@ -131,10 +132,10 @@ func _process(delta):
 
 
 func updateStati():
-	stamina = clamp(stamina+hungerIncreaseSpeed,0,1)
-	if stamina >= 1-hungerIncreaseSpeed:
+	stamina = clamp(stamina-staminaDecreaseSpeed,0,1)
+	if stamina <= staminaDecreaseSpeed:
 		S_HUNGRY = true
-	else:
+	elif stamina > 0.8:
 		S_HUNGRY = false
 
 
