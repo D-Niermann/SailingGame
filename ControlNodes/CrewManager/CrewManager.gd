@@ -426,7 +426,7 @@ func findAndAssignBestMen(task):
 			return true
 		## for relaxed tasks, other conditions apply
 		elif task.taskGroup == TG_RELAX:
-			if foundMen.S_HUNGRY:
+			if foundMen.stamina<0.2:
 				if task.type == JOB_TASK:
 					## assign man the new item target
 					fromIdleToBusy(foundMen, task)
@@ -647,7 +647,7 @@ func consumeGood(itemGroup : String, itemID, goodName : String, requestNew = fal
 	if requestNew is true, the consumed good is directly requested again
 	"""
 	var amount : int = getInventoryCount(itemID, goodName)
-	if amount>0:
+	if amount != null and amount>0:
 		itemAssignmentsAndInventory[itemGroup][itemID].inventory[goodName] -= 1
 		goodCount[goodName] -= 1
 		goodGroupCount[Economy.getGG(goodName)] -= 1

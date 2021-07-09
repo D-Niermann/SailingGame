@@ -25,7 +25,7 @@ func link(itemRef):
 	$Panel/Title.text = str(myHuman.id)
 	foodSlider.value = myHuman.stamina
 	# statusLabel.pressed = myHuman.isActive
-	pass
+	
 	
 func _process(delta):
 	# if myHuman.targetItem!=null:
@@ -37,7 +37,12 @@ func _process(delta):
 	# statusLabel.text = str(myHuman.isAssigned)
 	
 	foodSlider.value = myHuman.stamina
-
+	if myHuman.currentTask!=null and myHuman.currentTask.type == "taskType:job":
+		$Panel/ItemLabel.text = myHuman.currentTask.taskGroup + " | "  + str(myHuman.currentTask.priority) + " | " + GlobalObjectReferencer.crewManager.items[myHuman.currentTask.itemID].itemRef.databaseName
+	elif myHuman.currentTask!=null and myHuman.currentTask.type == "taskType:fetch":
+		$Panel/ItemLabel.text = myHuman.currentTask.taskGroup + " | " + str(myHuman.currentTask.priority) 
+	else:
+		$Panel/ItemLabel.text = ""
 	if is_instance_valid(positionRef):
 		self.rect_position =  positionRef.rect_position
 
